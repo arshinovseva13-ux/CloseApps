@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Close Приложения · Хаб</title>
+    <style>
+        :root {
+            --bg-deep: #070b1a;
+            --text-primary: #ffffff;
+            --text-secondary: #aabbcc;
+            --accent: #00d4ff;
+            --accent-purple: #8b6cff;
+            --border-subtle: rgba(100, 150, 220, 0.3);
+            --card-bg: rgba(18, 26, 48, 0.8);
+            --radius-lg: 20px;
+            --transition-smooth: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app-stage {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Шапка */
+        .header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: rgba(8, 14, 30, 0.92);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(100, 170, 240, 0.35);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #00c8ff, #7c5cfc);
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.5), 0 0 50px rgba(124, 92, 252, 0.3);
+            flex-shrink: 0;
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
+            white-space: nowrap;
+        }
+
+        .brand-name .accent {
+            color: #00d4ff;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.7);
+        }
+
+        .brand-name .normal {
+            color: #ffffff;
+        }
+
+        /* Область с кнопками */
+        .content-area {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            padding: 40px 24px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Стили для кнопок-ссылок */
+        .app-link {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(100, 150, 220, 0.25);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: #ffffff;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 85% 30%, rgba(0, 212, 255, 0.06) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .app-link:hover::before {
+            opacity: 1;
+        }
+
+        .app-link:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.55);
+            box-shadow: 0 16px 40px rgba(0, 160, 255, 0.15);
+            background: rgba(22, 32, 58, 0.9);
+        }
+
+        .link-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            background: rgba(0, 200, 255, 0.15);
+        }
+
+        .link-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .link-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 3px;
+        }
+
+        .link-url {
+            font-size: 0.78rem;
+            color: #8899bb;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .arrow-icon {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        .app-link:hover .arrow-icon {
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 700px) {
+            .header {
+                padding: 12px 14px;
+            }
+            .brand-name {
+                font-size: 1.2rem;
+            }
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+            }
+            .logo-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+            .content-area {
+                padding: 20px 14px;
+                gap: 12px;
+            }
+            .app-link {
+                padding: 14px 16px;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-stage">
+        <!-- Анимированный фон -->
+        <canvas id="bgCanvas"></canvas>
+
+        <!-- Шапка -->
+        <header class="header">
+            <div class="header-brand">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="2" width="8" height="8" rx="2.5" fill="white" opacity="0.95"/>
+                        <rect x="13" y="2" width="8" height="8" rx="2.5" fill="white" opacity="0.65"/>
+                        <rect x="2" y="13" width="8" height="8" rx="2.5" fill="white" opacity="0.65"/>
+                        <rect x="13" y="13" width="8" height="8" rx="2.5" fill="white" opacity="0.95"/>
+                    </svg>
+                </div>
+                <span class="brand-name">
+                    <span class="accent">Close</span>
+                    <span class="normal"> Приложения</span>
+                </span>
+            </div>
+        </header>
+
+        <!-- Кнопки-ссылки -->
+        <main class="content-area">
+            <!-- Конструктор Кроссвордов -->
+            <a href="https://arshinovseva13-ux.github.io/-/" target="_blank" class="app-link">
+                <div class="link-icon">🧩</div>
+                <div class="link-info">
+                    <div class="link-title">Конструктор Кроссвордов</div>
+                    <div class="link-url">arshinovseva13-ux.github.io/-/</div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
+            <!-- Здесь будешь добавлять новые кнопки -->
+        </main>
+    </div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            let codeStreams = [];
+            const PARTICLE_COUNT = 80;
+            const CODE_STREAM_COUNT = 16;
+            const MAX_DISTANCE = 120;
+
+            function resizeCanvas() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initObjects();
+            }
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.baseRadius = Math.random() * 2 + 0.8;
+                    this.speedX = (Math.random() - 0.5) * 0.25;
+                    this.speedY = (Math.random() - 0.5) * 0.25;
+                    this.pulseSpeed = 0.02 + Math.random() * 0.03;
+                    this.pulseOffset = Math.random() * 100;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < -10) this.x = width + 10;
+                    if (this.x > width + 10) this.x = -10;
+                    if (this.y < -10) this.y = height + 10;
+                    if (this.y > height + 10) this.y = -10;
+                }
+                draw(ctx) {
+                    const r = this.baseRadius + Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.35;
+                    ctx.beginPath();
+                    ctx.shadowColor = '#5db8ff';
+                    ctx.shadowBlur = 8;
+                    ctx.fillStyle = 'rgba(190, 225, 255, 0.75)';
+                    ctx.arc(this.x, this.y, r * 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.arc(this.x, this.y, r * 0.7, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            class CodeStream {
+                constructor() {
+                    this.reset(true);
+                }
+                reset(randomY = false) {
+                    this.x = Math.random() * width;
+                    this.y = randomY ? Math.random() * height : -20 - Math.random() * 150;
+                    this.speed = 0.8 + Math.random() * 1.8;
+                    this.maxChars = Math.floor(Math.random() * 10 + 5);
+                    this.fontSize = 10 + Math.floor(Math.random() * 7);
+                    this.opacity = 0.3 + Math.random() * 0.35;
+                    const chars = '01AI{}[]<>/\\|#*&%$@';
+                    this.symbols = [];
+                    for (let i = 0; i < this.maxChars; i++) {
+                        this.symbols.push(chars[Math.floor(Math.random() * chars.length)]);
+                    }
+                }
+                update() {
+                    this.y += this.speed;
+                    if (this.y - this.maxChars * this.fontSize > height + 40) {
+                        this.y = -this.maxChars * this.fontSize - Math.random() * 40;
+                        this.x = Math.random() * width;
+                    }
+                }
+                draw(ctx) {
+                    for (let i = 0; i < this.symbols.length; i++) {
+                        const charY = this.y - i * (this.fontSize + 2);
+                        if (charY < -20 || charY > height + 20) continue;
+                        const alpha = Math.max(0.1, this.opacity - i * 0.05);
+                        ctx.font = `bold ${this.fontSize}px "Fira Code", "Courier New", monospace`;
+                        ctx.fillStyle = '#8df0ff';
+                        ctx.globalAlpha = alpha;
+                        ctx.shadowColor = '#00e5ff';
+                        ctx.shadowBlur = i === 0 ? 7 : 2;
+                        ctx.fillText(this.symbols[i], this.x, charY);
+                    }
+                    ctx.globalAlpha = 1;
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            function initObjects() {
+                particles = [];
+                for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+                codeStreams = [];
+                for (let i = 0; i < CODE_STREAM_COUNT; i++) codeStreams.push(new CodeStream());
+            }
+
+            function drawConnections(ctx) {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p1 = particles[i];
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < MAX_DISTANCE) {
+                            const alpha = 1 - dist / MAX_DISTANCE;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(80, 170, 255, ${alpha * 0.2})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.shadowColor = 'rgba(0, 200, 255, 0.3)';
+                            ctx.shadowBlur = 4;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                ctx.shadowBlur = 0;
+            }
+
+            function drawGrid(ctx) {
+                const step = 60;
+                ctx.strokeStyle = 'rgba(30, 80, 140, 0.12)';
+                ctx.lineWidth = 0.4;
+                for (let x = 0; x <= width; x += step) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, height);
+                    ctx.stroke();
+                }
+                for (let y = 0; y <= height; y += step) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(width, y);
+                    ctx.stroke();
+                }
+            }
+
+            function animate() {
+                ctx.fillStyle = 'rgba(5, 9, 20, 0.18)';
+                ctx.fillRect(0, 0, width, height);
+                drawGrid(ctx);
+                for (let s of codeStreams) { s.update(); s.draw(ctx); }
+                for (let p of particles) p.update();
+                drawConnections(ctx);
+                for (let p of particles) p.draw(ctx);
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            initObjects();
+            animate();
+        })();
+    </script>
+</body>
+</html>
