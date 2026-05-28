@@ -66,6 +66,12 @@
             gap: 12px;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .header-brand {
             display: flex;
             align-items: center;
@@ -106,10 +112,42 @@
             color: #ffffff;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Мировое время */
+        .world-clock {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(0, 200, 255, 0.08);
+            border: 1px solid rgba(0, 200, 255, 0.25);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #ccddef;
+            white-space: nowrap;
+        }
+
+        .world-clock .time-icon {
+            font-size: 1rem;
+        }
+
+        .world-clock .time-value {
+            color: #00d4ff;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
         .header-links {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -150,6 +188,56 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }
+
+        /* Поиск */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px 14px 46px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(100, 150, 220, 0.3);
+            border-radius: var(--radius-lg);
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #8899bb;
+        }
+
+        .search-input:focus {
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: #8899bb;
+            pointer-events: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
         }
 
         /* Блок описания */
@@ -227,6 +315,10 @@
             overflow: hidden;
         }
 
+        .app-link.hidden {
+            display: none;
+        }
+
         .app-link::before {
             content: '';
             position: absolute;
@@ -298,9 +390,16 @@
             border: 1px solid rgba(180, 150, 255, 0.3);
         }
 
-        .link-url {
-            font-size: 0.78rem;
+        .link-desc {
+            font-size: 0.8rem;
             color: #8899bb;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .link-url {
+            font-size: 0.75rem;
+            color: #667788;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -410,6 +509,10 @@
             .changelog-section {
                 padding: 18px;
             }
+            .world-clock {
+                font-size: 0.72rem;
+                padding: 6px 10px;
+            }
         }
     </style>
 </head>
@@ -419,23 +522,33 @@
 
         <!-- Шапка -->
         <header class="header">
-            <div class="header-brand">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <rect x="2" y="2" width="8" height="8" rx="2.5" fill="white" opacity="0.95"/>
-                        <rect x="13" y="2" width="8" height="8" rx="2.5" fill="white" opacity="0.65"/>
-                        <rect x="2" y="13" width="8" height="8" rx="2.5" fill="white" opacity="0.65"/>
-                        <rect x="13" y="13" width="8" height="8" rx="2.5" fill="white" opacity="0.95"/>
-                    </svg>
+            <div class="header-left">
+                <div class="header-brand">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="2" width="8" height="8" rx="2.5" fill="white" opacity="0.95"/>
+                            <rect x="13" y="2" width="8" height="8" rx="2.5" fill="white" opacity="0.65"/>
+                            <rect x="2" y="13" width="8" height="8" rx="2.5" fill="white" opacity="0.65"/>
+                            <rect x="13" y="13" width="8" height="8" rx="2.5" fill="white" opacity="0.95"/>
+                        </svg>
+                    </div>
+                    <span class="brand-name">
+                        <span class="accent">Close</span>
+                        <span class="normal"> Приложения</span>
+                    </span>
                 </div>
-                <span class="brand-name">
-                    <span class="accent">Close</span>
-                    <span class="normal"> Приложения</span>
-                </span>
             </div>
-            <div class="header-links">
-                <a href="https://md2sites.ru/#" target="_blank" class="header-link parent">MD2</a>
-                <a href="https://dzen.ru/id/681375ecf579fe6ab18dd19c" target="_blank" class="header-link">Дзен</a>
+            <div class="header-right">
+                <!-- Мировое время -->
+                <div class="world-clock">
+                    <span class="time-icon">🌍</span>
+                    <span>UTC</span>
+                    <span class="time-value" id="utcTime">00:00:00</span>
+                </div>
+                <div class="header-links">
+                    <a href="https://md2sites.ru/#" target="_blank" class="header-link parent">MD2</a>
+                    <a href="https://dzen.ru/id/681375ecf579fe6ab18dd19c" target="_blank" class="header-link">Дзен</a>
+                </div>
             </div>
         </header>
 
@@ -458,31 +571,40 @@
                 </a>
             </div>
 
+            <!-- Поиск -->
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск приложений...">
+            </div>
+            <p class="no-results" id="noResults">Приложений не найдено</p>
+
             <!-- Приложения -->
             <p class="section-label">🔗 Приложения</p>
 
             <!-- Конструктор Кроссвордов -->
-            <a href="https://arshinovseva13-ux.github.io/-/" target="_blank" class="app-link">
+            <a href="https://arshinovseva13-ux.github.io/-/" target="_blank" class="app-link" data-search="конструктор кроссвордов crossword">
                 <div class="link-icon">🧩</div>
                 <div class="link-info">
                     <div class="link-title">Конструктор Кроссвордов</div>
+                    <div class="link-desc">Создавайте и разгадывайте кроссворды онлайн. Простой интерфейс, экспорт и печать.</div>
                     <div class="link-url">arshinovseva13-ux.github.io/-/</div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
             <!-- Крестики Нолики -->
-            <a href="https://arshinovseva13-ux.github.io/Krestiki-Noliki/" target="_blank" class="app-link">
+            <a href="https://arshinovseva13-ux.github.io/Krestiki-Noliki/" target="_blank" class="app-link" data-search="крестики нолики tic tac toe игра">
                 <div class="link-icon">❌</div>
                 <div class="link-info">
                     <div class="link-title">Крестики Нолики</div>
+                    <div class="link-desc">Классическая игра для двух игроков. Минималистичный дизайн, быстрый старт.</div>
                     <div class="link-url">arshinovseva13-ux.github.io/Krestiki-Noliki/</div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
             <!-- Clause AI Studio -->
-            <a href="https://claus-ai-studio-623389241403.europe-west2.run.app/" target="_blank" class="app-link">
+            <a href="https://claus-ai-studio-623389241403.europe-west2.run.app/" target="_blank" class="app-link" data-search="clause ai studio искусственный интеллект">
                 <div class="link-icon">🤖</div>
                 <div class="link-info">
                     <div class="link-title">
@@ -490,6 +612,7 @@
                         <span class="link-badge badge-desktop">🖥️ ПК</span>
                         <span class="link-badge badge-intl">🌍 International</span>
                     </div>
+                    <div class="link-desc">Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа.</div>
                     <div class="link-url">claus-ai-studio-623389241403.europe-west2.run.app</div>
                 </div>
                 <span class="arrow-icon">→</span>
@@ -499,6 +622,10 @@
             <div class="changelog-section">
                 <div class="changelog-title">📋 История обновлений</div>
                 <ul class="changelog-list">
+                    <li class="changelog-item">
+                        <span class="changelog-date">28.05.2026</span>
+                        <span>Добавлено мировое время (UTC) в шапку сайта. Внедрён поиск приложений по названию. Добавлены описания для всех приложений.</span>
+                    </li>
                     <li class="changelog-item">
                         <span class="changelog-date">28.05.2026</span>
                         <span>Добавлено приложение Clause AI Studio (только для ПК, английский интерфейс). Добавлены соответствующие бейджи на карточку приложения.</span>
@@ -523,6 +650,47 @@
     </div>
 
     <script>
+        // Мировое время UTC
+        function updateUTCTime() {
+            const now = new Date();
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            document.getElementById('utcTime').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        updateUTCTime();
+        setInterval(updateUTCTime, 1000);
+
+        // Поиск приложений
+        const searchInput = document.getElementById('searchInput');
+        const appLinks = document.querySelectorAll('.app-link');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            appLinks.forEach(link => {
+                const searchData = link.getAttribute('data-search') || '';
+                const title = link.querySelector('.link-title').textContent.toLowerCase();
+                const desc = link.querySelector('.link-desc') ? link.querySelector('.link-desc').textContent.toLowerCase() : '';
+
+                if (query === '' || searchData.includes(query) || title.includes(query) || desc.includes(query)) {
+                    link.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    link.classList.add('hidden');
+                }
+            });
+
+            if (visibleCount === 0 && query !== '') {
+                noResults.classList.add('show');
+            } else {
+                noResults.classList.remove('show');
+            }
+        });
+
+        // Анимированный фон
         (function() {
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
