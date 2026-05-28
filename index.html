@@ -9,11 +9,13 @@
             --bg-deep: #070b1a;
             --text-primary: #ffffff;
             --text-secondary: #aabbcc;
+            --text-muted: #778899;
             --accent: #00d4ff;
             --accent-purple: #8b6cff;
             --border-subtle: rgba(100, 150, 220, 0.3);
             --card-bg: rgba(18, 26, 48, 0.8);
             --radius-lg: 20px;
+            --radius-md: 14px;
             --transition-smooth: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -48,6 +50,7 @@
             z-index: 0;
         }
 
+        /* Шапка */
         .header {
             position: relative;
             z-index: 10;
@@ -59,6 +62,8 @@
             backdrop-filter: blur(24px);
             border-bottom: 1px solid rgba(100, 170, 240, 0.35);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .header-brand {
@@ -101,17 +106,109 @@
             color: #ffffff;
         }
 
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-link {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(120, 170, 230, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccddef;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .header-link:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .header-link.parent {
+            border-color: rgba(139, 108, 255, 0.5);
+            background: rgba(124, 92, 252, 0.15);
+        }
+
+        /* Контент */
         .content-area {
             position: relative;
             z-index: 10;
             flex: 1;
-            padding: 40px 24px;
+            padding: 36px 24px;
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
+        }
+
+        /* Блок описания */
+        .about-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(100, 150, 220, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 4px;
+        }
+
+        .about-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .about-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .about-text .highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .parent-company {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            padding: 10px 18px;
+            background: rgba(124, 92, 252, 0.1);
+            border: 1px solid rgba(139, 108, 255, 0.3);
+            border-radius: 30px;
+            text-decoration: none;
+            color: #c8b4ff;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        .parent-company:hover {
+            background: rgba(124, 92, 252, 0.2);
+            border-color: rgba(139, 108, 255, 0.6);
+            color: #ffffff;
+        }
+
+        /* Кнопки-ссылки */
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: -8px;
         }
 
         .app-link {
@@ -195,6 +292,71 @@
             transform: translateX(4px);
         }
 
+        /* История обновлений */
+        .changelog-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(100, 150, 220, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-top: 8px;
+        }
+
+        .changelog-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .changelog-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .changelog-item {
+            display: flex;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .changelog-date {
+            color: #00d4ff;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.78rem;
+            min-width: 80px;
+        }
+
+        /* Футер */
+        .footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(100, 150, 220, 0.15);
+            background: rgba(8, 14, 30, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 700px) {
             .header {
                 padding: 12px 14px;
@@ -213,11 +375,15 @@
             }
             .content-area {
                 padding: 20px 14px;
-                gap: 12px;
+                gap: 14px;
             }
             .app-link {
                 padding: 14px 16px;
                 gap: 12px;
+            }
+            .about-section,
+            .changelog-section {
+                padding: 18px;
             }
         }
     </style>
@@ -226,6 +392,7 @@
     <div class="app-stage">
         <canvas id="bgCanvas"></canvas>
 
+        <!-- Шапка -->
         <header class="header">
             <div class="header-brand">
                 <div class="logo-icon">
@@ -241,25 +408,40 @@
                     <span class="normal"> Приложения</span>
                 </span>
             </div>
+            <div class="header-links">
+                <a href="https://md2sites.ru/#" target="_blank" class="header-link parent">MD2</a>
+                <a href="https://dzen.ru/id/681375ecf579fe6ab18dd19c" target="_blank" class="header-link">Дзен</a>
+            </div>
         </header>
 
         <main class="content-area">
+            <!-- О компании -->
+            <div class="about-section">
+                <div class="about-title">О компании</div>
+                <p class="about-text">
+                    <span class="highlight">Close Приложения</span> — это дочерняя компания 
+                    <a href="https://md2sites.ru/#" target="_blank" style="color:#c8b4ff;text-decoration:underline;">MD2</a>, 
+                    специализирующаяся на разработке и поддержке веб-приложений. Мы создаём удобные, быстрые и современные 
+                    инструменты для решения повседневных задач: от конструкторов кроссвордов до игр и образовательных сервисов.
+                </p>
+                <p class="about-text" style="margin-top:10px;">
+                    Наша миссия — делать технологии доступными. Каждое приложение проходит тщательное тестирование 
+                    и регулярно обновляется. Мы стремимся к тому, чтобы каждый пользователь нашёл здесь что-то полезное для себя.
+                </p>
+                <a href="https://md2sites.ru/#" target="_blank" class="parent-company">
+                    🏢 MD2 — головная компания
+                </a>
+            </div>
+
+            <!-- Приложения -->
+            <p class="section-label">🔗 Приложения</p>
+
             <!-- Конструктор Кроссвордов -->
             <a href="https://arshinovseva13-ux.github.io/-/" target="_blank" class="app-link">
                 <div class="link-icon">🧩</div>
                 <div class="link-info">
                     <div class="link-title">Конструктор Кроссвордов</div>
                     <div class="link-url">arshinovseva13-ux.github.io/-/</div>
-                </div>
-                <span class="arrow-icon">→</span>
-            </a>
-
-            <!-- Lumina Studio -->
-            <a href="https://untitled-623389241403.europe-west2.run.app/" target="_blank" class="app-link">
-                <div class="link-icon">💡</div>
-                <div class="link-info">
-                    <div class="link-title">Lumina Studio</div>
-                    <div class="link-url">untitled-623389241403.europe-west2.run.app</div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
@@ -274,7 +456,27 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <!-- История обновлений -->
+            <div class="changelog-section">
+                <div class="changelog-title">📋 История обновлений</div>
+                <ul class="changelog-list">
+                    <li class="changelog-item">
+                        <span class="changelog-date">28.05.2026</span>
+                        <span>Добавлено описание компании. Указано, что Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Внедрён раздел «История обновлений». Добавлено приложение «Крестики Нолики». Удалена неработающая ссылка Lumina Studio.</span>
+                    </li>
+                    <li class="changelog-item">
+                        <span class="changelog-date">27.05.2026</span>
+                        <span>Запуск хаба Close Приложения. Добавлены первые приложения: Конструктор Кроссвордов.</span>
+                    </li>
+                </ul>
+            </div>
         </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            © 2026 <a href="https://md2sites.ru/#" target="_blank">MD2</a> · Close Приложения — дочерняя компания MD2 · 
+            <a href="https://dzen.ru/id/681375ecf579fe6ab18dd19c" target="_blank">Дзен</a>
+        </footer>
     </div>
 
     <script>
