@@ -271,6 +271,31 @@
             font-weight: 600;
             font-size: 1.05rem;
             margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .link-badge {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .badge-desktop {
+            background: rgba(0, 200, 255, 0.15);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+        }
+
+        .badge-intl {
+            background: rgba(200, 180, 255, 0.15);
+            color: #c8b4ff;
+            border: 1px solid rgba(180, 150, 255, 0.3);
         }
 
         .link-url {
@@ -456,13 +481,31 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <!-- Clause AI Studio -->
+            <a href="https://claus-ai-studio-623389241403.europe-west2.run.app/" target="_blank" class="app-link">
+                <div class="link-icon">🤖</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Clause AI Studio
+                        <span class="link-badge badge-desktop">🖥️ ПК</span>
+                        <span class="link-badge badge-intl">🌍 International</span>
+                    </div>
+                    <div class="link-url">claus-ai-studio-623389241403.europe-west2.run.app</div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
             <!-- История обновлений -->
             <div class="changelog-section">
                 <div class="changelog-title">📋 История обновлений</div>
                 <ul class="changelog-list">
                     <li class="changelog-item">
                         <span class="changelog-date">28.05.2026</span>
-                        <span>Добавлено описание компании. Указано, что Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Внедрён раздел «История обновлений». Добавлено приложение «Крестики Нолики». Удалена неработающая ссылка Lumina Studio.</span>
+                        <span>Добавлено приложение Clause AI Studio (только для ПК, английский интерфейс). Добавлены соответствующие бейджи на карточку приложения.</span>
+                    </li>
+                    <li class="changelog-item">
+                        <span class="changelog-date">28.05.2026</span>
+                        <span>Добавлено официальное описание компании. Указано, что Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Внедрён раздел «История обновлений». Добавлено приложение «Крестики Нолики». Удалена неработающая ссылка Lumina Studio.</span>
                     </li>
                     <li class="changelog-item">
                         <span class="changelog-date">27.05.2026</span>
