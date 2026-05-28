@@ -119,7 +119,7 @@
             flex-wrap: wrap;
         }
 
-        /* Мировое время */
+        /* Местное время */
         .world-clock {
             display: flex;
             align-items: center;
@@ -137,11 +137,18 @@
             font-size: 1rem;
         }
 
+        .world-clock .time-zone {
+            color: #8899bb;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
         .world-clock .time-value {
             color: #00d4ff;
             font-weight: 600;
             font-variant-numeric: tabular-nums;
             font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
         }
 
         .header-links {
@@ -539,11 +546,11 @@
                 </div>
             </div>
             <div class="header-right">
-                <!-- Мировое время -->
+                <!-- Местное время -->
                 <div class="world-clock">
-                    <span class="time-icon">🌍</span>
-                    <span>UTC</span>
-                    <span class="time-value" id="utcTime">00:00:00</span>
+                    <span class="time-icon">🕐</span>
+                    <span class="time-zone" id="timeZoneLabel">Местное</span>
+                    <span class="time-value" id="localTime">00:00</span>
                 </div>
                 <div class="header-links">
                     <a href="https://md2sites.ru/#" target="_blank" class="header-link parent">MD2</a>
@@ -624,7 +631,7 @@
                 <ul class="changelog-list">
                     <li class="changelog-item">
                         <span class="changelog-date">28.05.2026</span>
-                        <span>Добавлено мировое время (UTC) в шапку сайта. Внедрён поиск приложений по названию. Добавлены описания для всех приложений.</span>
+                        <span>Часы переведены на местное время пользователя (автоопределение часового пояса). Добавлен поиск приложений по названию и описанию. Добавлены описания для всех приложений.</span>
                     </li>
                     <li class="changelog-item">
                         <span class="changelog-date">28.05.2026</span>
@@ -650,16 +657,20 @@
     </div>
 
     <script>
-        // Мировое время UTC
-        function updateUTCTime() {
+        // Местное время пользователя
+        function updateLocalTime() {
             const now = new Date();
-            const hours = String(now.getUTCHours()).padStart(2, '0');
-            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-            document.getElementById('utcTime').textContent = `${hours}:${minutes}:${seconds}`;
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('localTime').textContent = `${hours}:${minutes}`;
+            
+            // Определяем и показываем часовой пояс
+            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const shortTZ = timeZone.split('/').pop().replace('_', ' ');
+            document.getElementById('timeZoneLabel').textContent = shortTZ;
         }
-        updateUTCTime();
-        setInterval(updateUTCTime, 1000);
+        updateLocalTime();
+        setInterval(updateLocalTime, 1000);
 
         // Поиск приложений
         const searchInput = document.getElementById('searchInput');
