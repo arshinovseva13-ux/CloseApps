@@ -423,6 +423,56 @@
             transform: translateX(4px);
         }
 
+        /* Овал "В разработке" */
+        .dev-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: rgba(255, 180, 40, 0.08);
+            border: 1px solid rgba(255, 180, 40, 0.3);
+            border-radius: 50px;
+            color: #ffb828;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            animation: pulse-oval 2.5s infinite;
+        }
+
+        .dev-status .dev-icon {
+            font-size: 1.1rem;
+            animation: spin-gear 3s linear infinite;
+        }
+
+        .dev-status .dev-text {
+            color: #ffd080;
+        }
+
+        .dev-status .dev-highlight {
+            color: #ffb828;
+            font-weight: 700;
+        }
+
+        @keyframes pulse-oval {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(255, 180, 40, 0.15);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 180, 40, 0.3), 0 0 50px rgba(255, 160, 20, 0.1);
+            }
+        }
+
+        @keyframes spin-gear {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         /* История обновлений */
         .changelog-section {
             background: var(--card-bg);
@@ -433,14 +483,57 @@
             margin-top: 8px;
         }
 
+        .changelog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
         .changelog-title {
             font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 16px;
             color: #ffffff;
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        .changelog-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #8899bb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 1rem;
+        }
+
+        .changelog-toggle:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        .changelog-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .changelog-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.5s ease;
+            margin-top: 0;
+        }
+
+        .changelog-content.expanded {
+            max-height: 2000px;
+            margin-top: 16px;
         }
 
         .changelog-list {
@@ -519,6 +612,10 @@
             .world-clock {
                 font-size: 0.72rem;
                 padding: 6px 10px;
+            }
+            .dev-status {
+                font-size: 0.75rem;
+                padding: 12px 18px;
             }
         }
     </style>
@@ -625,27 +722,43 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <!-- Овал "В разработке" -->
+            <div class="dev-status">
+                <span class="dev-icon">⚙️</span>
+                <span class="dev-text">Сейчас в разработке:</span>
+                <span class="dev-highlight">Игра Пинг-Понг</span>
+            </div>
+
             <!-- История обновлений -->
             <div class="changelog-section">
-                <div class="changelog-title">📋 История обновлений</div>
-                <ul class="changelog-list">
-                    <li class="changelog-item">
-                        <span class="changelog-date">28.05.2026</span>
-                        <span>Часы переведены на местное время пользователя (автоопределение часового пояса). Добавлен поиск приложений по названию и описанию. Добавлены описания для всех приложений.</span>
-                    </li>
-                    <li class="changelog-item">
-                        <span class="changelog-date">28.05.2026</span>
-                        <span>Добавлено приложение Clause AI Studio (только для ПК, английский интерфейс). Добавлены соответствующие бейджи на карточку приложения.</span>
-                    </li>
-                    <li class="changelog-item">
-                        <span class="changelog-date">28.05.2026</span>
-                        <span>Добавлено официальное описание компании. Указано, что Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Внедрён раздел «История обновлений». Добавлено приложение «Крестики Нолики». Удалена неработающая ссылка Lumina Studio.</span>
-                    </li>
-                    <li class="changelog-item">
-                        <span class="changelog-date">27.05.2026</span>
-                        <span>Запуск хаба Close Приложения. Добавлены первые приложения: Конструктор Кроссвордов.</span>
-                    </li>
-                </ul>
+                <div class="changelog-header" id="changelogHeader">
+                    <div class="changelog-title">📋 История обновлений</div>
+                    <div class="changelog-toggle" id="changelogToggle">▼</div>
+                </div>
+                <div class="changelog-content expanded" id="changelogContent">
+                    <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">29.05.2026</span>
+                            <span>Добавлена кнопка сворачивания/разворачивания истории обновлений. Добавлен овал «Сейчас в разработке» с информацией о текущих задачах команды.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">28.05.2026</span>
+                            <span>Часы переведены на местное время пользователя (автоопределение часового пояса). Добавлен поиск приложений по названию и описанию. Добавлены описания для всех приложений.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">28.05.2026</span>
+                            <span>Добавлено приложение Clause AI Studio (только для ПК, английский интерфейс). Добавлены соответствующие бейджи на карточку приложения.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">28.05.2026</span>
+                            <span>Добавлено официальное описание компании. Указано, что Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Внедрён раздел «История обновлений». Добавлено приложение «Крестики Нолики». Удалена неработающая ссылка Lumina Studio.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">27.05.2026</span>
+                            <span>Запуск хаба Close Приложения. Добавлены первые приложения: Конструктор Кроссвордов.</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
 
@@ -664,7 +777,6 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('localTime').textContent = `${hours}:${minutes}`;
             
-            // Определяем и показываем часовой пояс
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const shortTZ = timeZone.split('/').pop().replace('_', ' ');
             document.getElementById('timeZoneLabel').textContent = shortTZ;
@@ -698,6 +810,26 @@
                 noResults.classList.add('show');
             } else {
                 noResults.classList.remove('show');
+            }
+        });
+
+        // Сворачивание/разворачивание истории обновлений
+        const changelogHeader = document.getElementById('changelogHeader');
+        const changelogContent = document.getElementById('changelogContent');
+        const changelogToggle = document.getElementById('changelogToggle');
+        let isChangelogOpen = true;
+
+        changelogHeader.addEventListener('click', function() {
+            isChangelogOpen = !isChangelogOpen;
+            
+            if (isChangelogOpen) {
+                changelogContent.classList.add('expanded');
+                changelogToggle.classList.add('open');
+                changelogToggle.textContent = '▼';
+            } else {
+                changelogContent.classList.remove('expanded');
+                changelogToggle.classList.remove('open');
+                changelogToggle.textContent = '▲';
             }
         });
 
