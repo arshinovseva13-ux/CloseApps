@@ -643,7 +643,6 @@
                 </div>
             </div>
             <div class="header-right">
-                <!-- Местное время -->
                 <div class="world-clock">
                     <span class="time-icon">🕐</span>
                     <span class="time-zone" id="timeZoneLabel">Местное</span>
@@ -657,7 +656,6 @@
         </header>
 
         <main class="content-area">
-            <!-- О компании -->
             <div class="about-section">
                 <div class="about-title">О компании</div>
                 <p class="about-text">
@@ -675,14 +673,12 @@
                 </a>
             </div>
 
-            <!-- Поиск -->
             <div class="search-container">
                 <span class="search-icon">🔍</span>
                 <input type="text" class="search-input" id="searchInput" placeholder="Поиск приложений...">
             </div>
             <p class="no-results" id="noResults">Приложений не найдено</p>
 
-            <!-- Приложения -->
             <p class="section-label">🔗 Приложения</p>
 
             <!-- Конструктор Кроссвордов -->
@@ -707,6 +703,17 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <!-- Пинг-Понг -->
+            <a href="https://arshinovseva13-ux.github.io/Pong/" target="_blank" class="app-link" data-search="пинг понг pong игра">
+                <div class="link-icon">🏓</div>
+                <div class="link-info">
+                    <div class="link-title">Пинг-Понг</div>
+                    <div class="link-desc">Классическая аркадная игра. Два игрока, две ракетки, один мяч — простота и азарт.</div>
+                    <div class="link-url">arshinovseva13-ux.github.io/Pong/</div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
             <!-- Clause AI Studio -->
             <a href="https://claus-ai-studio-623389241403.europe-west2.run.app/" target="_blank" class="app-link" data-search="clause ai studio искусственный интеллект">
                 <div class="link-icon">🤖</div>
@@ -726,7 +733,7 @@
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
-                <span class="dev-highlight">Игра Пинг-Понг</span>
+                <span class="dev-highlight">Компилятор HTML / CSS / JavaScript</span>
             </div>
 
             <!-- История обновлений -->
@@ -737,6 +744,10 @@
                 </div>
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">30.05.2026</span>
+                            <span>Добавлена игра «Пинг-Понг». Статус разработки обновлён: теперь ведётся работа над компилятором HTML / CSS / JavaScript.</span>
+                        </li>
                         <li class="changelog-item">
                             <span class="changelog-date">29.05.2026</span>
                             <span>Добавлена кнопка сворачивания/разворачивания истории обновлений. Добавлен овал «Сейчас в разработке» с информацией о текущих задачах команды.</span>
@@ -762,7 +773,6 @@
             </div>
         </main>
 
-        <!-- Футер -->
         <footer class="footer">
             © 2026 <a href="https://md2sites.ru/#" target="_blank">MD2</a> · Close Приложения — дочерняя компания MD2 · 
             <a href="https://dzen.ru/id/681375ecf579fe6ab18dd19c" target="_blank">Дзен</a>
@@ -770,7 +780,7 @@
     </div>
 
     <script>
-        // Местное время пользователя
+        // Местное время
         function updateLocalTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -784,7 +794,7 @@
         updateLocalTime();
         setInterval(updateLocalTime, 1000);
 
-        // Поиск приложений
+        // Поиск
         const searchInput = document.getElementById('searchInput');
         const appLinks = document.querySelectorAll('.app-link');
         const noResults = document.getElementById('noResults');
@@ -813,7 +823,7 @@
             }
         });
 
-        // Сворачивание/разворачивание истории обновлений
+        // Сворачивание истории
         const changelogHeader = document.getElementById('changelogHeader');
         const changelogContent = document.getElementById('changelogContent');
         const changelogToggle = document.getElementById('changelogToggle');
@@ -996,4 +1006,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
