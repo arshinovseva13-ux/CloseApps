@@ -50,7 +50,6 @@
             z-index: 0;
         }
 
-        /* Шапка */
         .header {
             position: relative;
             z-index: 10;
@@ -119,7 +118,6 @@
             flex-wrap: wrap;
         }
 
-        /* Местное время */
         .world-clock {
             display: flex;
             align-items: center;
@@ -183,7 +181,6 @@
             background: rgba(124, 92, 252, 0.15);
         }
 
-        /* Контент */
         .content-area {
             position: relative;
             z-index: 10;
@@ -197,7 +194,6 @@
             gap: 20px;
         }
 
-        /* Поиск */
         .search-container {
             position: relative;
         }
@@ -247,7 +243,6 @@
             display: block;
         }
 
-        /* Блок описания */
         .about-section {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -297,7 +292,6 @@
             color: #ffffff;
         }
 
-        /* Кнопки-ссылки */
         .section-label {
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -397,6 +391,12 @@
             border: 1px solid rgba(180, 150, 255, 0.3);
         }
 
+        .badge-mobile {
+            background: rgba(0, 230, 160, 0.15);
+            color: #00e6a0;
+            border: 1px solid rgba(0, 230, 160, 0.3);
+        }
+
         .link-desc {
             font-size: 0.8rem;
             color: #8899bb;
@@ -423,7 +423,6 @@
             transform: translateX(4px);
         }
 
-        /* Овал "В разработке" */
         .dev-status {
             display: flex;
             align-items: center;
@@ -473,7 +472,6 @@
             }
         }
 
-        /* История обновлений */
         .changelog-section {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -559,7 +557,6 @@
             min-width: 80px;
         }
 
-        /* Футер */
         .footer {
             position: relative;
             z-index: 10;
@@ -624,7 +621,6 @@
     <div class="app-stage">
         <canvas id="bgCanvas"></canvas>
 
-        <!-- Шапка -->
         <header class="header">
             <div class="header-left">
                 <div class="header-brand">
@@ -681,7 +677,6 @@
 
             <p class="section-label">🔗 Приложения</p>
 
-            <!-- Конструктор Кроссвордов -->
             <a href="https://arshinovseva13-ux.github.io/-/" target="_blank" class="app-link" data-search="конструктор кроссвордов crossword">
                 <div class="link-icon">🧩</div>
                 <div class="link-info">
@@ -692,7 +687,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Крестики Нолики -->
             <a href="https://arshinovseva13-ux.github.io/Krestiki-Noliki/" target="_blank" class="app-link" data-search="крестики нолики tic tac toe игра">
                 <div class="link-icon">❌</div>
                 <div class="link-info">
@@ -703,18 +697,19 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Пинг-Понг -->
             <a href="https://arshinovseva13-ux.github.io/Pong/" target="_blank" class="app-link" data-search="пинг понг pong игра">
                 <div class="link-icon">🏓</div>
                 <div class="link-info">
-                    <div class="link-title">Пинг-Понг</div>
+                    <div class="link-title">
+                        Пинг-Понг
+                        <span class="link-badge badge-mobile">📱 Телефон</span>
+                    </div>
                     <div class="link-desc">Классическая аркадная игра. Два игрока, две ракетки, один мяч — простота и азарт.</div>
                     <div class="link-url">arshinovseva13-ux.github.io/Pong/</div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Clause AI Studio -->
             <a href="https://claus-ai-studio-623389241403.europe-west2.run.app/" target="_blank" class="app-link" data-search="clause ai studio искусственный интеллект">
                 <div class="link-icon">🤖</div>
                 <div class="link-info">
@@ -729,14 +724,12 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Овал "В разработке" -->
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
                 <span class="dev-highlight">Компилятор HTML / CSS / JavaScript</span>
             </div>
 
-            <!-- История обновлений -->
             <div class="changelog-section">
                 <div class="changelog-header" id="changelogHeader">
                     <div class="changelog-title">📋 История обновлений</div>
@@ -744,6 +737,10 @@
                 </div>
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">31.05.2026</span>
+                            <span>Для игры «Пинг-Понг» добавлен бейдж «📱 Телефон» — приложение оптимизировано для мобильных устройств.</span>
+                        </li>
                         <li class="changelog-item">
                             <span class="changelog-date">30.05.2026</span>
                             <span>Добавлена игра «Пинг-Понг». Статус разработки обновлён: теперь ведётся работа над компилятором HTML / CSS / JavaScript.</span>
@@ -780,7 +777,6 @@
     </div>
 
     <script>
-        // Местное время
         function updateLocalTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -794,7 +790,6 @@
         updateLocalTime();
         setInterval(updateLocalTime, 1000);
 
-        // Поиск
         const searchInput = document.getElementById('searchInput');
         const appLinks = document.querySelectorAll('.app-link');
         const noResults = document.getElementById('noResults');
@@ -823,7 +818,6 @@
             }
         });
 
-        // Сворачивание истории
         const changelogHeader = document.getElementById('changelogHeader');
         const changelogContent = document.getElementById('changelogContent');
         const changelogToggle = document.getElementById('changelogToggle');
@@ -843,7 +837,6 @@
             }
         });
 
-        // Анимированный фон
         (function() {
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
