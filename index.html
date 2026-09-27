@@ -231,6 +231,39 @@
             pointer-events: none;
         }
 
+        /* Категории */
+        .categories {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(120, 170, 230, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+            color: #aabbcc;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-color: rgba(0, 212, 255, 0.4);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.2), rgba(124, 92, 252, 0.2));
+            color: #ffffff;
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.15);
+        }
+
         .no-results {
             text-align: center;
             padding: 30px;
@@ -241,6 +274,58 @@
 
         .no-results.show {
             display: block;
+        }
+
+        /* Недавно просмотренные */
+        .recent-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(100, 150, 220, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+            display: none;
+        }
+
+        .recent-section.show {
+            display: block;
+        }
+
+        .recent-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .recent-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(0, 200, 255, 0.08);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #ccddef;
+            font-size: 0.82rem;
+            transition: var(--transition-smooth);
+        }
+
+        .recent-item:hover {
+            background: rgba(0, 200, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.5);
+            color: #ffffff;
+        }
+
+        .recent-item .recent-icon {
+            font-size: 1rem;
         }
 
         .about-section {
@@ -401,7 +486,14 @@
             font-size: 0.8rem;
             color: #8899bb;
             line-height: 1.4;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
+        .link-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .link-url {
@@ -410,6 +502,42 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        /* Рейтинг */
+        .rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stars {
+            display: inline-flex;
+            gap: 1px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #3a4a5a;
+            transition: color 0.2s ease, transform 0.2s ease;
+            user-select: none;
+        }
+
+        .star.filled {
+            color: #ffc107;
+            text-shadow: 0 0 6px rgba(255, 193, 7, 0.5);
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        .rating-value {
+            font-size: 0.72rem;
+            color: #8899bb;
+            font-variant-numeric: tabular-nums;
+            margin-left: 2px;
         }
 
         .arrow-icon {
@@ -464,12 +592,50 @@
         }
 
         @keyframes spin-gear {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .session-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 14px 20px;
+            background: rgba(0, 200, 255, 0.06);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(12px);
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .session-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .session-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+        }
+
+        .session-time {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00d4ff;
+            font-variant-numeric: tabular-nums;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .session-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(100, 150, 220, 0.3);
         }
 
         .changelog-section {
@@ -530,7 +696,7 @@
         }
 
         .changelog-content.expanded {
-            max-height: 2000px;
+            max-height: 3000px;
             margin-top: 16px;
         }
 
@@ -578,6 +744,224 @@
             text-decoration: underline;
         }
 
+        /* Модальное окно приложения */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 6, 15, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: rgba(14, 22, 42, 0.98);
+            border: 1px solid rgba(0, 212, 255, 0.35);
+            border-radius: 24px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 60px rgba(0, 200, 255, 0.1);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #8899bb;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 90, 120, 0.2);
+            color: #ff5e7a;
+            border-color: rgba(255, 90, 120, 0.4);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            background: rgba(0, 200, 255, 0.15);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.15);
+        }
+
+        .modal-title-block h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .modal-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .modal-description {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .modal-meta {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(100, 150, 220, 0.2);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            padding: 6px 0;
+        }
+
+        .modal-meta-row:not(:last-child) {
+            border-bottom: 1px solid rgba(100, 150, 220, 0.1);
+        }
+
+        .modal-meta-label {
+            color: var(--text-muted);
+        }
+
+        .modal-meta-value {
+            color: #ccddef;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.78rem;
+        }
+
+        .modal-rating-block {
+            margin-bottom: 22px;
+        }
+
+        .modal-rating-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .modal-stars {
+            display: flex;
+            gap: 6px;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        .modal-star {
+            color: #3a4a5a;
+            transition: color 0.2s ease, transform 0.2s ease;
+            user-select: none;
+        }
+
+        .modal-star.filled {
+            color: #ffc107;
+            text-shadow: 0 0 12px rgba(255, 193, 7, 0.6);
+        }
+
+        .modal-star:hover {
+            transform: scale(1.15);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
+            text-decoration: none;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #00c8ff, #7c5cfc);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 200, 255, 0.25);
+        }
+
+        .modal-btn.primary:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 35px rgba(0, 200, 255, 0.4);
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(120, 170, 230, 0.3);
+            color: #ccddef;
+        }
+
+        .modal-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
         @media (max-width: 700px) {
             .header {
                 padding: 12px 14px;
@@ -613,6 +997,24 @@
             .dev-status {
                 font-size: 0.75rem;
                 padding: 12px 18px;
+            }
+            .session-counter {
+                gap: 10px;
+                padding: 10px 14px;
+            }
+            .session-time {
+                font-size: 0.95rem;
+            }
+            .modal {
+                padding: 24px 20px;
+            }
+            .modal-icon {
+                width: 52px;
+                height: 52px;
+                font-size: 1.6rem;
+            }
+            .modal-title-block h2 {
+                font-size: 1.15rem;
             }
         }
     </style>
@@ -669,35 +1071,115 @@
                 </a>
             </div>
 
+            <div class="session-counter">
+                <div class="session-item">
+                    <span class="session-label">Текущий сеанс</span>
+                    <span class="session-time" id="sessionTime">00:00:00</span>
+                </div>
+                <div class="session-divider"></div>
+                <div class="session-item">
+                    <span class="session-label">Всего времени</span>
+                    <span class="session-time" id="totalTime">00:00:00</span>
+                </div>
+            </div>
+
+            <!-- Недавно просмотренные -->
+            <div class="recent-section" id="recentSection">
+                <div class="recent-title">🕘 Недавно просмотренные</div>
+                <div class="recent-list" id="recentList"></div>
+            </div>
+
             <div class="search-container">
                 <span class="search-icon">🔍</span>
                 <input type="text" class="search-input" id="searchInput" placeholder="Поиск приложений...">
             </div>
+
+            <!-- Категории -->
+            <div class="categories" id="categories">
+                <button class="category-btn active" data-category="all">Все</button>
+                <button class="category-btn" data-category="games">🎮 Игры</button>
+                <button class="category-btn" data-category="tools">🛠️ Инструменты</button>
+                <button class="category-btn" data-category="education">📚 Обучение</button>
+                <button class="category-btn" data-category="other">📦 Разное</button>
+            </div>
+
             <p class="no-results" id="noResults">Приложений не найдено</p>
 
             <p class="section-label">🔗 Приложения</p>
 
-            <a href="https://arshinovseva13-ux.github.io/-/" target="_blank" class="app-link" data-search="конструктор кроссвордов crossword">
+            <!-- Конструктор Кроссвордов -->
+            <a href="#" class="app-link" 
+               data-search="конструктор кроссвордов crossword" 
+               data-category="education"
+               data-id="crossword"
+               data-icon="🧩"
+               data-title="Конструктор Кроссвордов"
+               data-desc="Создавайте и разгадывайте кроссворды онлайн. Простой интерфейс, экспорт и печать."
+               data-url="https://arshinovseva13-ux.github.io/-/"
+               data-url-display="arshinovseva13-ux.github.io/-/">
                 <div class="link-icon">🧩</div>
                 <div class="link-info">
                     <div class="link-title">Конструктор Кроссвордов</div>
                     <div class="link-desc">Создавайте и разгадывайте кроссворды онлайн. Простой интерфейс, экспорт и печать.</div>
-                    <div class="link-url">arshinovseva13-ux.github.io/-/</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="crossword">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/-/</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <a href="https://arshinovseva13-ux.github.io/Krestiki-Noliki/" target="_blank" class="app-link" data-search="крестики нолики tic tac toe игра">
+            <!-- Крестики Нолики -->
+            <a href="#" class="app-link" 
+               data-search="крестики нолики tic tac toe игра" 
+               data-category="games"
+               data-id="tictactoe"
+               data-icon="❌"
+               data-title="Крестики Нолики"
+               data-desc="Классическая игра для двух игроков. Минималистичный дизайн, быстрый старт."
+               data-url="https://arshinovseva13-ux.github.io/Krestiki-Noliki/"
+               data-url-display="arshinovseva13-ux.github.io/Krestiki-Noliki/">
                 <div class="link-icon">❌</div>
                 <div class="link-info">
                     <div class="link-title">Крестики Нолики</div>
                     <div class="link-desc">Классическая игра для двух игроков. Минималистичный дизайн, быстрый старт.</div>
-                    <div class="link-url">arshinovseva13-ux.github.io/Krestiki-Noliki/</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="tictactoe">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Krestiki-Noliki/</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <a href="https://arshinovseva13-ux.github.io/Pong/" target="_blank" class="app-link" data-search="пинг понг pong игра">
+            <!-- Пинг-Понг -->
+            <a href="#" class="app-link" 
+               data-search="пинг понг pong игра" 
+               data-category="games"
+               data-id="pong"
+               data-icon="🏓"
+               data-title="Пинг-Понг"
+               data-desc="Классическая аркадная игра. Два игрока, две ракетки, один мяч — простота и азарт."
+               data-url="https://arshinovseva13-ux.github.io/Pong/"
+               data-url-display="arshinovseva13-ux.github.io/Pong/"
+               data-badges='[{"text":"📱 Телефон","class":"badge-mobile"}]'>
                 <div class="link-icon">🏓</div>
                 <div class="link-info">
                     <div class="link-title">
@@ -705,12 +1187,34 @@
                         <span class="link-badge badge-mobile">📱 Телефон</span>
                     </div>
                     <div class="link-desc">Классическая аркадная игра. Два игрока, две ракетки, один мяч — простота и азарт.</div>
-                    <div class="link-url">arshinovseva13-ux.github.io/Pong/</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="pong">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Pong/</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <a href="https://claus-ai-studio-623389241403.europe-west2.run.app/" target="_blank" class="app-link" data-search="clause ai studio искусственный интеллект">
+            <!-- Clause AI Studio -->
+            <a href="#" class="app-link" 
+               data-search="clause ai studio искусственный интеллект" 
+               data-category="tools"
+               data-id="clauseai"
+               data-icon="🤖"
+               data-title="Clause AI Studio"
+               data-desc="Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа."
+               data-url="https://claus-ai-studio-623389241403.europe-west2.run.app/"
+               data-url-display="claus-ai-studio-623389241403.europe-west2.run.app"
+               data-badges='[{"text":"🖥️ ПК","class":"badge-desktop"},{"text":"🌍 International","class":"badge-intl"}]'>
                 <div class="link-icon">🤖</div>
                 <div class="link-info">
                     <div class="link-title">
@@ -719,12 +1223,34 @@
                         <span class="link-badge badge-intl">🌍 International</span>
                     </div>
                     <div class="link-desc">Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа.</div>
-                    <div class="link-url">claus-ai-studio-623389241403.europe-west2.run.app</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="clauseai">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">claus-ai-studio-623389241403.europe-west2.run.app</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <a href="https://arshinovseva13-ux.github.io/Compiler/" target="_blank" class="app-link" data-search="компилятор compiler html css javascript код">
+            <!-- Компилятор -->
+            <a href="#" class="app-link" 
+               data-search="компилятор compiler html css javascript код" 
+               data-category="tools"
+               data-id="compiler"
+               data-icon="💻"
+               data-title="Компилятор HTML / CSS / JS"
+               data-desc="Пишите и тестируйте код прямо в браузере. Поддержка HTML, CSS и JavaScript."
+               data-url="https://arshinovseva13-ux.github.io/Compiler/"
+               data-url-display="arshinovseva13-ux.github.io/Compiler/"
+               data-badges='[{"text":"🖥️ ПК","class":"badge-desktop"}]'>
                 <div class="link-icon">💻</div>
                 <div class="link-info">
                     <div class="link-title">
@@ -732,27 +1258,81 @@
                         <span class="link-badge badge-desktop">🖥️ ПК</span>
                     </div>
                     <div class="link-desc">Пишите и тестируйте код прямо в браузере. Поддержка HTML, CSS и JavaScript.</div>
-                    <div class="link-url">arshinovseva13-ux.github.io/Compiler/</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="compiler">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Compiler/</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <a href="https://arshinovseva13-ux.github.io/Converter/" target="_blank" class="app-link" data-search="конвертер converter файлы документы">
+            <!-- Конвертер файлов -->
+            <a href="#" class="app-link" 
+               data-search="конвертер converter файлы документы" 
+               data-category="tools"
+               data-id="converter"
+               data-icon="🔄"
+               data-title="Конвертер файлов"
+               data-desc="Преобразование файлов между различными форматами. Быстро, точно, удобно."
+               data-url="https://arshinovseva13-ux.github.io/Converter/"
+               data-url-display="arshinovseva13-ux.github.io/Converter/">
                 <div class="link-icon">🔄</div>
                 <div class="link-info">
                     <div class="link-title">Конвертер файлов</div>
                     <div class="link-desc">Преобразование файлов между различными форматами. Быстро, точно, удобно.</div>
-                    <div class="link-url">arshinovseva13-ux.github.io/Converter/</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="converter">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Converter/</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
 
-            <a href="https://arshinovseva13-ux.github.io/Recomendation/" target="_blank" class="app-link" data-search="рекомендации отпуск путешествия отдых">
+            <!-- Рекомендации по отпуску -->
+            <a href="#" class="app-link" 
+               data-search="рекомендации отпуск путешествия отдых" 
+               data-category="other"
+               data-id="vacation"
+               data-icon="🏖️"
+               data-title="Рекомендации по отпуску"
+               data-desc="Персональные рекомендации для идеального отпуска. Куда поехать, что посмотреть, как спланировать."
+               data-url="https://arshinovseva13-ux.github.io/Recomendation/"
+               data-url-display="arshinovseva13-ux.github.io/Recomendation/">
                 <div class="link-icon">🏖️</div>
                 <div class="link-info">
                     <div class="link-title">Рекомендации по отпуску</div>
                     <div class="link-desc">Персональные рекомендации для идеального отпуска. Куда поехать, что посмотреть, как спланировать.</div>
-                    <div class="link-url">arshinovseva13-ux.github.io/Recomendation/</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="vacation">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Recomendation/</span>
+                    </div>
                 </div>
                 <span class="arrow-icon">→</span>
             </a>
@@ -760,7 +1340,7 @@
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
-                <span class="dev-highlight">Мафия</span>
+                <span class="dev-highlight">Сапёр</span>
             </div>
 
             <div class="changelog-section">
@@ -771,8 +1351,16 @@
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
                         <li class="changelog-item">
+                            <span class="changelog-date">27.09.2026</span>
+                            <span>Крупное обновление хаба: добавлены фильтры по категориям (Игры, Инструменты, Обучение, Разное), рейтинг со звёздами для каждого приложения, внутренние страницы-превью с подробной информацией, блок «Недавно просмотренные» на основе истории посещений.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">01.09.2026</span>
+                            <span>Добавлен счётчик сеансов: показывает время текущего визита и общее время на сайте (сохраняется между визитами). Статус разработки обновлён: начата работа над игрой «Сапёр».</span>
+                        </li>
+                        <li class="changelog-item">
                             <span class="changelog-date">13.06.2026</span>
-                            <span>Добавлены «Рекомендации по отпуску». Описание Конвертера изменено на «Конвертер файлов». Статус разработки обновлён: теперь ведётся работа над игрой «Мафия».</span>
+                            <span>Добавлены «Рекомендации по отпуску». Описание Конвертера изменено на «Конвертер файлов». Статус разработки обновлён: начата работа над игрой «Мафия».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">07.06.2026</span>
@@ -821,7 +1409,47 @@
         </footer>
     </div>
 
+    <!-- Модальное окно приложения -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header">
+                <div class="modal-icon" id="modalIcon">🧩</div>
+                <div class="modal-title-block">
+                    <h2 id="modalTitle">Название</h2>
+                    <div class="modal-badges" id="modalBadges"></div>
+                </div>
+            </div>
+            <p class="modal-description" id="modalDescription">Описание</p>
+            <div class="modal-meta">
+                <div class="modal-meta-row">
+                    <span class="modal-meta-label">Ссылка</span>
+                    <span class="modal-meta-value" id="modalUrl">—</span>
+                </div>
+                <div class="modal-meta-row">
+                    <span class="modal-meta-label">Категория</span>
+                    <span class="modal-meta-value" id="modalCategory">—</span>
+                </div>
+            </div>
+            <div class="modal-rating-block">
+                <div class="modal-rating-label">Ваша оценка</div>
+                <div class="modal-stars" id="modalStars">
+                    <span class="modal-star" data-value="1">★</span>
+                    <span class="modal-star" data-value="2">★</span>
+                    <span class="modal-star" data-value="3">★</span>
+                    <span class="modal-star" data-value="4">★</span>
+                    <span class="modal-star" data-value="5">★</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <a href="#" target="_blank" class="modal-btn primary" id="modalOpenBtn">Открыть приложение →</a>
+                <button class="modal-btn secondary" id="modalCancelBtn">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // ===== МЕСТНОЕ ВРЕМЯ =====
         function updateLocalTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -835,20 +1463,105 @@
         updateLocalTime();
         setInterval(updateLocalTime, 1000);
 
+        // ===== СЧЁТЧИК ВРЕМЕНИ =====
+        const sessionStartTime = Date.now();
+        const STORAGE_KEY = 'closeAppsTotalTime';
+        let totalTimeMs = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
+        
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+        
+        function updateTimeCounter() {
+            const sessionMs = Date.now() - sessionStartTime;
+            document.getElementById('sessionTime').textContent = formatTime(sessionMs);
+            document.getElementById('totalTime').textContent = formatTime(totalTimeMs + sessionMs);
+        }
+        
+        updateTimeCounter();
+        setInterval(updateTimeCounter, 1000);
+        
+        window.addEventListener('beforeunload', function() {
+            const sessionMs = Date.now() - sessionStartTime;
+            totalTimeMs += sessionMs;
+            localStorage.setItem(STORAGE_KEY, totalTimeMs);
+        });
+
+        // ===== РЕЙТИНГИ =====
+        const RATING_KEY = 'closeAppsRatings';
+        let ratings = JSON.parse(localStorage.getItem(RATING_KEY)) || {};
+
+        function saveRatings() {
+            localStorage.setItem(RATING_KEY, JSON.stringify(ratings));
+        }
+
+        function updateStarsDisplay(container, value) {
+            const stars = container.querySelectorAll('.star');
+            stars.forEach(s => {
+                const v = parseInt(s.getAttribute('data-value'));
+                s.classList.toggle('filled', v <= value);
+            });
+            const valueEl = container.querySelector('.rating-value');
+            if (valueEl) valueEl.textContent = value > 0 ? value.toFixed(1) : '0.0';
+        }
+
+        function initRatings() {
+            document.querySelectorAll('.rating').forEach(ratingEl => {
+                const appId = ratingEl.getAttribute('data-app-id');
+                const savedValue = ratings[appId] || 0;
+                updateStarsDisplay(ratingEl, savedValue);
+
+                const stars = ratingEl.querySelectorAll('.star');
+                stars.forEach(star => {
+                    star.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const value = parseInt(this.getAttribute('data-value'));
+                        ratings[appId] = value;
+                        saveRatings();
+                        updateStarsDisplay(ratingEl, value);
+                    });
+                });
+            });
+        }
+        initRatings();
+
+        // ===== КАТЕГОРИИ =====
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        let currentCategory = 'all';
+
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                categoryButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.getAttribute('data-category');
+                applyFilters();
+            });
+        });
+
+        // ===== ПОИСК И ФИЛЬТРАЦИЯ =====
         const searchInput = document.getElementById('searchInput');
         const appLinks = document.querySelectorAll('.app-link');
         const noResults = document.getElementById('noResults');
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
+        function applyFilters() {
+            const query = searchInput.value.toLowerCase().trim();
             let visibleCount = 0;
 
             appLinks.forEach(link => {
                 const searchData = link.getAttribute('data-search') || '';
                 const title = link.querySelector('.link-title').textContent.toLowerCase();
                 const desc = link.querySelector('.link-desc') ? link.querySelector('.link-desc').textContent.toLowerCase() : '';
+                const category = link.getAttribute('data-category') || '';
 
-                if (query === '' || searchData.includes(query) || title.includes(query) || desc.includes(query)) {
+                const matchesSearch = query === '' || searchData.includes(query) || title.includes(query) || desc.includes(query);
+                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+
+                if (matchesSearch && matchesCategory) {
                     link.classList.remove('hidden');
                     visibleCount++;
                 } else {
@@ -856,13 +1569,174 @@
                 }
             });
 
-            if (visibleCount === 0 && query !== '') {
-                noResults.classList.add('show');
-            } else {
-                noResults.classList.remove('show');
+            noResults.classList.toggle('show', visibleCount === 0 && (query !== '' || currentCategory !== 'all'));
+        }
+
+        searchInput.addEventListener('input', applyFilters);
+
+        // ===== НЕДАВНО ПРОСМОТРЕННЫЕ =====
+        const RECENT_KEY = 'closeAppsRecent';
+        const MAX_RECENT = 5;
+
+        function getRecent() {
+            try {
+                return JSON.parse(localStorage.getItem(RECENT_KEY)) || [];
+            } catch {
+                return [];
             }
+        }
+
+        function addToRecent(appId) {
+            let recent = getRecent();
+            recent = recent.filter(id => id !== appId);
+            recent.unshift(appId);
+            if (recent.length > MAX_RECENT) recent = recent.slice(0, MAX_RECENT);
+            localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+            renderRecent();
+        }
+
+        function renderRecent() {
+            const recent = getRecent();
+            const section = document.getElementById('recentSection');
+            const list = document.getElementById('recentList');
+            
+            if (recent.length === 0) {
+                section.classList.remove('show');
+                return;
+            }
+
+            section.classList.add('show');
+            list.innerHTML = '';
+
+            recent.forEach(appId => {
+                const link = document.querySelector(`.app-link[data-id="${appId}"]`);
+                if (!link) return;
+                
+                const icon = link.getAttribute('data-icon');
+                const title = link.getAttribute('data-title');
+                
+                const item = document.createElement('a');
+                item.href = '#';
+                item.className = 'recent-item';
+                item.innerHTML = `<span class="recent-icon">${icon}</span><span>${title}</span>`;
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal(link);
+                });
+                list.appendChild(item);
+            });
+        }
+        renderRecent();
+
+        // ===== МОДАЛЬНОЕ ОКНО =====
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBadges = document.getElementById('modalBadges');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalUrl = document.getElementById('modalUrl');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalStars = document.getElementById('modalStars');
+        const modalOpenBtn = document.getElementById('modalOpenBtn');
+        let currentAppId = null;
+
+        const categoryNames = {
+            games: '🎮 Игры',
+            tools: '🛠️ Инструменты',
+            education: '📚 Обучение',
+            other: '📦 Разное'
+        };
+
+        function openModal(linkEl) {
+            const id = linkEl.getAttribute('data-id');
+            const icon = linkEl.getAttribute('data-icon');
+            const title = linkEl.getAttribute('data-title');
+            const desc = linkEl.getAttribute('data-desc');
+            const url = linkEl.getAttribute('data-url');
+            const urlDisplay = linkEl.getAttribute('data-url-display');
+            const category = linkEl.getAttribute('data-category');
+            const badgesRaw = linkEl.getAttribute('data-badges');
+
+            currentAppId = id;
+
+            modalIcon.textContent = icon;
+            modalTitle.textContent = title;
+            modalDescription.textContent = desc;
+            modalUrl.textContent = urlDisplay;
+            modalCategory.textContent = categoryNames[category] || '—';
+            modalOpenBtn.href = url;
+
+            // Бейджи
+            modalBadges.innerHTML = '';
+            if (badgesRaw) {
+                try {
+                    const badges = JSON.parse(badgesRaw);
+                    badges.forEach(b => {
+                        const span = document.createElement('span');
+                        span.className = `link-badge ${b.class}`;
+                        span.textContent = b.text;
+                        modalBadges.appendChild(span);
+                    });
+                } catch (e) {}
+            }
+
+            // Рейтинг
+            const savedValue = ratings[id] || 0;
+            updateModalStars(savedValue);
+
+            // Показать модалку
+            modalOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+
+            // Добавить в недавние
+            addToRecent(id);
+        }
+
+        function updateModalStars(value) {
+            modalStars.querySelectorAll('.modal-star').forEach(s => {
+                const v = parseInt(s.getAttribute('data-value'));
+                s.classList.toggle('filled', v <= value);
+            });
+        }
+
+        modalStars.querySelectorAll('.modal-star').forEach(star => {
+            star.addEventListener('click', function() {
+                const value = parseInt(this.getAttribute('data-value'));
+                if (currentAppId) {
+                    ratings[currentAppId] = value;
+                    saveRatings();
+                    updateModalStars(value);
+                    
+                    // Обновить рейтинг в карточке
+                    const cardRating = document.querySelector(`.rating[data-app-id="${currentAppId}"]`);
+                    if (cardRating) updateStarsDisplay(cardRating, value);
+                }
+            });
         });
 
+        function closeModal() {
+            modalOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('modalCancelBtn').addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('show')) closeModal();
+        });
+
+        // ===== КЛИК ПО КАРТОЧКАМ =====
+        appLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal(this);
+            });
+        });
+
+        // ===== СВОРАЧИВАНИЕ ИСТОРИИ =====
         const changelogHeader = document.getElementById('changelogHeader');
         const changelogContent = document.getElementById('changelogContent');
         const changelogToggle = document.getElementById('changelogToggle');
@@ -882,6 +1756,7 @@
             }
         });
 
+        // ===== АНИМИРОВАННЫЙ ФОН =====
         (function() {
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
@@ -1044,4 +1919,4 @@
         })();
     </script>
 </body>
-</html>
+    </html>
