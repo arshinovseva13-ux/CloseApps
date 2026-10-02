@@ -579,6 +579,38 @@
             font-weight: 700;
         }
 
+        /* Овал "Скоро" */
+        .soon-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: rgba(0, 200, 255, 0.06);
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            border-radius: 50px;
+            color: #00d4ff;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            animation: pulse-oval-blue 2.5s infinite;
+        }
+
+        .soon-status .soon-icon {
+            font-size: 1.1rem;
+            animation: float-icon 2.5s ease-in-out infinite;
+        }
+
+        .soon-status .soon-text {
+            color: #80e0ff;
+        }
+
+        .soon-status .soon-highlight {
+            color: #00d4ff;
+            font-weight: 700;
+        }
+
         @keyframes pulse-oval {
             0%, 100% {
                 box-shadow: 0 0 15px rgba(255, 180, 40, 0.15);
@@ -591,6 +623,24 @@
         @keyframes spin-gear {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-oval-blue {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(0, 200, 255, 0.12);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 200, 255, 0.28), 0 0 50px rgba(0, 180, 255, 0.1);
+            }
+        }
+
+        @keyframes float-icon {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
         }
 
         .session-counter {
@@ -990,7 +1040,8 @@
                 font-size: 0.72rem;
                 padding: 6px 10px;
             }
-            .dev-status {
+            .dev-status,
+            .soon-status {
                 font-size: 0.75rem;
                 padding: 12px 18px;
             }
@@ -1368,6 +1419,12 @@
                 <span class="dev-highlight">Сапёр</span>
             </div>
 
+            <div class="soon-status">
+                <span class="soon-icon">📖</span>
+                <span class="soon-text">Скоро:</span>
+                <span class="soon-highlight">Текстовые сайты — для чтения, а не приложения</span>
+            </div>
+
             <div class="changelog-section">
                 <div class="changelog-header" id="changelogHeader">
                     <div class="changelog-title">📋 История обновлений</div>
@@ -1375,6 +1432,10 @@
                 </div>
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">02.10.2026</span>
+                            <span>Добавлен анонс «Скоро»: готовятся текстовые сайты для чтения — новый формат контента в дополнение к приложениям.</span>
+                        </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
                             <span>Добавлено приложение «Менеджер расходов» — учёт доходов и расходов, контроль бюджета и анализ трат.</span>
