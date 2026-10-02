@@ -426,6 +426,67 @@
             background: rgba(22, 32, 58, 0.9);
         }
 
+        /* Карточка статьи */
+        .article-link {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.12), rgba(0, 200, 255, 0.08));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(139, 108, 255, 0.35);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: #ffffff;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 85% 30%, rgba(180, 140, 255, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .article-link:hover::before {
+            opacity: 1;
+        }
+
+        .article-link:hover {
+            transform: translateY(-4px);
+            border-color: rgba(180, 140, 255, 0.7);
+            box-shadow: 0 16px 40px rgba(124, 92, 252, 0.2);
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.2), rgba(0, 200, 255, 0.12));
+        }
+
+        .article-link .link-icon {
+            background: rgba(139, 108, 255, 0.2);
+        }
+
+        .article-link .arrow-icon {
+            color: #c8b4ff;
+        }
+
+        .article-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            background: rgba(139, 108, 255, 0.2);
+            color: #c8b4ff;
+            border: 1px solid rgba(180, 150, 255, 0.4);
+        }
+
         .link-icon {
             width: 46px;
             height: 46px;
@@ -544,7 +605,8 @@
             transition: transform 0.3s ease;
         }
 
-        .app-link:hover .arrow-icon {
+        .app-link:hover .arrow-icon,
+        .article-link:hover .arrow-icon {
             transform: translateX(4px);
         }
 
@@ -579,38 +641,6 @@
             font-weight: 700;
         }
 
-        /* Овал "Скоро" */
-        .soon-status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 24px;
-            background: rgba(0, 200, 255, 0.06);
-            border: 1px solid rgba(0, 200, 255, 0.3);
-            border-radius: 50px;
-            color: #00d4ff;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-align: center;
-            backdrop-filter: blur(12px);
-            animation: pulse-oval-blue 2.5s infinite;
-        }
-
-        .soon-status .soon-icon {
-            font-size: 1.1rem;
-            animation: float-icon 2.5s ease-in-out infinite;
-        }
-
-        .soon-status .soon-text {
-            color: #80e0ff;
-        }
-
-        .soon-status .soon-highlight {
-            color: #00d4ff;
-            font-weight: 700;
-        }
-
         @keyframes pulse-oval {
             0%, 100% {
                 box-shadow: 0 0 15px rgba(255, 180, 40, 0.15);
@@ -623,24 +653,6 @@
         @keyframes spin-gear {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse-oval-blue {
-            0%, 100% {
-                box-shadow: 0 0 15px rgba(0, 200, 255, 0.12);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(0, 200, 255, 0.28), 0 0 50px rgba(0, 180, 255, 0.1);
-            }
-        }
-
-        @keyframes float-icon {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-3px);
-            }
         }
 
         .session-counter {
@@ -1028,7 +1040,8 @@
                 padding: 20px 14px;
                 gap: 14px;
             }
-            .app-link {
+            .app-link,
+            .article-link {
                 padding: 14px 16px;
                 gap: 12px;
             }
@@ -1040,8 +1053,7 @@
                 font-size: 0.72rem;
                 padding: 6px 10px;
             }
-            .dev-status,
-            .soon-status {
+            .dev-status {
                 font-size: 0.75rem;
                 padding: 12px 18px;
             }
@@ -1137,7 +1149,7 @@
 
             <div class="search-container">
                 <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" id="searchInput" placeholder="Поиск приложений...">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск приложений и статей...">
             </div>
 
             <div class="categories" id="categories">
@@ -1148,8 +1160,46 @@
                 <button class="category-btn" data-category="other">📦 Разное</button>
             </div>
 
-            <p class="no-results" id="noResults">Приложений не найдено</p>
+            <p class="no-results" id="noResults">Ничего не найдено</p>
 
+            <!-- Текстовые статьи -->
+            <p class="section-label">📖 Текстовые статьи</p>
+
+            <a href="#" class="article-link" 
+               data-search="agi искусственный интеллект статья текст чтение" 
+               data-category="other"
+               data-id="agi-article"
+               data-icon="📄"
+               data-title="AGI"
+               data-desc="Что такое AGI, чем отличается от текущих ИИ и когда человечество может прийти к общему искусственному интеллекту."
+               data-url="https://arshinovseva13-ux.github.io/txt/"
+               data-url-display="arshinovseva13-ux.github.io/txt/"
+               data-badges='[{"text":"📖 Статья","class":"article-tag"}]'>
+                <div class="link-icon">📄</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        AGI
+                        <span class="article-tag">📖 Статья</span>
+                    </div>
+                    <div class="link-desc">Что такое AGI, чем отличается от текущих ИИ и когда человечество может прийти к общему искусственному интеллекту.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="agi-article">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/txt/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
+            <!-- Приложения -->
             <p class="section-label">🔗 Приложения</p>
 
             <!-- Конструктор Кроссвордов -->
@@ -1419,12 +1469,6 @@
                 <span class="dev-highlight">Сапёр</span>
             </div>
 
-            <div class="soon-status">
-                <span class="soon-icon">📖</span>
-                <span class="soon-text">Скоро:</span>
-                <span class="soon-highlight">Текстовые сайты — для чтения, а не приложения</span>
-            </div>
-
             <div class="changelog-section">
                 <div class="changelog-header" id="changelogHeader">
                     <div class="changelog-title">📋 История обновлений</div>
@@ -1434,7 +1478,7 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
-                            <span>Добавлен анонс «Скоро»: готовятся текстовые сайты для чтения — новый формат контента в дополнение к приложениям.</span>
+                            <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи» над приложениями. Поиск теперь работает и по статьям. Анонс «Скоро» убран.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
@@ -1499,7 +1543,7 @@
         </footer>
     </div>
 
-    <!-- Модальное окно приложения -->
+    <!-- Модальное окно -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose">✕</button>
@@ -1532,7 +1576,7 @@
                 </div>
             </div>
             <div class="modal-actions">
-                <a href="#" target="_blank" class="modal-btn primary" id="modalOpenBtn">Открыть приложение →</a>
+                <a href="#" target="_blank" class="modal-btn primary" id="modalOpenBtn">Открыть →</a>
                 <button class="modal-btn secondary" id="modalCancelBtn">Закрыть</button>
             </div>
         </div>
@@ -1635,7 +1679,7 @@
 
         // ===== ПОИСК И ФИЛЬТРАЦИЯ =====
         const searchInput = document.getElementById('searchInput');
-        const appLinks = document.querySelectorAll('.app-link');
+        const appLinks = document.querySelectorAll('.app-link, .article-link');
         const noResults = document.getElementById('noResults');
 
         function applyFilters() {
@@ -1699,7 +1743,7 @@
             list.innerHTML = '';
 
             recent.forEach(appId => {
-                const link = document.querySelector(`.app-link[data-id="${appId}"]`);
+                const link = document.querySelector(`[data-id="${appId}"]`);
                 if (!link) return;
                 
                 const icon = link.getAttribute('data-icon');
