@@ -231,7 +231,6 @@
             pointer-events: none;
         }
 
-        /* Категории */
         .categories {
             display: flex;
             gap: 8px;
@@ -276,7 +275,6 @@
             display: block;
         }
 
-        /* Недавно просмотренные */
         .recent-section {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -504,7 +502,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Рейтинг */
         .rating {
             display: inline-flex;
             align-items: center;
@@ -744,7 +741,6 @@
             text-decoration: underline;
         }
 
-        /* Модальное окно приложения */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1083,7 +1079,6 @@
                 </div>
             </div>
 
-            <!-- Недавно просмотренные -->
             <div class="recent-section" id="recentSection">
                 <div class="recent-title">🕘 Недавно просмотренные</div>
                 <div class="recent-list" id="recentList"></div>
@@ -1094,7 +1089,6 @@
                 <input type="text" class="search-input" id="searchInput" placeholder="Поиск приложений...">
             </div>
 
-            <!-- Категории -->
             <div class="categories" id="categories">
                 <button class="category-btn active" data-category="all">Все</button>
                 <button class="category-btn" data-category="games">🎮 Игры</button>
@@ -1337,6 +1331,37 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <!-- Менеджер расходов -->
+            <a href="#" class="app-link" 
+               data-search="менеджер расходов expenses бюджет финансы деньги" 
+               data-category="tools"
+               data-id="expenses"
+               data-icon="💰"
+               data-title="Менеджер расходов"
+               data-desc="Учёт доходов и расходов. Контролируйте бюджет, анализируйте траты и планируйте финансы."
+               data-url="https://arshinovseva13-ux.github.io/Menedjer/"
+               data-url-display="arshinovseva13-ux.github.io/Menedjer/">
+                <div class="link-icon">💰</div>
+                <div class="link-info">
+                    <div class="link-title">Менеджер расходов</div>
+                    <div class="link-desc">Учёт доходов и расходов. Контролируйте бюджет, анализируйте траты и планируйте финансы.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="expenses">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Menedjer/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
@@ -1350,6 +1375,10 @@
                 </div>
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">02.10.2026</span>
+                            <span>Добавлено приложение «Менеджер расходов» — учёт доходов и расходов, контроль бюджета и анализ трат.</span>
+                        </li>
                         <li class="changelog-item">
                             <span class="changelog-date">27.09.2026</span>
                             <span>Крупное обновление хаба: добавлены фильтры по категориям (Игры, Инструменты, Обучение, Разное), рейтинг со звёздами для каждого приложения, внутренние страницы-превью с подробной информацией, блок «Недавно просмотренные» на основе истории посещений.</span>
@@ -1666,7 +1695,6 @@
             modalCategory.textContent = categoryNames[category] || '—';
             modalOpenBtn.href = url;
 
-            // Бейджи
             modalBadges.innerHTML = '';
             if (badgesRaw) {
                 try {
@@ -1680,15 +1708,12 @@
                 } catch (e) {}
             }
 
-            // Рейтинг
             const savedValue = ratings[id] || 0;
             updateModalStars(savedValue);
 
-            // Показать модалку
             modalOverlay.classList.add('show');
             document.body.style.overflow = 'hidden';
 
-            // Добавить в недавние
             addToRecent(id);
         }
 
@@ -1707,7 +1732,6 @@
                     saveRatings();
                     updateModalStars(value);
                     
-                    // Обновить рейтинг в карточке
                     const cardRating = document.querySelector(`.rating[data-app-id="${currentAppId}"]`);
                     if (cardRating) updateStarsDisplay(cardRating, value);
                 }
@@ -1919,4 +1943,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
