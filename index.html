@@ -426,7 +426,6 @@
             background: rgba(22, 32, 58, 0.9);
         }
 
-        /* Карточка статьи */
         .article-link {
             display: flex;
             align-items: center;
@@ -541,6 +540,12 @@
             border: 1px solid rgba(0, 230, 160, 0.3);
         }
 
+        .badge-vpn {
+            background: rgba(255, 120, 120, 0.15);
+            color: #ff7878;
+            border: 1px solid rgba(255, 120, 120, 0.35);
+        }
+
         .link-desc {
             font-size: 0.8rem;
             color: #8899bb;
@@ -653,48 +658,6 @@
         @keyframes spin-gear {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
-        }
-
-        .session-counter {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
-            padding: 14px 20px;
-            background: rgba(0, 200, 255, 0.06);
-            border: 1px solid rgba(0, 200, 255, 0.2);
-            border-radius: var(--radius-lg);
-            backdrop-filter: blur(12px);
-            flex-wrap: wrap;
-            text-align: center;
-        }
-
-        .session-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .session-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-        }
-
-        .session-time {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #00d4ff;
-            font-variant-numeric: tabular-nums;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-        }
-
-        .session-divider {
-            width: 1px;
-            height: 32px;
-            background: rgba(100, 150, 220, 0.3);
         }
 
         .changelog-section {
@@ -1057,13 +1020,6 @@
                 font-size: 0.75rem;
                 padding: 12px 18px;
             }
-            .session-counter {
-                gap: 10px;
-                padding: 10px 14px;
-            }
-            .session-time {
-                font-size: 0.95rem;
-            }
             .modal {
                 padding: 24px 20px;
             }
@@ -1128,18 +1084,6 @@
                 <a href="https://md2sites.ru/#" target="_blank" class="parent-company">
                     🏢 MD2 — головная компания
                 </a>
-            </div>
-
-            <div class="session-counter">
-                <div class="session-item">
-                    <span class="session-label">Текущий сеанс</span>
-                    <span class="session-time" id="sessionTime">00:00:00</span>
-                </div>
-                <div class="session-divider"></div>
-                <div class="session-item">
-                    <span class="session-label">Всего времени</span>
-                    <span class="session-time" id="totalTime">00:00:00</span>
-                </div>
             </div>
 
             <div class="recent-section" id="recentSection">
@@ -1463,6 +1407,41 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <!-- Paragon OS -->
+            <a href="#" class="app-link" 
+               data-search="paragon os симулятор операционная система vpn" 
+               data-category="tools"
+               data-id="paragonos"
+               data-icon="🖥️"
+               data-title="Paragon OS"
+               data-desc="Симулятор операционной системы. Погрузитесь в интерфейс вымышленной ОС и исследуйте её возможности."
+               data-url="https://6ac132e96c298ee3a1a7da3e--sparkling-kangaroo-f684cc.netlify.app/"
+               data-url-display="sparkling-kangaroo-f684cc.netlify.app"
+               data-badges='[{"text":"🌐 Только с VPN","class":"badge-vpn"}]'>
+                <div class="link-icon">🖥️</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Paragon OS
+                        <span class="link-badge badge-vpn">🌐 Только с VPN</span>
+                    </div>
+                    <div class="link-desc">Симулятор операционной системы. Погрузитесь в интерфейс вымышленной ОС и исследуйте её возможности.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="paragonos">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">sparkling-kangaroo-f684cc.netlify.app</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
@@ -1476,6 +1455,10 @@
                 </div>
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">03.10.2026</span>
+                            <span>Добавлено приложение Paragon OS — симулятор операционной системы. Работает только через VPN.</span>
+                        </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
                             <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи» над приложениями. Поиск теперь работает и по статьям. Анонс «Скоро» убран.</span>
@@ -1596,34 +1579,6 @@
         }
         updateLocalTime();
         setInterval(updateLocalTime, 1000);
-
-        // ===== СЧЁТЧИК ВРЕМЕНИ =====
-        const sessionStartTime = Date.now();
-        const STORAGE_KEY = 'closeAppsTotalTime';
-        let totalTimeMs = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
-        
-        function formatTime(ms) {
-            const totalSeconds = Math.floor(ms / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        }
-        
-        function updateTimeCounter() {
-            const sessionMs = Date.now() - sessionStartTime;
-            document.getElementById('sessionTime').textContent = formatTime(sessionMs);
-            document.getElementById('totalTime').textContent = formatTime(totalTimeMs + sessionMs);
-        }
-        
-        updateTimeCounter();
-        setInterval(updateTimeCounter, 1000);
-        
-        window.addEventListener('beforeunload', function() {
-            const sessionMs = Date.now() - sessionStartTime;
-            totalTimeMs += sessionMs;
-            localStorage.setItem(STORAGE_KEY, totalTimeMs);
-        });
 
         // ===== РЕЙТИНГИ =====
         const RATING_KEY = 'closeAppsRatings';
