@@ -442,6 +442,10 @@
             overflow: hidden;
         }
 
+        .article-link.hidden {
+            display: none;
+        }
+
         .article-link::before {
             content: '';
             position: absolute;
@@ -1109,6 +1113,7 @@
             <!-- Текстовые статьи -->
             <p class="section-label">📖 Текстовые статьи</p>
 
+            <!-- AGI -->
             <a href="#" class="article-link" 
                data-search="agi искусственный интеллект статья текст чтение" 
                data-category="other"
@@ -1138,6 +1143,41 @@
                             <span class="rating-value">0.0</span>
                         </div>
                         <span class="link-url">arshinovseva13-ux.github.io/txt/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
+            <!-- Claude Sonnet 5.5 -->
+            <a href="#" class="article-link" 
+               data-search="claude sonnet 5.5 антропик anthropic ии нейросеть статья текст" 
+               data-category="other"
+               data-id="claude-sonnet"
+               data-icon="🤖"
+               data-title="Claude Sonnet 5.5"
+               data-desc="Обзор новой модели Claude Sonnet 5.5 от Anthropic: возможности, особенности и что изменилось."
+               data-url="https://arshinovseva13-ux.github.io/Txt1/"
+               data-url-display="arshinovseva13-ux.github.io/Txt1/"
+               data-badges='[{"text":"📖 Статья","class":"article-tag"}]'>
+                <div class="link-icon">🤖</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Claude Sonnet 5.5
+                        <span class="article-tag">📖 Статья</span>
+                    </div>
+                    <div class="link-desc">Обзор новой модели Claude Sonnet 5.5 от Anthropic: возможности, особенности и что изменилось.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="claude-sonnet">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Txt1/</span>
                     </div>
                 </div>
                 <span class="arrow-icon">→</span>
@@ -1457,11 +1497,15 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">03.10.2026</span>
+                            <span>Добавлена вторая текстовая статья — «Claude Sonnet 5.5».</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">03.10.2026</span>
                             <span>Добавлено приложение Paragon OS — симулятор операционной системы. Работает только через VPN.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
-                            <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи» над приложениями. Поиск теперь работает и по статьям. Анонс «Скоро» убран.</span>
+                            <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи» над приложениями. Поиск теперь работает и по статьям.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
@@ -1473,7 +1517,7 @@
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">01.09.2026</span>
-                            <span>Добавлен счётчик сеансов: показывает время текущего визита и общее время на сайте (сохраняется между визитами). Статус разработки обновлён: начата работа над игрой «Сапёр».</span>
+                            <span>Добавлен счётчик сеансов. Статус разработки обновлён: начата работа над игрой «Сапёр».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">13.06.2026</span>
@@ -2003,4 +2047,4 @@
         })();
     </script>
 </body>
-</html>
+    </html>
