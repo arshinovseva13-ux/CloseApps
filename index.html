@@ -664,6 +664,183 @@
             to { transform: rotate(360deg); }
         }
 
+        /* ===== ПРАЗДНИЧНЫЙ БАННЕР ===== */
+        .celebrate-banner {
+            position: relative;
+            padding: 28px 24px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255, 180, 40, 0.12), rgba(255, 100, 180, 0.1), rgba(124, 92, 252, 0.12));
+            border: 1px solid rgba(255, 200, 100, 0.4);
+            text-align: center;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            animation: celebrate-pulse 3s ease-in-out infinite;
+        }
+
+        .celebrate-banner .celebrate-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 200, 100, 0.15) 60deg,
+                transparent 120deg,
+                rgba(255, 120, 200, 0.15) 180deg,
+                transparent 240deg,
+                rgba(124, 92, 252, 0.15) 300deg,
+                transparent 360deg
+            );
+            animation: celebrate-rotate 8s linear infinite;
+            pointer-events: none;
+        }
+
+        .celebrate-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .celebrate-icon {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            display: inline-block;
+            animation: celebrate-bounce 1.6s ease-in-out infinite;
+        }
+
+        .celebrate-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ff9a3c, #ff5e9c, #8b6cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 30px rgba(255, 180, 40, 0.3);
+        }
+
+        .celebrate-subtitle {
+            font-size: 0.85rem;
+            color: #ccddef;
+            line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        @keyframes celebrate-pulse {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(255, 180, 40, 0.15), 0 0 50px rgba(255, 100, 180, 0.08);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 180, 40, 0.3), 0 0 70px rgba(255, 100, 180, 0.15);
+            }
+        }
+
+        @keyframes celebrate-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes celebrate-bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.1); }
+        }
+
+        /* ===== БАННЕР "СКОРО СОБЫТИЕ" ===== */
+        .event-banner {
+            position: relative;
+            padding: 24px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.1), rgba(139, 108, 255, 0.12), rgba(0, 230, 160, 0.08));
+            border: 1px solid rgba(120, 200, 255, 0.4);
+            text-align: center;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            animation: event-pulse 3.5s ease-in-out infinite;
+        }
+
+        .event-banner .event-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 212, 255, 0.12),
+                rgba(139, 108, 255, 0.15),
+                transparent
+            );
+            animation: event-shimmer 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .event-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: rgba(0, 212, 255, 0.15);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            margin-bottom: 10px;
+            animation: event-badge-pulse 2s ease-in-out infinite;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7c5cfc, #00e6a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .event-subtitle {
+            font-size: 0.85rem;
+            color: #ccddef;
+            line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        @keyframes event-pulse {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(0, 212, 255, 0.12), 0 0 50px rgba(139, 108, 255, 0.08);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 212, 255, 0.25), 0 0 70px rgba(139, 108, 255, 0.15);
+            }
+        }
+
+        @keyframes event-shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes event-badge-pulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.2);
+            }
+        }
+
         .changelog-section {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -1035,6 +1212,20 @@
             .modal-title-block h2 {
                 font-size: 1.15rem;
             }
+            .celebrate-banner,
+            .event-banner {
+                padding: 20px 18px;
+                border-radius: 40px;
+            }
+            .celebrate-title {
+                font-size: 1.15rem;
+            }
+            .event-title {
+                font-size: 1.05rem;
+            }
+            .celebrate-icon {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -1113,7 +1304,6 @@
             <!-- Текстовые статьи -->
             <p class="section-label">📖 Текстовые статьи</p>
 
-            <!-- AGI -->
             <a href="#" class="article-link" 
                data-search="agi искусственный интеллект статья текст чтение" 
                data-category="other"
@@ -1148,7 +1338,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Claude Sonnet 5.5 -->
             <a href="#" class="article-link" 
                data-search="claude sonnet 5.5 антропик anthropic ии нейросеть статья текст" 
                data-category="other"
@@ -1186,7 +1375,6 @@
             <!-- Приложения -->
             <p class="section-label">🔗 Приложения</p>
 
-            <!-- Конструктор Кроссвордов -->
             <a href="#" class="app-link" 
                data-search="конструктор кроссвордов crossword" 
                data-category="education"
@@ -1217,7 +1405,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Крестики Нолики -->
             <a href="#" class="app-link" 
                data-search="крестики нолики tic tac toe игра" 
                data-category="games"
@@ -1248,7 +1435,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Пинг-Понг -->
             <a href="#" class="app-link" 
                data-search="пинг понг pong игра" 
                data-category="games"
@@ -1283,7 +1469,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Clause AI Studio -->
             <a href="#" class="app-link" 
                data-search="clause ai studio искусственный интеллект" 
                data-category="tools"
@@ -1319,7 +1504,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Компилятор -->
             <a href="#" class="app-link" 
                data-search="компилятор compiler html css javascript код" 
                data-category="tools"
@@ -1354,7 +1538,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Конвертер файлов -->
             <a href="#" class="app-link" 
                data-search="конвертер converter файлы документы" 
                data-category="tools"
@@ -1385,7 +1568,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Рекомендации по отпуску -->
             <a href="#" class="app-link" 
                data-search="рекомендации отпуск путешествия отдых" 
                data-category="other"
@@ -1416,7 +1598,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Менеджер расходов -->
             <a href="#" class="app-link" 
                data-search="менеджер расходов expenses бюджет финансы деньги" 
                data-category="tools"
@@ -1447,7 +1628,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Paragon OS -->
             <a href="#" class="app-link" 
                data-search="paragon os симулятор операционная система vpn" 
                data-category="tools"
@@ -1482,10 +1662,60 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <a href="#" class="app-link" 
+               data-search="сапер saper minesweeper игра головоломка" 
+               data-category="games"
+               data-id="saper"
+               data-icon="💣"
+               data-title="Сапёр"
+               data-desc="Классическая логическая игра. Открывайте клетки, избегайте мин и тренируйте внимательность."
+               data-url="https://arshinovseva13-ux.github.io/Saper/"
+               data-url-display="arshinovseva13-ux.github.io/Saper/">
+                <div class="link-icon">💣</div>
+                <div class="link-info">
+                    <div class="link-title">Сапёр</div>
+                    <div class="link-desc">Классическая логическая игра. Открывайте клетки, избегайте мин и тренируйте внимательность.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="saper">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Saper/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
+            <!-- ПРАЗДНИЧНЫЙ БАННЕР -->
+            <div class="celebrate-banner">
+                <div class="celebrate-glow"></div>
+                <div class="celebrate-content">
+                    <div class="celebrate-icon">🎉</div>
+                    <div class="celebrate-title">10 приложений!</div>
+                    <div class="celebrate-subtitle">Мы достигли круглой отметки — и это только начало. Спасибо, что вы с нами!</div>
+                </div>
+            </div>
+
+            <!-- БАННЕР "СКОРО СОБЫТИЕ" -->
+            <div class="event-banner">
+                <div class="event-glow"></div>
+                <div class="event-content">
+                    <div class="event-badge">Скоро</div>
+                    <div class="event-title">Готовится событие</div>
+                    <div class="event-subtitle">Мы готовим специальное событие для наших пользователей. Следите за обновлениями — скоро расскажем подробнее!</div>
+                </div>
+            </div>
+
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
-                <span class="dev-highlight">Сапёр</span>
+                <span class="dev-highlight">Мафия</span>
             </div>
 
             <div class="changelog-section">
@@ -1495,6 +1725,10 @@
                 </div>
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
+                        <li class="changelog-item">
+                            <span class="changelog-date">06.10.2026</span>
+                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр». В честь события на главной появился праздничный баннер. Также добавлен баннер «Скоро событие». Статус разработки обновлён: теперь ведётся работа над игрой «Мафия».</span>
+                        </li>
                         <li class="changelog-item">
                             <span class="changelog-date">03.10.2026</span>
                             <span>Добавлена вторая текстовая статья — «Claude Sonnet 5.5».</span>
@@ -2047,4 +2281,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
