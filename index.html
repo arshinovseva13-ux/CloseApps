@@ -550,6 +550,22 @@
             border: 1px solid rgba(255, 120, 120, 0.35);
         }
 
+        .badge-warning {
+            background: rgba(255, 180, 40, 0.15);
+            color: #ffb828;
+            border: 1px solid rgba(255, 180, 40, 0.4);
+            animation: warning-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes warning-pulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(255, 180, 40, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(255, 180, 40, 0.5);
+            }
+        }
+
         .link-desc {
             font-size: 0.8rem;
             color: #8899bb;
@@ -664,7 +680,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== ПРАЗДНИЧНЫЙ БАННЕР ===== */
         .celebrate-banner {
             position: relative;
             padding: 28px 24px;
@@ -746,99 +761,6 @@
         @keyframes celebrate-bounce {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-5px) scale(1.1); }
-        }
-
-        /* ===== БАННЕР "СКОРО СОБЫТИЕ" ===== */
-        .event-banner {
-            position: relative;
-            padding: 24px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, rgba(0, 200, 255, 0.1), rgba(139, 108, 255, 0.12), rgba(0, 230, 160, 0.08));
-            border: 1px solid rgba(120, 200, 255, 0.4);
-            text-align: center;
-            overflow: hidden;
-            backdrop-filter: blur(14px);
-            animation: event-pulse 3.5s ease-in-out infinite;
-        }
-
-        .event-banner .event-glow {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 212, 255, 0.12),
-                rgba(139, 108, 255, 0.15),
-                transparent
-            );
-            animation: event-shimmer 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .event-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .event-badge {
-            display: inline-block;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: rgba(0, 212, 255, 0.15);
-            color: #00d4ff;
-            border: 1px solid rgba(0, 212, 255, 0.4);
-            margin-bottom: 10px;
-            animation: event-badge-pulse 2s ease-in-out infinite;
-        }
-
-        .event-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #00d4ff, #7c5cfc, #00e6a0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-
-        .event-subtitle {
-            font-size: 0.85rem;
-            color: #ccddef;
-            line-height: 1.5;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        @keyframes event-pulse {
-            0%, 100% {
-                box-shadow: 0 0 25px rgba(0, 212, 255, 0.12), 0 0 50px rgba(139, 108, 255, 0.08);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(0, 212, 255, 0.25), 0 0 70px rgba(139, 108, 255, 0.15);
-            }
-        }
-
-        @keyframes event-shimmer {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes event-badge-pulse {
-            0%, 100% {
-                box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.2);
-            }
         }
 
         .changelog-section {
@@ -1164,6 +1086,194 @@
             border-color: rgba(0, 212, 255, 0.5);
         }
 
+        /* ===== ПАСХАЛКА: СЕКРЕТНАЯ КНОПКА ===== */
+        .easter-egg-trigger {
+            margin: 40px auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            opacity: 0.25;
+            user-select: none;
+        }
+
+        .easter-egg-trigger:hover {
+            opacity: 1;
+            background: rgba(255, 200, 100, 0.15);
+            border-color: rgba(255, 200, 100, 0.6);
+            box-shadow: 0 0 25px rgba(255, 200, 100, 0.4), 0 0 50px rgba(255, 200, 100, 0.2);
+            transform: scale(1.2) rotate(15deg);
+        }
+
+        .easter-egg-trigger .egg-icon {
+            font-size: 1.1rem;
+            transition: transform 0.5s ease;
+        }
+
+        .easter-egg-trigger:hover .egg-icon {
+            transform: rotate(-15deg) scale(1.2);
+        }
+
+        .easter-egg-hint {
+            text-align: center;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.08);
+            margin-top: 6px;
+            letter-spacing: 1.5px;
+            transition: color 0.4s ease;
+            user-select: none;
+        }
+
+        .easter-egg-trigger:hover + .easter-egg-hint {
+            color: rgba(255, 200, 100, 0.5);
+        }
+
+        .fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 250;
+            pointer-events: none;
+            display: none;
+        }
+
+        .fireworks-canvas.show {
+            display: block;
+        }
+
+        .easter-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            z-index: 260;
+            background: linear-gradient(135deg, rgba(30, 20, 60, 0.98), rgba(15, 25, 50, 0.98));
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            border-radius: 28px;
+            padding: 40px 36px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 80px rgba(255, 200, 100, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+        }
+
+        .easter-popup::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 28px;
+            padding: 2px;
+            background: linear-gradient(135deg, #ffd700, #ff9a3c, #ff5e9c, #8b6cff, #00d4ff, #ffd700);
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: gradient-border-rotate 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gradient-border-rotate {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .easter-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+
+        .easter-popup .popup-emoji {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            display: inline-block;
+            animation: celebrate-bounce 1.5s ease-in-out infinite;
+        }
+
+        .easter-popup .popup-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ff9a3c, #ff5e9c, #8b6cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .easter-popup .popup-text {
+            font-size: 0.95rem;
+            color: #ccddef;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .easter-popup .popup-text strong {
+            color: #ffd700;
+        }
+
+        .easter-popup .popup-note {
+            font-size: 0.8rem;
+            color: #8899bb;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-style: italic;
+        }
+
+        .easter-popup .popup-close {
+            margin-top: 22px;
+            padding: 12px 32px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #ffd700, #ff9a3c);
+            color: #1a1408;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition-smooth);
+            box-shadow: 0 8px 25px rgba(255, 200, 100, 0.3);
+        }
+
+        .easter-popup .popup-close:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 200, 100, 0.5);
+        }
+
+        .easter-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 255;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .easter-popup-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         @media (max-width: 700px) {
             .header {
                 padding: 12px 14px;
@@ -1212,19 +1322,24 @@
             .modal-title-block h2 {
                 font-size: 1.15rem;
             }
-            .celebrate-banner,
-            .event-banner {
+            .celebrate-banner {
                 padding: 20px 18px;
                 border-radius: 40px;
             }
             .celebrate-title {
                 font-size: 1.15rem;
             }
-            .event-title {
-                font-size: 1.05rem;
-            }
             .celebrate-icon {
                 font-size: 1.8rem;
+            }
+            .easter-popup {
+                padding: 32px 24px;
+            }
+            .easter-popup .popup-emoji {
+                font-size: 3rem;
+            }
+            .easter-popup .popup-title {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -1301,7 +1416,6 @@
 
             <p class="no-results" id="noResults">Ничего не найдено</p>
 
-            <!-- Текстовые статьи -->
             <p class="section-label">📖 Текстовые статьи</p>
 
             <a href="#" class="article-link" 
@@ -1372,7 +1486,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Приложения -->
             <p class="section-label">🔗 Приложения</p>
 
             <a href="#" class="app-link" 
@@ -1475,18 +1588,19 @@
                data-id="clauseai"
                data-icon="🤖"
                data-title="Clause AI Studio"
-               data-desc="Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа."
+               data-desc="Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа. ⚠️ Приложение будет удалено после выхода «Мафии»."
                data-url="https://claus-ai-studio-623389241403.europe-west2.run.app/"
                data-url-display="claus-ai-studio-623389241403.europe-west2.run.app"
-               data-badges='[{"text":"🖥️ ПК","class":"badge-desktop"},{"text":"🌍 International","class":"badge-intl"}]'>
+               data-badges='[{"text":"🖥️ ПК","class":"badge-desktop"},{"text":"🌍 International","class":"badge-intl"},{"text":"⚠️ Скоро удаление","class":"badge-warning"}]'>
                 <div class="link-icon">🤖</div>
                 <div class="link-info">
                     <div class="link-title">
                         Clause AI Studio
                         <span class="link-badge badge-desktop">🖥️ ПК</span>
                         <span class="link-badge badge-intl">🌍 International</span>
+                        <span class="link-badge badge-warning">⚠️ Скоро удаление</span>
                     </div>
-                    <div class="link-desc">Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа.</div>
+                    <div class="link-desc">Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа. ⚠️ Приложение будет удалено после выхода «Мафии».</div>
                     <div class="link-meta">
                         <div class="rating" data-app-id="clauseai">
                             <div class="stars">
@@ -1692,23 +1806,12 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- ПРАЗДНИЧНЫЙ БАННЕР -->
             <div class="celebrate-banner">
                 <div class="celebrate-glow"></div>
                 <div class="celebrate-content">
                     <div class="celebrate-icon">🎉</div>
                     <div class="celebrate-title">10 приложений!</div>
                     <div class="celebrate-subtitle">Мы достигли круглой отметки — и это только начало. Спасибо, что вы с нами!</div>
-                </div>
-            </div>
-
-            <!-- БАННЕР "СКОРО СОБЫТИЕ" -->
-            <div class="event-banner">
-                <div class="event-glow"></div>
-                <div class="event-content">
-                    <div class="event-badge">Скоро</div>
-                    <div class="event-title">Готовится событие</div>
-                    <div class="event-subtitle">Мы готовим специальное событие для наших пользователей. Следите за обновлениями — скоро расскажем подробнее!</div>
                 </div>
             </div>
 
@@ -1726,8 +1829,16 @@
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
                         <li class="changelog-item">
+                            <span class="changelog-date">07.10.2026</span>
+                            <span>⚠️ Важное объявление: приложение Clause AI Studio будет удалено с хаба. Причина — ограниченный лимит токенов для AI-агента и отсутствие платного тарифа. Замена уже в разработке: как только выйдет «Мафия» от Claude, Clause AI Studio будет убрано, чтобы сохранить ровно 10 приложений.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">07.10.2026</span>
+                            <span>🥚 Добавлена вечная пасхалка — секретная кнопка в самом низу страницы. Кто найдёт — получит праздничный салют и благодарность! Пасхалка стала главным событием хаба.</span>
+                        </li>
+                        <li class="changelog-item">
                             <span class="changelog-date">06.10.2026</span>
-                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр». В честь события на главной появился праздничный баннер. Также добавлен баннер «Скоро событие». Статус разработки обновлён: теперь ведётся работа над игрой «Мафия».</span>
+                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр». В честь события на главной появился праздничный баннер. Статус разработки обновлён: теперь ведётся работа над игрой «Мафия».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">03.10.2026</span>
@@ -1747,55 +1858,57 @@
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">27.09.2026</span>
-                            <span>Крупное обновление хаба: добавлены фильтры по категориям (Игры, Инструменты, Обучение, Разное), рейтинг со звёздами для каждого приложения, внутренние страницы-превью с подробной информацией, блок «Недавно просмотренные» на основе истории посещений.</span>
+                            <span>Крупное обновление хаба: добавлены фильтры по категориям, рейтинг со звёздами, внутренние страницы-превью, блок «Недавно просмотренные».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">01.09.2026</span>
-                            <span>Добавлен счётчик сеансов. Статус разработки обновлён: начата работа над игрой «Сапёр».</span>
+                            <span>Добавлен счётчик сеансов. Статус разработки: игра «Сапёр».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">13.06.2026</span>
-                            <span>Добавлены «Рекомендации по отпуску». Описание Конвертера изменено на «Конвертер файлов». Статус разработки обновлён: начата работа над игрой «Мафия».</span>
+                            <span>Добавлены «Рекомендации по отпуску». Конвертер переименован в «Конвертер файлов».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">07.06.2026</span>
-                            <span>Добавлен Конвертер величин и единиц измерения. Статус разработки обновлён: начата работа над рекомендациями по отпуску.</span>
+                            <span>Добавлен Конвертер. Статус разработки: рекомендации по отпуску.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">31.05.2026</span>
-                            <span>Добавлен Компилятор HTML / CSS / JavaScript (оптимизирован для ПК, работает на телефоне). Статус разработки обновлён: начата работа над Конвертером.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">31.05.2026</span>
-                            <span>Для игры «Пинг-Понг» добавлен бейдж «📱 Телефон» — приложение оптимизировано для мобильных устройств.</span>
+                            <span>Добавлен Компилятор HTML / CSS / JS.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">30.05.2026</span>
-                            <span>Добавлена игра «Пинг-Понг». Статус разработки обновлён: начата работа над компилятором HTML / CSS / JavaScript.</span>
+                            <span>Добавлена игра «Пинг-Понг».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">29.05.2026</span>
-                            <span>Добавлена кнопка сворачивания/разворачивания истории обновлений. Добавлен овал «Сейчас в разработке» с информацией о текущих задачах команды.</span>
+                            <span>Добавлен овал «Сейчас в разработке» и сворачиваемая история обновлений.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">28.05.2026</span>
-                            <span>Часы переведены на местное время пользователя. Добавлен поиск приложений по названию и описанию. Добавлены описания для всех приложений.</span>
+                            <span>Часы переведены на местное время. Добавлен поиск. Добавлены описания приложений.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">28.05.2026</span>
-                            <span>Добавлено приложение Clause AI Studio (только для ПК, английский интерфейс).</span>
+                            <span>Добавлен Clause AI Studio.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">28.05.2026</span>
-                            <span>Добавлено официальное описание компании. Указано, что Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Внедрён раздел «История обновлений». Добавлено приложение «Крестики Нолики». Удалена неработающая ссылка Lumina Studio.</span>
+                            <span>Добавлено описание компании. Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Добавлено «Крестики Нолики». Удалена ссылка Lumina Studio.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">27.05.2026</span>
-                            <span>Запуск хаба Close Приложения. Добавлены первые приложения: Конструктор Кроссвордов.</span>
+                            <span>Запуск хаба Close Приложения. Добавлен «Конструктор Кроссвордов».</span>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            <!-- 🥚 ПАСХАЛКА: Секретная кнопка -->
+            <div class="easter-egg-trigger" id="easterEggTrigger" title="...">
+                <span class="egg-icon">✨</span>
+            </div>
+            <div class="easter-egg-hint">•</div>
         </main>
 
         <footer class="footer">
@@ -1804,7 +1917,27 @@
         </footer>
     </div>
 
-    <!-- Модальное окно -->
+    <canvas class="fireworks-canvas" id="fireworksCanvas"></canvas>
+
+    <div class="easter-popup-overlay" id="easterPopupOverlay"></div>
+    <div class="easter-popup" id="easterPopup">
+        <div class="popup-emoji">🎉</div>
+        <div class="popup-title">Ты нашёл секрет!</div>
+        <p class="popup-text">
+            Ты — один из немногих, кто добрался до самого низа и заметил <strong>маленькую звёздочку</strong>.
+        </p>
+        <p class="popup-text">
+            Спасибо, что ты здесь. Мы делаем Close Приложения с душой — для таких любопытных и внимательных, как ты.
+        </p>
+        <p class="popup-text" style="margin-top:14px;">
+            🎁 Твой секретный код: <strong>STARFINDER-2026</strong>
+        </p>
+        <div class="popup-note">
+            «Любопытство — двигатель прогресса». Так держать! 💜
+        </div>
+        <button class="popup-close" id="popupClose">Спасибо!</button>
+    </div>
+
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose">✕</button>
@@ -2118,6 +2251,146 @@
             }
         });
 
+        // ==================================================
+        // ===== ПАСХАЛКА: СЕКРЕТНАЯ КНОПКА + САЛЮТ =====
+        // ==================================================
+        const easterTrigger = document.getElementById('easterEggTrigger');
+        const easterPopup = document.getElementById('easterPopup');
+        const easterPopupOverlay = document.getElementById('easterPopupOverlay');
+        const popupClose = document.getElementById('popupClose');
+        const fireworksCanvas = document.getElementById('fireworksCanvas');
+        const fctx = fireworksCanvas.getContext('2d');
+        let fireworks = [];
+        let fireworksAnimation = null;
+        let fireworksActive = false;
+
+        easterTrigger.addEventListener('click', function() {
+            easterPopupOverlay.classList.add('show');
+            easterPopup.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            startFireworks();
+            localStorage.setItem('closeAppsEasterEggFound', 'true');
+        });
+
+        function closeEasterPopup() {
+            easterPopup.classList.remove('show');
+            easterPopupOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+            stopFireworks();
+        }
+
+        popupClose.addEventListener('click', closeEasterPopup);
+        easterPopupOverlay.addEventListener('click', closeEasterPopup);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && easterPopup.classList.contains('show')) {
+                closeEasterPopup();
+            }
+        });
+
+        if (localStorage.getItem('closeAppsEasterEggFound') === 'true') {
+            easterTrigger.style.opacity = '0.5';
+        }
+
+        function resizeFireworks() {
+            fireworksCanvas.width = window.innerWidth;
+            fireworksCanvas.height = window.innerHeight;
+        }
+        resizeFireworks();
+        window.addEventListener('resize', resizeFireworks);
+
+        class FireworkParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 6 + 2;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.life = 1;
+                this.decay = 0.015 + Math.random() * 0.015;
+                this.size = Math.random() * 2.5 + 1;
+                this.gravity = 0.05;
+                this.friction = 0.98;
+            }
+            update() {
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= this.decay;
+            }
+            draw(ctx) {
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 15;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createExplosion(x, y) {
+            const colors = ['#ffd700', '#ff9a3c', '#ff5e9c', '#8b6cff', '#00d4ff', '#00ff8c', '#ffffff'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const count = 40 + Math.floor(Math.random() * 30);
+            for (let i = 0; i < count; i++) {
+                fireworks.push(new FireworkParticle(x, y, color));
+            }
+        }
+
+        function animateFireworks() {
+            if (!fireworksActive) return;
+            
+            fctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            fctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+
+            if (Math.random() < 0.08) {
+                const x = Math.random() * fireworksCanvas.width;
+                const y = Math.random() * fireworksCanvas.height * 0.6 + 50;
+                createExplosion(x, y);
+            }
+
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                fireworks[i].update();
+                fireworks[i].draw(fctx);
+                if (fireworks[i].life <= 0) {
+                    fireworks.splice(i, 1);
+                }
+            }
+            fctx.globalAlpha = 1;
+            fctx.shadowBlur = 0;
+
+            fireworksAnimation = requestAnimationFrame(animateFireworks);
+        }
+
+        function startFireworks() {
+            if (fireworksActive) return;
+            fireworksActive = true;
+            fireworksCanvas.classList.add('show');
+            const cx = fireworksCanvas.width / 2;
+            const cy = fireworksCanvas.height * 0.35;
+            createExplosion(cx, cy);
+            setTimeout(() => createExplosion(cx - 150, cy + 50), 200);
+            setTimeout(() => createExplosion(cx + 150, cy + 50), 400);
+            
+            fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+            animateFireworks();
+        }
+
+        function stopFireworks() {
+            fireworksActive = false;
+            if (fireworksAnimation) {
+                cancelAnimationFrame(fireworksAnimation);
+                fireworksAnimation = null;
+            }
+            fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+            fireworksCanvas.classList.remove('show');
+            fireworks = [];
+        }
+
         // ===== АНИМИРОВАННЫЙ ФОН =====
         (function() {
             const canvas = document.getElementById('bgCanvas');
@@ -2281,4 +2554,4 @@
         })();
     </script>
 </body>
-</html>
+    </html>
