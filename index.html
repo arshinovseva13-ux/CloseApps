@@ -1086,7 +1086,6 @@
             border-color: rgba(0, 212, 255, 0.5);
         }
 
-        /* ===== ПАСХАЛКА: СЕКРЕТНАЯ КНОПКА ===== */
         .easter-egg-trigger {
             margin: 40px auto 20px;
             display: flex;
@@ -1486,6 +1485,40 @@
                 <span class="arrow-icon">→</span>
             </a>
 
+            <a href="#" class="article-link" 
+               data-search="метод cfop кубик рубика сборка speedcubing спидкубинг статья" 
+               data-category="other"
+               data-id="cfop-article"
+               data-icon="🧊"
+               data-title="Метод CFOP — Собирание кубика Рубика"
+               data-desc="Подробный разбор метода CFOP — самого популярного способа скоростной сборки кубика Рубика. Cross, F2L, OLL, PLL."
+               data-url="https://arshinovseva13-ux.github.io/CFOP/"
+               data-url-display="arshinovseva13-ux.github.io/CFOP/"
+               data-badges='[{"text":"📖 Статья","class":"article-tag"}]'>
+                <div class="link-icon">🧊</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Метод CFOP — Собирание кубика Рубика
+                        <span class="article-tag">📖 Статья</span>
+                    </div>
+                    <div class="link-desc">Подробный разбор метода CFOP — самого популярного способа скоростной сборки кубика Рубика. Cross, F2L, OLL, PLL.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="cfop-article">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/CFOP/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
             <p class="section-label">🔗 Приложения</p>
 
             <a href="#" class="app-link" 
@@ -1829,6 +1862,10 @@
                 <div class="changelog-content expanded" id="changelogContent">
                     <ul class="changelog-list">
                         <li class="changelog-item">
+                            <span class="changelog-date">08.10.2026</span>
+                            <span>Добавлена третья текстовая статья — «Метод CFOP — Собирание кубика Рубика». Подробный разбор скоростной сборки: Cross, F2L, OLL, PLL. Разработка «Мафии» продолжается 😁</span>
+                        </li>
+                        <li class="changelog-item">
                             <span class="changelog-date">07.10.2026</span>
                             <span>⚠️ Важное объявление: приложение Clause AI Studio будет удалено с хаба. Причина — ограниченный лимит токенов для AI-агента и отсутствие платного тарифа. Замена уже в разработке: как только выйдет «Мафия» от Claude, Clause AI Studio будет убрано, чтобы сохранить ровно 10 приложений.</span>
                         </li>
@@ -1904,7 +1941,6 @@
                 </div>
             </div>
 
-            <!-- 🥚 ПАСХАЛКА: Секретная кнопка -->
             <div class="easter-egg-trigger" id="easterEggTrigger" title="...">
                 <span class="egg-icon">✨</span>
             </div>
@@ -1977,7 +2013,6 @@
     </div>
 
     <script>
-        // ===== МЕСТНОЕ ВРЕМЯ =====
         function updateLocalTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -1991,7 +2026,6 @@
         updateLocalTime();
         setInterval(updateLocalTime, 1000);
 
-        // ===== РЕЙТИНГИ =====
         const RATING_KEY = 'closeAppsRatings';
         let ratings = JSON.parse(localStorage.getItem(RATING_KEY)) || {};
 
@@ -2030,7 +2064,6 @@
         }
         initRatings();
 
-        // ===== КАТЕГОРИИ =====
         const categoryButtons = document.querySelectorAll('.category-btn');
         let currentCategory = 'all';
 
@@ -2043,7 +2076,6 @@
             });
         });
 
-        // ===== ПОИСК И ФИЛЬТРАЦИЯ =====
         const searchInput = document.getElementById('searchInput');
         const appLinks = document.querySelectorAll('.app-link, .article-link');
         const noResults = document.getElementById('noResults');
@@ -2074,7 +2106,6 @@
 
         searchInput.addEventListener('input', applyFilters);
 
-        // ===== НЕДАВНО ПРОСМОТРЕННЫЕ =====
         const RECENT_KEY = 'closeAppsRecent';
         const MAX_RECENT = 5;
 
@@ -2128,7 +2159,6 @@
         }
         renderRecent();
 
-        // ===== МОДАЛЬНОЕ ОКНО =====
         const modalOverlay = document.getElementById('modalOverlay');
         const modalIcon = document.getElementById('modalIcon');
         const modalTitle = document.getElementById('modalTitle');
@@ -2223,7 +2253,6 @@
             if (e.key === 'Escape' && modalOverlay.classList.contains('show')) closeModal();
         });
 
-        // ===== КЛИК ПО КАРТОЧКАМ =====
         appLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2231,7 +2260,6 @@
             });
         });
 
-        // ===== СВОРАЧИВАНИЕ ИСТОРИИ =====
         const changelogHeader = document.getElementById('changelogHeader');
         const changelogContent = document.getElementById('changelogContent');
         const changelogToggle = document.getElementById('changelogToggle');
@@ -2251,9 +2279,6 @@
             }
         });
 
-        // ==================================================
-        // ===== ПАСХАЛКА: СЕКРЕТНАЯ КНОПКА + САЛЮТ =====
-        // ==================================================
         const easterTrigger = document.getElementById('easterEggTrigger');
         const easterPopup = document.getElementById('easterPopup');
         const easterPopupOverlay = document.getElementById('easterPopupOverlay');
@@ -2391,7 +2416,6 @@
             fireworks = [];
         }
 
-        // ===== АНИМИРОВАННЫЙ ФОН =====
         (function() {
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
@@ -2554,4 +2578,4 @@
         })();
     </script>
 </body>
-    </html>
+                    </html>
