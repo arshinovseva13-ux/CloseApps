@@ -550,19 +550,19 @@
             border: 1px solid rgba(255, 120, 120, 0.35);
         }
 
-        .badge-warning {
-            background: rgba(255, 180, 40, 0.15);
-            color: #ffb828;
-            border: 1px solid rgba(255, 180, 40, 0.4);
-            animation: warning-pulse 2s ease-in-out infinite;
+        .badge-new {
+            background: rgba(255, 200, 100, 0.2);
+            color: #ffc864;
+            border: 1px solid rgba(255, 200, 100, 0.5);
+            animation: badge-new-pulse 2s ease-in-out infinite;
         }
 
-        @keyframes warning-pulse {
+        @keyframes badge-new-pulse {
             0%, 100% {
-                box-shadow: 0 0 8px rgba(255, 180, 40, 0.2);
+                box-shadow: 0 0 8px rgba(255, 200, 100, 0.3);
             }
             50% {
-                box-shadow: 0 0 16px rgba(255, 180, 40, 0.5);
+                box-shadow: 0 0 18px rgba(255, 200, 100, 0.6);
             }
         }
 
@@ -1616,26 +1616,24 @@
             </a>
 
             <a href="#" class="app-link" 
-               data-search="clause ai studio искусственный интеллект" 
-               data-category="tools"
-               data-id="clauseai"
-               data-icon="🤖"
-               data-title="Clause AI Studio"
-               data-desc="Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа. ⚠️ Приложение будет удалено после выхода «Мафии»."
-               data-url="https://claus-ai-studio-623389241403.europe-west2.run.app/"
-               data-url-display="claus-ai-studio-623389241403.europe-west2.run.app"
-               data-badges='[{"text":"🖥️ ПК","class":"badge-desktop"},{"text":"🌍 International","class":"badge-intl"},{"text":"⚠️ Скоро удаление","class":"badge-warning"}]'>
-                <div class="link-icon">🤖</div>
+               data-search="мафия mafia игра социальная детектив" 
+               data-category="games"
+               data-id="mafia"
+               data-icon="🕵️"
+               data-title="Мафия"
+               data-desc="Классическая социальная игра на дедукцию и логику. Вычисли мафию среди мирных жителей!"
+               data-url="https://arshinovseva13-ux.github.io/Mafia1/"
+               data-url-display="arshinovseva13-ux.github.io/Mafia1/"
+               data-badges='[{"text":"✨ Новое","class":"badge-new"}]'>
+                <div class="link-icon">🕵️</div>
                 <div class="link-info">
                     <div class="link-title">
-                        Clause AI Studio
-                        <span class="link-badge badge-desktop">🖥️ ПК</span>
-                        <span class="link-badge badge-intl">🌍 International</span>
-                        <span class="link-badge badge-warning">⚠️ Скоро удаление</span>
+                        Мафия
+                        <span class="link-badge badge-new">✨ Новое</span>
                     </div>
-                    <div class="link-desc">Платформа для работы с искусственным интеллектом. Английский интерфейс, оптимизировано для десктопа. ⚠️ Приложение будет удалено после выхода «Мафии».</div>
+                    <div class="link-desc">Классическая социальная игра на дедукцию и логику. Вычисли мафию среди мирных жителей!</div>
                     <div class="link-meta">
-                        <div class="rating" data-app-id="clauseai">
+                        <div class="rating" data-app-id="mafia">
                             <div class="stars">
                                 <span class="star" data-value="1">★</span>
                                 <span class="star" data-value="2">★</span>
@@ -1645,7 +1643,7 @@
                             </div>
                             <span class="rating-value">0.0</span>
                         </div>
-                        <span class="link-url">claus-ai-studio-623389241403.europe-west2.run.app</span>
+                        <span class="link-url">arshinovseva13-ux.github.io/Mafia1/</span>
                     </div>
                 </div>
                 <span class="arrow-icon">→</span>
@@ -1851,7 +1849,7 @@
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
-                <span class="dev-highlight">Мафия</span>
+                <span class="dev-highlight">Календарь событий с пасхалками</span>
             </div>
 
             <div class="changelog-section">
@@ -1863,7 +1861,11 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">08.10.2026</span>
-                            <span>Добавлена третья текстовая статья — «Метод CFOP — Собирание кубика Рубика». Подробный разбор скоростной сборки: Cross, F2L, OLL, PLL. Разработка «Мафии» продолжается 😁</span>
+                            <span>🕵️ Наконец-то! Добавлена игра «Мафия» — классическая социальная игра на дедукцию и логику. Событие, которого все ждали! Также удалено приложение Clause AI Studio (по причине ограниченного лимита токенов и отсутствия платного тарифа) — как и обещали, осталось ровно 10 приложений. Статус разработки обновлён: теперь ведётся работа над «Календарём событий с пасхалками».</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">08.10.2026</span>
+                            <span>Добавлена третья текстовая статья — «Метод CFOP — Собирание кубика Рубика». Подробный разбор скоростной сборки: Cross, F2L, OLL, PLL.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">07.10.2026</span>
@@ -2578,4 +2580,4 @@
         })();
     </script>
 </body>
-                    </html>
+    </html>
