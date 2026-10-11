@@ -426,6 +426,40 @@
             background: rgba(22, 32, 58, 0.9);
         }
 
+        /* Спец. стиль для Игрового зала */
+        .app-link.featured {
+            background: linear-gradient(135deg, rgba(0, 230, 160, 0.1), rgba(0, 200, 255, 0.08), rgba(139, 108, 255, 0.1));
+            border: 1px solid rgba(0, 230, 160, 0.4);
+            animation: featured-pulse 3s ease-in-out infinite;
+        }
+
+        .app-link.featured::before {
+            background: radial-gradient(circle at 85% 30%, rgba(0, 230, 160, 0.1) 0%, transparent 60%);
+        }
+
+        .app-link.featured:hover {
+            border-color: rgba(0, 230, 160, 0.7);
+            box-shadow: 0 16px 40px rgba(0, 230, 160, 0.2);
+            background: linear-gradient(135deg, rgba(0, 230, 160, 0.15), rgba(0, 200, 255, 0.12), rgba(139, 108, 255, 0.15));
+        }
+
+        .app-link.featured .link-icon {
+            background: rgba(0, 230, 160, 0.2);
+        }
+
+        .app-link.featured .arrow-icon {
+            color: #00e6a0;
+        }
+
+        @keyframes featured-pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 230, 160, 0.1), 0 0 40px rgba(0, 200, 255, 0.06);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 230, 160, 0.2), 0 0 60px rgba(0, 200, 255, 0.12);
+            }
+        }
+
         .article-link {
             display: flex;
             align-items: center;
@@ -557,12 +591,28 @@
             animation: badge-new-pulse 2s ease-in-out infinite;
         }
 
+        .badge-featured {
+            background: rgba(0, 230, 160, 0.2);
+            color: #00e6a0;
+            border: 1px solid rgba(0, 230, 160, 0.5);
+            animation: badge-featured-pulse 2s ease-in-out infinite;
+        }
+
         @keyframes badge-new-pulse {
             0%, 100% {
                 box-shadow: 0 0 8px rgba(255, 200, 100, 0.3);
             }
             50% {
                 box-shadow: 0 0 18px rgba(255, 200, 100, 0.6);
+            }
+        }
+
+        @keyframes badge-featured-pulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(0, 230, 160, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(0, 230, 160, 0.6);
             }
         }
 
@@ -678,105 +728,6 @@
         @keyframes spin-gear {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
-        }
-
-        /* ===== КАРТОЧКА-АНОНС "СКОРО" ===== */
-        .soon-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 22px 24px;
-            background: linear-gradient(135deg, rgba(0, 230, 160, 0.08), rgba(0, 200, 255, 0.08), rgba(139, 108, 255, 0.1));
-            border: 1px solid rgba(0, 230, 160, 0.4);
-            border-radius: var(--radius-lg);
-            backdrop-filter: blur(14px);
-            position: relative;
-            overflow: hidden;
-            animation: soon-card-pulse 3s ease-in-out infinite;
-        }
-
-        .soon-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 230, 160, 0.1),
-                rgba(0, 200, 255, 0.1),
-                transparent
-            );
-            animation: soon-card-shimmer 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .soon-card-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            flex-shrink: 0;
-            background: rgba(0, 230, 160, 0.15);
-            border: 1px solid rgba(0, 230, 160, 0.3);
-            animation: soon-card-bounce 2s ease-in-out infinite;
-        }
-
-        .soon-card-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .soon-card-badge {
-            display: inline-block;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: rgba(0, 230, 160, 0.15);
-            color: #00e6a0;
-            border: 1px solid rgba(0, 230, 160, 0.4);
-            margin-bottom: 8px;
-        }
-
-        .soon-card-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-
-        .soon-card-desc {
-            font-size: 0.85rem;
-            color: #aabbcc;
-            line-height: 1.5;
-        }
-
-        @keyframes soon-card-pulse {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(0, 230, 160, 0.1), 0 0 40px rgba(0, 200, 255, 0.06);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(0, 230, 160, 0.2), 0 0 60px rgba(0, 200, 255, 0.12);
-            }
-        }
-
-        @keyframes soon-card-shimmer {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes soon-card-bounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-3px) scale(1.05); }
         }
 
         .celebrate-banner {
@@ -1439,18 +1390,6 @@
             .easter-popup .popup-title {
                 font-size: 1.2rem;
             }
-            .soon-card {
-                padding: 18px;
-                gap: 12px;
-            }
-            .soon-card-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 1.3rem;
-            }
-            .soon-card-title {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
@@ -1525,18 +1464,6 @@
             </div>
 
             <p class="no-results" id="noResults">Ничего не найдено</p>
-
-            <!-- Анонс: Игровой зал -->
-            <div class="soon-card">
-                <div class="soon-card-icon">🎮</div>
-                <div class="soon-card-content">
-                    <div class="soon-card-badge">Скоро</div>
-                    <div class="soon-card-title">Игровой зал</div>
-                    <div class="soon-card-desc">
-                        Все игры хаба в одном месте. Отдельные карточки игр останутся — они по-прежнему доступны в общем списке, потому что выглядят по-разному.
-                    </div>
-                </div>
-            </div>
 
             <p class="section-label">📖 Текстовые статьи</p>
 
@@ -1643,6 +1570,41 @@
             </a>
 
             <p class="section-label">🔗 Приложения</p>
+
+            <!-- 🎮 ИГРОВОЙ ЗАЛ - главная новинка -->
+            <a href="#" class="app-link featured" 
+               data-search="игровой зал games мини-игры игры браузер аркада монеты статистика рейтинг" 
+               data-category="games"
+               data-id="games"
+               data-icon="🎮"
+               data-title="Игровой зал"
+               data-desc="Все игры хаба в одном месте. Монеты за победы, статистика и рейтинг. Выбирай игру и играй прямо в браузере!"
+               data-url="https://arshinovseva13-ux.github.io/games/"
+               data-url-display="arshinovseva13-ux.github.io/games/"
+               data-badges='[{"text":"🎮 Новое","class":"badge-featured"}]'>
+                <div class="link-icon">🎮</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Игровой зал
+                        <span class="link-badge badge-featured">🎮 Новое</span>
+                    </div>
+                    <div class="link-desc">Все игры хаба в одном месте. Монеты за победы, статистика и рейтинг. Выбирай игру и играй прямо в браузере!</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="games">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/games/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
 
             <a href="#" class="app-link" 
                data-search="конструктор кроссвордов crossword" 
@@ -1964,8 +1926,8 @@
                 <div class="celebrate-glow"></div>
                 <div class="celebrate-content">
                     <div class="celebrate-icon">🎉</div>
-                    <div class="celebrate-title">10 приложений!</div>
-                    <div class="celebrate-subtitle">Мы достигли круглой отметки — и это только начало. Спасибо, что вы с нами!</div>
+                    <div class="celebrate-title">11 приложений!</div>
+                    <div class="celebrate-subtitle">Игровой зал вышел — теперь у нас 11 приложений! Спасибо, что вы с нами!</div>
                 </div>
             </div>
 
@@ -1984,27 +1946,31 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">11.10.2026</span>
+                            <span>🎮 Игровой зал открыт! Все игры хаба теперь собраны в одном приложении. Монеты за победы, статистика и рейтинг. Стало 11 приложений — обновлён праздничный баннер.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">11.10.2026</span>
                             <span>🎮 Добавлен анонс «Игровой зал» — скоро появится витрина со всеми играми хаба в одном месте. Отдельные карточки игр останутся, потому что выглядят по-разному.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">08.10.2026</span>
-                            <span>🕵️ Наконец-то! Добавлена игра «Мафия» — классическая социальная игра на дедукцию и логику. Событие, которого все ждали! Также удалено приложение Clause AI Studio (по причине ограниченного лимита токенов и отсутствия платного тарифа) — как и обещали, осталось ровно 10 приложений. Статус разработки обновлён: теперь ведётся работа над «Календарём событий с пасхалками».</span>
+                            <span>🕵️ Наконец-то! Добавлена игра «Мафия» — классическая социальная игра на дедукцию и логику. Событие, которого все ждали! Также удалено приложение Clause AI Studio — как и обещали, осталось ровно 10 приложений.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">08.10.2026</span>
-                            <span>Добавлена третья текстовая статья — «Метод CFOP — Собирание кубика Рубика». Подробный разбор скоростной сборки: Cross, F2L, OLL, PLL.</span>
+                            <span>Добавлена третья текстовая статья — «Метод CFOP — Собирание кубика Рубика».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">07.10.2026</span>
-                            <span>⚠️ Важное объявление: приложение Clause AI Studio будет удалено с хаба. Причина — ограниченный лимит токенов для AI-агента и отсутствие платного тарифа. Замена уже в разработке: как только выйдет «Мафия» от Claude, Clause AI Studio будет убрано, чтобы сохранить ровно 10 приложений.</span>
+                            <span>⚠️ Важное объявление: приложение Clause AI Studio будет удалено с хаба. Причина — ограниченный лимит токенов и отсутствие платного тарифа.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">07.10.2026</span>
-                            <span>🥚 Добавлена вечная пасхалка — секретная кнопка в самом низу страницы. Кто найдёт — получит праздничный салют и благодарность! Пасхалка стала главным событием хаба.</span>
+                            <span>🥚 Добавлена вечная пасхалка — секретная кнопка в самом низу страницы. Кто найдёт — получит праздничный салют и благодарность!</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">06.10.2026</span>
-                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр». В честь события на главной появился праздничный баннер. Статус разработки обновлён: теперь ведётся работа над игрой «Мафия».</span>
+                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр». Появился праздничный баннер.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">03.10.2026</span>
@@ -2016,51 +1982,19 @@
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
-                            <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи» над приложениями. Поиск теперь работает и по статьям.</span>
+                            <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
-                            <span>Добавлено приложение «Менеджер расходов» — учёт доходов и расходов, контроль бюджета и анализ трат.</span>
+                            <span>Добавлено приложение «Менеджер расходов».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">27.09.2026</span>
-                            <span>Крупное обновление хаба: добавлены фильтры по категориям, рейтинг со звёздами, внутренние страницы-превью, блок «Недавно просмотренные».</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">01.09.2026</span>
-                            <span>Добавлен счётчик сеансов. Статус разработки: игра «Сапёр».</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">13.06.2026</span>
-                            <span>Добавлены «Рекомендации по отпуску». Конвертер переименован в «Конвертер файлов».</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">07.06.2026</span>
-                            <span>Добавлен Конвертер. Статус разработки: рекомендации по отпуску.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">31.05.2026</span>
-                            <span>Добавлен Компилятор HTML / CSS / JS.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">30.05.2026</span>
-                            <span>Добавлена игра «Пинг-Понг».</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">29.05.2026</span>
-                            <span>Добавлен овал «Сейчас в разработке» и сворачиваемая история обновлений.</span>
+                            <span>Крупное обновление хаба: фильтры по категориям, рейтинг со звёздами, превью, «Недавно просмотренные».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">28.05.2026</span>
                             <span>Часы переведены на местное время. Добавлен поиск. Добавлены описания приложений.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">28.05.2026</span>
-                            <span>Добавлен Clause AI Studio.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">28.05.2026</span>
-                            <span>Добавлено описание компании. Close Приложения — дочерняя компания MD2. Добавлены ссылки на MD2 и Дзен. Добавлено «Крестики Нолики». Удалена ссылка Lumina Studio.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">27.05.2026</span>
