@@ -460,6 +460,40 @@
             }
         }
 
+        /* Спец. стиль для Календаря */
+        .app-link.calendar-feature {
+            background: linear-gradient(135deg, rgba(255, 100, 180, 0.1), rgba(139, 108, 255, 0.1), rgba(0, 200, 255, 0.08));
+            border: 1px solid rgba(255, 120, 200, 0.4);
+            animation: calendar-pulse 3s ease-in-out infinite;
+        }
+
+        .app-link.calendar-feature::before {
+            background: radial-gradient(circle at 85% 30%, rgba(255, 120, 200, 0.1) 0%, transparent 60%);
+        }
+
+        .app-link.calendar-feature:hover {
+            border-color: rgba(255, 120, 200, 0.7);
+            box-shadow: 0 16px 40px rgba(255, 100, 180, 0.2);
+            background: linear-gradient(135deg, rgba(255, 100, 180, 0.15), rgba(139, 108, 255, 0.15), rgba(0, 200, 255, 0.12));
+        }
+
+        .app-link.calendar-feature .link-icon {
+            background: rgba(255, 120, 200, 0.2);
+        }
+
+        .app-link.calendar-feature .arrow-icon {
+            color: #ff78c8;
+        }
+
+        @keyframes calendar-pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 100, 180, 0.1), 0 0 40px rgba(139, 108, 255, 0.06);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 100, 180, 0.2), 0 0 60px rgba(139, 108, 255, 0.12);
+            }
+        }
+
         .article-link {
             display: flex;
             align-items: center;
@@ -595,7 +629,13 @@
             background: rgba(0, 230, 160, 0.2);
             color: #00e6a0;
             border: 1px solid rgba(0, 230, 160, 0.5);
-            animation: badge-featured-pulse 2s ease-in-out infinite;
+        }
+
+        .badge-calendar {
+            background: rgba(255, 120, 200, 0.2);
+            color: #ff78c8;
+            border: 1px solid rgba(255, 120, 200, 0.5);
+            animation: badge-calendar-pulse 2s ease-in-out infinite;
         }
 
         @keyframes badge-new-pulse {
@@ -607,12 +647,12 @@
             }
         }
 
-        @keyframes badge-featured-pulse {
+        @keyframes badge-calendar-pulse {
             0%, 100% {
-                box-shadow: 0 0 8px rgba(0, 230, 160, 0.3);
+                box-shadow: 0 0 8px rgba(255, 120, 200, 0.3);
             }
             50% {
-                box-shadow: 0 0 18px rgba(0, 230, 160, 0.6);
+                box-shadow: 0 0 18px rgba(255, 120, 200, 0.6);
             }
         }
 
@@ -1571,7 +1611,42 @@
 
             <p class="section-label">🔗 Приложения</p>
 
-            <!-- 🎮 ИГРОВОЙ ЗАЛ - главная новинка -->
+            <!-- 📅 КАЛЕНДАРЬ СОБЫТИЙ - новинка -->
+            <a href="#" class="app-link calendar-feature" 
+               data-search="календарь событий пасхалки праздники бонусы calendar" 
+               data-category="tools"
+               data-id="calendar"
+               data-icon="📅"
+               data-title="Календарь событий с пасхалками"
+               data-desc="Интерактивный календарь с праздниками, бонусными датами и спрятанными сюрпризами. Найди все пасхалки!"
+               data-url="https://arshinovseva13-ux.github.io/calendar/"
+               data-url-display="arshinovseva13-ux.github.io/calendar/"
+               data-badges='[{"text":"✨ Новое","class":"badge-calendar"}]'>
+                <div class="link-icon">📅</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Календарь событий с пасхалками
+                        <span class="link-badge badge-calendar">✨ Новое</span>
+                    </div>
+                    <div class="link-desc">Интерактивный календарь с праздниками, бонусными датами и спрятанными сюрпризами. Найди все пасхалки!</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="calendar">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/calendar/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
+
+            <!-- 🎮 Игровой зал - выделен, но уже без "Новое" -->
             <a href="#" class="app-link featured" 
                data-search="игровой зал games мини-игры игры браузер аркада монеты статистика рейтинг" 
                data-category="games"
@@ -1581,12 +1656,12 @@
                data-desc="Все игры хаба в одном месте. Монеты за победы, статистика и рейтинг. Выбирай игру и играй прямо в браузере!"
                data-url="https://arshinovseva13-ux.github.io/games/"
                data-url-display="arshinovseva13-ux.github.io/games/"
-               data-badges='[{"text":"🎮 Новое","class":"badge-featured"}]'>
+               data-badges='[{"text":"🎮 Выбор редакции","class":"badge-featured"}]'>
                 <div class="link-icon">🎮</div>
                 <div class="link-info">
                     <div class="link-title">
                         Игровой зал
-                        <span class="link-badge badge-featured">🎮 Новое</span>
+                        <span class="link-badge badge-featured">🎮 Выбор редакции</span>
                     </div>
                     <div class="link-desc">Все игры хаба в одном месте. Монеты за победы, статистика и рейтинг. Выбирай игру и играй прямо в браузере!</div>
                     <div class="link-meta">
@@ -1708,14 +1783,10 @@
                data-title="Мафия"
                data-desc="Классическая социальная игра на дедукцию и логику. Вычисли мафию среди мирных жителей!"
                data-url="https://arshinovseva13-ux.github.io/Mafia1/"
-               data-url-display="arshinovseva13-ux.github.io/Mafia1/"
-               data-badges='[{"text":"✨ Новое","class":"badge-new"}]'>
+               data-url-display="arshinovseva13-ux.github.io/Mafia1/">
                 <div class="link-icon">🕵️</div>
                 <div class="link-info">
-                    <div class="link-title">
-                        Мафия
-                        <span class="link-badge badge-new">✨ Новое</span>
-                    </div>
+                    <div class="link-title">Мафия</div>
                     <div class="link-desc">Классическая социальная игра на дедукцию и логику. Вычисли мафию среди мирных жителей!</div>
                     <div class="link-meta">
                         <div class="rating" data-app-id="mafia">
@@ -1926,15 +1997,15 @@
                 <div class="celebrate-glow"></div>
                 <div class="celebrate-content">
                     <div class="celebrate-icon">🎉</div>
-                    <div class="celebrate-title">11 приложений!</div>
-                    <div class="celebrate-subtitle">Игровой зал вышел — теперь у нас 11 приложений! Спасибо, что вы с нами!</div>
+                    <div class="celebrate-title">12 приложений!</div>
+                    <div class="celebrate-subtitle">Календарь событий вышел — теперь у нас 12 приложений! Спасибо, что вы с нами!</div>
                 </div>
             </div>
 
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
-                <span class="dev-highlight">Календарь событий с пасхалками</span>
+                <span class="dev-highlight">Текстовая статья про Скибиди Туалет</span>
             </div>
 
             <div class="changelog-section">
@@ -1946,15 +2017,15 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">11.10.2026</span>
-                            <span>🎮 Игровой зал открыт! Все игры хаба теперь собраны в одном приложении. Монеты за победы, статистика и рейтинг. Стало 11 приложений — обновлён праздничный баннер.</span>
+                            <span>📅 Календарь событий с пасхалками вышел! Интерактивный календарь с праздниками, бонусными датами и спрятанными сюрпризами. Стало 12 приложений — обновлён праздничный баннер. Статус разработки: текстовая статья про Скибиди Туалет.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">11.10.2026</span>
-                            <span>🎮 Добавлен анонс «Игровой зал» — скоро появится витрина со всеми играми хаба в одном месте. Отдельные карточки игр останутся, потому что выглядят по-разному.</span>
+                            <span>🎮 Игровой зал открыт! Все игры хаба теперь собраны в одном приложении. Монеты за победы, статистика и рейтинг.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">08.10.2026</span>
-                            <span>🕵️ Наконец-то! Добавлена игра «Мафия» — классическая социальная игра на дедукцию и логику. Событие, которого все ждали! Также удалено приложение Clause AI Studio — как и обещали, осталось ровно 10 приложений.</span>
+                            <span>🕵️ Добавлена игра «Мафия». Удалено приложение Clause AI Studio — осталось ровно 10 приложений.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">08.10.2026</span>
@@ -1962,31 +2033,19 @@
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">07.10.2026</span>
-                            <span>⚠️ Важное объявление: приложение Clause AI Studio будет удалено с хаба. Причина — ограниченный лимит токенов и отсутствие платного тарифа.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">07.10.2026</span>
-                            <span>🥚 Добавлена вечная пасхалка — секретная кнопка в самом низу страницы. Кто найдёт — получит праздничный салют и благодарность!</span>
+                            <span>⚠️ Объявление об удалении Clause AI Studio. Добавлена вечная пасхалка-звёздочка внизу страницы.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">06.10.2026</span>
-                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр». Появился праздничный баннер.</span>
+                            <span>🎉 Достигнута отметка в 10 приложений! Добавлена игра «Сапёр».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">03.10.2026</span>
-                            <span>Добавлена вторая текстовая статья — «Claude Sonnet 5.5».</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">03.10.2026</span>
-                            <span>Добавлено приложение Paragon OS — симулятор операционной системы. Работает только через VPN.</span>
+                            <span>Добавлена статья «Claude Sonnet 5.5». Добавлено приложение Paragon OS.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">02.10.2026</span>
-                            <span>Добавлена первая текстовая статья «AGI». Введён отдельный раздел «Текстовые статьи».</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-date">02.10.2026</span>
-                            <span>Добавлено приложение «Менеджер расходов».</span>
+                            <span>Добавлена первая текстовая статья «AGI». Добавлено приложение «Менеджер расходов».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">27.09.2026</span>
