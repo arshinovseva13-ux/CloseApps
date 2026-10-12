@@ -565,22 +565,10 @@
             border: 1px solid rgba(0, 200, 255, 0.3);
         }
 
-        .badge-intl {
-            background: rgba(200, 180, 255, 0.15);
-            color: #c8b4ff;
-            border: 1px solid rgba(180, 150, 255, 0.3);
-        }
-
         .badge-mobile {
             background: rgba(0, 230, 160, 0.15);
             color: #00e6a0;
             border: 1px solid rgba(0, 230, 160, 0.3);
-        }
-
-        .badge-vpn {
-            background: rgba(255, 120, 120, 0.15);
-            color: #ff7878;
-            border: 1px solid rgba(255, 120, 120, 0.35);
         }
 
         .badge-new {
@@ -1125,7 +1113,6 @@
             border-color: rgba(0, 212, 255, 0.5);
         }
 
-        /* ===== ДВЕ ПАСХАЛКИ ===== */
         .easter-eggs-row {
             display: flex;
             align-items: center;
@@ -1332,7 +1319,6 @@
             pointer-events: auto;
         }
 
-        /* ===== ТЕРМИНАЛ ===== */
         .terminal-overlay {
             position: fixed;
             top: 0;
@@ -1490,11 +1476,6 @@
 
         .terminal-line.info {
             color: #c8b4ff;
-        }
-
-        .terminal-line .ascii {
-            color: #00ff8c;
-            text-shadow: 0 0 8px rgba(0, 255, 140, 0.5);
         }
 
         .terminal-prompt {
@@ -1698,7 +1679,6 @@
 
             <p class="section-label">📖 Текстовые статьи</p>
 
-            <!-- 5 партий России - новая с бейджем "Новое" -->
             <a href="#" class="article-link" 
                data-search="пять главных партий россии политика госдума единая россия кпрф лдпр новые люди справедливая россия статья" 
                data-category="other"
@@ -1872,7 +1852,6 @@
 
             <p class="section-label">🔗 Приложения</p>
 
-            <!-- Календарь событий - уже без "Новое" -->
             <a href="#" class="app-link" 
                data-search="календарь событий пасхалки праздники бонусы calendar" 
                data-category="tools"
@@ -1903,7 +1882,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Игровой зал -->
             <a href="#" class="app-link featured" 
                data-search="игровой зал games мини-игры игры браузер аркада монеты статистика рейтинг" 
                data-category="games"
@@ -2240,7 +2218,7 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">12.10.2026</span>
-                            <span>🏛️ Добавлена пятая текстовая статья — «Пять главных партий России». Внедрена пасхалка-терминал (кнопка <code>>_</code> рядом со звёздочкой). Бейдж «Новое» перешёл с Календаря событий на статью про партии. Статус разработки: статья по ЛДПР.</span>
+                            <span>🏛️ Добавлена пятая текстовая статья — «Пять главных партий России». Внедрена пасхалка-терминал (кнопка >_ рядом со звёздочкой). Бейдж «Новое» перешёл с Календаря событий на статью про партии. Статус разработки: статья по ЛДПР.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">12.10.2026</span>
@@ -2298,7 +2276,6 @@
                 </div>
             </div>
 
-            <!-- ДВЕ ПАСХАЛКИ -->
             <div class="easter-eggs-row">
                 <div class="easter-egg-trigger star-egg" id="easterEggTrigger" title="...">
                     <span class="egg-icon">✨</span>
@@ -2337,7 +2314,6 @@
         <button class="popup-close" id="popupClose">Спасибо!</button>
     </div>
 
-    <!-- ТЕРМИНАЛ -->
     <div class="terminal-overlay" id="terminalOverlay">
         <div class="terminal">
             <div class="terminal-header">
@@ -2352,7 +2328,7 @@
             <div class="terminal-body" id="terminalBody"></div>
             <div class="terminal-prompt">
                 <span class="terminal-prompt-label">close@hub:~$</span>
-                <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" autofocus>
+                <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false">
             </div>
             <div class="terminal-hint">
                 <span>Введи <kbd>help</kbd> — список команд</span>
@@ -2400,24 +2376,29 @@
     </div>
 
     <script>
+        // ===== ВРЕМЯ =====
         function updateLocalTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('localTime').textContent = `${hours}:${minutes}`;
-            
-            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const shortTZ = timeZone.split('/').pop().replace('_', ' ');
-            document.getElementById('timeZoneLabel').textContent = shortTZ;
+            try {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                document.getElementById('localTime').textContent = hours + ':' + minutes;
+                
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const shortTZ = timeZone.split('/').pop().replace('_', ' ');
+                document.getElementById('timeZoneLabel').textContent = shortTZ;
+            } catch(e) { console.error('Time error:', e); }
         }
         updateLocalTime();
         setInterval(updateLocalTime, 1000);
 
+        // ===== РЕЙТИНГИ =====
         const RATING_KEY = 'closeAppsRatings';
-        let ratings = JSON.parse(localStorage.getItem(RATING_KEY)) || {};
+        let ratings = {};
+        try { ratings = JSON.parse(localStorage.getItem(RATING_KEY)) || {}; } catch(e) { ratings = {}; }
 
         function saveRatings() {
-            localStorage.setItem(RATING_KEY, JSON.stringify(ratings));
+            try { localStorage.setItem(RATING_KEY, JSON.stringify(ratings)); } catch(e) {}
         }
 
         function updateStarsDisplay(container, value) {
@@ -2451,6 +2432,7 @@
         }
         initRatings();
 
+        // ===== КАТЕГОРИИ =====
         const categoryButtons = document.querySelectorAll('.category-btn');
         let currentCategory = 'all';
 
@@ -2463,6 +2445,7 @@
             });
         });
 
+        // ===== ПОИСК =====
         const searchInput = document.getElementById('searchInput');
         const appLinks = document.querySelectorAll('.app-link, .article-link');
         const noResults = document.getElementById('noResults');
@@ -2477,7 +2460,7 @@
                 const desc = link.querySelector('.link-desc') ? link.querySelector('.link-desc').textContent.toLowerCase() : '';
                 const category = link.getAttribute('data-category') || '';
 
-                const matchesSearch = query === '' || searchData.includes(query) || title.includes(query) || desc.includes(query);
+                const matchesSearch = query === '' || searchData.indexOf(query) !== -1 || title.indexOf(query) !== -1 || desc.indexOf(query) !== -1;
                 const matchesCategory = currentCategory === 'all' || category === currentCategory;
 
                 if (matchesSearch && matchesCategory) {
@@ -2493,15 +2476,12 @@
 
         searchInput.addEventListener('input', applyFilters);
 
+        // ===== НЕДАВНО ПРОСМОТРЕННЫЕ =====
         const RECENT_KEY = 'closeAppsRecent';
         const MAX_RECENT = 5;
 
         function getRecent() {
-            try {
-                return JSON.parse(localStorage.getItem(RECENT_KEY)) || [];
-            } catch {
-                return [];
-            }
+            try { return JSON.parse(localStorage.getItem(RECENT_KEY)) || []; } catch(e) { return []; }
         }
 
         function addToRecent(appId) {
@@ -2509,7 +2489,7 @@
             recent = recent.filter(id => id !== appId);
             recent.unshift(appId);
             if (recent.length > MAX_RECENT) recent = recent.slice(0, MAX_RECENT);
-            localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+            try { localStorage.setItem(RECENT_KEY, JSON.stringify(recent)); } catch(e) {}
             renderRecent();
         }
 
@@ -2527,7 +2507,7 @@
             list.innerHTML = '';
 
             recent.forEach(appId => {
-                const link = document.querySelector(`[data-id="${appId}"]`);
+                const link = document.querySelector('[data-id="' + appId + '"]');
                 if (!link) return;
                 
                 const icon = link.getAttribute('data-icon');
@@ -2536,7 +2516,7 @@
                 const item = document.createElement('a');
                 item.href = '#';
                 item.className = 'recent-item';
-                item.innerHTML = `<span class="recent-icon">${icon}</span><span>${title}</span>`;
+                item.innerHTML = '<span class="recent-icon">' + icon + '</span><span>' + title + '</span>';
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
                     openModal(link);
@@ -2546,6 +2526,7 @@
         }
         renderRecent();
 
+        // ===== МОДАЛЬНОЕ ОКНО =====
         const modalOverlay = document.getElementById('modalOverlay');
         const modalIcon = document.getElementById('modalIcon');
         const modalTitle = document.getElementById('modalTitle');
@@ -2589,7 +2570,7 @@
                     const badges = JSON.parse(badgesRaw);
                     badges.forEach(b => {
                         const span = document.createElement('span');
-                        span.className = `link-badge ${b.class}`;
+                        span.className = 'link-badge ' + b.class;
                         span.textContent = b.text;
                         modalBadges.appendChild(span);
                     });
@@ -2620,7 +2601,7 @@
                     saveRatings();
                     updateModalStars(value);
                     
-                    const cardRating = document.querySelector(`.rating[data-app-id="${currentAppId}"]`);
+                    const cardRating = document.querySelector('.rating[data-app-id="' + currentAppId + '"]');
                     if (cardRating) updateStarsDisplay(cardRating, value);
                 }
             });
@@ -2636,9 +2617,6 @@
         modalOverlay.addEventListener('click', function(e) {
             if (e.target === modalOverlay) closeModal();
         });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('show')) closeModal();
-        });
 
         appLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -2647,6 +2625,7 @@
             });
         });
 
+        // ===== ИСТОРИЯ ОБНОВЛЕНИЙ =====
         const changelogHeader = document.getElementById('changelogHeader');
         const changelogContent = document.getElementById('changelogContent');
         const changelogToggle = document.getElementById('changelogToggle');
@@ -2671,18 +2650,13 @@
         const easterPopup = document.getElementById('easterPopup');
         const easterPopupOverlay = document.getElementById('easterPopupOverlay');
         const popupClose = document.getElementById('popupClose');
-        const fireworksCanvas = document.getElementById('fireworksCanvas');
-        const fctx = fireworksCanvas.getContext('2d');
-        let fireworks = [];
-        let fireworksAnimation = null;
-        let fireworksActive = false;
 
         easterTrigger.addEventListener('click', function() {
             easterPopupOverlay.classList.add('show');
             easterPopup.classList.add('show');
             document.body.style.overflow = 'hidden';
             startFireworks();
-            localStorage.setItem('closeAppsEasterEggFound', 'true');
+            try { localStorage.setItem('closeAppsEasterEggFound', 'true'); } catch(e) {}
         });
 
         function closeEasterPopup() {
@@ -2694,15 +2668,13 @@
 
         popupClose.addEventListener('click', closeEasterPopup);
         easterPopupOverlay.addEventListener('click', closeEasterPopup);
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && easterPopup.classList.contains('show')) {
-                closeEasterPopup();
-            }
-        });
 
-        if (localStorage.getItem('closeAppsEasterEggFound') === 'true') {
-            easterTrigger.style.opacity = '0.5';
-        }
+        // ===== САЛЮТ =====
+        const fireworksCanvas = document.getElementById('fireworksCanvas');
+        const fctx = fireworksCanvas.getContext('2d');
+        let fireworks = [];
+        let fireworksAnimation = null;
+        let fireworksActive = false;
 
         function resizeFireworks() {
             fireworksCanvas.width = window.innerWidth;
@@ -2711,39 +2683,37 @@
         resizeFireworks();
         window.addEventListener('resize', resizeFireworks);
 
-        class FireworkParticle {
-            constructor(x, y, color) {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 6 + 2;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
-                this.life = 1;
-                this.decay = 0.015 + Math.random() * 0.015;
-                this.size = Math.random() * 2.5 + 1;
-                this.gravity = 0.05;
-                this.friction = 0.98;
-            }
-            update() {
-                this.vx *= this.friction;
-                this.vy *= this.friction;
-                this.vy += this.gravity;
-                this.x += this.vx;
-                this.y += this.vy;
-                this.life -= this.decay;
-            }
-            draw(ctx) {
-                ctx.globalAlpha = Math.max(0, this.life);
-                ctx.fillStyle = this.color;
-                ctx.shadowColor = this.color;
-                ctx.shadowBlur = 15;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+        function FireworkParticle(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 6 + 2;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed;
+            this.life = 1;
+            this.decay = 0.015 + Math.random() * 0.015;
+            this.size = Math.random() * 2.5 + 1;
+            this.gravity = 0.05;
+            this.friction = 0.98;
         }
+        FireworkParticle.prototype.update = function() {
+            this.vx *= this.friction;
+            this.vy *= this.friction;
+            this.vy += this.gravity;
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life -= this.decay;
+        };
+        FireworkParticle.prototype.draw = function(ctx) {
+            ctx.globalAlpha = Math.max(0, this.life);
+            ctx.fillStyle = this.color;
+            ctx.shadowColor = this.color;
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        };
 
         function createExplosion(x, y) {
             const colors = ['#ffd700', '#ff9a3c', '#ff5e9c', '#8b6cff', '#00d4ff', '#00ff8c', '#ffffff'];
@@ -2786,8 +2756,8 @@
             const cx = fireworksCanvas.width / 2;
             const cy = fireworksCanvas.height * 0.35;
             createExplosion(cx, cy);
-            setTimeout(() => createExplosion(cx - 150, cy + 50), 200);
-            setTimeout(() => createExplosion(cx + 150, cy + 50), 400);
+            setTimeout(function() { createExplosion(cx - 150, cy + 50); }, 200);
+            setTimeout(function() { createExplosion(cx + 150, cy + 50); }, 400);
             
             fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
             animateFireworks();
@@ -2813,23 +2783,20 @@
         let commandHistory = [];
         let historyIndex = -1;
         let terminalOpen = false;
+        let terminalInitialized = false;
 
-        const asciiBanner = `
-╔══════════════════════════════════════════╗
-║   ██████╗██╗      ██████╗ ███████╗███████╗
-║  ██╔════╝██║     ██╔═══██╗██╔════╝██╔════╝
-║  ██║     ██║     ██║   ██║███████╗█████╗  
-║  ██║     ██║     ██║   ██║╚════██║██╔══╝  
-║  ╚██████╗███████╗╚██████╔╝███████║███████╗
-║   ╚═════╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝
-║                                          ║
-║        T E R M I N A L  v1.0             ║
-║       Close Приложения · MD2             ║
-╚══════════════════════════════════════════╝`;
+        function printLine(text, type) {
+            type = type || '';
+            const line = document.createElement('div');
+            line.className = 'terminal-line' + (type ? ' ' + type : '');
+            line.textContent = text;
+            terminalBody.appendChild(line);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
 
         const commands = {
-            help: () => {
-                printLine('📖 Доступные команды:', 'info');
+            help: function() {
+                printLine('Доступные команды:', 'info');
                 printLine('');
                 printLine('  help              — показать это сообщение');
                 printLine('  about             — информация о хабе');
@@ -2842,168 +2809,154 @@
                 printLine('  clear             — очистить экран');
                 printLine('  exit              — закрыть терминал');
                 printLine('');
-                printLine('🔐 Секретные команды:', 'warn');
-                printLine('  matrix            — ...');
-                printLine('  party             — ...');
-                printLine('  hack              — ...');
-                printLine('  coffee            — ...');
-                printLine('  sudo              — ...');
-                printLine('  admin             — ...');
-                printLine('  close             — ...');
-                printLine('  md2               — ...');
-                printLine('  secret            — ...');
-                printLine('  love              — ...');
-                printLine('  hi                — ...');
-                printLine('  ping              — ...');
-                printLine('  ls                — ...');
-                printLine('  cat               — ...');
-                printLine('  weather           — ...');
-                printLine('  ascii             — ...');
-                printLine('  nyan              — ...');
+                printLine('Секретные команды:', 'warn');
+                printLine('  matrix, party, hack, coffee, sudo,');
+                printLine('  admin, close, md2, secret, love,');
+                printLine('  hi, ping, ls, cat, weather, ascii, nyan');
                 printLine('');
-                printLine('💡 Подсказка: попробуй ввести названия приложений или команду secret', 'dim');
+                printLine('Подсказка: попробуй команду secret', 'dim');
             },
-            about: () => {
+            about: function() {
                 printLine('Close Приложения — дочерняя компания MD2.', 'success');
                 printLine('Мы создаём веб-приложения: игры, инструменты, обучение.');
-                printLine('Хаб: https://arshinovseva13-ux.github.io/CloseApps/', 'dim');
+                printLine('Хаб: arshinovseva13-ux.github.io/CloseApps/', 'dim');
             },
-            apps: () => {
-                printLine('📱 Все приложения (11):', 'info');
+            apps: function() {
+                printLine('Все приложения (11):', 'info');
                 const apps = document.querySelectorAll('.app-link');
-                apps.forEach((app, i) => {
+                apps.forEach(function(app, i) {
                     const title = app.getAttribute('data-title');
                     const icon = app.getAttribute('data-icon');
-                    printLine(`  ${i + 1}. ${icon} ${title}`);
+                    printLine('  ' + (i + 1) + '. ' + icon + ' ' + title);
                 });
             },
-            articles: () => {
-                printLine('📖 Текстовые статьи (5):', 'info');
+            articles: function() {
+                printLine('Текстовые статьи (5):', 'info');
                 const articles = document.querySelectorAll('.article-link');
-                articles.forEach((art, i) => {
+                articles.forEach(function(art, i) {
                     const title = art.getAttribute('data-title');
                     const icon = art.getAttribute('data-icon');
-                    printLine(`  ${i + 1}. ${icon} ${title}`);
+                    printLine('  ' + (i + 1) + '. ' + icon + ' ' + title);
                 });
             },
-            dev: () => {
-                printLine('⚙️ Сейчас в разработке: Статья по ЛДПР', 'warn');
+            dev: function() {
+                printLine('Сейчас в разработке: Статья по ЛДПР', 'warn');
                 printLine('Ожидайте обновлений!', 'dim');
             },
-            stats: () => {
+            stats: function() {
                 const apps = document.querySelectorAll('.app-link').length;
                 const articles = document.querySelectorAll('.article-link').length;
-                printLine('📊 Статистика хаба:', 'info');
-                printLine(`  Приложений: ${apps}`);
-                printLine(`  Статей: ${articles}`);
-                printLine(`  Всего контента: ${apps + articles}`);
-                printLine(`  Пасхалок: 2 (звёздочка и терминал)`);
+                printLine('Статистика хаба:', 'info');
+                printLine('  Приложений: ' + apps);
+                printLine('  Статей: ' + articles);
+                printLine('  Всего контента: ' + (apps + articles));
+                printLine('  Пасхалок: 2 (звёздочка и терминал)');
             },
-            date: () => {
+            date: function() {
                 const now = new Date();
-                printLine(`📅 ${now.toLocaleDateString('ru-RU')}`, 'success');
-                printLine(`🕐 ${now.toLocaleTimeString('ru-RU')}`, 'success');
+                printLine('Дата: ' + now.toLocaleDateString('ru-RU'), 'success');
+                printLine('Время: ' + now.toLocaleTimeString('ru-RU'), 'success');
             },
-            whoami: () => {
-                printLine('👤 Ты — гость системы Close.', 'success');
+            whoami: function() {
+                printLine('Ты — гость системы Close.', 'success');
                 printLine('Уровень доступа: обычный.', 'dim');
                 printLine('Но кто знает, что скрывается глубже...', 'warn');
             },
-            clear: () => {
+            clear: function() {
                 terminalBody.innerHTML = '';
             },
-            exit: () => {
+            exit: function() {
                 closeTerminal();
             },
-
-            matrix: () => {
-                printLine('🟢 Wake up, Neo...', 'success');
-                printLine('🟢 The Matrix has you...', 'success');
-                printLine('🟢 Follow the white rabbit.', 'success');
+            matrix: function() {
+                printLine('Wake up, Neo...', 'success');
+                printLine('The Matrix has you...', 'success');
+                printLine('Follow the white rabbit.', 'success');
                 printLine('');
-                printLine('🐇 Knock, knock, Neo.', 'info');
+                printLine('Knock, knock, Neo.', 'info');
                 triggerMatrixEffect();
             },
-            party: () => {
-                printLine('🎉 ЗАЖИГАЕМ!', 'success');
-                printLine('🥳 🎊 🎈 🎉 🎁 🎂 🎈 🎊 🥳', 'warn');
+            party: function() {
+                printLine('ЗАЖИГАЕМ!', 'success');
                 printLine('Все приложения танцуют!', 'info');
                 triggerPartyEffect();
             },
-            hack: () => {
-                printLine('💻 Инициализация взлома...', 'success');
+            hack: function() {
+                printLine('Инициализация взлома...', 'success');
                 let progress = 0;
-                const interval = setInterval(() => {
+                const interval = setInterval(function() {
                     progress += Math.floor(Math.random() * 15 + 5);
                     if (progress >= 100) progress = 100;
-                    printLine(`  [${'█'.repeat(Math.floor(progress / 5))}${'░'.repeat(20 - Math.floor(progress / 5))}] ${progress}%`);
+                    const bars = '█'.repeat(Math.floor(progress / 5));
+                    const empty = '░'.repeat(20 - Math.floor(progress / 5));
+                    printLine('  [' + bars + empty + '] ' + progress + '%');
                     if (progress === 100) {
                         clearInterval(interval);
                         printLine('');
-                        printLine('✅ Взлом завершён!', 'success');
-                        printLine('🔓 Получен доступ к /dev/coffee', 'info');
-                        printLine('Шутка 😄. Ты просто получил +1 к настроению!', 'warn');
+                        printLine('Взлом завершён!', 'success');
+                        printLine('Получен доступ к /dev/coffee', 'info');
+                        printLine('Шутка. Ты просто получил +1 к настроению!', 'warn');
                     }
                 }, 200);
             },
-            coffee: () => {
-                printLine('☕ Не могу приготовить кофе — я всего лишь скрипт.', 'warn');
+            coffee: function() {
+                printLine('Не могу приготовить кофе — я всего лишь скрипт.', 'warn');
                 printLine('');
                 printLine('   ( (', 'dim');
                 printLine('    ) )', 'dim');
                 printLine('  ........', 'dim');
                 printLine('  |      |]', 'dim');
                 printLine('  \\      /', 'dim');
-                printLine('   `----\\'', 'dim');
+                printLine('   `----\'', 'dim');
                 printLine('');
                 printLine('Но ты можешь выпить его сам!', 'success');
             },
-            sudo: () => {
-                printLine('🚫 Отказано в доступе.', 'error');
+            sudo: function() {
+                printLine('Отказано в доступе.', 'error');
                 printLine('Мы сообщили об этой попытке в MD2.', 'warn');
                 printLine('Шутка! Никому мы не сообщали :)', 'dim');
             },
-            admin: () => {
-                printLine('🔐 Проверка прав администратора...', 'warn');
-                printLine('❌ Прав недостаточно.', 'error');
+            admin: function() {
+                printLine('Проверка прав администратора...', 'warn');
+                printLine('Прав недостаточно.', 'error');
                 printLine('');
-                printLine('💡 Подсказка: команда admin не работает, но ты можешь попробовать:', 'info');
-                printLine('   👉 secret');
+                printLine('Подсказка: команда admin не работает, но ты можешь попробовать:', 'info');
+                printLine('   secret');
             },
-            close: () => {
-                printLine('👋 Close Приложения — не «закрыть», а имя компании!', 'success');
+            close: function() {
+                printLine('Close Приложения — не «закрыть», а имя компании!', 'success');
                 printLine('Дочерняя компания MD2.', 'info');
-                printLine('Мы никогда не закрываемся 😄');
+                printLine('Мы никогда не закрываемся :)');
             },
-            md2: () => {
-                printLine('🏢 MD2 — головная компания Close Приложений.', 'success');
+            md2: function() {
+                printLine('MD2 — головная компания Close Приложений.', 'success');
                 printLine('Сайт: https://md2sites.ru/', 'info');
                 printLine('');
-                printLine('🎁 Награда за любопытство: +10 к карме!', 'warn');
+                printLine('Награда за любопытство: +10 к карме!', 'warn');
             },
-            secret: () => {
-                printLine('🎁 СЕКРЕТНАЯ КОМНАТА ОТКРЫТА!', 'success');
+            secret: function() {
+                printLine('СЕКРЕТНАЯ КОМНАТА ОТКРЫТА!', 'success');
                 printLine('');
-                printLine('   ┌──────────────────────────────┐', 'info');
-                printLine('   │  Поздравляем, искатель! 🏆   │', 'info');
-                printLine('   │  Ты нашёл секретную команду. │', 'info');
-                printLine('   │  Таких, как ты — единицы.    │', 'info');
-                printLine('   └──────────────────────────────┘', 'info');
+                printLine('   +------------------------------+', 'info');
+                printLine('   |  Поздравляем, искатель!      |', 'info');
+                printLine('   |  Ты нашёл секретную команду. |', 'info');
+                printLine('   |  Таких, как ты — единицы.    |', 'info');
+                printLine('   +------------------------------+', 'info');
                 printLine('');
-                printLine('🔑 Твой код: TERMINAL-2026', 'warn');
-                printLine('💫 Спасибо, что исследуешь наш хаб!', 'success');
+                printLine('Твой код: TERMINAL-2026', 'warn');
+                printLine('Спасибо, что исследуешь наш хаб!', 'success');
             },
-            love: () => {
+            love: function() {
                 printLine('❤️ ❤️ ❤️', 'error');
                 printLine('Спасибо за любовь к нашему хабу!', 'success');
-                printLine('Мы это очень ценим 💜', 'info');
+                printLine('Мы это очень ценим', 'info');
             },
-            hi: () => {
-                printLine('👋 Привет-привет!', 'success');
+            hi: function() {
+                printLine('Привет-привет!', 'success');
                 printLine('Как дела? Надеюсь, отлично!', 'info');
                 printLine('Если хочешь что-то предложить — пиши нам.', 'dim');
             },
-            ping: () => {
+            ping: function() {
                 printLine('PING closeapps.ru (127.0.0.1): 56 data bytes', 'dim');
                 printLine('64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.042 ms', 'success');
                 printLine('64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.038 ms', 'success');
@@ -3012,32 +2965,34 @@
                 printLine('--- closeapps.ru ping statistics ---', 'dim');
                 printLine('3 packets transmitted, 3 received, 0.0% packet loss', 'info');
             },
-            ls: () => {
-                printLine('📁 /home/close/', 'info');
-                printLine('  📂 apps/', 'success');
-                printLine('  📂 articles/', 'success');
-                printLine('  📂 tools/', 'success');
-                printLine('  📄 README.md', 'dim');
-                printLine('  📄 changelog.txt', 'dim');
-                printLine('  🔒 .secret', 'warn');
+            ls: function() {
+                printLine('/home/close/', 'info');
+                printLine('  apps/', 'success');
+                printLine('  articles/', 'success');
+                printLine('  tools/', 'success');
+                printLine('  README.md', 'dim');
+                printLine('  changelog.txt', 'dim');
+                printLine('  .secret', 'warn');
             },
-            cat: () => {
-                printLine('🐱 Мяу! Я кот. А ты что ожидал?', 'success');
+            cat: function() {
+                printLine('Мяу! Я кот. А ты что ожидал?', 'success');
                 printLine('   /\\_/\\', 'dim');
                 printLine('  ( o.o )', 'dim');
                 printLine('   > ^ <', 'dim');
             },
-            weather: () => {
-                printLine('☀️ Погода в цифровом мире: всегда ясно!', 'success');
-                printLine('Температура: +25°C в серверной.', 'info');
+            weather: function() {
+                printLine('Погода в цифровом мире: всегда ясно!', 'success');
+                printLine('Температура: +25 градусов в серверной.', 'info');
                 printLine('Осадки: 0% (мы всё храним в облаке).', 'dim');
             },
-            ascii: () => {
-                printLine(asciiBanner, 'ascii');
+            ascii: function() {
+                printLine('███████ CLOSE ███████', 'success');
+                printLine('██     Приложения   ██', 'success');
+                printLine('███████ MD2 █████████', 'success');
             },
-            nyan: () => {
-                printLine('🌈 ~=[,,_,,]:3', 'warn');
-                printLine('🐱 Nyan Cat присоединился к чату!', 'success');
+            nyan: function() {
+                printLine('~=[,,_,,]:3', 'warn');
+                printLine('Nyan Cat присоединился к чату!', 'success');
                 triggerPartyEffect();
             }
         };
@@ -3048,16 +3003,18 @@
             terminalOverlay.classList.add('show');
             document.body.style.overflow = 'hidden';
             
-            if (terminalBody.innerHTML.trim() === '') {
-                printLine(asciiBanner, 'ascii');
+            if (!terminalInitialized) {
+                terminalInitialized = true;
+                printLine('CLOSE TERMINAL v1.0', 'success');
+                printLine('====================', 'success');
                 printLine('');
                 printLine('Добро пожаловать в скрытый терминал Close Приложений!', 'success');
-                printLine('Напиши <help> — увидишь список всех команд.', 'info');
-                printLine('Есть пасхалки — попробуй их найти 😉', 'warn');
+                printLine('Напиши help — увидишь список всех команд.', 'info');
+                printLine('Есть пасхалки — попробуй их найти!', 'warn');
                 printLine('');
             }
             
-            setTimeout(() => terminalInput.focus(), 100);
+            setTimeout(function() { terminalInput.focus(); }, 100);
         }
 
         function closeTerminal() {
@@ -3066,25 +3023,18 @@
             document.body.style.overflow = '';
         }
 
-        function printLine(text, type = '') {
-            const line = document.createElement('div');
-            line.className = 'terminal-line' + (type ? ' ' + type : '');
-            line.textContent = text;
-            terminalBody.appendChild(line);
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        }
-
         function runCommand(cmd) {
             const trimmed = cmd.trim();
             if (!trimmed) return;
             
             printLine('close@hub:~$ ' + trimmed, 'cmd');
             
-            if (commands[trimmed.toLowerCase()]) {
-                commands[trimmed.toLowerCase()]();
+            const lower = trimmed.toLowerCase();
+            if (commands[lower]) {
+                commands[lower]();
             } else {
-                printLine(`Команда не найдена: ${trimmed}`, 'error');
-                printLine('Попробуй <help> для списка команд.', 'dim');
+                printLine('Команда не найдена: ' + trimmed, 'error');
+                printLine('Попробуй help для списка команд.', 'dim');
             }
             
             printLine('');
@@ -3124,8 +3074,10 @@
         terminalEggTrigger.addEventListener('click', openTerminal);
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && terminalOpen) {
-                closeTerminal();
+            if (e.key === 'Escape') {
+                if (terminalOpen) closeTerminal();
+                if (easterPopup.classList.contains('show')) closeEasterPopup();
+                if (modalOverlay.classList.contains('show')) closeModal();
             }
         });
 
@@ -3133,24 +3085,25 @@
             const canvas = document.getElementById('bgCanvas');
             canvas.style.transition = 'filter 0.5s ease';
             canvas.style.filter = 'hue-rotate(90deg) saturate(2) brightness(0.8)';
-            setTimeout(() => {
+            setTimeout(function() {
                 canvas.style.filter = '';
             }, 3000);
         }
 
         function triggerPartyEffect() {
             const elements = document.querySelectorAll('.app-link, .article-link, .celebrate-banner');
-            elements.forEach((el, i) => {
+            elements.forEach(function(el, i) {
                 el.style.transition = 'transform 0.3s ease';
-                setTimeout(() => {
+                setTimeout(function() {
                     el.style.transform = 'rotate(' + (Math.random() * 6 - 3) + 'deg) scale(1.03)';
-                    setTimeout(() => {
+                    setTimeout(function() {
                         el.style.transform = '';
                     }, 300);
                 }, i * 40);
             });
         }
 
+        // ===== АНИМИРОВАННЫЙ ФОН =====
         (function() {
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
@@ -3169,82 +3122,78 @@
                 initObjects();
             }
 
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                reset() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.baseRadius = Math.random() * 2 + 0.8;
-                    this.speedX = (Math.random() - 0.5) * 0.25;
-                    this.speedY = (Math.random() - 0.5) * 0.25;
-                    this.pulseSpeed = 0.02 + Math.random() * 0.03;
-                    this.pulseOffset = Math.random() * 100;
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    if (this.x < -10) this.x = width + 10;
-                    if (this.x > width + 10) this.x = -10;
-                    if (this.y < -10) this.y = height + 10;
-                    if (this.y > height + 10) this.y = -10;
-                }
-                draw(ctx) {
-                    const r = this.baseRadius + Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.35;
-                    ctx.beginPath();
-                    ctx.shadowColor = '#5db8ff';
-                    ctx.shadowBlur = 8;
-                    ctx.fillStyle = 'rgba(190, 225, 255, 0.75)';
-                    ctx.arc(this.x, this.y, r * 1.5, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = '#ffffff';
-                    ctx.arc(this.x, this.y, r * 0.7, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
+            function Particle() {
+                this.reset();
             }
+            Particle.prototype.reset = function() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.baseRadius = Math.random() * 2 + 0.8;
+                this.speedX = (Math.random() - 0.5) * 0.25;
+                this.speedY = (Math.random() - 0.5) * 0.25;
+                this.pulseSpeed = 0.02 + Math.random() * 0.03;
+                this.pulseOffset = Math.random() * 100;
+            };
+            Particle.prototype.update = function() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < -10) this.x = width + 10;
+                if (this.x > width + 10) this.x = -10;
+                if (this.y < -10) this.y = height + 10;
+                if (this.y > height + 10) this.y = -10;
+            };
+            Particle.prototype.draw = function(ctx) {
+                const r = this.baseRadius + Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.35;
+                ctx.beginPath();
+                ctx.shadowColor = '#5db8ff';
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = 'rgba(190, 225, 255, 0.75)';
+                ctx.arc(this.x, this.y, r * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.arc(this.x, this.y, r * 0.7, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            };
 
-            class CodeStream {
-                constructor() {
-                    this.reset(true);
-                }
-                reset(randomY = false) {
-                    this.x = Math.random() * width;
-                    this.y = randomY ? Math.random() * height : -20 - Math.random() * 150;
-                    this.speed = 0.8 + Math.random() * 1.8;
-                    this.maxChars = Math.floor(Math.random() * 10 + 5);
-                    this.fontSize = 10 + Math.floor(Math.random() * 7);
-                    this.opacity = 0.3 + Math.random() * 0.35;
-                    const chars = '01AI{}[]<>/\\|#*&%$@';
-                    this.symbols = [];
-                    for (let i = 0; i < this.maxChars; i++) {
-                        this.symbols.push(chars[Math.floor(Math.random() * chars.length)]);
-                    }
-                }
-                update() {
-                    this.y += this.speed;
-                    if (this.y - this.maxChars * this.fontSize > height + 40) {
-                        this.y = -this.maxChars * this.fontSize - Math.random() * 40;
-                        this.x = Math.random() * width;
-                    }
-                }
-                draw(ctx) {
-                    for (let i = 0; i < this.symbols.length; i++) {
-                        const charY = this.y - i * (this.fontSize + 2);
-                        if (charY < -20 || charY > height + 20) continue;
-                        const alpha = Math.max(0.1, this.opacity - i * 0.05);
-                        ctx.font = `bold ${this.fontSize}px "Fira Code", "Courier New", monospace`;
-                        ctx.fillStyle = '#8df0ff';
-                        ctx.globalAlpha = alpha;
-                        ctx.shadowColor = '#00e5ff';
-                        ctx.shadowBlur = i === 0 ? 7 : 2;
-                        ctx.fillText(this.symbols[i], this.x, charY);
-                    }
-                    ctx.globalAlpha = 1;
-                    ctx.shadowBlur = 0;
-                }
+            function CodeStream() {
+                this.reset(true);
             }
+            CodeStream.prototype.reset = function(randomY) {
+                this.x = Math.random() * width;
+                this.y = randomY ? Math.random() * height : -20 - Math.random() * 150;
+                this.speed = 0.8 + Math.random() * 1.8;
+                this.maxChars = Math.floor(Math.random() * 10 + 5);
+                this.fontSize = 10 + Math.floor(Math.random() * 7);
+                this.opacity = 0.3 + Math.random() * 0.35;
+                const chars = '01AI{}[]<>/\\|#*&%$@';
+                this.symbols = [];
+                for (let i = 0; i < this.maxChars; i++) {
+                    this.symbols.push(chars[Math.floor(Math.random() * chars.length)]);
+                }
+            };
+            CodeStream.prototype.update = function() {
+                this.y += this.speed;
+                if (this.y - this.maxChars * this.fontSize > height + 40) {
+                    this.y = -this.maxChars * this.fontSize - Math.random() * 40;
+                    this.x = Math.random() * width;
+                }
+            };
+            CodeStream.prototype.draw = function(ctx) {
+                for (let i = 0; i < this.symbols.length; i++) {
+                    const charY = this.y - i * (this.fontSize + 2);
+                    if (charY < -20 || charY > height + 20) continue;
+                    const alpha = Math.max(0.1, this.opacity - i * 0.05);
+                    ctx.font = 'bold ' + this.fontSize + 'px "Fira Code", "Courier New", monospace';
+                    ctx.fillStyle = '#8df0ff';
+                    ctx.globalAlpha = alpha;
+                    ctx.shadowColor = '#00e5ff';
+                    ctx.shadowBlur = i === 0 ? 7 : 2;
+                    ctx.fillText(this.symbols[i], this.x, charY);
+                }
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+            };
 
             function initObjects() {
                 particles = [];
@@ -3266,7 +3215,7 @@
                             ctx.beginPath();
                             ctx.moveTo(p1.x, p1.y);
                             ctx.lineTo(p2.x, p2.y);
-                            ctx.strokeStyle = `rgba(80, 170, 255, ${alpha * 0.2})`;
+                            ctx.strokeStyle = 'rgba(80, 170, 255, ' + (alpha * 0.2) + ')';
                             ctx.lineWidth = 0.5;
                             ctx.shadowColor = 'rgba(0, 200, 255, 0.3)';
                             ctx.shadowBlur = 4;
@@ -3313,4 +3262,4 @@
         })();
     </script>
 </body>
-    </html>
+                            </html>
