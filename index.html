@@ -426,7 +426,6 @@
             background: rgba(22, 32, 58, 0.9);
         }
 
-        /* Спец. стиль для Игрового зала */
         .app-link.featured {
             background: linear-gradient(135deg, rgba(0, 230, 160, 0.1), rgba(0, 200, 255, 0.08), rgba(139, 108, 255, 0.1));
             border: 1px solid rgba(0, 230, 160, 0.4);
@@ -457,40 +456,6 @@
             }
             50% {
                 box-shadow: 0 0 30px rgba(0, 230, 160, 0.2), 0 0 60px rgba(0, 200, 255, 0.12);
-            }
-        }
-
-        /* Спец. стиль для Календаря */
-        .app-link.calendar-feature {
-            background: linear-gradient(135deg, rgba(255, 100, 180, 0.1), rgba(139, 108, 255, 0.1), rgba(0, 200, 255, 0.08));
-            border: 1px solid rgba(255, 120, 200, 0.4);
-            animation: calendar-pulse 3s ease-in-out infinite;
-        }
-
-        .app-link.calendar-feature::before {
-            background: radial-gradient(circle at 85% 30%, rgba(255, 120, 200, 0.1) 0%, transparent 60%);
-        }
-
-        .app-link.calendar-feature:hover {
-            border-color: rgba(255, 120, 200, 0.7);
-            box-shadow: 0 16px 40px rgba(255, 100, 180, 0.2);
-            background: linear-gradient(135deg, rgba(255, 100, 180, 0.15), rgba(139, 108, 255, 0.15), rgba(0, 200, 255, 0.12));
-        }
-
-        .app-link.calendar-feature .link-icon {
-            background: rgba(255, 120, 200, 0.2);
-        }
-
-        .app-link.calendar-feature .arrow-icon {
-            color: #ff78c8;
-        }
-
-        @keyframes calendar-pulse {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255, 100, 180, 0.1), 0 0 40px rgba(139, 108, 255, 0.06);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(255, 100, 180, 0.2), 0 0 60px rgba(139, 108, 255, 0.12);
             }
         }
 
@@ -631,28 +596,12 @@
             border: 1px solid rgba(0, 230, 160, 0.5);
         }
 
-        .badge-calendar {
-            background: rgba(255, 120, 200, 0.2);
-            color: #ff78c8;
-            border: 1px solid rgba(255, 120, 200, 0.5);
-            animation: badge-calendar-pulse 2s ease-in-out infinite;
-        }
-
         @keyframes badge-new-pulse {
             0%, 100% {
                 box-shadow: 0 0 8px rgba(255, 200, 100, 0.3);
             }
             50% {
                 box-shadow: 0 0 18px rgba(255, 200, 100, 0.6);
-            }
-        }
-
-        @keyframes badge-calendar-pulse {
-            0%, 100% {
-                box-shadow: 0 0 8px rgba(255, 120, 200, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(255, 120, 200, 0.6);
             }
         }
 
@@ -1176,8 +1125,16 @@
             border-color: rgba(0, 212, 255, 0.5);
         }
 
-        .easter-egg-trigger {
+        /* ===== ДВЕ ПАСХАЛКИ ===== */
+        .easter-eggs-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
             margin: 40px auto 20px;
+        }
+
+        .easter-egg-trigger {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1193,7 +1150,7 @@
             user-select: none;
         }
 
-        .easter-egg-trigger:hover {
+        .easter-egg-trigger.star-egg:hover {
             opacity: 1;
             background: rgba(255, 200, 100, 0.15);
             border-color: rgba(255, 200, 100, 0.6);
@@ -1201,27 +1158,39 @@
             transform: scale(1.2) rotate(15deg);
         }
 
+        .easter-egg-trigger.terminal-egg:hover {
+            opacity: 1;
+            background: rgba(0, 255, 140, 0.15);
+            border-color: rgba(0, 255, 140, 0.6);
+            box-shadow: 0 0 25px rgba(0, 255, 140, 0.4), 0 0 50px rgba(0, 255, 140, 0.2);
+            transform: scale(1.2);
+        }
+
         .easter-egg-trigger .egg-icon {
             font-size: 1.1rem;
             transition: transform 0.5s ease;
         }
 
-        .easter-egg-trigger:hover .egg-icon {
+        .easter-egg-trigger.star-egg:hover .egg-icon {
             transform: rotate(-15deg) scale(1.2);
+        }
+
+        .easter-egg-trigger.terminal-egg .egg-icon {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-weight: 700;
+            color: #00ff8c;
+            font-size: 1rem;
+            letter-spacing: -1px;
         }
 
         .easter-egg-hint {
             text-align: center;
             font-size: 0.65rem;
             color: rgba(255, 255, 255, 0.08);
-            margin-top: 6px;
             letter-spacing: 1.5px;
             transition: color 0.4s ease;
             user-select: none;
-        }
-
-        .easter-egg-trigger:hover + .easter-egg-hint {
-            color: rgba(255, 200, 100, 0.5);
+            margin-bottom: 20px;
         }
 
         .fireworks-canvas {
@@ -1363,6 +1332,219 @@
             pointer-events: auto;
         }
 
+        /* ===== ТЕРМИНАЛ ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 270;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .terminal-overlay.show {
+            display: flex;
+            animation: terminalFadeIn 0.3s ease;
+        }
+
+        @keyframes terminalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .terminal {
+            background: #0a0e1a;
+            border: 1px solid rgba(0, 255, 140, 0.4);
+            border-radius: 14px;
+            max-width: 720px;
+            width: 100%;
+            height: 80vh;
+            max-height: 560px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 60px rgba(0, 255, 140, 0.25), 0 0 120px rgba(0, 255, 140, 0.1), 0 30px 80px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            animation: terminalSlideIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes terminalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: rgba(0, 255, 140, 0.06);
+            border-bottom: 1px solid rgba(0, 255, 140, 0.2);
+        }
+
+        .terminal-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #00ff8c;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dots span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .terminal-dots .dot-red { background: #ff5f57; }
+        .terminal-dots .dot-yellow { background: #febc2e; }
+        .terminal-dots .dot-green { background: #28c840; }
+
+        .terminal-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 255, 140, 0.3);
+            background: rgba(0, 255, 140, 0.08);
+            color: #00ff8c;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+        }
+
+        .terminal-close:hover {
+            background: rgba(255, 90, 120, 0.15);
+            color: #ff5e7a;
+            border-color: rgba(255, 90, 120, 0.5);
+        }
+
+        .terminal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px;
+            color: #b8e6c8;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 255, 140, 0.3) transparent;
+        }
+
+        .terminal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 140, 0.3);
+            border-radius: 4px;
+        }
+
+        .terminal-line {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .terminal-line.cmd {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .terminal-line.success {
+            color: #00ff8c;
+        }
+
+        .terminal-line.error {
+            color: #ff5e7a;
+        }
+
+        .terminal-line.warn {
+            color: #ffb828;
+        }
+
+        .terminal-line.dim {
+            color: #667788;
+        }
+
+        .terminal-line.info {
+            color: #c8b4ff;
+        }
+
+        .terminal-line .ascii {
+            color: #00ff8c;
+            text-shadow: 0 0 8px rgba(0, 255, 140, 0.5);
+        }
+
+        .terminal-prompt {
+            display: flex;
+            align-items: center;
+            padding: 10px 18px;
+            border-top: 1px solid rgba(0, 255, 140, 0.15);
+            background: rgba(0, 255, 140, 0.03);
+            gap: 10px;
+        }
+
+        .terminal-prompt-label {
+            color: #00ff8c;
+            font-weight: 700;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #b8e6c8;
+            font-family: inherit;
+            font-size: 0.85rem;
+            caret-color: #00ff8c;
+        }
+
+        .terminal-hint {
+            font-size: 0.72rem;
+            color: #667788;
+            padding: 6px 18px;
+            border-top: 1px solid rgba(0, 255, 140, 0.1);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .terminal-hint kbd {
+            background: rgba(0, 255, 140, 0.1);
+            border: 1px solid rgba(0, 255, 140, 0.3);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 0.7rem;
+            color: #00ff8c;
+            font-family: inherit;
+        }
+
         @media (max-width: 700px) {
             .header {
                 padding: 12px 14px;
@@ -1429,6 +1611,15 @@
             }
             .easter-popup .popup-title {
                 font-size: 1.2rem;
+            }
+            .terminal {
+                height: 85vh;
+                max-height: none;
+                border-radius: 10px;
+            }
+            .terminal-body {
+                font-size: 0.75rem;
+                padding: 14px;
             }
         }
     </style>
@@ -1506,6 +1697,42 @@
             <p class="no-results" id="noResults">Ничего не найдено</p>
 
             <p class="section-label">📖 Текстовые статьи</p>
+
+            <!-- 5 партий России - новая с бейджем "Новое" -->
+            <a href="#" class="article-link" 
+               data-search="пять главных партий россии политика госдума единая россия кпрф лдпр новые люди справедливая россия статья" 
+               data-category="other"
+               data-id="partii-article"
+               data-icon="🏛️"
+               data-title="Пять главных партий России"
+               data-desc="Кто представлен в Государственной думе девятого созыва, чего хотят эти партии и чем они отличаются друг от друга."
+               data-url="https://arshinovseva13-ux.github.io/Partii/"
+               data-url-display="arshinovseva13-ux.github.io/Partii/"
+               data-badges='[{"text":"✨ Новое","class":"badge-new"},{"text":"📖 Статья","class":"article-tag"}]'>
+                <div class="link-icon">🏛️</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Пять главных партий России
+                        <span class="link-badge badge-new">✨ Новое</span>
+                        <span class="article-tag">📖 Статья</span>
+                    </div>
+                    <div class="link-desc">Кто представлен в Государственной думе девятого созыва, чего хотят эти партии и чем они отличаются друг от друга.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="partii-article">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Partii/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
 
             <a href="#" class="article-link" 
                data-search="agi искусственный интеллект статья текст чтение" 
@@ -1609,7 +1836,6 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- Skibidi Toilet статья - новая -->
             <a href="#" class="article-link" 
                data-search="скибиди туалет skibidi toilet история сюжет конфликт invisible narratives статья" 
                data-category="other"
@@ -1646,8 +1872,8 @@
 
             <p class="section-label">🔗 Приложения</p>
 
-            <!-- 📅 КАЛЕНДАРЬ СОБЫТИЙ -->
-            <a href="#" class="app-link calendar-feature" 
+            <!-- Календарь событий - уже без "Новое" -->
+            <a href="#" class="app-link" 
                data-search="календарь событий пасхалки праздники бонусы calendar" 
                data-category="tools"
                data-id="calendar"
@@ -1655,14 +1881,10 @@
                data-title="Календарь событий с пасхалками"
                data-desc="Интерактивный календарь с праздниками, бонусными датами и спрятанными сюрпризами. Найди все пасхалки!"
                data-url="https://arshinovseva13-ux.github.io/calendar/"
-               data-url-display="arshinovseva13-ux.github.io/calendar/"
-               data-badges='[{"text":"✨ Новое","class":"badge-calendar"}]'>
+               data-url-display="arshinovseva13-ux.github.io/calendar/">
                 <div class="link-icon">📅</div>
                 <div class="link-info">
-                    <div class="link-title">
-                        Календарь событий с пасхалками
-                        <span class="link-badge badge-calendar">✨ Новое</span>
-                    </div>
+                    <div class="link-title">Календарь событий с пасхалками</div>
                     <div class="link-desc">Интерактивный календарь с праздниками, бонусными датами и спрятанными сюрпризами. Найди все пасхалки!</div>
                     <div class="link-meta">
                         <div class="rating" data-app-id="calendar">
@@ -1681,7 +1903,7 @@
                 <span class="arrow-icon">→</span>
             </a>
 
-            <!-- 🎮 Игровой зал -->
+            <!-- Игровой зал -->
             <a href="#" class="app-link featured" 
                data-search="игровой зал games мини-игры игры браузер аркада монеты статистика рейтинг" 
                data-category="games"
@@ -2006,7 +2228,7 @@
             <div class="dev-status">
                 <span class="dev-icon">⚙️</span>
                 <span class="dev-text">Сейчас в разработке:</span>
-                <span class="dev-highlight">Статья про 5 партий России</span>
+                <span class="dev-highlight">Статья по ЛДПР</span>
             </div>
 
             <div class="changelog-section">
@@ -2018,7 +2240,11 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">12.10.2026</span>
-                            <span>📝 Добавлена четвёртая текстовая статья — «Skibidi Toilet: полная история и конфликт с Invisible Narratives». Статус разработки обновлён: теперь ведётся работа над статьёй про 5 партий России.</span>
+                            <span>🏛️ Добавлена пятая текстовая статья — «Пять главных партий России». Внедрена пасхалка-терминал (кнопка <code>>_</code> рядом со звёздочкой). Бейдж «Новое» перешёл с Календаря событий на статью про партии. Статус разработки: статья по ЛДПР.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">12.10.2026</span>
+                            <span>📝 Добавлена четвёртая текстовая статья — «Skibidi Toilet: полная история и конфликт с Invisible Narratives».</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">11.10.2026</span>
@@ -2072,8 +2298,14 @@
                 </div>
             </div>
 
-            <div class="easter-egg-trigger" id="easterEggTrigger" title="...">
-                <span class="egg-icon">✨</span>
+            <!-- ДВЕ ПАСХАЛКИ -->
+            <div class="easter-eggs-row">
+                <div class="easter-egg-trigger star-egg" id="easterEggTrigger" title="...">
+                    <span class="egg-icon">✨</span>
+                </div>
+                <div class="easter-egg-trigger terminal-egg" id="terminalEggTrigger" title="...">
+                    <span class="egg-icon">&gt;_</span>
+                </div>
             </div>
             <div class="easter-egg-hint">•</div>
         </main>
@@ -2103,6 +2335,30 @@
             «Любопытство — двигатель прогресса». Так держать! 💜
         </div>
         <button class="popup-close" id="popupClose">Спасибо!</button>
+    </div>
+
+    <!-- ТЕРМИНАЛ -->
+    <div class="terminal-overlay" id="terminalOverlay">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot-red"></span>
+                    <span class="dot-yellow"></span>
+                    <span class="dot-green"></span>
+                </div>
+                <div class="terminal-title">💻 close_terminal — v1.0</div>
+                <button class="terminal-close" id="terminalClose">✕</button>
+            </div>
+            <div class="terminal-body" id="terminalBody"></div>
+            <div class="terminal-prompt">
+                <span class="terminal-prompt-label">close@hub:~$</span>
+                <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" autofocus>
+            </div>
+            <div class="terminal-hint">
+                <span>Введи <kbd>help</kbd> — список команд</span>
+                <span><kbd>Esc</kbd> — выход</span>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="modalOverlay">
@@ -2410,6 +2666,7 @@
             }
         });
 
+        // ===== ПАСХАЛКА-ЗВЁЗДОЧКА =====
         const easterTrigger = document.getElementById('easterEggTrigger');
         const easterPopup = document.getElementById('easterPopup');
         const easterPopupOverlay = document.getElementById('easterPopupOverlay');
@@ -2545,6 +2802,353 @@
             fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
             fireworksCanvas.classList.remove('show');
             fireworks = [];
+        }
+
+        // ===== ПАСХАЛКА-ТЕРМИНАЛ =====
+        const terminalOverlay = document.getElementById('terminalOverlay');
+        const terminalBody = document.getElementById('terminalBody');
+        const terminalInput = document.getElementById('terminalInput');
+        const terminalClose = document.getElementById('terminalClose');
+        const terminalEggTrigger = document.getElementById('terminalEggTrigger');
+        let commandHistory = [];
+        let historyIndex = -1;
+        let terminalOpen = false;
+
+        const asciiBanner = `
+╔══════════════════════════════════════════╗
+║   ██████╗██╗      ██████╗ ███████╗███████╗
+║  ██╔════╝██║     ██╔═══██╗██╔════╝██╔════╝
+║  ██║     ██║     ██║   ██║███████╗█████╗  
+║  ██║     ██║     ██║   ██║╚════██║██╔══╝  
+║  ╚██████╗███████╗╚██████╔╝███████║███████╗
+║   ╚═════╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝
+║                                          ║
+║        T E R M I N A L  v1.0             ║
+║       Close Приложения · MD2             ║
+╚══════════════════════════════════════════╝`;
+
+        const commands = {
+            help: () => {
+                printLine('📖 Доступные команды:', 'info');
+                printLine('');
+                printLine('  help              — показать это сообщение');
+                printLine('  about             — информация о хабе');
+                printLine('  apps              — список всех приложений');
+                printLine('  articles          — список текстовых статей');
+                printLine('  dev               — что сейчас в разработке');
+                printLine('  stats             — статистика хаба');
+                printLine('  date              — текущая дата и время');
+                printLine('  whoami            — кто ты в этой системе');
+                printLine('  clear             — очистить экран');
+                printLine('  exit              — закрыть терминал');
+                printLine('');
+                printLine('🔐 Секретные команды:', 'warn');
+                printLine('  matrix            — ...');
+                printLine('  party             — ...');
+                printLine('  hack              — ...');
+                printLine('  coffee            — ...');
+                printLine('  sudo              — ...');
+                printLine('  admin             — ...');
+                printLine('  close             — ...');
+                printLine('  md2               — ...');
+                printLine('  secret            — ...');
+                printLine('  love              — ...');
+                printLine('  hi                — ...');
+                printLine('  ping              — ...');
+                printLine('  ls                — ...');
+                printLine('  cat               — ...');
+                printLine('  weather           — ...');
+                printLine('  ascii             — ...');
+                printLine('  nyan              — ...');
+                printLine('');
+                printLine('💡 Подсказка: попробуй ввести названия приложений или команду secret', 'dim');
+            },
+            about: () => {
+                printLine('Close Приложения — дочерняя компания MD2.', 'success');
+                printLine('Мы создаём веб-приложения: игры, инструменты, обучение.');
+                printLine('Хаб: https://arshinovseva13-ux.github.io/CloseApps/', 'dim');
+            },
+            apps: () => {
+                printLine('📱 Все приложения (11):', 'info');
+                const apps = document.querySelectorAll('.app-link');
+                apps.forEach((app, i) => {
+                    const title = app.getAttribute('data-title');
+                    const icon = app.getAttribute('data-icon');
+                    printLine(`  ${i + 1}. ${icon} ${title}`);
+                });
+            },
+            articles: () => {
+                printLine('📖 Текстовые статьи (5):', 'info');
+                const articles = document.querySelectorAll('.article-link');
+                articles.forEach((art, i) => {
+                    const title = art.getAttribute('data-title');
+                    const icon = art.getAttribute('data-icon');
+                    printLine(`  ${i + 1}. ${icon} ${title}`);
+                });
+            },
+            dev: () => {
+                printLine('⚙️ Сейчас в разработке: Статья по ЛДПР', 'warn');
+                printLine('Ожидайте обновлений!', 'dim');
+            },
+            stats: () => {
+                const apps = document.querySelectorAll('.app-link').length;
+                const articles = document.querySelectorAll('.article-link').length;
+                printLine('📊 Статистика хаба:', 'info');
+                printLine(`  Приложений: ${apps}`);
+                printLine(`  Статей: ${articles}`);
+                printLine(`  Всего контента: ${apps + articles}`);
+                printLine(`  Пасхалок: 2 (звёздочка и терминал)`);
+            },
+            date: () => {
+                const now = new Date();
+                printLine(`📅 ${now.toLocaleDateString('ru-RU')}`, 'success');
+                printLine(`🕐 ${now.toLocaleTimeString('ru-RU')}`, 'success');
+            },
+            whoami: () => {
+                printLine('👤 Ты — гость системы Close.', 'success');
+                printLine('Уровень доступа: обычный.', 'dim');
+                printLine('Но кто знает, что скрывается глубже...', 'warn');
+            },
+            clear: () => {
+                terminalBody.innerHTML = '';
+            },
+            exit: () => {
+                closeTerminal();
+            },
+
+            matrix: () => {
+                printLine('🟢 Wake up, Neo...', 'success');
+                printLine('🟢 The Matrix has you...', 'success');
+                printLine('🟢 Follow the white rabbit.', 'success');
+                printLine('');
+                printLine('🐇 Knock, knock, Neo.', 'info');
+                triggerMatrixEffect();
+            },
+            party: () => {
+                printLine('🎉 ЗАЖИГАЕМ!', 'success');
+                printLine('🥳 🎊 🎈 🎉 🎁 🎂 🎈 🎊 🥳', 'warn');
+                printLine('Все приложения танцуют!', 'info');
+                triggerPartyEffect();
+            },
+            hack: () => {
+                printLine('💻 Инициализация взлома...', 'success');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.floor(Math.random() * 15 + 5);
+                    if (progress >= 100) progress = 100;
+                    printLine(`  [${'█'.repeat(Math.floor(progress / 5))}${'░'.repeat(20 - Math.floor(progress / 5))}] ${progress}%`);
+                    if (progress === 100) {
+                        clearInterval(interval);
+                        printLine('');
+                        printLine('✅ Взлом завершён!', 'success');
+                        printLine('🔓 Получен доступ к /dev/coffee', 'info');
+                        printLine('Шутка 😄. Ты просто получил +1 к настроению!', 'warn');
+                    }
+                }, 200);
+            },
+            coffee: () => {
+                printLine('☕ Не могу приготовить кофе — я всего лишь скрипт.', 'warn');
+                printLine('');
+                printLine('   ( (', 'dim');
+                printLine('    ) )', 'dim');
+                printLine('  ........', 'dim');
+                printLine('  |      |]', 'dim');
+                printLine('  \\      /', 'dim');
+                printLine('   `----\\'', 'dim');
+                printLine('');
+                printLine('Но ты можешь выпить его сам!', 'success');
+            },
+            sudo: () => {
+                printLine('🚫 Отказано в доступе.', 'error');
+                printLine('Мы сообщили об этой попытке в MD2.', 'warn');
+                printLine('Шутка! Никому мы не сообщали :)', 'dim');
+            },
+            admin: () => {
+                printLine('🔐 Проверка прав администратора...', 'warn');
+                printLine('❌ Прав недостаточно.', 'error');
+                printLine('');
+                printLine('💡 Подсказка: команда admin не работает, но ты можешь попробовать:', 'info');
+                printLine('   👉 secret');
+            },
+            close: () => {
+                printLine('👋 Close Приложения — не «закрыть», а имя компании!', 'success');
+                printLine('Дочерняя компания MD2.', 'info');
+                printLine('Мы никогда не закрываемся 😄');
+            },
+            md2: () => {
+                printLine('🏢 MD2 — головная компания Close Приложений.', 'success');
+                printLine('Сайт: https://md2sites.ru/', 'info');
+                printLine('');
+                printLine('🎁 Награда за любопытство: +10 к карме!', 'warn');
+            },
+            secret: () => {
+                printLine('🎁 СЕКРЕТНАЯ КОМНАТА ОТКРЫТА!', 'success');
+                printLine('');
+                printLine('   ┌──────────────────────────────┐', 'info');
+                printLine('   │  Поздравляем, искатель! 🏆   │', 'info');
+                printLine('   │  Ты нашёл секретную команду. │', 'info');
+                printLine('   │  Таких, как ты — единицы.    │', 'info');
+                printLine('   └──────────────────────────────┘', 'info');
+                printLine('');
+                printLine('🔑 Твой код: TERMINAL-2026', 'warn');
+                printLine('💫 Спасибо, что исследуешь наш хаб!', 'success');
+            },
+            love: () => {
+                printLine('❤️ ❤️ ❤️', 'error');
+                printLine('Спасибо за любовь к нашему хабу!', 'success');
+                printLine('Мы это очень ценим 💜', 'info');
+            },
+            hi: () => {
+                printLine('👋 Привет-привет!', 'success');
+                printLine('Как дела? Надеюсь, отлично!', 'info');
+                printLine('Если хочешь что-то предложить — пиши нам.', 'dim');
+            },
+            ping: () => {
+                printLine('PING closeapps.ru (127.0.0.1): 56 data bytes', 'dim');
+                printLine('64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.042 ms', 'success');
+                printLine('64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.038 ms', 'success');
+                printLine('64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.041 ms', 'success');
+                printLine('');
+                printLine('--- closeapps.ru ping statistics ---', 'dim');
+                printLine('3 packets transmitted, 3 received, 0.0% packet loss', 'info');
+            },
+            ls: () => {
+                printLine('📁 /home/close/', 'info');
+                printLine('  📂 apps/', 'success');
+                printLine('  📂 articles/', 'success');
+                printLine('  📂 tools/', 'success');
+                printLine('  📄 README.md', 'dim');
+                printLine('  📄 changelog.txt', 'dim');
+                printLine('  🔒 .secret', 'warn');
+            },
+            cat: () => {
+                printLine('🐱 Мяу! Я кот. А ты что ожидал?', 'success');
+                printLine('   /\\_/\\', 'dim');
+                printLine('  ( o.o )', 'dim');
+                printLine('   > ^ <', 'dim');
+            },
+            weather: () => {
+                printLine('☀️ Погода в цифровом мире: всегда ясно!', 'success');
+                printLine('Температура: +25°C в серверной.', 'info');
+                printLine('Осадки: 0% (мы всё храним в облаке).', 'dim');
+            },
+            ascii: () => {
+                printLine(asciiBanner, 'ascii');
+            },
+            nyan: () => {
+                printLine('🌈 ~=[,,_,,]:3', 'warn');
+                printLine('🐱 Nyan Cat присоединился к чату!', 'success');
+                triggerPartyEffect();
+            }
+        };
+
+        function openTerminal() {
+            if (terminalOpen) return;
+            terminalOpen = true;
+            terminalOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            if (terminalBody.innerHTML.trim() === '') {
+                printLine(asciiBanner, 'ascii');
+                printLine('');
+                printLine('Добро пожаловать в скрытый терминал Close Приложений!', 'success');
+                printLine('Напиши <help> — увидишь список всех команд.', 'info');
+                printLine('Есть пасхалки — попробуй их найти 😉', 'warn');
+                printLine('');
+            }
+            
+            setTimeout(() => terminalInput.focus(), 100);
+        }
+
+        function closeTerminal() {
+            terminalOpen = false;
+            terminalOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function printLine(text, type = '') {
+            const line = document.createElement('div');
+            line.className = 'terminal-line' + (type ? ' ' + type : '');
+            line.textContent = text;
+            terminalBody.appendChild(line);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        function runCommand(cmd) {
+            const trimmed = cmd.trim();
+            if (!trimmed) return;
+            
+            printLine('close@hub:~$ ' + trimmed, 'cmd');
+            
+            if (commands[trimmed.toLowerCase()]) {
+                commands[trimmed.toLowerCase()]();
+            } else {
+                printLine(`Команда не найдена: ${trimmed}`, 'error');
+                printLine('Попробуй <help> для списка команд.', 'dim');
+            }
+            
+            printLine('');
+            commandHistory.push(trimmed);
+            historyIndex = commandHistory.length;
+        }
+
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                runCommand(this.value);
+                this.value = '';
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    this.value = '';
+                }
+            } else if (e.key === 'Escape') {
+                closeTerminal();
+            }
+        });
+
+        terminalClose.addEventListener('click', closeTerminal);
+        terminalOverlay.addEventListener('click', function(e) {
+            if (e.target === terminalOverlay) closeTerminal();
+        });
+
+        terminalEggTrigger.addEventListener('click', openTerminal);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && terminalOpen) {
+                closeTerminal();
+            }
+        });
+
+        function triggerMatrixEffect() {
+            const canvas = document.getElementById('bgCanvas');
+            canvas.style.transition = 'filter 0.5s ease';
+            canvas.style.filter = 'hue-rotate(90deg) saturate(2) brightness(0.8)';
+            setTimeout(() => {
+                canvas.style.filter = '';
+            }, 3000);
+        }
+
+        function triggerPartyEffect() {
+            const elements = document.querySelectorAll('.app-link, .article-link, .celebrate-banner');
+            elements.forEach((el, i) => {
+                el.style.transition = 'transform 0.3s ease';
+                setTimeout(() => {
+                    el.style.transform = 'rotate(' + (Math.random() * 6 - 3) + 'deg) scale(1.03)';
+                    setTimeout(() => {
+                        el.style.transform = '';
+                    }, 300);
+                }, i * 40);
+            });
         }
 
         (function() {
