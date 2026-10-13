@@ -416,6 +416,97 @@
             terminalBody.scrollTop = terminalBody.scrollHeight;
         }
 
+
+        // Изолированная панель фрагментов доступа. Команда не выводится в справке.
+        function openCodePanel() {
+            let overlay = document.getElementById('closeCodePanel');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'closeCodePanel';
+                overlay.innerHTML = `
+                  <style>
+                    #closeCodePanel{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:18px;background:rgba(3,5,14,.84);backdrop-filter:blur(12px);font-family:Inter,system-ui,sans-serif;color:#eef2ff}
+                    #closeCodePanel .cc-card{width:min(460px,100%);box-sizing:border-box;border:1px solid #34375e;border-radius:22px;padding:25px;background:linear-gradient(145deg,#17172b,#0b1020);box-shadow:0 25px 100px #0009}
+                    #closeCodePanel .cc-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+                    #closeCodePanel .cc-label{font-size:11px;letter-spacing:2.5px;color:#a7a0ff;font-weight:800}
+                    #closeCodePanel .cc-close{border:0;background:#ffffff12;color:#cdd1e8;border-radius:10px;padding:8px 11px;cursor:pointer}
+                    #closeCodePanel h2{font-size:25px;margin:16px 0 8px;letter-spacing:-.6px}
+                    #closeCodePanel p{color:#aab2d0;line-height:1.55;font-size:14px}
+                    #closeCodePanel .cc-input{box-sizing:border-box;width:100%;margin-top:10px;padding:14px 15px;border:1px solid #44446f;border-radius:12px;background:#090d1a;color:white;font:600 14px ui-monospace,monospace;outline:none}
+                    #closeCodePanel .cc-input:focus{border-color:#a18cff;box-shadow:0 0 0 3px #927aff20}
+                    #closeCodePanel .cc-submit{width:100%;margin-top:10px;padding:13px;border:0;border-radius:12px;background:linear-gradient(100deg,#7c5cff,#3ca8ff);color:white;font-weight:800;cursor:pointer}
+                    #closeCodePanel .cc-status{min-height:22px;margin-top:13px;font-size:13px;color:#b6c0df}
+                    #closeCodePanel .cc-progress{display:flex;gap:7px;margin-top:15px}
+                    #closeCodePanel .cc-dot{height:5px;flex:1;border-radius:8px;background:#292d45}
+                    #closeCodePanel .cc-dot.on{background:linear-gradient(90deg,#8b70ff,#4cc9f0);box-shadow:0 0 12px #8170ff66}
+                    #closeCodePanel .cc-link{display:block;text-align:center;margin-top:14px;padding:13px;border:1px solid #5f55a8;border-radius:12px;color:#fff;text-decoration:none;background:#7560ff20;font-weight:800}
+                    @media(max-width:420px){#closeCodePanel .cc-card{padding:20px}#closeCodePanel h2{font-size:22px}}
+                  </style>
+                  <section class="cc-card" role="dialog" aria-modal="true" aria-labelledby="ccTitle">
+                    <div class="cc-top"><span class="cc-label">CLOSE / ACCESS CONTROL</span><button class="cc-close" type="button" aria-label="Закрыть">✕</button></div>
+                    <h2 id="ccTitle">Сборка доступа</h2>
+                    <p>Введи найденный фрагмент. Порядок не важен. Прогресс сохранится в этом браузере.</p>
+                    <form class="cc-form"><input class="cc-input" autocomplete="off" spellcheck="false" placeholder="Вставь код фрагмента" aria-label="Код фрагмента"><button class="cc-submit" type="submit">Проверить фрагмент</button></form>
+                    <div class="cc-progress" aria-label="Прогресс"><span class="cc-dot"></span><span class="cc-dot"></span><span class="cc-dot"></span></div>
+                    <div class="cc-status" role="status" aria-live="polite"></div>
+                    <a class="cc-link" href="vault.html" hidden>Открыть CLOSE // ZERO ↗</a>
+                  </section>`;
+                document.body.appendChild(overlay);
+                overlay.querySelector('.cc-close').addEventListener('click', () => overlay.remove());
+                overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+                overlay.querySelector('.cc-form').addEventListener('submit', e => {
+                    e.preventDefault();
+                    const input = overlay.querySelector('.cc-input');
+                    const status = overlay.querySelector('.cc-status');
+                    const known = ['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
+                    const value = input.value.trim().toUpperCase();
+                    if (!known.includes(value)) {
+                        status.textContent = 'Фрагмент не распознан. Проверь написание.';
+                        status.style.color = '#ff9aa9';
+                        input.select();
+                        return;
+                    }
+                    let saved = [];
+                    try { saved = JSON.parse(localStorage.getItem('closeAppsVaultCodes') || '[]'); } catch(_) {}
+                    if (!saved.includes(value)) saved.push(value);
+                    try { localStorage.setItem('closeAppsVaultCodes', JSON.stringify(saved)); } catch(_) {}
+                    const count = known.filter(k => saved.includes(k)).length;
+                    overlay.querySelectorAll('.cc-dot').forEach((dot, i) => dot.classList.toggle('on', i < count));
+                    if (count === known.length) {
+                        status.textContent = 'Доступ подтверждён. Архив готов к открытию.';
+                        status.style.color = '#7cf5c0';
+                        overlay.querySelector('.cc-link').hidden = false;
+                        overlay.querySelector('.cc-submit').textContent = 'Все фрагменты приняты';
+                        overlay.querySelector('.cc-input').disabled = true;
+                    } else {
+                        status.textContent = 'Фрагмент принят · ' + count + ' из 3';
+                        status.style.color = '#a9f5d0';
+                        input.value = '';
+                        input.focus();
+                    }
+                });
+            }
+            let saved = [];
+            try { saved = JSON.parse(localStorage.getItem('closeAppsVaultCodes') || '[]'); } catch(_) {}
+            const known = ['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
+            const count = known.filter(k => saved.includes(k)).length;
+            overlay.querySelectorAll('.cc-dot').forEach((dot, i) => dot.classList.toggle('on', i < count));
+            const status = overlay.querySelector('.cc-status');
+            const input = overlay.querySelector('.cc-input');
+            const link = overlay.querySelector('.cc-link');
+            if (count === known.length) {
+                status.textContent = 'Доступ подтверждён. Архив готов к открытию.';
+                status.style.color = '#7cf5c0';
+                link.hidden = false;
+                overlay.querySelector('.cc-submit').textContent = 'Все фрагменты приняты';
+                input.disabled = true;
+            } else {
+                status.textContent = count ? 'Сохранено фрагментов: ' + count + ' из 3' : 'Ожидание первого фрагмента…';
+                link.hidden = true;
+            }
+            if (!input.disabled) setTimeout(() => input.focus(), 40);
+        }
+
         const commands = {
             help: function() {
                 printLine('Доступные команды:', 'info');
@@ -625,8 +716,7 @@
                 printLine('В публичной версии внутренние сведения не выводятся.', 'dim');
             },
             codes: function() {
-                printLine('Модуль проверки перенесён в изолированную среду.', 'info');
-                printLine('Служебные данные не выводятся в терминал.', 'dim');
+                openCodePanel();
             }
         };
 
