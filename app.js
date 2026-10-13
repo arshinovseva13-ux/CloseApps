@@ -749,6 +749,31 @@
             if (e.target === terminalOverlay) closeTerminal();
         });
 
+        // Третья пасхалка: секретная цифра в баннере активируется при 15 приложениях.
+        const hiddenFifteenTrigger = document.getElementById('hiddenFifteenTrigger');
+        if (hiddenFifteenTrigger) {
+            const appCount = document.querySelectorAll('.app-link').length;
+            if (appCount >= 15) {
+                hiddenFifteenTrigger.classList.add('armed');
+                hiddenFifteenTrigger.setAttribute('tabindex', '0');
+                hiddenFifteenTrigger.addEventListener('click', function() {
+                    openTerminal();
+                    window.setTimeout(function() {
+                        runCommand('fifteen');
+                    }, 150);
+                });
+                hiddenFifteenTrigger.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            } else {
+                hiddenFifteenTrigger.setAttribute('tabindex', '-1');
+                hiddenFifteenTrigger.setAttribute('aria-hidden', 'true');
+            }
+        }
+
         terminalEggTrigger.addEventListener('click', openTerminal);
 
         document.addEventListener('keydown', function(e) {
