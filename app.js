@@ -748,6 +748,21 @@
                 printLine('');
                 printLine('ПРИМЕЧАНИЕ', 'dim');
                 printLine('Это внутренняя памятка проекта. Не раскрывать публично детали активации пасхалок.');
+
+                const vaultButtonLine = document.createElement('div');
+                vaultButtonLine.className = 'terminal-line';
+                vaultButtonLine.style.margin = '10px 0';
+                const vaultButton = document.createElement('button');
+                vaultButton.type = 'button';
+                vaultButton.textContent = '↗ Открыть CLOSE // ZERO';
+                vaultButton.setAttribute('aria-label', 'Открыть секретное приложение CLOSE ZERO');
+                vaultButton.style.cssText = 'display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border:1px solid #8b5cf6;border-radius:9px;background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(34,211,238,.12));color:#e9ddff;font:600 13px/1.3 inherit;cursor:pointer;box-shadow:0 0 18px rgba(139,92,246,.12);';
+                vaultButton.addEventListener('click', function() {
+                    window.location.href = new URL('vault.html', window.location.href).href;
+                });
+                vaultButtonLine.appendChild(vaultButton);
+                terminalBody.appendChild(vaultButtonLine);
+                terminalBody.scrollTop = terminalBody.scrollHeight;
             },
             codes: function() {
                 openCodePanel();
