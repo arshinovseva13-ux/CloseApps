@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080a14">
+<title>CLOSE // ZERO</title>
+<style>
+:root{color-scheme:dark;--bg:#080a14;--panel:#111629;--line:#252d49;--text:#edf1ff;--muted:#909bbd;--violet:#9b83ff;--cyan:#5ce6f4;--green:#77f4be}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#25204a 0,transparent 38%),radial-gradient(ellipse at 100% 30%,#10333e 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}button,a{font:inherit}.shell{max-width:1180px;margin:auto;padding:24px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding:6px 0 22px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:1.5px}.mark{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#071019;font-size:21px;box-shadow:0 0 35px #8f7cff44}.tiny{color:var(--muted);font-size:12px;letter-spacing:2px}.status{display:flex;align-items:center;gap:8px;color:var(--green);font:12px ui-monospace,monospace}.pulse{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}.hero{padding:58px 0 36px;max-width:800px}.eyebrow{font:700 11px ui-monospace,monospace;color:var(--cyan);letter-spacing:3px}.hero h1{font-size:clamp(43px,8vw,86px);line-height:.97;letter-spacing:-5px;margin:16px 0 20px}.hero h1 span{color:transparent;-webkit-text-stroke:1px #aaa1ff}.hero p{font-size:17px;line-height:1.75;color:#aeb7d2;max-width:650px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{border:1px solid #3c4568;background:#171d33;color:var(--text);padding:12px 16px;border-radius:12px;cursor:pointer;text-decoration:none;transition:.2s}.btn:hover{transform:translateY(-2px);border-color:var(--violet)}.btn.primary{border:0;background:linear-gradient(100deg,#8e70ff,#38bfe0);color:#080b18;font-weight:900}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;margin:18px 0 36px}.panel{border:1px solid var(--line);background:linear-gradient(145deg,#141a2dE8,#0c1120F2);border-radius:20px;padding:21px;min-width:0;box-shadow:0 15px 45px #0002}.panel h2,.panel h3{margin:0 0 10px}.panel p{color:var(--muted);margin:0}.wide{grid-column:span 7}.narrow{grid-column:span 5}.third{grid-column:span 4}.panel-label{font:11px ui-monospace,monospace;letter-spacing:2px;color:#a99aff;margin-bottom:15px}.big-number{font-size:43px;font-weight:900;letter-spacing:-2px}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:18px}.mini{padding:12px;background:#090e1c;border:1px solid #202943;border-radius:12px}.mini strong{display:block;font-size:19px}.mini span{font-size:11px;color:var(--muted)}.feed{display:grid;gap:12px;margin-top:15px}.feed-row{display:flex;gap:12px;align-items:flex-start}.feed-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#8270ff20;flex-shrink:0}.feed-row strong{display:block}.feed-row small{color:var(--muted)}.console{background:#070b14;border:1px solid #28324e;border-radius:13px;padding:15px;margin-top:16px;font:12px/1.8 ui-monospace,SFMono-Regular,monospace;color:#9ca9c8;min-height:126px}.console .ok{color:var(--green)}.console .accent{color:var(--cyan)}.footer{border-top:1px solid var(--line);padding:18px 0 6px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#687494;font-size:12px}.locked{min-height:100vh;display:grid;place-items:center;padding:22px}.locked-card{max-width:470px;text-align:center;padding:35px 28px;border:1px solid var(--line);border-radius:24px;background:#101629eF}.lock-icon{font-size:42px}.locked-card h1{font-size:28px}.locked-card p{color:var(--muted);line-height:1.7}.hidden{display:none!important}@media(max-width:720px){.shell{padding:17px}.topbar{align-items:flex-start}.status{font-size:10px}.hero{padding:43px 0 25px}.hero h1{letter-spacing:-2.5px}.wide,.narrow,.third{grid-column:span 12}.mini-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.panel{padding:17px}}@media(max-width:390px){.mini-grid{grid-template-columns:1fr}.topbar{flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="locked" class="locked">
+  <section class="locked-card">
+    <div class="lock-icon">⌁</div>
+    <div class="eyebrow">CLOSE / RESTRICTED</div>
+    <h1>Доступ не подтверждён</h1>
+    <p>Этот цифровой архив закрыт. Он откроется только после подтверждения доступа в основном хабе Close Приложений.</p>
+    <a class="btn primary" href="./">Вернуться в хаб ↗</a>
+  </section>
+</div>
+<main id="app" class="hidden">
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="mark">⌁</div><div>CLOSE <span style="color:var(--cyan)">// ZERO</span><div class="tiny">PRIVATE DIGITAL SPACE</div></div></div>
+      <div class="status"><span class="pulse"></span> ACCESS GRANTED · LOCAL SESSION</div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">ARCHIVE 015 / RESTRICTED ENVIRONMENT</div>
+      <h1>WELCOME TO<br><span>THE ZERO</span></h1>
+      <p>Ты добрался до пространства, которого нет в обычном каталоге. Здесь собраны следы проекта, маленькие эксперименты и послание от создателя. Никакой магии — только любопытство и немного кода.</p>
+      <div class="hero-actions">
+        <button class="btn primary" id="diagnose">Запустить диагностику ↗</button>
+        <a class="btn" href="./">← Назад в CloseApps</a>
+      </div>
+    </section>
+    <section class="grid">
+      <article class="panel wide">
+        <div class="panel-label">01 / SYSTEM OVERVIEW</div>
+        <h2>Система в норме</h2>
+        <p>Секретный узел активен в этом браузере. Прогресс доступа хранится локально на твоём устройстве.</p>
+        <div class="mini-grid">
+          <div class="mini"><strong>15</strong><span>APP NODES</span></div>
+          <div class="mini"><strong>03</strong><span>ACCESS FRAGMENTS</span></div>
+          <div class="mini"><strong id="uptime">00:00</strong><span>SESSION TIME</span></div>
+        </div>
+        <div class="console" id="console"><div><span class="ok">[OK]</span> identity.check — verified</div><div><span class="ok">[OK]</span> archive.mount — ready</div><div><span class="accent">[INFO]</span> waiting for manual diagnostics…</div></div>
+      </article>
+      <article class="panel narrow">
+        <div class="panel-label">02 / CREATOR NOTE</div>
+        <h2>От Севы</h2>
+        <p>Если ты читаешь это, значит, ты не просто открыл сайт, а внимательно его исследовал. Спасибо, что проверяешь, нажимаешь, экспериментируешь и замечаешь детали. Именно так и рождаются интересные проекты.</p>
+        <div style="margin-top:20px;font-weight:850">Аршинов Всеволод</div>
+        <div class="tiny" style="margin-top:4px">CREATOR OF CLOSE APPS</div>
+      </article>
+      <article class="panel third">
+        <div class="panel-label">03 / ARCHIVE</div>
+        <h3>Запись 001 — Начало</h3>
+        <p>Сначала была идея собрать полезные инструменты и игры в одном месте. Со временем хаб вырос — и получил собственные скрытые уголки.</p>
+      </article>
+      <article class="panel third">
+        <div class="panel-label">04 / PRINCIPLES</div>
+        <h3>Три правила</h3>
+        <div class="feed">
+          <div class="feed-row"><div class="feed-icon">✦</div><div><strong>Любопытство</strong><small>Проверяй, что скрывается за привычным.</small></div></div>
+          <div class="feed-row"><div class="feed-icon">⌘</div><div><strong>Создание</strong><small>Не бойся пробовать новые идеи.</small></div></div>
+          <div class="feed-row"><div class="feed-icon">∞</div><div><strong>Улучшение</strong><small>Каждый релиз — следующий шаг.</small></div></div>
+        </div>
+      </article>
+      <article class="panel third">
+        <div class="panel-label">05 / SECRET NODE</div>
+        <h3>Узел активирован</h3>
+        <p>Архив открыт. Можешь исследовать интерфейс и запустить диагностику — она покажет несколько системных сообщений.</p>
+        <button class="btn" id="signal" style="margin-top:17px;width:100%">Отправить сигнал</button>
+      </article>
+    </section>
+    <footer class="footer"><span>© 2026 CLOSE APPS · PRIVATE ARCHIVE</span><span>BUILT WITH CURIOSITY, NOT MAGIC.</span></footer>
+  </div>
+</main>
+<script>
+(function(){
+  let found=[];
+  try{found=JSON.parse(localStorage.getItem('closeAppsVaultCodes')||'[]')}catch(e){}
+  const required=['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
+  const allowed=required.every(code=>found.includes(code));
+  document.getElementById('locked').classList.toggle('hidden',allowed);
+  document.getElementById('app').classList.toggle('hidden',!allowed);
+  if(!allowed)return;
+  const started=Date.now(), uptime=document.getElementById('uptime'), log=document.getElementById('console');
+  setInterval(()=>{const s=Math.floor((Date.now()-started)/1000);uptime.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
+  function line(text,cls){const d=document.createElement('div');if(cls)d.className=cls;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight}
+  document.getElementById('diagnose').addEventListener('click',()=>{
+    const b=document.getElementById('diagnose');b.disabled=true;b.textContent='Диагностика запущена…';
+    const tasks=['checking app registry','checking local session','checking archive integrity','all systems nominal'];
+    let i=0;const timer=setInterval(()=>{if(i>=tasks.length){clearInterval(timer);b.textContent='Диагностика завершена ✓';b.disabled=false;return}line('['+(i===tasks.length-1?'OK':'RUN')+'] '+tasks[i],i===tasks.length-1?'ok':'accent');i++},550);
+  });
+  document.getElementById('signal').addEventListener('click',()=>{
+    line('[SIGNAL] packet sent from CLOSE // ZERO','accent');
+    line('[REPLY] привет, исследователь. хорошего дня!','ok');
+  });
+})();
+</script>
+</body>
+</html>
