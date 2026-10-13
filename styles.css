@@ -1642,3 +1642,23 @@
                 padding: 14px;
             }
         }
+
+
+/* Hidden third Easter egg: activated once the hub reaches 15 apps. */
+.celebrate-banner { position: relative; }
+.hidden-fifteen-trigger {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    width: 28px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    opacity: 0.015;
+    cursor: default;
+    z-index: 3;
+}
+.hidden-fifteen-trigger.armed { cursor: pointer; }
