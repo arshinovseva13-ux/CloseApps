@@ -52,10 +52,10 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;pa
 <div class="overlay" id="settingsOverlay" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
   <section class="settings">
     <h2 id="settingsTitle">⚙️ Подключение ИИ</h2>
-    <p>Используй API-совместимый сервис. Адрес, модель и ключ можно получить у выбранного провайдера.</p>
+    <p>Для бесплатного старта можно использовать OpenRouter с маршрутизатором бесплатных моделей. Нужен личный API-ключ; лимиты бесплатных моделей ограничены.</p><p><a href="https://openrouter.ai/settings/keys" target="_blank" rel="noopener noreferrer" style="color:#b8a5ff">Получить API-ключ на OpenRouter ↗</a></p>
     <div class="security">Важно: ключ не публикуется в коде сайта, но сохраняется в локальном хранилище этого браузера. Пользуйся только на личном устройстве и не вводи ключ на чужом компьютере.</div>
-    <div class="field"><label for="endpoint">API endpoint (Chat Completions)</label><input id="endpoint" type="url" placeholder="https://provider.example/v1/chat/completions" autocomplete="url"></div>
-    <div class="field"><label for="model">Название модели</label><input id="model" type="text" placeholder="например, модель из кабинета провайдера" autocomplete="off"></div>
+    <div class="field"><label for="endpoint">API endpoint (Chat Completions)</label><input id="endpoint" type="url" placeholder="https://openrouter.ai/api/v1/chat/completions" autocomplete="url"></div>
+    <div class="field"><label for="model">Название модели</label><input id="model" type="text" placeholder="openrouter/free" autocomplete="off"></div>
     <div class="field"><label for="apiKey">API-ключ</label><input id="apiKey" type="password" placeholder="Вставь свой API-ключ" autocomplete="new-password"></div>
     <div class="field"><label for="systemPrompt">Стиль ответов</label><select id="systemPrompt"><option value="Ты Close AI — дружелюбный, честный и полезный ИИ-помощник. Отвечай на языке пользователя, обычно по-русски. Объясняй понятно, не выдумывай факты и уточняй неопределённость.">Дружелюбный помощник</option><option value="Ты опытный преподаватель. Объясняй пошагово простым языком, помогай понять тему, а не только получить ответ.">Учитель</option><option value="Ты опытный программист. Предлагай понятные, безопасные и рабочие решения, объясняй код и учитывай мобильные устройства.">Программист</option><option value="Ты творческий напарник. Предлагай оригинальные идеи, несколько вариантов и конкретные шаги.">Творческий режим</option></select></div>
     <div class="rowbtn"><button class="btn" id="clearSettings" type="button">Удалить настройки</button><button class="btn" id="closeSettings" type="button">Отмена</button><button class="btn primary" id="saveSettings" type="button">Сохранить</button></div>
@@ -65,7 +65,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;pa
 (() => {
 const $ = id => document.getElementById(id);
 const CONFIG_KEY='closeAIConfig_v1', CHATS_KEY='closeAIChats_v1';
-let config={endpoint:'',model:'',key:'',system:'Ты Close AI — дружелюбный, честный и полезный ИИ-помощник. Отвечай на языке пользователя, обычно по-русски. Объясняй понятно, не выдумывай факты и уточняй неопределённость.'};
+let config={endpoint:'https://openrouter.ai/api/v1/chat/completions',model:'openrouter/free',key:'',system:'Ты Close AI — дружелюбный, честный и полезный ИИ-помощник. Отвечай на языке пользователя, обычно по-русски. Объясняй понятно, не выдумывай факты и уточняй неопределённость.'};
 let chats=[],activeId=null,busy=false;
 const defaultSystem=$('systemPrompt').value;
 function load(){
@@ -103,7 +103,7 @@ $('saveSettings').addEventListener('click',()=>{
  try{localStorage.setItem(CONFIG_KEY,JSON.stringify(config))}catch{alert('Браузер не разрешил сохранить настройки.');return}
  closeSettings();setStatus(isConfigured()?'✓ ИИ настроен — можно писать':'⚙️ Заполни endpoint, модель и ключ',isConfigured());
 });
-$('clearSettings').addEventListener('click',()=>{if(!confirm('Удалить сохранённый API-ключ и настройки?'))return;config={endpoint:'',model:'',key:'',system:defaultSystem};try{localStorage.removeItem(CONFIG_KEY)}catch{};$('endpoint').value='';$('model').value='';$('apiKey').value='';$('systemPrompt').value=defaultSystem;setStatus('Настройки удалены')});
+$('clearSettings').addEventListener('click',()=>{if(!confirm('Удалить сохранённый API-ключ и настройки?'))return;config={endpoint:'https://openrouter.ai/api/v1/chat/completions',model:'openrouter/free',key:'',system:defaultSystem};try{localStorage.removeItem(CONFIG_KEY)}catch{};$('endpoint').value=config.endpoint;$('model').value=config.model;$('apiKey').value='';$('systemPrompt').value=defaultSystem;setStatus('Настройки удалены')});
 $('newChat').addEventListener('click',newChat);
 document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{$('prompt').value=b.dataset.prompt;autoSize();$('prompt').focus()}));
 function autoSize(){$('prompt').style.height='auto';$('prompt').style.height=Math.min($('prompt').scrollHeight,180)+'px'}
@@ -116,7 +116,7 @@ $('chatForm').addEventListener('submit',async e=>{
  c.messages.push({role:'user',content:text});$('prompt').value='';autoSize();renderChat();renderHistory();saveChats();
  const waiting=addMessage('assistant','Думаю…');waiting.classList.add('typing');busy=true;$('send').disabled=true;setStatus('⏳ Получаю ответ от модели…');
  try{
-  const response=await fetch(config.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+config.key},body:JSON.stringify({model:config.model,messages:[{role:'system',content:config.system||defaultSystem},...c.messages.map(m=>({role:m.role,content:m.content}))],temperature:0.7,stream:false})});
+  const response=await fetch(config.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+config.key,'HTTP-Referer':'https://arshinovseva13-ux.github.io/CloseApps/','X-OpenRouter-Title':'Close AI'},body:JSON.stringify({model:config.model,messages:[{role:'system',content:config.system||defaultSystem},...c.messages.map(m=>({role:m.role,content:m.content}))],temperature:0.7,stream:false})});
   const raw=await response.text();let data;try{data=JSON.parse(raw)}catch{throw new Error('Сервис вернул не JSON. Проверь endpoint и совместимость API.')}
   if(!response.ok)throw new Error(data?.error?.message||data?.message||('Ошибка API: HTTP '+response.status));
   const answer=data?.choices?.[0]?.message?.content;
