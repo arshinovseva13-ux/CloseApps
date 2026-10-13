@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b14">
+<title>Close AI — ИИ-помощник</title>
+<style>
+:root{color-scheme:dark;--bg:#090b14;--panel:#111522;--panel2:#171c2d;--line:#2a3045;--text:#f4f5fb;--muted:#9da6bd;--purple:#9c7bff;--cyan:#55d9ed}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#26204d 0,transparent 42%),radial-gradient(ellipse at 95% 25%,#102c43 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-width:1040px;margin:auto;min-height:100vh;padding:18px;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 0 18px;border-bottom:1px solid #ffffff14}.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.2px}.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#9d75ff,#4bceef);color:#0b0c17;font-size:22px;box-shadow:0 0 28px #7f65ff44}.brand small{display:block;color:var(--muted);font-size:12px;font-weight:500;letter-spacing:0}.actions{display:flex;gap:8px}.btn{border:1px solid var(--line);border-radius:12px;background:#171b2a;padding:10px 13px}.btn:hover{border-color:#8c78e8}.btn.primary{background:linear-gradient(110deg,#8764e8,#4fbbd8);border:0;color:#080b15;font-weight:750}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;flex:1;padding-top:18px;min-height:0}.side,.chatbox{background:#111522dd;border:1px solid var(--line);border-radius:20px;overflow:hidden}.side{padding:14px;display:flex;flex-direction:column;gap:12px}.newchat{width:100%;text-align:left}.side-title{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px;padding:5px 2px}.history{display:flex;flex-direction:column;gap:5px}.history button{border:0;background:transparent;text-align:left;padding:9px;border-radius:10px;color:#c8cce0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.history button:hover{background:var(--panel2)}.privacy{font-size:12px;color:var(--muted);margin-top:auto;padding:12px 4px 0;border-top:1px solid var(--line)}
+.chatbox{display:flex;flex-direction:column;min-height:68vh}.welcome{text-align:center;margin:auto;padding:36px 22px;max-width:620px}.orb{width:74px;height:74px;margin:0 auto 20px;display:grid;place-items:center;border-radius:25px;background:linear-gradient(135deg,#8e68f5,#42cde6);font-size:38px;box-shadow:0 0 55px #7e64ff40}.welcome h1{font-size:clamp(27px,4vw,38px);margin:0 0 8px;letter-spacing:-1px}.gradient{background:linear-gradient(90deg,#b49aff,#6be1f2);color:transparent;background-clip:text}.welcome p{color:var(--muted);margin:0 auto 24px;max-width:460px}.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:9px;text-align:left}.suggestions button{background:#171b2a;border:1px solid var(--line);border-radius:13px;padding:12px;color:#e0e3f2}.suggestions button:hover{border-color:#8d78ee}
+.messages{display:flex;flex-direction:column;gap:18px;padding:22px;overflow-y:auto;flex:1;max-height:calc(100vh - 280px)}.message{display:flex;gap:11px;align-items:flex-start;max-width:100%}.message.user{flex-direction:row-reverse}.avatar{flex:0 0 32px;height:32px;border-radius:11px;display:grid;place-items:center;background:#292044}.user .avatar{background:#173a49}.bubble{max-width:min(760px,calc(100% - 45px));border:1px solid var(--line);background:#171b2a;border-radius:4px 15px 15px 15px;padding:12px 15px;white-space:pre-wrap;overflow-wrap:anywhere}.user .bubble{background:#1a2940;border-radius:15px 4px 15px 15px}.bubble.error{border-color:#a54a5d;color:#ffb5c2}.typing{color:var(--muted);font-size:13px}.composer-wrap{padding:14px;border-top:1px solid var(--line);background:#0f1320}.composer{display:flex;gap:10px;align-items:flex-end;border:1px solid #363d56;background:#171b2a;border-radius:17px;padding:9px}.composer:focus-within{border-color:#9a80ff;box-shadow:0 0 0 3px #987cff16}textarea{resize:none;max-height:180px;min-height:42px;flex:1;background:transparent;border:0;outline:0;color:var(--text);padding:9px 7px}textarea::placeholder{color:#818aa3}.send{width:43px;height:43px;border:0;border-radius:13px;background:linear-gradient(135deg,#a185ff,#58d7e9);color:#0a0c17;font-size:19px;font-weight:800}.send:disabled{opacity:.45;cursor:not-allowed}.fineprint{text-align:center;color:#8089a0;font-size:11px;margin:9px 0 0}.status{font-size:12px;color:var(--muted);padding:8px 2px}.status.ready{color:#81e1b4}.overlay{position:fixed;inset:0;background:#03040ac9;display:none;align-items:center;justify-content:center;padding:16px;z-index:5}.overlay.show{display:flex}.settings{width:min(540px,100%);max-height:90vh;overflow:auto;background:#111522;border:1px solid #353b53;border-radius:20px;padding:22px;box-shadow:0 25px 100px #0009}.settings h2{margin:0 0 6px}.settings p{color:var(--muted);font-size:13px}.field{display:flex;flex-direction:column;gap:6px;margin:14px 0}.field label{font-size:13px;color:#cbd0e2}.field input,.field select{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--line);background:#090d18;color:var(--text);outline:none}.field input:focus{border-color:var(--purple)}.rowbtn{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:18px}.security{border:1px solid #66563a;background:#2b2418;color:#f4dca8;padding:11px;border-radius:11px;font-size:12px}.empty-history{color:#737d94;font-size:13px;padding:7px 2px}
+@media(max-width:720px){.shell{padding:12px}.layout{grid-template-columns:1fr;gap:10px}.side{order:2}.chatbox{min-height:62vh;order:1}.side{padding:10px}.side .side-title,.privacy{display:none}.history{flex-direction:row;overflow-x:auto}.history button{max-width:170px;flex:0 0 auto}.newchat{width:auto}.side{flex-direction:row;align-items:center}.messages{padding:15px;max-height:none}.welcome{padding:28px 14px}.suggestions{grid-template-columns:1fr}.header-label{display:none}.btn{padding:9px 10px}.bubble{padding:10px 12px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="brand"><div class="logo">✦</div><div>Close <span class="gradient">AI</span><small>ИИ-помощник · приложение №15</small></div></div>
+  <div class="actions"><a class="btn" href="https://arshinovseva13-ux.github.io/CloseApps/" style="text-decoration:none">← <span class="header-label">Все приложения</span></a><button class="btn" id="settingsBtn" type="button">⚙️ <span class="header-label">Настройки ИИ</span></button></div>
+</header>
+<div class="layout">
+  <aside class="side">
+    <button class="btn primary newchat" id="newChat">＋ Новый чат</button>
+    <div class="side-title">Недавние чаты</div>
+    <div class="history" id="history"><div class="empty-history">Пока пусто</div></div>
+    <div class="privacy">🔒 Переписки хранятся в этом браузере. Не отправляй в чат пароли и личные секреты.</div>
+  </aside>
+  <main class="chatbox">
+    <section class="welcome" id="welcome">
+      <div class="orb">✦</div><h1>Привет! Я <span class="gradient">Close AI</span></h1>
+      <p>Помогаю разобраться в сложном, придумать идею, написать текст или код. Подключи ИИ в настройках, чтобы начать.</p>
+      <div class="suggestions">
+        <button type="button" data-prompt="Объясни простыми словами, что такое искусственный интеллект.">💡 Объясни сложную тему</button>
+        <button type="button" data-prompt="Придумай 5 идей для нового веб-приложения.">🚀 Придумай идею приложения</button>
+        <button type="button" data-prompt="Помоги написать простую игру на HTML, CSS и JavaScript.">💻 Помоги с кодом</button>
+        <button type="button" data-prompt="Составь план подготовки к контрольной на 5 дней.">📚 Помоги учиться</button>
+      </div>
+    </section>
+    <section class="messages" id="messages" hidden aria-live="polite"></section>
+    <div class="composer-wrap">
+      <form class="composer" id="chatForm"><textarea id="prompt" rows="1" placeholder="Напиши сообщение… (Enter — отправить)" aria-label="Сообщение"></textarea><button class="send" id="send" type="submit" aria-label="Отправить">↑</button></form>
+      <div class="fineprint">Ответы генерируются подключённой моделью. Возможны ошибки — проверяй важную информацию.</div>
+      <div class="status" id="status">⚙️ ИИ не подключён — открой настройки</div>
+    </div>
+  </main>
+</div>
+</div>
+<div class="overlay" id="settingsOverlay" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <section class="settings">
+    <h2 id="settingsTitle">⚙️ Подключение ИИ</h2>
+    <p>Используй API-совместимый сервис. Адрес, модель и ключ можно получить у выбранного провайдера.</p>
+    <div class="security">Важно: ключ не публикуется в коде сайта, но сохраняется в локальном хранилище этого браузера. Пользуйся только на личном устройстве и не вводи ключ на чужом компьютере.</div>
+    <div class="field"><label for="endpoint">API endpoint (Chat Completions)</label><input id="endpoint" type="url" placeholder="https://provider.example/v1/chat/completions" autocomplete="url"></div>
+    <div class="field"><label for="model">Название модели</label><input id="model" type="text" placeholder="например, модель из кабинета провайдера" autocomplete="off"></div>
+    <div class="field"><label for="apiKey">API-ключ</label><input id="apiKey" type="password" placeholder="Вставь свой API-ключ" autocomplete="new-password"></div>
+    <div class="field"><label for="systemPrompt">Стиль ответов</label><select id="systemPrompt"><option value="Ты Close AI — дружелюбный, честный и полезный ИИ-помощник. Отвечай на языке пользователя, обычно по-русски. Объясняй понятно, не выдумывай факты и уточняй неопределённость.">Дружелюбный помощник</option><option value="Ты опытный преподаватель. Объясняй пошагово простым языком, помогай понять тему, а не только получить ответ.">Учитель</option><option value="Ты опытный программист. Предлагай понятные, безопасные и рабочие решения, объясняй код и учитывай мобильные устройства.">Программист</option><option value="Ты творческий напарник. Предлагай оригинальные идеи, несколько вариантов и конкретные шаги.">Творческий режим</option></select></div>
+    <div class="rowbtn"><button class="btn" id="clearSettings" type="button">Удалить настройки</button><button class="btn" id="closeSettings" type="button">Отмена</button><button class="btn primary" id="saveSettings" type="button">Сохранить</button></div>
+  </section>
+</div>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const CONFIG_KEY='closeAIConfig_v1', CHATS_KEY='closeAIChats_v1';
+let config={endpoint:'',model:'',key:'',system:'Ты Close AI — дружелюбный, честный и полезный ИИ-помощник. Отвечай на языке пользователя, обычно по-русски. Объясняй понятно, не выдумывай факты и уточняй неопределённость.'};
+let chats=[],activeId=null,busy=false;
+const defaultSystem=$('systemPrompt').value;
+function load(){
+ try{const c=JSON.parse(localStorage.getItem(CONFIG_KEY)||'null');if(c&&typeof c==='object')config={...config,...c};}catch{}
+ try{const h=JSON.parse(localStorage.getItem(CHATS_KEY)||'[]');if(Array.isArray(h))chats=h.filter(x=>x&&Array.isArray(x.messages)).slice(0,30);}catch{}
+ $('endpoint').value=config.endpoint||'';$('model').value=config.model||'';$('apiKey').value=config.key||'';$('systemPrompt').value=config.system||defaultSystem;
+ renderHistory();setStatus(isConfigured()?'✓ ИИ настроен — можно писать':'⚙️ ИИ не подключён — открой настройки',isConfigured());
+}
+function isConfigured(){return !!(config.endpoint&&config.model&&config.key)}
+function setStatus(t,ok=false){$('status').textContent=t;$('status').classList.toggle('ready',ok)}
+function active(){return chats.find(c=>c.id===activeId)}
+function saveChats(){try{localStorage.setItem(CHATS_KEY,JSON.stringify(chats.slice(0,30)))}catch{setStatus('Не удалось сохранить историю — возможно, переполнено хранилище')}}
+function renderHistory(){
+ const host=$('history');host.textContent='';
+ if(!chats.length){const d=document.createElement('div');d.className='empty-history';d.textContent='Пока пусто';host.append(d);return}
+ chats.forEach(c=>{const b=document.createElement('button');b.type='button';b.textContent=c.title||'Новый чат';b.title=b.textContent;b.addEventListener('click',()=>{activeId=c.id;renderChat();renderHistory()});host.append(b)})
+}
+function addMessage(role,content,error=false){
+ const host=$('messages'),wrap=document.createElement('div'),avatar=document.createElement('div'),bubble=document.createElement('div');
+ wrap.className='message '+(role==='user'?'user':'assistant');avatar.className='avatar';avatar.textContent=role==='user'?'🙂':'✦';bubble.className='bubble'+(error?' error':'');bubble.textContent=content;wrap.append(avatar,bubble);host.append(wrap);host.scrollTop=host.scrollHeight;return bubble;
+}
+function renderChat(){
+ const c=active();$('welcome').hidden=!!c;$('messages').hidden=!c;$('messages').textContent='';
+ if(c)c.messages.forEach(m=>addMessage(m.role,m.content,m.error));
+}
+function newChat(){activeId=null;renderChat();$('prompt').focus()}
+function openSettings(){const s=active();$('endpoint').value=config.endpoint||'';$('model').value=config.model||'';$('apiKey').value=config.key||'';$('systemPrompt').value=config.system||defaultSystem;$('settingsOverlay').classList.add('show')}
+function closeSettings(){$('settingsOverlay').classList.remove('show')}
+$('settingsBtn').addEventListener('click',openSettings);$('closeSettings').addEventListener('click',closeSettings);
+$('settingsOverlay').addEventListener('click',e=>{if(e.target===$('settingsOverlay'))closeSettings()});
+$('saveSettings').addEventListener('click',()=>{
+ const endpoint=$('endpoint').value.trim(),model=$('model').value.trim(),key=$('apiKey').value.trim();
+ if(endpoint&&!/^https:\/\//i.test(endpoint)){alert('Для безопасности API endpoint должен начинаться с https://');return}
+ config={endpoint,model,key,system:$('systemPrompt').value};
+ try{localStorage.setItem(CONFIG_KEY,JSON.stringify(config))}catch{alert('Браузер не разрешил сохранить настройки.');return}
+ closeSettings();setStatus(isConfigured()?'✓ ИИ настроен — можно писать':'⚙️ Заполни endpoint, модель и ключ',isConfigured());
+});
+$('clearSettings').addEventListener('click',()=>{if(!confirm('Удалить сохранённый API-ключ и настройки?'))return;config={endpoint:'',model:'',key:'',system:defaultSystem};try{localStorage.removeItem(CONFIG_KEY)}catch{};$('endpoint').value='';$('model').value='';$('apiKey').value='';$('systemPrompt').value=defaultSystem;setStatus('Настройки удалены')});
+$('newChat').addEventListener('click',newChat);
+document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{$('prompt').value=b.dataset.prompt;autoSize();$('prompt').focus()}));
+function autoSize(){$('prompt').style.height='auto';$('prompt').style.height=Math.min($('prompt').scrollHeight,180)+'px'}
+$('prompt').addEventListener('input',autoSize);
+$('prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('chatForm').requestSubmit()}});
+$('chatForm').addEventListener('submit',async e=>{
+ e.preventDefault();const text=$('prompt').value.trim();if(!text||busy)return;
+ if(!isConfigured()){openSettings();setStatus('Сначала подключи ИИ в настройках');return}
+ let c=active();if(!c){c={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),title:text.slice(0,48),messages:[]};chats.unshift(c);activeId=c.id}
+ c.messages.push({role:'user',content:text});$('prompt').value='';autoSize();renderChat();renderHistory();saveChats();
+ const waiting=addMessage('assistant','Думаю…');waiting.classList.add('typing');busy=true;$('send').disabled=true;setStatus('⏳ Получаю ответ от модели…');
+ try{
+  const response=await fetch(config.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+config.key},body:JSON.stringify({model:config.model,messages:[{role:'system',content:config.system||defaultSystem},...c.messages.map(m=>({role:m.role,content:m.content}))],temperature:0.7,stream:false})});
+  const raw=await response.text();let data;try{data=JSON.parse(raw)}catch{throw new Error('Сервис вернул не JSON. Проверь endpoint и совместимость API.')}
+  if(!response.ok)throw new Error(data?.error?.message||data?.message||('Ошибка API: HTTP '+response.status));
+  const answer=data?.choices?.[0]?.message?.content;
+  if(typeof answer!=='string'||!answer.trim())throw new Error('Модель вернула пустой ответ. Проверь выбранную модель.');
+  const final=answer.trim();c.messages.push({role:'assistant',content:final});waiting.classList.remove('typing');waiting.textContent=final;saveChats();renderHistory();setStatus('✓ Ответ получен',true);
+ }catch(err){
+  const msg=(err&&err.message)||'Неизвестная ошибка';
+  waiting.classList.remove('typing');waiting.classList.add('error');
+  waiting.textContent='Не удалось получить ответ. '+msg+(msg.includes('fetch')||msg.includes('NetworkError')?' Возможно, провайдер не разрешает запросы из браузера (CORS). Используй API с поддержкой браузерных запросов или отдельный безопасный сервер.':'');
+  c.messages.pop();saveChats();setStatus('⚠️ Не удалось связаться с ИИ');
+ }finally{busy=false;$('send').disabled=false;$('prompt').focus()}
+});
+window.addEventListener('beforeunload',()=>{saveChats()});
+load();renderChat();
+})();
+</script>
+</body>
+</html>
