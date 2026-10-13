@@ -426,6 +426,40 @@
             background: rgba(22, 32, 58, 0.9);
         }
 
+        /* Спец. стиль для Kodex - новая фича */
+        .app-link.kodex-feature {
+            background: linear-gradient(135deg, rgba(0, 120, 255, 0.12), rgba(0, 200, 255, 0.08), rgba(139, 108, 255, 0.1));
+            border: 1px solid rgba(0, 150, 255, 0.45);
+            animation: kodex-pulse 3s ease-in-out infinite;
+        }
+
+        .app-link.kodex-feature::before {
+            background: radial-gradient(circle at 85% 30%, rgba(0, 150, 255, 0.12) 0%, transparent 60%);
+        }
+
+        .app-link.kodex-feature:hover {
+            border-color: rgba(0, 150, 255, 0.75);
+            box-shadow: 0 16px 40px rgba(0, 150, 255, 0.25);
+            background: linear-gradient(135deg, rgba(0, 120, 255, 0.18), rgba(0, 200, 255, 0.14), rgba(139, 108, 255, 0.16));
+        }
+
+        .app-link.kodex-feature .link-icon {
+            background: rgba(0, 150, 255, 0.22);
+        }
+
+        .app-link.kodex-feature .arrow-icon {
+            color: #4da6ff;
+        }
+
+        @keyframes kodex-pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 150, 255, 0.12), 0 0 40px rgba(139, 108, 255, 0.06);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(0, 150, 255, 0.25), 0 0 65px rgba(139, 108, 255, 0.12);
+            }
+        }
+
         .app-link.featured {
             background: linear-gradient(135deg, rgba(0, 230, 160, 0.1), rgba(0, 200, 255, 0.08), rgba(139, 108, 255, 0.1));
             border: 1px solid rgba(0, 230, 160, 0.4);
@@ -584,12 +618,28 @@
             border: 1px solid rgba(0, 230, 160, 0.5);
         }
 
+        .badge-code {
+            background: rgba(0, 150, 255, 0.2);
+            color: #4da6ff;
+            border: 1px solid rgba(0, 150, 255, 0.5);
+            animation: badge-code-pulse 2s ease-in-out infinite;
+        }
+
         @keyframes badge-new-pulse {
             0%, 100% {
                 box-shadow: 0 0 8px rgba(255, 200, 100, 0.3);
             }
             50% {
                 box-shadow: 0 0 18px rgba(255, 200, 100, 0.6);
+            }
+        }
+
+        @keyframes badge-code-pulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(0, 150, 255, 0.35);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 150, 255, 0.7);
             }
         }
 
@@ -1679,6 +1729,7 @@
 
             <p class="section-label">📖 Текстовые статьи</p>
 
+            <!-- 5 партий - уже без "Новое" -->
             <a href="#" class="article-link" 
                data-search="пять главных партий россии политика госдума единая россия кпрф лдпр новые люди справедливая россия статья" 
                data-category="other"
@@ -1688,12 +1739,11 @@
                data-desc="Кто представлен в Государственной думе девятого созыва, чего хотят эти партии и чем они отличаются друг от друга."
                data-url="https://arshinovseva13-ux.github.io/Partii/"
                data-url-display="arshinovseva13-ux.github.io/Partii/"
-               data-badges='[{"text":"✨ Новое","class":"badge-new"},{"text":"📖 Статья","class":"article-tag"}]'>
+               data-badges='[{"text":"📖 Статья","class":"article-tag"}]'>
                 <div class="link-icon">🏛️</div>
                 <div class="link-info">
                     <div class="link-title">
                         Пять главных партий России
-                        <span class="link-badge badge-new">✨ Новое</span>
                         <span class="article-tag">📖 Статья</span>
                     </div>
                     <div class="link-desc">Кто представлен в Государственной думе девятого созыва, чего хотят эти партии и чем они отличаются друг от друга.</div>
@@ -1851,6 +1901,42 @@
             </a>
 
             <p class="section-label">🔗 Приложения</p>
+
+            <!-- 🆕 KODEX - новое, глобальное -->
+            <a href="#" class="app-link kodex-feature" 
+               data-search="kodex кодекс редактор кода vscode альтернатива ide" 
+               data-category="tools"
+               data-id="kodex"
+               data-icon="⌨️"
+               data-title="Kodex"
+               data-desc="Редактор кода в браузере. Открывайте папки, переключайтесь между файлами, работайте с командами и встроенным терминалом."
+               data-url="https://arshinovseva13-ux.github.io/Kodex/"
+               data-url-display="arshinovseva13-ux.github.io/Kodex/"
+               data-badges='[{"text":"✨ Новое","class":"badge-code"},{"text":"🖥️ Только ПК","class":"badge-desktop"}]'>
+                <div class="link-icon">⌨️</div>
+                <div class="link-info">
+                    <div class="link-title">
+                        Kodex
+                        <span class="link-badge badge-code">✨ Новое</span>
+                        <span class="link-badge badge-desktop">🖥️ Только ПК</span>
+                    </div>
+                    <div class="link-desc">Редактор кода в браузере. Открывайте папки, переключайтесь между файлами, работайте с командами и встроенным терминалом.</div>
+                    <div class="link-meta">
+                        <div class="rating" data-app-id="kodex">
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <span class="rating-value">0.0</span>
+                        </div>
+                        <span class="link-url">arshinovseva13-ux.github.io/Kodex/</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">→</span>
+            </a>
 
             <a href="#" class="app-link" 
                data-search="календарь событий пасхалки праздники бонусы calendar" 
@@ -2198,8 +2284,8 @@
                 <div class="celebrate-glow"></div>
                 <div class="celebrate-content">
                     <div class="celebrate-icon">🎉</div>
-                    <div class="celebrate-title">11 приложений!</div>
-                    <div class="celebrate-subtitle">Спасибо, что вы с нами! Впереди ещё много интересного.</div>
+                    <div class="celebrate-title">12 приложений!</div>
+                    <div class="celebrate-subtitle">Kodex вышел — теперь у нас 12 приложений! Спасибо, что вы с нами!</div>
                 </div>
             </div>
 
@@ -2218,7 +2304,11 @@
                     <ul class="changelog-list">
                         <li class="changelog-item">
                             <span class="changelog-date">12.10.2026</span>
-                            <span>🏛️ Добавлена пятая текстовая статья — «Пять главных партий России». Внедрена пасхалка-терминал (кнопка >_ рядом со звёздочкой). Бейдж «Новое» перешёл с Календаря событий на статью про партии. Статус разработки: статья по ЛДПР.</span>
+                            <span>⌨️ Добавлено приложение Kodex — редактор кода в браузере. Только для ПК. Стало 12 приложений — обновлён праздничный баннер. Бейдж «Новое» перешёл с «Пяти партий России» на Kodex.</span>
+                        </li>
+                        <li class="changelog-item">
+                            <span class="changelog-date">12.10.2026</span>
+                            <span>🏛️ Добавлена пятая текстовая статья — «Пять главных партий России». Внедрена пасхалка-терминал (кнопка >_ рядом со звёздочкой). Статус разработки: статья по ЛДПР.</span>
                         </li>
                         <li class="changelog-item">
                             <span class="changelog-date">12.10.2026</span>
@@ -2822,7 +2912,7 @@
                 printLine('Хаб: arshinovseva13-ux.github.io/CloseApps/', 'dim');
             },
             apps: function() {
-                printLine('Все приложения (11):', 'info');
+                printLine('Все приложения (12):', 'info');
                 const apps = document.querySelectorAll('.app-link');
                 apps.forEach(function(app, i) {
                     const title = app.getAttribute('data-title');
@@ -3262,4 +3352,4 @@
         })();
     </script>
 </body>
-                            </html>
+                                </html>
