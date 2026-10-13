@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>Камера — Close Приложения</title>
+<style>
+:root{color-scheme:dark;--bg:#07111f;--panel:#101d30;--line:#263b56;--cyan:#55d8ff;--text:#f2f7ff;--muted:#9fb2ca}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#123253 0%,#07111f 58%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;padding:22px}
+main{width:min(100%,920px);margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px}.brand{font-weight:800;letter-spacing:.02em}.back{color:var(--cyan);text-decoration:none;border:1px solid var(--line);padding:9px 14px;border-radius:999px}.back:hover{background:#142b43}
+h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.05;margin:8px 0 12px}.intro{color:var(--muted);margin:0 0 24px}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,.8fr);gap:18px}.panel{background:linear-gradient(145deg,rgba(17,31,51,.96),rgba(8,18,32,.96));border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 22px 70px #0003}.preview{width:100%;aspect-ratio:4/3;background:#03070d;border-radius:16px;display:block;object-fit:contain}.status{min-height:26px;color:var(--muted);font-size:.92rem;margin:12px 0}.controls{display:flex;gap:10px;flex-wrap:wrap}.btn,select{border:1px solid var(--line);background:#172a41;color:var(--text);border-radius:12px;padding:12px 15px;font:inherit}.btn{cursor:pointer;font-weight:700}.btn.primary{background:linear-gradient(100deg,#04a9e2,#5576ff);border:0;color:white}.btn:disabled{opacity:.45;cursor:not-allowed}.btn:hover:not(:disabled){filter:brightness(1.15)}select{max-width:100%;width:100%;margin:8px 0 12px}.side h2{font-size:1.1rem;margin:2px 0 8px}.side p{color:var(--muted);font-size:.92rem}.thumbs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}.thumbs img{width:100%;border-radius:10px;border:1px solid var(--line)}.small{font-size:.8rem;color:var(--muted)}.hidden{display:none!important}
+@media(max-width:680px){body{padding:14px}.layout{grid-template-columns:1fr}.panel{padding:13px}.top{align-items:flex-start}.controls .btn{flex:1}.preview{aspect-ratio:3/4;max-height:58vh}}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><div class="brand">📷 CLOSE · ПРИЛОЖЕНИЯ</div><a class="back" href="https://arshinovseva13-ux.github.io/CloseApps/">← К хабу</a></header>
+<h1>Камера</h1>
+<p class="intro">Снимай прямо в браузере. Фотографии остаются у тебя на устройстве — снимки не отправляются на сервер.</p>
+<div class="layout">
+<section class="panel">
+<video id="video" class="preview" autoplay playsinline muted aria-label="Предпросмотр камеры"></video>
+<canvas id="canvas" class="preview hidden"></canvas>
+<p id="status" class="status" role="status">Нажми «Включить камеру» и разреши доступ в браузере.</p>
+<div class="controls">
+<button id="start" class="btn primary">Включить камеру</button>
+<button id="shot" class="btn" disabled>📸 Снимок</button>
+<button id="flip" class="btn" disabled>🔄 Переключить</button>
+</div>
+<div class="controls" style="margin-top:10px">
+<button id="retake" class="btn hidden">Вернуться к камере</button>
+<a id="download" class="btn primary hidden" download="close-camera.jpg">⬇ Скачать фото</a>
+</div>
+</section>
+<aside class="panel side">
+<h2>Настройки</h2>
+<label for="devices">Камера устройства</label>
+<select id="devices" disabled><option>Сначала включи камеру</option></select>
+<p>Если камера не запускается, проверь разрешения сайта и закрой приложения, которые уже используют камеру.</p>
+<hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+<h2>Последние снимки</h2>
+<div id="gallery" class="thumbs"><p class="small">Здесь появятся миниатюры снимков этой сессии.</p></div>
+<p class="small">Совет: на телефоне открой сайт в браузере и разреши доступ к камере.</p>
+</aside>
+</div>
+</main>
+<script>
+(() => {
+const video=document.getElementById('video'), canvas=document.getElementById('canvas'), status=document.getElementById('status');
+const startBtn=document.getElementById('start'), shotBtn=document.getElementById('shot'), flipBtn=document.getElementById('flip');
+const retakeBtn=document.getElementById('retake'), downloadLink=document.getElementById('download'), devicesSelect=document.getElementById('devices'), gallery=document.getElementById('gallery');
+let stream=null, facing='environment', lastPhoto=null, photoNumber=0;
+function say(message){status.textContent=message}
+function stopStream(){if(stream){stream.getTracks().forEach(track=>track.stop());stream=null}video.srcObject=null}
+async function loadDevices(){
+ try{
+  const devices=await navigator.mediaDevices.enumerateDevices();
+  const cameras=devices.filter(d=>d.kind==='videoinput');
+  devicesSelect.innerHTML='';
+  cameras.forEach((cam,i)=>{const option=document.createElement('option');option.value=cam.deviceId;option.textContent=cam.label||'Камера '+(i+1);devicesSelect.appendChild(option)});
+  devicesSelect.disabled=cameras.length<2;
+  if(!cameras.length)devicesSelect.innerHTML='<option>Камеры не найдены</option>';
+ }catch(e){devicesSelect.disabled=true}
+}
+async function startCamera(deviceId){
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){say('Этот браузер не поддерживает камеру. Открой страницу по HTTPS в современном браузере.');return}
+ stopStream();
+ try{
+  const videoConstraint=deviceId?{deviceId:{exact:deviceId}}:{facingMode:{ideal:facing}};
+  stream=await navigator.mediaDevices.getUserMedia({video:videoConstraint,audio:false});
+  video.srcObject=stream; video.classList.remove('hidden');canvas.classList.add('hidden');
+  await video.play(); shotBtn.disabled=false;flipBtn.disabled=false;startBtn.textContent='Перезапустить камеру';
+  retakeBtn.classList.add('hidden');downloadLink.classList.add('hidden');say('Камера включена. Готово к снимку!');
+  await loadDevices();
+  const track=stream.getVideoTracks()[0];if(track&&track.getSettings().deviceId)devicesSelect.value=track.getSettings().deviceId;
+ }catch(err){
+  const message=err&&err.name==='NotAllowedError'?'Нет доступа к камере. Разреши доступ в настройках браузера.':err&&err.name==='NotFoundError'?'Камера не найдена на устройстве.':'Не удалось включить камеру. Проверь разрешения и попробуй ещё раз.';
+  say(message);shotBtn.disabled=true;flipBtn.disabled=true;
+ }
+}
+startBtn.addEventListener('click',()=>startCamera());
+devicesSelect.addEventListener('change',()=>{if(devicesSelect.value)startCamera(devicesSelect.value)});
+flipBtn.addEventListener('click',async()=>{facing=facing==='environment'?'user':'environment';await startCamera()});
+shotBtn.addEventListener('click',()=>{
+ if(!video.videoWidth||!video.videoHeight){say('Подожди, пока камера запустится.');return}
+ canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+ const ctx=canvas.getContext('2d');ctx.drawImage(video,0,0,canvas.width,canvas.height);
+ lastPhoto=canvas.toDataURL('image/jpeg',.94);downloadLink.href=lastPhoto;downloadLink.download='close-camera-'+new Date().toISOString().replace(/[:.]/g,'-')+'.jpg';
+ video.classList.add('hidden');canvas.classList.remove('hidden');retakeBtn.classList.remove('hidden');downloadLink.classList.remove('hidden');say('Снимок готов! Нажми «Скачать фото», чтобы сохранить его.');
+ if(photoNumber===0)gallery.innerHTML='';
+ photoNumber++;const img=document.createElement('img');img.src=lastPhoto;img.alt='Снимок '+photoNumber;img.title='Снимок '+photoNumber;gallery.prepend(img);
+});
+retakeBtn.addEventListener('click',()=>{video.classList.remove('hidden');canvas.classList.add('hidden');retakeBtn.classList.add('hidden');downloadLink.classList.add('hidden');say('Можно сделать следующий снимок.')});
+window.addEventListener('pagehide',stopStream);
+})();
+</script>
+</body>
+</html>
