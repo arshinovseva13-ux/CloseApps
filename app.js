@@ -444,7 +444,7 @@
                 printLine('Хаб: arshinovseva13-ux.github.io/CloseApps/', 'dim');
             },
             apps: function() {
-                printLine('Все приложения (13):', 'info');
+                printLine('Все приложения (' + document.querySelectorAll('.app-link').length + '):', 'info');
                 const apps = document.querySelectorAll('.app-link');
                 apps.forEach(function(app, i) {
                     const title = app.getAttribute('data-title');
