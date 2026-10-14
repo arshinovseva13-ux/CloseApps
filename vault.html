@@ -75,6 +75,22 @@
         <button class="btn" id="signal" style="margin-top:17px;width:100%">Отправить сигнал</button>
       </article>
     </section>
+    <section class="panel" id="questExpansion" style="grid-column:1/-1;border-color:#6c55b8;background:linear-gradient(145deg,#1b1634ee,#0b1420f2);margin-bottom:28px">
+      <div class="panel-label">06 / QUEST CLEARANCE</div><h2>🔓 Уровень 2 — Исследователь</h2>
+      <p id="questAccessText">Проверка допуска CLOSE // QUEST…</p>
+      <div id="questLockedNote" class="console"><div class="accent">[LOCKED] researcher.clearance — missing</div><div>Заверши все 12 испытаний в CLOSE // QUEST, чтобы получить доступ к расширению архива.</div><div style="margin-top:10px"><a class="btn primary" href="quest.html">Пройти CLOSE // QUEST ↗</a></div></div>
+      <div id="questUnlockedTools" class="hidden">
+        <div class="mini-grid"><div class="mini"><strong>12/12</strong><span>MISSIONS CLEARED</span></div><div class="mini"><strong>LEVEL 02</strong><span>RESEARCHER</span></div><div class="mini"><strong>ZERO-7</strong><span>EXPERIMENTAL ACCESS</span></div></div>
+        <div class="feed" style="margin-top:18px">
+          <div class="feed-row"><div class="feed-icon">📁</div><div><strong>Досье 012 — Последний исследователь</strong><small>Ты доказал, что умеешь связывать подсказки и находить скрытые связи.</small></div></div>
+          <div class="feed-row"><div class="feed-icon">⌘</div><div><strong>Команда ZERO-REPORT</strong><small>Показывает системный отчёт о твоём допуске.</small></div></div>
+          <div class="feed-row"><div class="feed-icon">🧩</div><div><strong>Бонусная команда ZERO-7</strong><small>Открывает экспериментальный протокол и секретное послание.</small></div></div>
+        </div>
+        <div class="console" id="zeroTerminal" aria-live="polite"><div class="ok">[ACCESS] researcher clearance verified</div><div class="accent">[INFO] доступны команды ZERO-REPORT и ZERO-7</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><input id="zeroCommandInput" aria-label="Команда архива" placeholder="Введи команду…" style="flex:1;min-width:180px;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px"><button class="btn primary" id="zeroCommandBtn" type="button">Выполнить</button></div>
+        <div id="zeroBonus" class="hidden" style="margin-top:15px;padding:16px;border:1px solid #48b995;border-radius:14px;background:#0d2a24"><div class="panel-label" style="color:var(--green)">EXPERIMENTAL MODE · UNLOCKED</div><h3>Протокол ZERO-7</h3><p>«Архив — это не место, а последовательность решений. Первый ключ открывает дверь. Второй показывает, что за ней. Третий доказывает, что ты готов создать собственный путь».</p><p style="margin-top:10px"><strong>Бонусный статус:</strong> Носитель протокола ZERO-7</p></div>
+      </div>
+    </section>
     <footer class="footer"><span>© 2026 CLOSE APPS · PRIVATE ARCHIVE</span><span>BUILT WITH CURIOSITY, NOT MAGIC.</span></footer>
   </div>
 </main>
@@ -87,6 +103,23 @@
   document.getElementById('locked').classList.toggle('hidden',allowed);
   document.getElementById('app').classList.toggle('hidden',!allowed);
   if(!allowed)return;
+  const questCleared=found.includes('QUEST-COMPLETE-2026');
+  document.getElementById('questLockedNote').classList.toggle('hidden',questCleared);
+  document.getElementById('questUnlockedTools').classList.toggle('hidden',!questCleared);
+  document.getElementById('questAccessText').textContent=questCleared?'Уровень 2 активирован: допуск исследователя подтверждён.':'Уровень 2 закрыт. Для доступа нужно завершить все 12 испытаний CLOSE // QUEST.';
+  if(questCleared){
+    const runZeroCommand=()=>{
+      const input=document.getElementById('zeroCommandInput'), terminal=document.getElementById('zeroTerminal');
+      const cmd=input.value.trim().toUpperCase(), line=document.createElement('div');
+      if(cmd==='ZERO-REPORT'){line.className='ok';line.textContent='[REPORT] QUEST 12/12 · clearance: RESEARCHER · archive: EXTENDED';terminal.appendChild(line);const detail=document.createElement('div');detail.textContent='[NOTE] Досье 012 доступно. Допуск сохранён в этом браузере.';terminal.appendChild(detail);}
+      else if(cmd==='ZERO-7'){line.className='ok';line.textContent='[OK] experimental protocol ZERO-7 unlocked';terminal.appendChild(line);document.getElementById('zeroBonus').classList.remove('hidden');try{localStorage.setItem('closeZeroProtocol7','unlocked')}catch(e){}}
+      else{line.textContent='[ERROR] команда не найдена. Доступны ZERO-REPORT и ZERO-7.';terminal.appendChild(line);}
+      terminal.scrollTop=terminal.scrollHeight;input.value='';
+    };
+    document.getElementById('zeroCommandBtn').addEventListener('click',runZeroCommand);
+    document.getElementById('zeroCommandInput').addEventListener('keydown',e=>{if(e.key==='Enter')runZeroCommand()});
+    if(localStorage.getItem('closeZeroProtocol7')==='unlocked')document.getElementById('zeroBonus').classList.remove('hidden');
+  }
   const started=Date.now(), uptime=document.getElementById('uptime'), log=document.getElementById('console');
   setInterval(()=>{const s=Math.floor((Date.now()-started)/1000);uptime.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
   function line(text,cls){const d=document.createElement('div');if(cls)d.className=cls;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight}
