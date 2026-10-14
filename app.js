@@ -772,7 +772,7 @@
                 printLine('Команды plans и codes не добавлять в help. Скрытые механики не должны случайно появляться в публичной справке.');
                 printLine('');
                 printLine('5. КНОПКА В PLANS', 'info');
-                printLine('В конце этого вывода создаётся кнопка «Открыть CLOSE // ZERO». Она ведёт на vault.html. Сам архив всё ещё может показать экран блокировки, если не собраны все три фрагмента в этом браузере.');
+                printLine('В конце вывода есть две ссылки: первая открывает CLOSE // ZERO, вторая ведёт прямо к секции уровня 2 «Исследователь» на vault.html#questExpansion. Уровень 2 активируется после прохождения всех 12 испытаний CLOSE // QUEST в том же браузере.');
                 printLine('');
                 printLine('5.1. ОБЯЗАТЕЛЬНЫЙ РЕГЛАМЕНТ ОБНОВЛЕНИЙ', 'warn');
                 printLine('При КАЖДОМ обновлении CloseApps обязательно синхронно обновлять публичную «Историю обновлений» в index.html и праздничный баннер с актуальным количеством приложений. Не считать статьи приложениями: сейчас в каталоге 18 приложений и 12 текстовых статей.');
@@ -814,10 +814,10 @@
                 questButtonLine.style.margin = '10px 0';
                 const questButton = document.createElement('button');
                 questButton.type = 'button';
-                questButton.textContent = '↗ Уровень 2 — CLOSE // QUEST';
-                questButton.setAttribute('aria-label', 'Открыть CLOSE QUEST — второй уровень');
+                questButton.textContent = '↗ Уровень 2 — CLOSE // ZERO';
+                questButton.setAttribute('aria-label', 'Открыть второй уровень CLOSE ZERO');
                 questButton.style.cssText = vaultButton.style.cssText;
-                questButton.addEventListener('click', function() { window.open(new URL('quest.html', window.location.href).href, '_blank', 'noopener'); });
+                questButton.addEventListener('click', function() { window.open(new URL('vault.html#questExpansion', window.location.href).href, '_blank', 'noopener'); });
                 questButtonLine.appendChild(questButton);
                 terminalBody.appendChild(questButtonLine);
                 terminalBody.scrollTop = terminalBody.scrollHeight;
