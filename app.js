@@ -817,7 +817,7 @@
                 questButton.textContent = '↗ Уровень 2 — CLOSE // ZERO';
                 questButton.setAttribute('aria-label', 'Открыть второй уровень CLOSE ZERO');
                 questButton.style.cssText = vaultButton.style.cssText;
-                questButton.addEventListener('click', function() { window.open(new URL('vault.html#questExpansion', window.location.href).href, '_blank', 'noopener'); });
+                questButton.addEventListener('click', function() { window.open(new URL('vault.html?from=plans#questExpansion', window.location.href).href, '_blank', 'noopener'); });
                 questButtonLine.appendChild(questButton);
                 terminalBody.appendChild(questButtonLine);
                 terminalBody.scrollTop = terminalBody.scrollHeight;
