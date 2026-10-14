@@ -54,10 +54,27 @@ const apps=[
 {id:'terminal',name:'Терминал',icon:'⌘',desc:'Команды CLOSE Shell.'},
 {id:'calculator',name:'Калькулятор',icon:'🧮',desc:'Быстрые вычисления.'},
 {id:'settings',name:'Настройки',icon:'⚙️',desc:'Внешний вид и информация.'},
-{id:'apps',name:'Приложения CloseApps',icon:'▦',desc:'Каталог существующих проектов.'},
+{id:'apps',name:'Приложения CloseApps',icon:'▦',desc:'Каталог всех 19 приложений.'},
 {id:'browser',name:'Веб-переход',icon:'🌐',desc:'Открытие сайта в новой вкладке.'},
-{id:'music',name:'SONORA',icon:'🎼',desc:'Музыкальная лаборатория CloseApps.',url:'music.html'},
-{id:'quest',name:'CLOSE // QUEST',icon:'🧩',desc:'Интерактивный квест CloseApps.',url:'index.html'}
+{id:'lab',name:'CLOSE // LAB',icon:'🧪',desc:'Лаборатория CloseApps.',url:'https://arshinovseva13-ux.github.io/CloseApps/lab.html'},
+{id:'gameforge',name:'CLOSE // GAMEFORGE',icon:'🎮',desc:'Мастерская игровых проектов.',url:'https://arshinovseva13-ux.github.io/CloseApps/gameforge.html'},
+{id:'neondesk',name:'NEON Desk',icon:'🖥️',desc:'Неоновая рабочая среда.',url:'https://arshinovseva13-ux.github.io/Terminal/'},
+{id:'kodex',name:'Kodex',icon:'📚',desc:'Цифровой справочник.',url:'https://arshinovseva13-ux.github.io/Kodex/'},
+{id:'calendar',name:'Календарь событий',icon:'🗓️',desc:'Календарь с пасхалками.',url:'https://arshinovseva13-ux.github.io/calendar/'},
+{id:'games',name:'Игровой зал',icon:'🕹️',desc:'Коллекция браузерных игр.',url:'https://arshinovseva13-ux.github.io/games/'},
+{id:'crossword',name:'Конструктор кроссвордов',icon:'🔠',desc:'Создание кроссвордов.',url:'https://arshinovseva13-ux.github.io/-/'},
+{id:'tictactoe',name:'Крестики-нолики',icon:'❎',desc:'Логическая игра.',url:'https://arshinovseva13-ux.github.io/Krestiki-Noliki/'},
+{id:'pong',name:'Пинг-понг',icon:'🏓',desc:'Аркадный теннис.',url:'https://arshinovseva13-ux.github.io/Pong/'},
+{id:'mafia',name:'Мафия',icon:'🕵️',desc:'Игра в мафию.',url:'https://arshinovseva13-ux.github.io/Mafia1/'},
+{id:'compiler',name:'Компилятор HTML/CSS/JS',icon:'💻',desc:'Редактор и запуск веб-кода.',url:'https://arshinovseva13-ux.github.io/Compiler/'},
+{id:'converter',name:'Конвертер файлов',icon:'🔄',desc:'Конвертация файлов.',url:'https://arshinovseva13-ux.github.io/Converter/'},
+{id:'vacation',name:'Рекомендации по отпуску',icon:'🧭',desc:'Планирование отдыха.',url:'https://arshinovseva13-ux.github.io/Recomendation/'},
+{id:'expenses',name:'Менеджер расходов',icon:'💰',desc:'Учёт личных расходов.',url:'https://arshinovseva13-ux.github.io/Menedjer/'},
+{id:'saper',name:'Сапёр',icon:'💣',desc:'Логическая игра.',url:'https://arshinovseva13-ux.github.io/Saper/'},
+{id:'ai',name:'Close AI',icon:'🤖',desc:'ИИ-инструмент CloseApps.',url:'https://arshinovseva13-ux.github.io/CloseApps/ai.html'},
+{id:'camera',name:'Камера',icon:'📷',desc:'Камера устройства.',url:'https://arshinovseva13-ux.github.io/CloseApps/camera.html'},
+{id:'quest',name:'CLOSE // QUEST',icon:'🧩',desc:'Интерактивный квест.',url:'https://arshinovseva13-ux.github.io/CloseApps/quest.html'},
+{id:'music',name:'SONORA — Музыкальная лаборатория',icon:'🎼',desc:'Музыкальная лаборатория.',url:'https://arshinovseva13-ux.github.io/CloseApps/music.html'}
 ];
 let z=30,winCount=0;const openWindows=new Map();
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('Хранилище недоступно — изменения останутся до закрытия страницы')}}
@@ -66,8 +83,7 @@ function appBy(id){return apps.find(a=>a.id===id)}
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function openApp(id){
  const a=appBy(id);if(!a)return;
- if(a.url&&id!=='music'&&id!=='quest'){location.href=a.url;return}
- if(a.url&&(id==='music'||id==='quest')){createWindow(a,externalContent(a));return}
+ if(a.url){createWindow(a,externalContent(a));return}
  const existing=openWindows.get(id);if(existing){existing.style.display='block';focusWindow(existing);return}
  createWindow(a,contentFor(id));
 }
@@ -76,7 +92,7 @@ function contentFor(id){
  if(id==='welcome')return '<div class="panel" style="background:linear-gradient(130deg,#55e7ff13,#9a7bff18)"><div style="font-size:11px;letter-spacing:3px;color:var(--cyan);font-weight:800">ANNIVERSARY BUILD · №20</div><h2 style="font-size:34px;margin-top:12px">Добро пожаловать в <span style="color:var(--cyan)">CLOSE OS</span></h2><p class="muted">Не просто страница — начало единой цифровой среды CloseApps.</p><div class="grid2" style="margin-top:18px"><div class="panel"><b>✦ Рабочий стол</b><p class="muted small">Открывайте окна, перемещайте их и сворачивайте в док.</p></div><div class="panel"><b>⌘ CLOSE Shell</b><p class="muted small">Введите <code>help</code> и исследуйте команды.</p></div><div class="panel"><b>💾 Локальные данные</b><p class="muted small">Заметки и настройки сохраняются в этом браузере.</p></div><div class="panel"><b>📱 Адаптивность</b><p class="muted small">Интерфейс перестраивается под маленький экран.</p></div></div><p class="muted small" style="margin-top:16px">Это первая рабочая версия. Это веб-ОС, а не замена Windows или Android.</p><button class="action" data-action="open" data-app="apps">Открыть каталог приложений →</button></div>';
  if(id==='notes')return '<h2>Заметки</h2><p class="muted">Автосохранение в текущем браузере.</p><textarea class="field notes" id="notesField" placeholder="Запишите идею…">'+safe(state.notes||'')+'</textarea><p class="muted small" id="notesStatus">Все изменения сохраняются автоматически.</p>';
  if(id==='files')return '<h2>Файлы и быстрые ссылки</h2><p class="muted">В первой версии это виртуальная панель. Ваши настоящие файлы на устройстве не сканируются.</p><div class="panel"><div class="file-row"><span>📝</span><span class="file-name">Мои заметки</span><button class="action" data-action="open" data-app="notes">Открыть</button></div><div class="file-row"><span>📚</span><span class="file-name">Каталог CloseApps</span><button class="action" data-action="open" data-app="apps">Открыть</button></div><div class="file-row"><span>🎼</span><span class="file-name">SONORA — музыкальная лаборатория</span><button class="action" data-action="open" data-app="music">Запустить</button></div><div class="file-row"><span>🧩</span><span class="file-name">CLOSE // QUEST</span><button class="action" data-action="open" data-app="quest">Запустить</button></div></div><p class="muted small">Следующий этап: виртуальные папки, создание файлов, импорт и экспорт.</p>';
- if(id==='apps')return '<h2>Приложения CloseApps</h2><p class="muted">Открывайте проекты из единого рабочего стола. Некоторые внешние страницы могут открываться отдельно из-за ограничений встраивания.</p><div class="grid2">'+[['music','🎼','SONORA','Музыка и тренировка слуха'],['quest','🧩','CLOSE // QUEST','Квест и головоломки'],['hub','▦','Главная CloseApps','Весь каталог приложений']].map(x=>'<div class="panel"><div style="font-size:27px">'+x[1]+'</div><b>'+x[2]+'</b><p class="muted small">'+x[3]+'</p><button class="action" data-action="'+(x[0]==='hub'?'external':'open')+'" '+(x[0]==='hub'?'data-url="index.html"':'data-app="'+x[0]+'"')+'>Открыть ↗</button></div>').join('')+'</div>';
+ if(id==='apps')return '<h2>Приложения CloseApps</h2><p class="muted">Все 19 проектов собраны в одном каталоге. Нажмите «Запустить», чтобы попробовать открыть проект в системном окне. Если сайт запрещает встраивание, нажмите «Открыть отдельно» внутри окна.</p><div class="grid2">'+apps.filter(a=>a.url).map(a=>'<div class="panel"><div style="font-size:27px">'+a.icon+'</div><b>'+safe(a.name)+'</b><p class="muted small">'+safe(a.desc)+'</p><button class="action" data-action="open" data-app="'+a.id+'">Запустить ↗</button></div>').join('')+'<div class="panel"><div style="font-size:27px">🌐</div><b>Главная CloseApps</b><p class="muted small">Весь каталог сайта.</p><button class="action" data-action="external" data-url="https://arshinovseva13-ux.github.io/CloseApps/">Открыть ↗</button></div></div>';
  if(id==='settings')return '<h2>Настройки</h2><p class="muted">Настройки сохраняются в этом браузере.</p><div class="panel"><b>Внешний вид</b><p class="muted small">Цветовая атмосфера рабочего стола</p><div class="grid2"><button class="action" data-action="theme" data-theme="neon">🌌 Неоновая ночь</button><button class="action" data-action="theme" data-theme="ocean">🌊 Океан</button><button class="action" data-action="theme" data-theme="violet">🔮 Фиолетовая дымка</button><button class="action" data-action="theme" data-theme="reset">↺ Сбросить тему</button></div></div><div class="panel" style="margin-top:12px"><b>Состояние системы</b><p class="muted small">Версия: 0.1.0 · Этап 1 · Юбилейное приложение №20</p><p class="muted small">Окна: свободное перемещение мышью или касанием. Данные: локальное хранилище браузера.</p><button class="action" data-action="export">Экспорт настроек и заметок</button><label class="action" style="display:inline-block;margin-left:5px">Импорт JSON<input id="importFile" type="file" accept="application/json,.json" hidden></label></div>';
  if(id==='calculator')return '<h2>Калькулятор</h2><input class="field" id="calcDisplay" value="" placeholder="Например: (12 + 8) * 3" inputmode="decimal"><div class="grid2" style="margin-top:10px"><button class="action" data-action="calculate">Вычислить =</button><button class="action" data-action="clearCalc">Очистить</button></div><p id="calcResult" class="muted">Поддерживаются числа, скобки и арифметические операторы.</p>';
  if(id==='browser')return '<h2>Веб-переход</h2><p class="muted">Введите адрес сайта, чтобы открыть его в отдельной вкладке.</p><input class="field" id="webAddress" placeholder="https://example.com"><button class="action" data-action="goUrl" style="margin-top:10px">Открыть сайт ↗</button>';
