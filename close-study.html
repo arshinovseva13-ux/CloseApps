@@ -105,7 +105,7 @@ function solveQuadratic(s){
  for(let term of terms){let sign=1;if(term[0]==='+')term=term.slice(1);else if(term[0]==='-'){sign=-1;term=term.slice(1)}if(!term)continue;
   const xs=(term.match(/x/g)||[]).length;if(xs>2)throw Error('Неверная степень x.');
   if(xs===2){const coeff=term.replace(/\*?x\^?2?/,'');A+=sign*(coeff===''?1:Number(coeff))}
-  else if(xs===1){if(term.includes('^')&&!/x\\^2/.test(term))throw Error('Для x используй первую или вторую степень.');const coeff=term.replace(/\*?x/,'');B+=sign*(coeff===''?1:Number(coeff))}
+  else if(xs===1){if(term.includes('^')&&!term.includes('x^2'))throw Error('Для x используй первую или вторую степень.');const coeff=term.replace(/\*?x/,'');B+=sign*(coeff===''?1:Number(coeff))}
   else C+=sign*arithmetic(term);
  }
  if(!Number.isFinite(A+B+C)||Math.abs(A)<1e-12)throw Error('Коэффициент a должен быть ненулевым. Пример: x^2-5*x+6=0.');
