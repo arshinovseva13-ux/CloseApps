@@ -99,10 +99,14 @@
   let found=[];
   try{found=JSON.parse(localStorage.getItem('closeAppsVaultCodes')||'[]')}catch(e){}
   const required=['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
-  const allowed=required.every(code=>found.includes(code));
+  const plansAccess=new URLSearchParams(window.location.search).get('from')==='plans';
+  const allowed=plansAccess||required.every(code=>found.includes(code));
   document.getElementById('locked').classList.toggle('hidden',allowed);
   document.getElementById('app').classList.toggle('hidden',!allowed);
   if(!allowed)return;
+  if(new URLSearchParams(window.location.search).get('from')==='plans'&&!required.every(code=>found.includes(code))){
+    document.querySelector('.status').textContent='PLANS OVERRIDE · INTERNAL ACCESS';
+  }
   const questCleared=found.includes('QUEST-COMPLETE-2026');
   document.getElementById('questLockedNote').classList.toggle('hidden',questCleared);
   document.getElementById('questUnlockedTools').classList.toggle('hidden',!questCleared);
