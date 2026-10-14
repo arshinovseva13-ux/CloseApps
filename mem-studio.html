@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17151f">
+<title>Close Мем Студия</title>
+<style>
+:root{color-scheme:dark;--bg:#17151f;--panel:#22202d;--line:#3b374a;--text:#f8f6ff;--muted:#b5afc6;--accent:#b69cff;--accent2:#6fe3d0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#302344 0,#17151f 55%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}header{padding:22px clamp(14px,4vw,38px) 16px;display:flex;align-items:center;gap:14px;max-width:1500px;margin:auto}.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#b69cff,#6fe3d0);font-size:25px;color:#17151f;font-weight:900}h1{margin:0;font-size:clamp(23px,4vw,34px);letter-spacing:-.04em}header p{margin:3px 0 0;color:var(--muted)}.wrap{max-width:1500px;margin:auto;padding:0 clamp(12px,3vw,30px) 32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:18px}.workspace,.panel{background:#1d1b27cc;border:1px solid var(--line);border-radius:20px;overflow:hidden}.toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:12px;border-bottom:1px solid var(--line)}button,.filelabel,select,input[type=color]{border:1px solid #494359;background:#302c3c;color:var(--text);border-radius:11px;padding:10px 13px;font:inherit;cursor:pointer}button:hover,.filelabel:hover{border-color:var(--accent)}button.primary{background:var(--accent);color:#1c1729;border-color:transparent;font-weight:750}button:disabled{opacity:.45;cursor:not-allowed}.stage{padding:clamp(8px,2vw,22px);display:grid;place-items:center;min-height:300px;background-color:#191722;background-image:linear-gradient(45deg,#252331 25%,transparent 25%),linear-gradient(-45deg,#252331 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#252331 75%),linear-gradient(-45deg,transparent 75%,#252331 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}canvas{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;box-shadow:0 12px 45px #0008;touch-action:none;border-radius:3px}.hint{padding:0 16px 14px;color:var(--muted);font-size:12px}.side{display:grid;gap:14px;align-content:start}.panel{padding:17px}.panel h2{font-size:16px;margin:0 0 13px}.field{display:grid;gap:6px;margin:12px 0}.field label{color:#ddd7ec;font-size:13px}.field input[type=text],.field input[type=number],.field select{width:100%;min-width:0;background:#17151f;color:var(--text);border:1px solid #494359;border-radius:10px;padding:10px;font:inherit}.field input[type=range]{width:100%;accent-color:var(--accent)}.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0;flex:1}.colors{display:flex;gap:12px;align-items:center}.colors label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}input[type=color]{width:42px;height:38px;padding:3px}.templates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.templates button{min-height:72px;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:4px}.templates button span{font-size:12px;color:var(--muted)}.status{color:var(--accent2);font-size:12px;min-height:18px;margin-top:9px}.back{color:var(--muted);text-decoration:none;margin-left:auto;align-self:flex-start}.back:hover{color:white}.filelabel input{display:none}.small{font-size:12px;color:var(--muted)}@media(max-width:850px){.wrap{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.side .panel:first-child{grid-column:1/-1}.stage{min-height:220px}canvas{max-height:none}}@media(max-width:520px){header{padding-top:15px}.back{font-size:12px}.side{grid-template-columns:1fr}.side .panel:first-child{grid-column:auto}.toolbar button,.filelabel{flex:1;text-align:center;padding:9px 8px;font-size:13px}.stage{padding:8px;min-height:170px}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<header><div class="logo">C</div><div><h1>Close Мем Студия</h1><p>Собери мем из своей картинки — прямо в браузере.</p></div><a class="back" href="index.html">← Каталог</a></header>
+<main class="wrap">
+<section class="workspace">
+<div class="toolbar">
+<label class="filelabel">＋ Загрузить фото<input id="upload" type="file" accept="image/*"></label>
+<button id="blank">🎨 Цветной фон</button><button id="random">🎲 Идея</button><button id="reset">↺ Сбросить</button>
+<button class="primary" id="download">⬇ Скачать PNG</button>
+</div>
+<div class="stage"><canvas id="canvas" width="900" height="600" aria-label="Предпросмотр мема"></canvas></div>
+<div class="hint">Подсказка: перетаскивай верхнюю и нижнюю подписи прямо по картинке. Изображение обрабатывается на устройстве.</div>
+</section>
+<aside class="side">
+<section class="panel"><h2>✍️ Подписи</h2>
+<div class="field"><label for="topText">Верхний текст</label><input id="topText" type="text" maxlength="180" value="КОГДА ВСЁ РАБОТАЕТ"></div>
+<div class="field"><label for="bottomText">Нижний текст</label><input id="bottomText" type="text" maxlength="180" value="И ТЫ НЕ ТРОГАЕШЬ НИЧЕГО"></div>
+<div class="row"><button id="caps" aria-pressed="true">🔠 ВЕРХНИЙ РЕГИСТР: ВКЛ</button><button id="center">↔ Центрировать</button></div>
+<div class="field"><label for="fontSize">Размер текста: <b id="sizeValue">48</b> px</label><input id="fontSize" type="range" min="18" max="100" value="48"></div>
+<div class="field"><label for="outline">Толщина обводки: <b id="outlineValue">5</b> px</label><input id="outline" type="range" min="0" max="12" value="5"></div>
+<div class="colors"><label>Текст <input id="textColor" type="color" value="#ffffff"></label><label>Обводка <input id="strokeColor" type="color" value="#000000"></label></div>
+<div class="status" id="status" role="status" aria-live="polite">Готово к созданию мема.</div></section>
+<section class="panel"><h2>🪄 Стартовые шаблоны</h2><div class="templates">
+<button data-template="purple">🌌 Космос<span>Фиолетовый градиент</span></button>
+<button data-template="sunset">🌅 Закат<span>Тёплый фон</span></button>
+<button data-template="matrix">💻 Матрица<span>Тёмно-зелёный</span></button>
+<button data-template="paper">📄 Чистый лист<span>Светлый фон</span></button>
+</div></section>
+<section class="panel"><h2>📱 Формат</h2><div class="field"><label for="ratio">Размер холста</label><select id="ratio"><option value="classic">Классический 3:2</option><option value="square">Квадрат 1:1</option><option value="story">История 9:16</option><option value="wide">Широкий 16:9</option></select></div><p class="small">PNG сохраняет качество и прозрачность загруженного изображения не требуется. Никакой регистрации и водяных знаков.</p></section>
+</aside>
+</main>
+<script>
+(function(){
+'use strict';
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+const $=id=>document.getElementById(id);
+const state={image:null,background:'purple',caps:true,topY:.12,bottomY:.88,drag:null};
+const ideas=[
+['КОГДА СКАЗАЛ «НА 5 МИНУТ»','И ПРОПАЛ НА 3 ЧАСА'],
+['МОЙ МОЗГ В 3 НОЧИ','А ЧТО ЕСЛИ ВСПОМНИТЬ ВСЁ С 2017 ГОДА'],
+['ПЛАН НА ДЕНЬ','ПЕРЕЖИТЬ ДЕНЬ — УЖЕ ДОСТИЖЕНИЕ'],
+['КОГДА КОД ЗАРАБОТАЛ','НЕ ТРОГАЙ. ПРОСТО НЕ ТРОГАЙ.'],
+['ОЖИДАНИЕ','РЕАЛЬНОСТЬ'],
+['Я: СЕГОДНЯ ЛЯГУ РАНО','ТАКЖЕ Я В 02:47:']
+];
+function say(s){$('status').textContent=s}
+function textValue(id){const v=$(id).value;return state.caps?v.toLocaleUpperCase('ru-RU'):v}
+function drawBackground(){
+ const w=canvas.width,h=canvas.height;
+ if(state.image){ctx.drawImage(state.image,0,0,w,h);return}
+ let g;
+ if(state.background==='sunset'){g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#ff875e');g.addColorStop(.48,'#b34c91');g.addColorStop(1,'#29275d')}
+ else if(state.background==='matrix'){g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#061d17');g.addColorStop(1,'#0b513c')}
+ else if(state.background==='paper'){g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#fff5dc');g.addColorStop(1,'#d7e9f2')}
+ else {g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#201442');g.addColorStop(.5,'#6845a6');g.addColorStop(1,'#111a3b')}
+ ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+ if(state.background==='matrix'){ctx.fillStyle='#8af6b0';ctx.font='18px monospace';for(let i=0;i<45;i++){let x=(i*83)%w,y=(i*137)%h;ctx.fillText(['0','1','⌘','{}'][i%4],x,y)}}
+ if(state.background==='paper'){ctx.fillStyle='#e7d9c5';ctx.fillRect(0,h*.24,w,h*.52)}
+ if(state.background==='purple'){ctx.fillStyle='#ffffff18';for(let i=0;i<70;i++){ctx.beginPath();ctx.arc((i*137)%w,(i*89)%h,(i%3)+1,0,Math.PI*2);ctx.fill()}}
+}
+function wrapLines(text,maxWidth){
+ const words=text.split(/\s+/).filter(Boolean),lines=[];let line='';
+ for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}
+ if(line)lines.push(line);return lines;
+}
+function drawCaption(text,y){
+ if(!text.trim())return;
+ const size=+$('fontSize').value;
+ ctx.save();ctx.font='900 '+size+'px Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
+ const lines=wrapLines(text,canvas.width*.9),lineH=size*1.08;
+ const maxH=canvas.height*.42;
+ const fitted=lines.length*lineH>maxH?maxH/lines.length:lineH;
+ const startY=Math.max(size*.55,Math.min(canvas.height-size*.55,y*canvas.height));
+ lines.forEach((line,i)=>{const yy=startY+(i-(lines.length-1)/2)*fitted;let f=size;while(ctx.measureText(line).width>canvas.width*.91&&f>12){f-=1;ctx.font='900 '+f+'px Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif'}ctx.lineWidth=+$('outline').value*2;ctx.strokeStyle=$('strokeColor').value;ctx.fillStyle=$('textColor').value;if(ctx.lineWidth)ctx.strokeText(line,canvas.width/2,yy,canvas.width*.92);ctx.fillText(line,canvas.width/2,yy,canvas.width*.92)});
+ ctx.restore();
+}
+function render(){ctx.clearRect(0,0,canvas.width,canvas.height);drawBackground();drawCaption(textValue('topText'),state.topY);drawCaption(textValue('bottomText'),state.bottomY);$('sizeValue').textContent=$('fontSize').value;$('outlineValue').textContent=$('outline').value}
+function resize(w,h){canvas.width=w;canvas.height=h;render()}
+function coverImage(img){state.image=img;state.background='';const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height;const ratio=+$('ratio').selectedIndex;let w=iw,h=ih;if(ratio===1){w=Math.min(iw,ih);h=w}else if(ratio===2){w=Math.round(ih*9/16);if(w>iw){w=iw;h=Math.round(iw*16/9)}else h=ih}else if(ratio===3){h=Math.round(iw*9/16);if(h>ih){h=ih;w=Math.round(ih*16/9)}else w=iw}resize(Math.max(1,Math.min(2400,w)),Math.max(1,Math.min(2400,h)));say('Изображение загружено.')}
+$('upload').addEventListener('change',e=>{const file=e.target.files&&e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')){say('Выбери файл изображения.');return}const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{coverImage(img);URL.revokeObjectURL(url)};img.onerror=()=>{URL.revokeObjectURL(url);say('Не удалось открыть изображение. Попробуй PNG или JPG.')};img.src=url});
+document.querySelectorAll('[data-template]').forEach(b=>b.addEventListener('click',()=>{state.image=null;state.background=b.dataset.template;render();say('Шаблон выбран. Добавь подписи или загрузи фото.')}));
+$('blank').addEventListener('click',()=>{state.image=null;state.background=['purple','sunset','matrix','paper'][Math.floor(Math.random()*4)];render();say('Создан цветной фон.')});
+$('random').addEventListener('click',()=>{const p=ideas[Math.floor(Math.random()*ideas.length)];$('topText').value=p[0];$('bottomText').value=p[1];render();say('Подписи для нового мема готовы!')});
+$('reset').addEventListener('click',()=>{state.image=null;state.background='purple';state.topY=.12;state.bottomY=.88;$('topText').value='КОГДА ВСЁ РАБОТАЕТ';$('bottomText').value='И ТЫ НЕ ТРОГАЕШЬ НИЧЕГО';$('fontSize').value=48;$('outline').value=5;$('ratio').value='classic';resize(900,600);say('Макет сброшен.')});
+$('caps').addEventListener('click',()=>{state.caps=!state.caps;$('caps').textContent='🔠 ВЕРХНИЙ РЕГИСТР: '+(state.caps?'ВКЛ':'ВЫКЛ');$('caps').setAttribute('aria-pressed',String(state.caps));render()});
+$('center').addEventListener('click',()=>{state.topY=.12;state.bottomY=.88;render();say('Подписи возвращены в стандартные позиции.')});
+['topText','bottomText','fontSize','outline','textColor','strokeColor'].forEach(id=>$(id).addEventListener('input',render));
+$('ratio').addEventListener('change',()=>{const v=$('ratio').value;const sizes={classic:[900,600],square:[800,800],story:[600,1067],wide:[960,540]};const [w,h]=sizes[v];if(state.image){const im=state.image;const tmp=document.createElement('canvas');tmp.width=w;tmp.height=h;const t=tmp.getContext('2d');const scale=Math.max(w/im.width,h/im.height);const dw=im.width*scale,dh=im.height*scale;t.drawImage(im,(w-dw)/2,(h-dh)/2,dw,dh);const ni=new Image();ni.onload=()=>{state.image=ni;resize(w,h)};ni.src=tmp.toDataURL('image/png')}else resize(w,h);say('Формат изменён.')});
+$('download').addEventListener('click',()=>{try{canvas.toBlob(blob=>{if(!blob){say('Не удалось создать PNG.');return}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='close-mem-'+new Date().toISOString().slice(0,10)+'.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);say('Мем сохранён в PNG!')},'image/png')}catch(e){say('Ошибка экспорта: '+e.message)}});
+function pos(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height}}
+canvas.addEventListener('pointerdown',e=>{const p=pos(e),top=Math.abs(p.y-state.topY*canvas.height),bottom=Math.abs(p.y-state.bottomY*canvas.height);state.drag=top<bottom?'top':'bottom';canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!state.drag)return;const p=pos(e);state[state.drag==='top'?'topY':'bottomY']=Math.max(.04,Math.min(.96,p.y/canvas.height));render()});
+function stop(){state.drag=null}canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);
+window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();$('download').click()}});
+render();
+})();
+</script>
+</body>
+</html>
