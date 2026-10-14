@@ -788,6 +788,12 @@
                 printLine('• API-ключ Close AI хранится в браузере. Использовать ключи с ограниченными правами и лимитами.');
                 printLine('• Если новая версия не появилась, дождаться деплоя GitHub Pages и обновить страницу.');
                 printLine('');
+                printLine('7. УРОВНИ CLOSE // ZERO', 'info');
+                printLine('УРОВЕНЬ 1 — базовый секретный архив: /vault.html. Доступ требует STARFINDER-2026, TERMINAL-2026 и FIFTEEN-2027.');
+                printLine('УРОВЕНЬ 2 — Исследователь: заверши все 12 загадок в /quest.html. Квест добавит QUEST-COMPLETE-2026 в closeAppsVaultCodes на том же домене и в том же браузере.');
+                printLine('Уровень 2 открывает в vault.html досье 012, команду ZERO-REPORT и экспериментальную команду ZERO-7. Это клиентская игровая механика, а не настоящая защита.');
+                printLine('Кнопки обоих уровней добавлены в plans ниже.');
+                printLine('');
                 printLine('КОНЕЦ СЛУЖЕБНОГО ЖУРНАЛА', 'dim');
 
                 const vaultButtonLine = document.createElement('div');
@@ -803,6 +809,17 @@
                 });
                 vaultButtonLine.appendChild(vaultButton);
                 terminalBody.appendChild(vaultButtonLine);
+                const questButtonLine = document.createElement('div');
+                questButtonLine.className = 'terminal-line';
+                questButtonLine.style.margin = '10px 0';
+                const questButton = document.createElement('button');
+                questButton.type = 'button';
+                questButton.textContent = '↗ Уровень 2 — CLOSE // QUEST';
+                questButton.setAttribute('aria-label', 'Открыть CLOSE QUEST — второй уровень');
+                questButton.style.cssText = vaultButton.style.cssText;
+                questButton.addEventListener('click', function() { window.open(new URL('quest.html', window.location.href).href, '_blank', 'noopener'); });
+                questButtonLine.appendChild(questButton);
+                terminalBody.appendChild(questButtonLine);
                 terminalBody.scrollTop = terminalBody.scrollHeight;
             },
             codes: function() {
