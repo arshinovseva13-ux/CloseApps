@@ -192,7 +192,7 @@
         const categoryNames = {
             games: '🎮 Игры',
             tools: '🛠️ Инструменты',
-            education: '📚 Обучение',
+            education: '🎓 Образовательные',
             other: '📦 Разное'
         };
 
