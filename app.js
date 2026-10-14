@@ -98,6 +98,35 @@
 
         searchInput.addEventListener('input', applyFilters);
 
+        // Третий фрагмент появляется после поиска фразы «15 приложений».
+        const fifteenSearchEgg = document.getElementById('fifteenSearchEgg');
+        if (fifteenSearchEgg) {
+            const updateFifteenSearchEgg = () => {
+                const query = searchInput.value.toLowerCase().replace(/\\s+/g, ' ').trim();
+                fifteenSearchEgg.style.display = query.includes('15 приложений') ? 'flex' : 'none';
+            };
+            searchInput.addEventListener('input', updateFifteenSearchEgg);
+            updateFifteenSearchEgg();
+            fifteenSearchEgg.addEventListener('click', () => {
+                const code = 'FIFTEEN-2027';
+                let saved = [];
+                try { saved = JSON.parse(localStorage.getItem('closeAppsVaultCodes') || '[]'); } catch (_) {}
+                if (!saved.includes(code)) saved.push(code);
+                try { localStorage.setItem('closeAppsVaultCodes', JSON.stringify(saved)); } catch (_) {}
+
+                let notice = document.getElementById('fifteenCodeNotice');
+                if (!notice) {
+                    notice = document.createElement('div');
+                    notice.id = 'fifteenCodeNotice';
+                    notice.style.cssText = 'position:fixed;inset:0;z-index:100001;display:grid;place-items:center;padding:18px;background:rgba(3,5,14,.82);backdrop-filter:blur(10px);font-family:Inter,system-ui,sans-serif;color:#eef2ff;';
+                    notice.innerHTML = '<section style="width:min(390px,100%);box-sizing:border-box;padding:25px;border:1px solid #51458d;border-radius:20px;background:linear-gradient(145deg,#17172b,#0b1020);box-shadow:0 25px 100px #0009;text-align:center"><div style="font-size:28px">✦</div><div style="margin:10px 0;color:#a7a0ff;font-size:11px;font-weight:800;letter-spacing:2px">FRAGMENT FOUND</div><h2 style="margin:8px 0 10px;font-size:22px">Третий фрагмент найден</h2><p style="color:#aab2d0;font-size:14px;line-height:1.5">Код доступа:</p><code style="display:block;padding:13px;border:1px solid #34375e;border-radius:10px;background:#090d1a;color:#b6f3ff;font-size:16px;font-weight:800;letter-spacing:1px">FIFTEEN-2027</code><button type="button" style="margin-top:16px;padding:11px 18px;border:0;border-radius:10px;background:linear-gradient(100deg,#7c5cff,#3ca8ff);color:white;font-weight:800;cursor:pointer">Понятно</button></section>';
+                    document.body.appendChild(notice);
+                    notice.querySelector('button').addEventListener('click', () => notice.remove());
+                    notice.addEventListener('click', e => { if (e.target === notice) notice.remove(); });
+                }
+            });
+        }
+
         // ===== НЕДАВНО ПРОСМОТРЕННЫЕ =====
         const RECENT_KEY = 'closeAppsRecent';
         const MAX_RECENT = 5;
