@@ -107,7 +107,7 @@
   if(plansAccess&&!required.every(code=>found.includes(code))){
     document.querySelector('.status').textContent='PLANS OVERRIDE · INTERNAL ACCESS';
   }
-  const questCleared=found.includes('QUEST-COMPLETE-2026');
+  const questCleared=found.includes('QUEST-COMPLETE-2026')||plansAccess;
   document.getElementById('questLockedNote').classList.toggle('hidden',questCleared);
   document.getElementById('questUnlockedTools').classList.toggle('hidden',!questCleared);
   document.getElementById('questAccessText').textContent=questCleared?'Уровень 2 активирован: допуск исследователя подтверждён.':'Уровень 2 закрыт. Для доступа нужно завершить все 12 испытаний CLOSE // QUEST.';
