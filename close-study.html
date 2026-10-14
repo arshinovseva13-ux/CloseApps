@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17142a">
+<title>Close Учёба — математика с объяснениями</title>
+<style>
+:root{color-scheme:dark;--bg:#17142a;--panel:#211e37;--panel2:#292544;--line:#413b60;--text:#f8f6ff;--muted:#bcb6d5;--accent:#b9a3ff;--green:#76e3c1;--red:#ff8798}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% -10%,#3a2c68 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{border:1px solid var(--line);background:#302b4a;color:var(--text);padding:10px 13px;border-radius:12px;cursor:pointer}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);border-color:transparent;color:#201838;font-weight:800}button:disabled{opacity:.5;cursor:not-allowed}header{max-width:1250px;margin:auto;padding:22px clamp(14px,3vw,32px);display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(135deg,#b9a3ff,#76e3c1);color:#1b1730;font-size:24px;font-weight:950}h1{font-size:clamp(24px,4vw,34px);letter-spacing:-.04em;line-height:1.1;margin:0}header p{color:var(--muted);margin:5px 0 0}.back{margin-left:auto;color:var(--muted);text-decoration:none;font-size:13px}.container{max-width:1250px;margin:auto;padding:0 clamp(12px,3vw,32px) 36px}.hero{padding:20px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(115deg,#30254c,#211e37 65%);margin-bottom:16px}.hero strong{font-size:18px}.hero p{margin:6px 0 0;color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr);gap:16px}.panel{border:1px solid var(--line);border-radius:18px;background:#211e37eF;padding:18px;min-width:0}.panel h2{font-size:17px;margin:0 0 14px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.tabs button.active{background:var(--accent);color:#201838;border-color:transparent;font-weight:800}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;color:#ddd7f0}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #4b4567;background:#17142a;color:var(--text);border-radius:11px;padding:11px}.field textarea{min-height:100px;resize:vertical}.examples{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.examples button{font-size:12px;padding:7px 10px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.result{min-height:100px;background:#17142a;border:1px solid #4b4567;border-radius:14px;padding:14px;overflow-wrap:anywhere}.result h3{font-size:13px;color:var(--green);margin:0 0 7px}.answer{font-size:22px;font-weight:850;white-space:pre-wrap}.explanation{white-space:pre-wrap;color:#e1dcf3;margin-top:10px}.status{font-size:12px;color:var(--muted);min-height:18px;margin-top:8px}.pill{display:inline-block;padding:4px 9px;border-radius:99px;background:#34304e;color:#d9ceff;font-size:12px}.tool-card{border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0;background:#1a172c}.tool-card h3{font-size:14px;margin:0 0 8px}.small{font-size:12px;color:var(--muted)}.history{display:grid;gap:8px}.history-item{padding:10px;border:1px solid var(--line);border-radius:11px;background:#1a172c}.history-item strong{display:block;overflow-wrap:anywhere}.history-item span{font-size:12px;color:var(--muted)}.muted{color:var(--muted)}.ok{color:var(--green)}.err{color:var(--red)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.hidden{display:none!important}@media(max-width:850px){.layout{grid-template-columns:1fr}.sidegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.sidegrid>.panel{margin:0}}@media(max-width:520px){header{padding-top:15px}.back{font-size:12px}.panel{padding:14px}.hero{padding:16px}.sidegrid{grid-template-columns:1fr}.answer{font-size:19px}.row button{padding:10px 8px}}
+</style>
+</head>
+<body>
+<header><div class="logo">C</div><div><h1>Close Учёба</h1><p>Математика и алгебра — ответ с понятным объяснением</p></div><a class="back" href="index.html">← Каталог</a></header>
+<main class="container">
+<section class="hero"><strong>Не просто ответ — пойми, как его получить.</strong><p>Введи пример, выбери тип задания и нажми «Решить». Все вычисления выполняются локально в браузере. Без аккаунта и платных ключей.</p></section>
+<div class="layout">
+<section class="panel">
+<h2>🧮 Решатель задач</h2>
+<div class="tabs" role="tablist"><button class="active" data-mode="auto" role="tab">Автоопределение</button><button data-mode="equation" role="tab">Уравнение</button><button data-mode="fraction" role="tab">Дроби</button><button data-mode="percent" role="tab">Проценты</button></div>
+<div class="field"><label for="problem">Пример или уравнение</label><input id="problem" type="text" autocomplete="off" spellcheck="false" placeholder="Например: 3*(8-2)+12/4" value="3*(8-2)+12/4"></div>
+<div class="examples"><button data-example="3*(8-2)+12/4">Пример со скобками</button><button data-example="2*x+5=17">Уравнение</button><button data-example="3/4+1/8">Дроби</button><button data-example="15% от 240">Проценты</button><button data-example="x^2-5*x+6=0">Квадратное</button></div>
+<div class="row"><button class="primary" id="solve">Решить</button><button id="clear">Очистить</button></div>
+<div class="status" id="solveStatus" role="status" aria-live="polite">Поддерживаются арифметика, дроби, проценты и линейные/квадратные уравнения.</div>
+<div class="field"><label>Результат</label><div class="result" id="result" aria-live="polite"><h3>ОТВЕТ И ОБЪЯСНЕНИЕ</h3><div class="muted">Здесь появится решение по шагам.</div></div></div>
+</section>
+<aside class="sidegrid">
+<section class="panel"><h2>📐 Быстрые инструменты</h2>
+<div class="tool-card"><h3>Процент от числа</h3><div class="grid2"><div class="field"><label for="pct">Процент</label><input id="pct" type="number" value="15"></div><div class="field"><label for="base">Число</label><input id="base" type="number" value="240"></div></div><button class="primary" id="calcPercent">Посчитать</button><div class="status" id="percentResult"></div></div>
+<div class="tool-card"><h3>Среднее арифметическое</h3><div class="field"><label for="numbers">Числа через запятую</label><input id="numbers" value="4, 7, 9, 12" inputmode="decimal"></div><button class="primary" id="calcMean">Найти среднее</button><div class="status" id="meanResult"></div></div>
+<div class="tool-card"><h3>Таблица умножения</h3><div class="field"><label for="mult">Число от 1 до 20</label><input id="mult" type="number" min="1" max="20" value="7"></div><button id="showTable">Показать таблицу</button><div class="status" id="tableResult"></div></div>
+</section>
+<section class="panel"><h2>📝 Мини-тренировка</h2><div class="pill" id="quizCount">Задание 1</div><p id="quizQuestion">Сколько будет 8 × 7?</p><div class="field"><label for="quizAnswer">Твой ответ</label><input id="quizAnswer" inputmode="decimal" placeholder="Введи число"></div><div class="row"><button class="primary" id="checkQuiz">Проверить</button><button id="nextQuiz">Другое</button></div><div class="status" id="quizStatus" aria-live="polite"></div></section>
+<section class="panel"><h2>🕘 Последние решения</h2><div id="history" class="history"><div class="small">Решённые примеры появятся здесь.</div></div><button id="clearHistory" style="margin-top:10px">Очистить историю</button></section>
+</aside>
+</div>
+<p class="small" style="margin:18px 3px 0">Важно: это учебный помощник для поддерживаемых типов задач, а не полная база ГДЗ. Проверяй условие и учись понимать каждый шаг.</p>
+</main>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+let mode='auto',history=[],quizIndex=0,quizScore=0;
+const quizzes=[
+{q:'Сколько будет 8 × 7?',a:56,ex:'8 × 7 = 56.'},
+{q:'Реши: x + 9 = 14. Чему равен x?',a:5,ex:'Вычитаем 9 из обеих частей: x = 14 − 9 = 5.'},
+{q:'Сколько составляет 25% от 80?',a:20,ex:'25% = 0,25; 80 × 0,25 = 20.'},
+{q:'Вычисли: 3² + 4',a:13,ex:'3² = 9, затем 9 + 4 = 13.'},
+{q:'Сократи дробь 6/8. Какой числитель у сокращённой дроби?',a:3,ex:'Делим числитель и знаменатель на 2: 6/8 = 3/4. Числитель — 3.'},
+{q:'Реши: 3x = 21. Чему равен x?',a:7,ex:'Делим обе части на 3: x = 21/3 = 7.'}
+];
+function fmt(n){if(!Number.isFinite(n))throw Error('Получилось слишком большое или неопределённое число.');if(Math.abs(n)<1e-12)return '0';return String(Number(n.toPrecision(10)))}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function tokenize(s){
+ s=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/,/g,'.').replace(/\s+/g,'');
+ const tokens=[];let i=0;
+ while(i<s.length){
+  const rest=s.slice(i),num=rest.match(/^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?/i);
+  if(num){tokens.push({t:'n',v:Number(num[0])});i+=num[0].length;continue}
+  const ch=s[i];
+  if('+-*/^()'.includes(ch)){tokens.push({t:ch,v:ch});i++;continue}
+  throw Error('Не понимаю символ «'+ch+'». Используй числа, + − × ÷, скобки и ^ для степени.');
+ }
+ return tokens;
+}
+function arithmetic(input){
+ const ts=tokenize(input);let i=0;
+ function expr(){let x=term();while(ts[i]&&(ts[i].t==='+'||ts[i].t==='-')){const op=ts[i++].t,y=term();x=op==='+'?x+y:x-y}return x}
+ function term(){let x=unary();while(ts[i]&&(ts[i].t==='*'||ts[i].t==='/')){const op=ts[i++].t,y=unary();if(op==='/'&&y===0)throw Error('На ноль делить нельзя.');x=op==='*'?x*y:x/y}return x}
+ function unary(){if(ts[i]&&ts[i].t==='+'){i++;return unary()}if(ts[i]&&ts[i].t==='-'){i++;return -unary()}return power()}
+ function power(){let x=atom();if(ts[i]&&ts[i].t==='^'){i++;const y=unary();x=Math.pow(x,y)}return x}
+ function atom(){const t=ts[i++];if(!t)throw Error('Выражение неожиданно закончилось.');if(t.t==='n')return t.v;if(t.t==='('){const x=expr();if(!ts[i]||ts[i++].t!==')')throw Error('Проверь закрывающую скобку.');return x}throw Error('Ожидалось число или скобка.')}
+ if(!ts.length)throw Error('Введи пример.');const result=expr();if(i!==ts.length)throw Error('Проверь запись примера и скобки.');if(!Number.isFinite(result))throw Error('Не удалось получить конечный результат.');return result;
+}
+function splitEquation(s){const parts=s.split('=');if(parts.length!==2)throw Error('Для уравнения используй один знак =, например 2*x+5=17.');return parts.map(x=>x.trim())}
+function linearCoeffs(s){
+ s=s.replace(/\s+/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/,/g,'.');
+ if(!s)throw Error('Пустая часть уравнения.');
+ let tokens=s.match(/[+-]?[^+-]+/g);if(!tokens)throw Error('Проверь уравнение.');
+ let a=0,b=0;
+ for(let term of tokens){
+  let sign=1;if(term[0]==='+')term=term.slice(1);else if(term[0]==='-'){sign=-1;term=term.slice(1)}
+  if(!term)continue;
+  if(term.includes('x')){
+   const p=term.indexOf('x');if(term.indexOf('x',p+1)!==-1)throw Error('В линейном уравнении каждый член должен содержать не более одного x.');
+   const before=term.slice(0,p),after=term.slice(p+1);if(after.includes('/')||after.includes('*'))throw Error('Запиши коэффициент перед x, например 2*x.');
+   let coeff=before.replace(/\*$/,'');if(coeff==='')coeff='1';if(coeff==='-')coeff='-1';
+   const c=Number(coeff);if(!Number.isFinite(c))throw Error('Не распознал коэффициент при x.');
+   let multiplier=1;if(after){if(!after.startsWith('/'))throw Error('Для деления x запиши x/2.');multiplier=1/Number(after.slice(1));if(!Number.isFinite(multiplier))throw Error('Неверный коэффициент.')}
+   a+=sign*c*multiplier;
+  }else{const n=arithmetic(term);b+=sign*n}
+ }
+ return [a,b];
+}
+function solveLinear(s){
+ const [l,r]=splitEquation(s),[a1,b1]=linearCoeffs(l),[a2,b2]=linearCoeffs(r),a=a1-a2,b=b2-b1;
+ if(Math.abs(a)<1e-12){if(Math.abs(b)<1e-12)return {answer:'Бесконечно много решений',steps:'После упрощения получилось '+fmt(a)+'·x = '+fmt(b)+'. Равенство верно при любом x.'};return {answer:'Решений нет',steps:'Коэффициенты при x сократились, но осталось неверное равенство: 0 = '+fmt(b)+'.'}}
+ const x=b/a;
+ return {answer:'x = '+fmt(x),steps:'1. Переносим слагаемые с x влево, числа — вправо.\n2. Получаем '+fmt(a)+'·x = '+fmt(b)+'.\n3. Делим обе части на '+fmt(a)+'.\n4. Ответ: x = '+fmt(x)+'.'};
+}
+function solveQuadratic(s){
+ const [l,r]=splitEquation(s);if(r!=='0'&&r!=='0.0')throw Error('Для квадратного уравнения пока приведи всё к виду ax^2+bx+c=0.');
+ let t=l.replace(/\s+/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/,/g,'.');if(t.includes('/'))throw Error('В квадратном уравнении используй целые или десятичные коэффициенты без дробных выражений.');
+ const terms=t.match(/[+-]?[^+-]+/g);let A=0,B=0,C=0;
+ if(!terms)throw Error('Не удалось разобрать уравнение.');
+ for(let term of terms){let sign=1;if(term[0]==='+')term=term.slice(1);else if(term[0]==='-'){sign=-1;term=term.slice(1)}if(!term)continue;
+  const xs=(term.match(/x/g)||[]).length;if(xs>2)throw Error('Неверная степень x.');
+  if(xs===2){const coeff=term.replace(/\*?x\^?2?/,'');A+=sign*(coeff===''?1:Number(coeff))}
+  else if(xs===1){if(term.includes('^'))throw Error('Для x используй первую или вторую степень.');const coeff=term.replace(/\*?x/,'');B+=sign*(coeff===''?1:Number(coeff))}
+  else C+=sign*arithmetic(term);
+ }
+ if(!Number.isFinite(A+B+C)||Math.abs(A)<1e-12)throw Error('Коэффициент a должен быть ненулевым. Пример: x^2-5*x+6=0.');
+ const D=B*B-4*A*C;
+ if(D< -1e-12)return {answer:'Действительных корней нет (D < 0)',steps:'Дискриминант D = b² − 4ac = '+fmt(D)+'. Он отрицательный, поэтому действительных корней нет.'};
+ if(Math.abs(D)<1e-12){const x=-B/(2*A);return {answer:'x = '+fmt(x),steps:'D = b² − 4ac = 0. Один двойной корень: x = −b/(2a) = '+fmt(x)+'.'}}
+ const root=Math.sqrt(D),x1=(-B-root)/(2*A),x2=(-B+root)/(2*A);
+ return {answer:'x₁ = '+fmt(x1)+'; x₂ = '+fmt(x2),steps:'1. Коэффициенты: a = '+fmt(A)+', b = '+fmt(B)+', c = '+fmt(C)+'.\n2. D = b² − 4ac = '+fmt(D)+'.\n3. x = (−b ± √D)/(2a).\n4. Корни: '+fmt(x1)+' и '+fmt(x2)+'.'};
+}
+function fractionSolve(s){
+ const m=s.replace(/\s+/g,'').match(/^([+-]?\d+)\/([+-]?\d+)([+-])([+-]?\d+)\/([+-]?\d+)$/);
+ if(!m)throw Error('Для дробей используй вид 3/4+1/8 или 5/6-1/3.');
+ let a=+m[1],b=+m[2],op=m[3],c=+m[4],d=+m[5];if(!b||!d)throw Error('Знаменатель дроби не может быть нулём.');
+ if(op==='-')c=-c;const n=a*d+b*c,den=b*d;function gcd(x,y){x=Math.abs(x);y=Math.abs(y);while(y){const z=x%y;x=y;y=z}return x||1}
+ const g=gcd(n,den),nn=n/g,dd=den/g;
+ return {answer:dd===1?String(nn):nn+'/'+dd,steps:'1. Общий знаменатель: '+b+' × '+d+' = '+den+'.\n2. Складываем числители: '+a+' × '+d+' '+op+' '+m[4]+' × '+b+' = '+n+'.\n3. Получаем '+n+'/'+den+'.\n4. Сокращаем на '+g+': '+(dd===1?String(nn):nn+'/'+dd)+'.'};
+}
+function percentSolve(s){
+ let m=s.match(/^\s*([+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+))\s*%\s*(?:от\s*)?([+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+))\s*$/i);
+ if(!m)m=s.match(/^\s*([+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+))\s*%\s*от\s*([+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+))\s*$/i);
+ if(!m)throw Error('Запиши проценты так: 15% от 240.');
+ const p=Number(m[1].replace(',','.')),n=Number(m[2].replace(',','.')),v=p*n/100;
+ return {answer:fmt(v),steps:'1. Переводим процент в дробь: '+p+'% = '+p+'/100.\n2. Умножаем число на процент: '+n+' × '+p+'/100.\n3. '+p+'% от '+n+' = '+fmt(v)+'.'};
+}
+function solve(s){
+ if(!s.trim())throw Error('Введи пример или выбери готовый пример.');
+ const chosen=mode;
+ if((chosen==='percent')||(/%/.test(s)&&chosen==='auto'))return percentSolve(s);
+ if(chosen==='fraction'||(chosen==='auto'&&/^\s*[+-]?\d+\/\d+\s*[+-]\s*[+-]?\d+\/\d+\s*$/.test(s)))return fractionSolve(s);
+ if(s.includes('=')){if(/x\s*\^\s*2|x\*x|x²/i.test(s))return solveQuadratic(s);return solveLinear(s)}
+ const value=arithmetic(s);
+ return {answer:fmt(value),steps:'Вычисляем выражение, соблюдая порядок действий: сначала скобки, затем степени, умножение и деление, после этого сложение и вычитание.\n'+s+' = '+fmt(value)+'.'};
+}
+function addHistory(problem,res){history.unshift({problem,result:res.answer});history=history.slice(0,6);renderHistory()}
+function renderHistory(){$('history').innerHTML=history.length?history.map(h=>'<div class="history-item"><strong>'+escapeHtml(h.problem)+'</strong><span>Ответ: '+escapeHtml(h.result)+'</span></div>').join(''):'<div class="small">Решённые примеры появятся здесь.</div>'}
+function doSolve(){const s=$('problem').value;try{const r=solve(s);$('result').innerHTML='<h3>ОТВЕТ</h3><div class="answer">'+escapeHtml(r.answer)+'</div><div class="explanation"><b>Объяснение</b>\n'+escapeHtml(r.steps)+'</div>';$('solveStatus').textContent='Решение готово. Попробуй изменить пример и сравнить шаги.';$('solveStatus').className='status ok';addHistory(s,r)}catch(e){$('result').innerHTML='<h3 class="err">НЕ УДАЛОСЬ РЕШИТЬ</h3><div>'+escapeHtml(e.message)+'</div>';$('solveStatus').textContent='Проверь запись задания.';$('solveStatus').className='status err'}}
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));const ph={auto:'Например: 3*(8-2)+12/4',equation:'Например: 2*x+5=17',fraction:'Например: 3/4+1/8',percent:'Например: 15% от 240'};$('problem').placeholder=ph[mode]}));
+document.querySelectorAll('[data-example]').forEach(b=>b.addEventListener('click',()=>{$('problem').value=b.dataset.example;if(b.dataset.example.includes('%'))mode='percent';else if(b.dataset.example.includes('/'))mode='fraction';else mode='auto';document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x.dataset.mode===mode));doSolve()}));
+$('solve').addEventListener('click',doSolve);$('problem').addEventListener('keydown',e=>{if(e.key==='Enter')doSolve()});
+$('clear').addEventListener('click',()=>{$('problem').value='';$('result').innerHTML='<h3>ОТВЕТ И ОБЪЯСНЕНИЕ</h3><div class="muted">Введи новый пример.</div>';$('solveStatus').textContent='Поле очищено.';$('problem').focus()});
+$('calcPercent').addEventListener('click',()=>{const p=Number($('pct').value),n=Number($('base').value);if($('pct').value===''||$('base').value===''||!Number.isFinite(p+n)){$('percentResult').textContent='Введи оба числа.';return}$('percentResult').textContent=fmt(p)+'% от '+fmt(n)+' = '+fmt(p*n/100)});
+$('calcMean').addEventListener('click',()=>{const raw=$('numbers').value.split(/[;,\s]+/).filter(Boolean),ns=raw.map(x=>Number(x.replace(',','.')));if(!ns.length||ns.some(x=>!Number.isFinite(x))){$('meanResult').textContent='Введи числа через запятую.';return}const sum=ns.reduce((a,b)=>a+b,0);$('meanResult').textContent='Сумма '+fmt(sum)+' ÷ '+ns.length+' = '+fmt(sum/ns.length)});
+$('showTable').addEventListener('click',()=>{const n=Number($('mult').value);if(!Number.isInteger(n)||n<1||n>20){$('tableResult').textContent='Введи целое число от 1 до 20.';return}$('tableResult').textContent=Array.from({length:10},(_,i)=>n+' × '+(i+1)+' = '+n*(i+1)).join(' · ')});
+function renderQuiz(){$('quizCount').textContent='Задание '+(quizIndex+1)+' из '+quizzes.length+' · Верно: '+quizScore;$('quizQuestion').textContent=quizzes[quizIndex].q;$('quizAnswer').value='';$('quizStatus').textContent='';$('quizAnswer').focus({preventScroll:true})}
+$('checkQuiz').addEventListener('click',()=>{const v=$('quizAnswer').value.trim().replace(',','.');if(!v){$('quizStatus').textContent='Сначала введи ответ.';return}const q=quizzes[quizIndex],correct=Math.abs(Number(v)-q.a)<1e-9;if(correct)quizScore++;$('quizStatus').textContent=(correct?'Верно! ':'Пока неверно. Правильный ответ: '+q.a+'. ')+q.ex;$('quizStatus').className='status '+(correct?'ok':'err');$('quizCount').textContent='Задание '+(quizIndex+1)+' из '+quizzes.length+' · Верно: '+quizScore});
+$('nextQuiz').addEventListener('click',()=>{quizIndex=(quizIndex+1)%quizzes.length;renderQuiz()});
+$('clearHistory').addEventListener('click',()=>{history=[];renderHistory()});
+renderQuiz();
+try{doSolve()}catch(e){/* app remains usable if the initial example fails */}
+})();
+</script>
+</body>
+</html>
