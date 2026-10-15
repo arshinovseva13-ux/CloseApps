@@ -57,6 +57,8 @@
                         </select>
                     </label>
                     <label class="setting-field color-field"><span>Цвет фона</span><input id="backgroundColor" type="color" value="#080c18" aria-label="Выбрать собственный цвет фона"></label>
+                    <label class="setting-field"><span>Плотность карточек</span><select id="densitySelect"><option value="comfortable">Комфортная</option><option value="compact">Компактная</option></select></label>
+                    <label class="setting-field"><span>Размер текста</span><select id="textSizeSelect"><option value="normal">Обычный</option><option value="large">Крупный</option></select></label>
                 </div>
                 <div class="settings-actions"><button id="settingsReset" type="button">Сбросить настройки</button><span id="settingsStatus" role="status" aria-live="polite">Изменения сохраняются автоматически</span></div>
             </div>
@@ -78,6 +80,12 @@
                 <a href="https://md2sites.ru/#" target="_blank" class="parent-company">
                     🏢 MD2 — головная компания
                 </a>
+            </div>
+
+            <div class="quick-access-section" id="quickAccessSection">
+                <div class="quick-access-heading"><div class="recent-title">⚡ Панель быстрого доступа</div><span class="quick-access-hint">Закрепи нужные приложения в окне приложения</span></div>
+                <div class="quick-access-list" id="quickAccessList"></div>
+                <p class="quick-access-empty" id="quickAccessEmpty">Здесь появятся закреплённые приложения — открой приложение и нажми «В быстрый доступ».</p>
             </div>
 
             <div class="recent-section" id="recentSection">
@@ -1456,7 +1464,9 @@
                     <span class="modal-star" data-value="5">★</span>
                 </div>
             </div>
-            <div class="modal-actions">
+            <div class="modal-actions modal-actions-enhanced">
+                <button class="modal-btn secondary favorite-toggle-btn" id="favoriteToggleBtn" type="button" aria-pressed="false">☆ В избранное</button>
+                <button class="modal-btn secondary quick-toggle-btn" id="quickToggleBtn" type="button" aria-pressed="false">⚡ В быстрый доступ</button>
                 <a href="#" target="_blank" class="modal-btn primary" id="modalOpenBtn">Открыть →</a>
                 <button class="modal-btn secondary" id="modalCancelBtn">Закрыть</button>
             </div>
