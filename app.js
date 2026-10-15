@@ -964,3 +964,45 @@
             const canvas = document.getElementById('bgCanvas');
             if (canvas) canvas.style.display = 'none';
         })();
+
+
+        // ===== НАСТРОЙКИ ВНЕШНЕГО ВИДА =====
+        (function initAppearanceSettings() {
+            const body = document.body;
+            const toggle = document.getElementById('settingsToggle');
+            const panel = document.getElementById('appearanceSettings');
+            const close = document.getElementById('settingsClose');
+            const theme = document.getElementById('themeSelect');
+            const background = document.getElementById('backgroundSelect');
+            const color = document.getElementById('backgroundColor');
+            const reset = document.getElementById('settingsReset');
+            const status = document.getElementById('settingsStatus');
+            const KEY = 'closeAppsAppearanceSettings';
+            const defaults = { theme:'dark', background:'default', color:'#080c18' };
+            let settings = { ...defaults };
+            try { const saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') settings = { ...defaults, ...saved }; } catch (e) {}
+            if (!['dark','light','system'].includes(settings.theme)) settings.theme = defaults.theme;
+            if (!['default','purple','ocean','forest','sunset','plain','custom'].includes(settings.background)) settings.background = defaults.background;
+            if (!/^#[0-9a-f]{6}$/i.test(settings.color)) settings.color = defaults.color;
+            function apply(save) {
+                let activeTheme = settings.theme;
+                if (activeTheme === 'system') activeTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                body.dataset.theme = activeTheme;
+                body.dataset.background = settings.background;
+                body.style.setProperty('--custom-background', settings.color);
+                theme.value = settings.theme; background.value = settings.background; color.value = settings.color;
+                color.closest('.setting-field').style.display = settings.background === 'custom' ? '' : 'none';
+                if (save) { try { localStorage.setItem(KEY, JSON.stringify(settings)); } catch (e) {} status.textContent = '✓ Настройки сохранены'; }
+            }
+            toggle.addEventListener('click', function() { const opening = panel.hidden; panel.hidden = !opening; toggle.setAttribute('aria-expanded', String(opening)); });
+            close.addEventListener('click', function() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); });
+            theme.addEventListener('change', function() { settings.theme = theme.value; apply(true); });
+            background.addEventListener('change', function() { settings.background = background.value; apply(true); });
+            color.addEventListener('input', function() { settings.color = color.value; settings.background = 'custom'; apply(true); });
+            reset.addEventListener('click', function() { settings = { ...defaults }; apply(true); status.textContent = 'Настройки сброшены'; });
+            if (window.matchMedia) {
+                const preference = window.matchMedia('(prefers-color-scheme: light)');
+                if (preference.addEventListener) preference.addEventListener('change', function() { if (settings.theme === 'system') apply(false); });
+            }
+            apply(false);
+        })();
