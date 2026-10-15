@@ -177,7 +177,6 @@
             });
         }
         renderRecent();
-        renderQuickAccess();
 
         // ===== МОДАЛЬНОЕ ОКНО =====
         const modalOverlay = document.getElementById('modalOverlay');
@@ -286,6 +285,7 @@
             renderQuickAccess();
             refreshFavoriteButtons();
         }
+        renderQuickAccess();
 
         function openModal(linkEl) {
             const id = linkEl.getAttribute('data-id');
