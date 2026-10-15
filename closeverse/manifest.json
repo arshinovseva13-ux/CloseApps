@@ -1,0 +1,19 @@
+{
+  "name": "CLOSEVERSE — личное пространство",
+  "short_name": "CLOSEVERSE",
+  "description": "Задачи, проекты, заметки, знания, финансы и фокус.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10131b",
+  "theme_color": "#10131b",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
