@@ -1689,3 +1689,30 @@
         transition-duration: 0.01ms !important;
     }
 }
+
+
+/* Lightweight static anniversary background: no canvas animation. */
+body {
+    background:
+        radial-gradient(ellipse at 12% 0%, rgba(25, 67, 120, 0.30), transparent 42%),
+        radial-gradient(ellipse at 90% 28%, rgba(70, 42, 130, 0.22), transparent 38%),
+        linear-gradient(180deg, #070b1a 0%, #0a1021 52%, #070b18 100%);
+    background-attachment: scroll;
+}
+#bgCanvas { display: none !important; }
+@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+    .app-link, .article-link, .search-input, .category-btn, .recent-item,
+    .header-link, .parent-company { transition: none !important; }
+    .app-link:hover, .article-link:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    .app-link.neon-feature, .app-link.featured, .badge-new {
+        animation: none !important;
+    }
+    .app-link, .article-link, .about-section, .recent-section,
+    .search-input, .header, .celebrate-banner {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+}
