@@ -83,7 +83,8 @@
                 const category = link.getAttribute('data-category') || '';
 
                 const matchesSearch = query === '' || searchData.indexOf(query) !== -1 || title.indexOf(query) !== -1 || desc.indexOf(query) !== -1;
-                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                const matchesCategory = currentCategory === 'all' ||
+                    (currentCategory === 'favorites' ? isFavorite(link.getAttribute('data-id')) : category === currentCategory);
 
                 if (matchesSearch && matchesCategory) {
                     link.classList.remove('hidden');
@@ -176,6 +177,7 @@
             });
         }
         renderRecent();
+        renderQuickAccess();
 
         // ===== МОДАЛЬНОЕ ОКНО =====
         const modalOverlay = document.getElementById('modalOverlay');
@@ -195,6 +197,95 @@
             education: '🎓 Образовательные',
             other: '📦 Разное'
         };
+
+        // Избранное и быстрый доступ сохраняются отдельно на устройстве.
+        const FAVORITES_KEY = 'closeAppsFavorites';
+        const QUICK_KEY = 'closeAppsQuickAccess';
+        const MAX_QUICK_ITEMS = 6;
+        function readIdList(key) {
+            try {
+                const value = JSON.parse(localStorage.getItem(key) || '[]');
+                return Array.isArray(value) ? value.filter(id => typeof id === 'string') : [];
+            } catch (e) { return []; }
+        }
+        let favorites = readIdList(FAVORITES_KEY);
+        let quickAccess = readIdList(QUICK_KEY);
+        function saveIdList(key, values) {
+            try { localStorage.setItem(key, JSON.stringify(values)); } catch (e) {}
+        }
+        function isFavorite(id) { return favorites.includes(id); }
+        function isQuick(id) { return quickAccess.includes(id); }
+        function refreshFavoriteButtons() {
+            const fav = document.getElementById('favoriteToggleBtn');
+            const quick = document.getElementById('quickToggleBtn');
+            if (fav) {
+                const active = currentAppId && isFavorite(currentAppId);
+                fav.textContent = active ? '★ В избранном' : '☆ В избранное';
+                fav.setAttribute('aria-pressed', String(Boolean(active)));
+                fav.classList.toggle('is-selected', Boolean(active));
+            }
+            if (quick) {
+                const active = currentAppId && isQuick(currentAppId);
+                quick.textContent = active ? '✓ В быстром доступе' : '⚡ В быстрый доступ';
+                quick.setAttribute('aria-pressed', String(Boolean(active)));
+                quick.classList.toggle('is-selected', Boolean(active));
+            }
+        }
+        function renderQuickAccess() {
+            const section = document.getElementById('quickAccessSection');
+            const list = document.getElementById('quickAccessList');
+            const empty = document.getElementById('quickAccessEmpty');
+            if (!section || !list || !empty) return;
+            list.innerHTML = '';
+            quickAccess = quickAccess.filter(id => {
+                const el = Array.from(document.querySelectorAll('.app-link')).find(card => card.getAttribute('data-id') === id);
+                return Boolean(el);
+            }).slice(0, MAX_QUICK_ITEMS);
+            saveIdList(QUICK_KEY, quickAccess);
+            quickAccess.forEach(id => {
+                const link = Array.from(document.querySelectorAll('.app-link')).find(card => card.getAttribute('data-id') === id);
+                if (!link) return;
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = 'quick-access-item';
+                const icon = document.createElement('span');
+                icon.className = 'quick-access-icon';
+                icon.textContent = link.getAttribute('data-icon') || '🧩';
+                const name = document.createElement('span');
+                name.className = 'quick-access-name';
+                name.textContent = link.getAttribute('data-title') || 'Приложение';
+                const remove = document.createElement('span');
+                remove.className = 'quick-access-remove';
+                remove.textContent = '×';
+                remove.setAttribute('aria-hidden', 'true');
+                item.append(icon, name, remove);
+                item.setAttribute('aria-label', 'Открыть ' + (link.getAttribute('data-title') || 'приложение'));
+                item.addEventListener('click', () => openModal(link));
+                list.appendChild(item);
+            });
+            empty.textContent = 'Здесь появятся закреплённые приложения — открой приложение и нажми «В быстрый доступ».';
+            empty.hidden = quickAccess.length > 0;
+            section.classList.toggle('has-items', quickAccess.length > 0);
+        }
+        function toggleFavorite(id) {
+            if (!id) return;
+            favorites = isFavorite(id) ? favorites.filter(value => value !== id) : [...favorites, id];
+            saveIdList(FAVORITES_KEY, favorites);
+            refreshFavoriteButtons();
+            applyFilters();
+        }
+        function toggleQuickAccess(id) {
+            if (!id) return;
+            if (isQuick(id)) quickAccess = quickAccess.filter(value => value !== id);
+            else if (quickAccess.length >= MAX_QUICK_ITEMS) {
+                const empty = document.getElementById('quickAccessEmpty');
+                if (empty) { empty.hidden = false; empty.textContent = 'Быстрый доступ вмещает до 6 приложений. Удали одно, чтобы добавить другое.'; }
+                return;
+            } else quickAccess.push(id);
+            saveIdList(QUICK_KEY, quickAccess);
+            renderQuickAccess();
+            refreshFavoriteButtons();
+        }
 
         function openModal(linkEl) {
             const id = linkEl.getAttribute('data-id');
@@ -230,6 +321,7 @@
 
             const savedValue = ratings[id] || 0;
             updateModalStars(savedValue);
+            refreshFavoriteButtons();
 
             modalOverlay.classList.add('show');
             document.body.style.overflow = 'hidden';
@@ -262,6 +354,9 @@
             modalOverlay.classList.remove('show');
             document.body.style.overflow = '';
         }
+
+        document.getElementById('favoriteToggleBtn').addEventListener('click', () => toggleFavorite(currentAppId));
+        document.getElementById('quickToggleBtn').addEventListener('click', () => toggleQuickAccess(currentAppId));
 
         document.getElementById('modalClose').addEventListener('click', closeModal);
         document.getElementById('modalCancelBtn').addEventListener('click', closeModal);
@@ -975,22 +1070,29 @@
             const theme = document.getElementById('themeSelect');
             const background = document.getElementById('backgroundSelect');
             const color = document.getElementById('backgroundColor');
+            const density = document.getElementById('densitySelect');
+            const textSize = document.getElementById('textSizeSelect');
             const reset = document.getElementById('settingsReset');
             const status = document.getElementById('settingsStatus');
             const KEY = 'closeAppsAppearanceSettings';
-            const defaults = { theme:'dark', background:'default', color:'#080c18' };
+            const defaults = { theme:'dark', background:'default', color:'#080c18', density:'comfortable', textSize:'normal' };
             let settings = { ...defaults };
             try { const saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') settings = { ...defaults, ...saved }; } catch (e) {}
             if (!['dark','light','system'].includes(settings.theme)) settings.theme = defaults.theme;
             if (!['default','purple','ocean','forest','sunset','plain','custom'].includes(settings.background)) settings.background = defaults.background;
             if (!/^#[0-9a-f]{6}$/i.test(settings.color)) settings.color = defaults.color;
+            if (!['comfortable','compact'].includes(settings.density)) settings.density = defaults.density;
+            if (!['normal','large'].includes(settings.textSize)) settings.textSize = defaults.textSize;
             function apply(save) {
                 let activeTheme = settings.theme;
                 if (activeTheme === 'system') activeTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
                 body.dataset.theme = activeTheme;
                 body.dataset.background = settings.background;
+                body.dataset.density = settings.density;
+                body.dataset.textSize = settings.textSize;
                 body.style.setProperty('--custom-background', settings.color);
                 theme.value = settings.theme; background.value = settings.background; color.value = settings.color;
+                density.value = settings.density; textSize.value = settings.textSize;
                 color.closest('.setting-field').style.display = settings.background === 'custom' ? '' : 'none';
                 if (save) { try { localStorage.setItem(KEY, JSON.stringify(settings)); } catch (e) {} status.textContent = '✓ Настройки сохранены'; }
             }
@@ -999,6 +1101,8 @@
             theme.addEventListener('change', function() { settings.theme = theme.value; apply(true); });
             background.addEventListener('change', function() { settings.background = background.value; apply(true); });
             color.addEventListener('input', function() { settings.color = color.value; settings.background = 'custom'; apply(true); });
+            density.addEventListener('change', function() { settings.density = density.value; apply(true); });
+            textSize.addEventListener('change', function() { settings.textSize = textSize.value; apply(true); });
             reset.addEventListener('click', function() { settings = { ...defaults }; apply(true); status.textContent = 'Настройки сброшены'; });
             if (window.matchMedia) {
                 const preference = window.matchMedia('(prefers-color-scheme: light)');
