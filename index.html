@@ -40,6 +40,28 @@
             </div>
         </header>
 
+        <section class="settings-wrap" aria-label="Настройки оформления">
+            <button class="settings-toggle" id="settingsToggle" type="button" aria-expanded="false" aria-controls="appearanceSettings">⚙️ Настройки оформления</button>
+            <div class="appearance-settings" id="appearanceSettings" hidden>
+                <div class="settings-heading">
+                    <div><strong>Персонализация</strong><p>Настройки сохраняются на этом устройстве</p></div>
+                    <button class="settings-close" id="settingsClose" type="button" aria-label="Закрыть настройки">✕</button>
+                </div>
+                <div class="settings-grid">
+                    <label class="setting-field"><span>Тема сайта</span>
+                        <select id="themeSelect"><option value="dark">🌙 Тёмная</option><option value="light">☀️ Светлая</option><option value="system">🖥️ Как в системе</option></select>
+                    </label>
+                    <label class="setting-field"><span>Фон страницы</span>
+                        <select id="backgroundSelect">
+                            <option value="default">🌌 Ночной синий</option><option value="purple">🪻 Фиолетовый</option><option value="ocean">🌊 Океан</option><option value="forest">🌲 Лесной</option><option value="sunset">🌅 Закат</option><option value="plain">⬛ Однотонный</option><option value="custom">🎨 Свой цвет</option>
+                        </select>
+                    </label>
+                    <label class="setting-field color-field"><span>Цвет фона</span><input id="backgroundColor" type="color" value="#080c18" aria-label="Выбрать собственный цвет фона"></label>
+                </div>
+                <div class="settings-actions"><button id="settingsReset" type="button">Сбросить настройки</button><span id="settingsStatus" role="status" aria-live="polite">Изменения сохраняются автоматически</span></div>
+            </div>
+        </section>
+
         <main class="content-area">
             <div class="about-section">
                 <div class="about-title">О компании</div>
