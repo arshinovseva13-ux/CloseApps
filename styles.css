@@ -1860,3 +1860,6 @@ body[data-theme="light"][data-background="plain"] { --page-background:#f1f3f7; }
 body[data-background="custom"] { --page-background:var(--custom-background,#080c18); }
 body[data-theme="light"][data-background="custom"] { --page-background:var(--custom-background,#f1f3f7); }
 @media(max-width:650px) { .settings-grid { grid-template-columns:1fr; } .settings-wrap { width:calc(100% - 28px); } .appearance-settings { padding:14px; } }
+
+body[data-theme="dark"] { background:var(--page-background,linear-gradient(180deg,#080c18,#0b1120)) !important; }
+body[data-theme="dark"] .settings-toggle,body[data-theme="dark"] .appearance-settings { color:var(--text-primary); }
