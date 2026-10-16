@@ -1917,3 +1917,12 @@ body[data-theme="light"] .quick-access-item { color:var(--text-primary); backgro
 .video-link:hover { border-color:rgba(183,164,255,.7); box-shadow:0 10px 32px rgba(65,51,130,.18); }
 .video-category-btn { border-color:rgba(183,164,255,.3); }
 @media(max-width:650px){.video-tag{margin-left:4px;font-size:.65rem}.video-section-intro{font-size:.88rem}}
+
+/* Dedicated Ecosystems category on the Close hub */
+.ecosystem-category-btn{border-color:rgba(94,234,212,.32)!important;background:rgba(94,234,212,.07)}
+.ecosystem-category-btn.active,.ecosystem-category-btn:hover{border-color:rgba(94,234,212,.7)!important;background:rgba(94,234,212,.15)!important;color:#b9fff4!important}
+.ecosystem-section-intro{margin:-8px 0 14px;color:#9fb4c9;font-size:.88rem;line-height:1.6}
+.ecosystem-link{border-color:rgba(94,234,212,.2)}
+.ecosystem-link:hover{border-color:rgba(94,234,212,.55)}
+.ecosystem-card-icon{background:linear-gradient(135deg,rgba(94,234,212,.2),rgba(124,92,252,.25));color:#a5fff1;border:1px solid rgba(94,234,212,.25)}
+.ecosystem-tag{display:inline-flex;align-items:center;gap:4px;margin-left:7px;padding:3px 7px;border-radius:6px;background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.22);color:#9af6e8;font-size:.68rem;font-weight:700;vertical-align:middle}
