@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ChatGPT 5.5 — следующий уровень ИИ | Close</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main id="wrap">
+  <canvas id="stage" aria-label="Видео-презентация о развитии ИИ"></canvas>
+  <div id="start">
+    <h1>Следующий уровень ИИ</h1>
+    <p>Видео-презентация, собранная кодом: около 2,5 минут, 9 сцен, синтезированная музыка.</p>
+    <button id="goSound" class="big">Начать просмотр со звуком</button>
+    <button id="goMute" class="ghost">Смотреть без звука</button>
+  </div>
+  <button id="uiShow" data-i="eye" aria-label="Показать управление" hidden></button>
+  <div id="msg" role="status" aria-live="polite"></div>
+  <section id="bar" aria-label="Управление видео">
+    <div id="panel" hidden>
+      <label>Общая громкость <input id="vMaster" type="range" min="0" max="100" value="80"></label>
+      <label>Музыка <input id="vMus" type="range" min="0" max="100" value="70"></label>
+      <label>Эффекты <input id="vSfx" type="range" min="0" max="100" value="80"></label>
+      <label class="chk"><input id="spk" type="checkbox"> Диктор (голос браузера, в запись не попадает)</label>
+      <button id="bRec" class="ghost">Записать видео</button>
+      <p class="note">Запись идёт в реальном времени в WebM (≈2:30), если браузер поддерживает MediaRecorder. Вкладку не сворачивайте.</p>
+    </div>
+    <input id="prog" type="range" min="0" max="1000" value="0" aria-label="Шкала прогресса">
+    <div class="row">
+      <button id="bPrev" data-i="prev" aria-label="Предыдущая сцена"></button>
+      <button id="bPlay" data-i="play" aria-label="Воспроизведение и пауза"></button>
+      <button id="bNext" data-i="next" aria-label="Следующая сцена"></button>
+      <button id="bRestart" data-i="restart" aria-label="Перезапуск"></button>
+      <span id="tm">0:00 / 2:30</span><span class="sp"></span>
+      <button id="bMute" data-i="vol" aria-label="Звук вкл/выкл"></button>
+      <button id="bSet" class="pill">Настройки</button>
+      <button id="bClean" data-i="eye" aria-label="Режим без интерфейса"></button>
+      <button id="bFull" data-i="full" aria-label="Полный экран"></button>
+    </div>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
