@@ -1926,3 +1926,13 @@ body[data-theme="light"] .quick-access-item { color:var(--text-primary); backgro
 .ecosystem-link:hover{border-color:rgba(94,234,212,.55)}
 .ecosystem-card-icon{background:linear-gradient(135deg,rgba(94,234,212,.2),rgba(124,92,252,.25));color:#a5fff1;border:1px solid rgba(94,234,212,.25)}
 .ecosystem-tag{display:inline-flex;align-items:center;gap:4px;margin-left:7px;padding:3px 7px;border-radius:6px;background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.22);color:#9af6e8;font-size:.68rem;font-weight:700;vertical-align:middle}
+
+
+/* Dedicated section: 3D worlds and simulators */
+.world-category-btn{border-color:rgba(127,214,255,.34)!important;background:rgba(66,178,220,.08)}
+.world-category-btn.active,.world-category-btn:hover{border-color:rgba(127,214,255,.75)!important;background:rgba(66,178,220,.16)!important;color:#c5f1ff!important}
+.world-section-intro{margin:-8px 0 14px;color:#9fb4c9;font-size:.88rem;line-height:1.6}
+.world-link{border-color:rgba(127,214,255,.25);background:linear-gradient(105deg,rgba(44,145,190,.10),rgba(80,95,180,.045))}
+.world-link:hover{border-color:rgba(127,214,255,.72);box-shadow:0 10px 32px rgba(25,130,180,.17)}
+.world-card-icon{background:linear-gradient(135deg,rgba(127,214,255,.22),rgba(124,92,252,.2));color:#c5f1ff;border:1px solid rgba(127,214,255,.28)}
+@media(max-width:650px){.world-section-intro{font-size:.88rem}}
