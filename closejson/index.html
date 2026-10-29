@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b101b"><title>Close JSON — форматировщик JSON</title>
+<style>
+:root{color-scheme:dark;--bg:#0b101b;--panel:#121a29;--line:#29364c;--muted:#9baac3;--accent:#7dd3fc;--good:#86efac;--bad:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b3048 0,var(--bg) 55%);color:#eef5ff;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;padding:22px 15px 40px}
+main{max-width:1100px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px}.top a{color:var(--accent);text-decoration:none}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:800;margin-top:26px}h1{font-size:clamp(36px,7vw,62px);letter-spacing:-.05em;line-height:1.05;margin:8px 0 10px}.intro{color:var(--muted);max-width:700px;margin:0 0 22px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.btn{border:1px solid #34445d;background:#1a2639;color:#edf6ff;border-radius:11px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.btn:hover{border-color:var(--accent)}.btn.primary{background:var(--accent);color:#07131d;border-color:var(--accent)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:14px}.panel{background:color-mix(in srgb,var(--panel) 94%,transparent);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line);font-weight:750}.tag{font-size:11px;color:var(--muted);letter-spacing:.08em}.editor{display:block;width:100%;min-height:380px;resize:vertical;border:0;outline:0;background:#0d1421;color:#dcecff;padding:16px;font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}.output{padding:16px;min-height:380px;max-height:600px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;color:#dcecff}.status{padding:11px 16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);min-height:43px}.status.good{color:var(--good)}.status.bad{color:var(--bad)}.bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:15px;color:var(--muted);font-size:12px}.count{display:flex;gap:12px;flex-wrap:wrap}.count b{color:#edf6ff}.note{margin-top:16px;color:var(--muted);font-size:12px}
+@media(max-width:760px){body{padding:17px 11px 30px}.workspace{grid-template-columns:1fr}.editor{min-height:280px}.output{min-height:240px;max-height:440px}.panel-head{padding:12px}.toolbar .btn{flex:1}.bottom{align-items:flex-start}}
+</style>
+</head>
+<body><main>
+<div class="top"><strong>CLOSE APPS <span style="opacity:.5">/ DEVELOPER TOOLS</span></strong><a href="../">← На главную</a></div>
+<div class="eyebrow">DATA TOOLKIT · 01</div><h1>Close JSON</h1><p class="intro">Проверяй JSON, находи синтаксические ошибки, форматируй структуру или сжимай данные. Всё работает прямо в браузере — без API и отправки текста на сервер.</p>
+<div class="toolbar"><button class="btn primary" id="format">✦ Форматировать</button><button class="btn" id="minify">Сжать</button><button class="btn" id="validate">✓ Проверить</button><button class="btn" id="sample">Загрузить пример</button><button class="btn" id="clear">Очистить</button></div>
+<div class="workspace">
+<section class="panel"><div class="panel-head"><span>Входные данные</span><span class="tag">JSON INPUT</span></div><textarea id="input" class="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Входной JSON" placeholder='Вставь JSON сюда…'></textarea><div id="inputStatus" class="status">Вставь данные или загрузи пример.</div></section>
+<section class="panel"><div class="panel-head"><span>Результат</span><span class="tag">OUTPUT</span></div><pre id="output" class="output">Здесь появится результат проверки или форматирования.</pre><div id="outputStatus" class="status">Результат будет показан здесь.</div></section>
+</div>
+<div class="bottom"><div class="count"><span>Символов: <b id="chars">0</b></span><span>Ключей: <b id="keys">0</b></span><span>Уровней: <b id="depth">0</b></span></div><div><button class="btn" id="copy">Копировать результат</button> <button class="btn" id="download">Скачать .json</button></div></div>
+<p class="note">Конфиденциальность: данные обрабатываются локально в браузере. Не вставляй секреты в общедоступные устройства.</p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const input=$('#input'),output=$('#output'),inputStatus=$('#inputStatus'),outputStatus=$('#outputStatus');
+const example={project:"Close Apps",version:1,settings:{theme:"dark",autosave:true},apps:[{name:"Close JSON",type:"developer-tool",enabled:true},{name:"Close Palette",type:"design-tool",enabled:true}],stats:{users:128,uptime:99.9}};
+function setStatus(el,msg,kind=''){el.textContent=msg;el.className='status'+(kind?' '+kind:'')}
+function stats(value){let keys=0,max=0;function walk(v,d){max=Math.max(max,d);if(v&&typeof v==='object'){for(const k of Object.keys(v)){keys++;walk(v[k],d+1)}}}walk(value,0);$('#chars').textContent=input.value.length.toLocaleString('ru-RU');$('#keys').textContent=keys.toLocaleString('ru-RU');$('#depth').textContent=max.toLocaleString('ru-RU')}
+function parse(){const raw=input.value.trim();if(!raw)throw new Error('Поле пустое — вставь JSON или загрузи пример.');try{return JSON.parse(raw)}catch(e){const m=e.message||'Неизвестная ошибка';throw new Error('Некорректный JSON: '+m)}}
+function run(mode){try{const value=parse();const result=mode==='minify'?JSON.stringify(value):JSON.stringify(value,null,2);output.textContent=result;setStatus(inputStatus,'✓ JSON корректен','good');setStatus(outputStatus,mode==='minify'?'Данные сжаты.':'JSON успешно обработан.','good');stats(value);return true}catch(e){output.textContent='';setStatus(inputStatus,e.message,'bad');setStatus(outputStatus,'Исправь ошибку во входных данных и повтори проверку.','bad');$('#keys').textContent='—';$('#depth').textContent='—';$('#chars').textContent=input.value.length.toLocaleString('ru-RU');return false}}
+$('#format').onclick=()=>run('format');$('#minify').onclick=()=>run('minify');$('#validate').onclick=()=>{if(run('format')){output.textContent='JSON синтаксически корректен.\n\n'+output.textContent;setStatus(outputStatus,'✓ Проверка пройдена','good')}};
+$('#sample').onclick=()=>{input.value=JSON.stringify(example);run('format')};
+$('#clear').onclick=()=>{input.value='';output.textContent='Здесь появится результат проверки или форматирования.';setStatus(inputStatus,'Вставь данные или загрузи пример.');setStatus(outputStatus,'Результат будет показан здесь.');stats(null);$('#keys').textContent='0';$('#depth').textContent='0';input.focus()};
+$('#copy').onclick=async()=>{const text=output.textContent;if(!text||text.startsWith('Здесь появится')){setStatus(outputStatus,'Сначала сформируй результат.','bad');return}try{await navigator.clipboard.writeText(text);setStatus(outputStatus,'Результат скопирован в буфер обмена.','good')}catch{const r=document.createRange();r.selectNodeContents(output);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);setStatus(outputStatus,'Выделил результат — скопируй его вручную.')}}; 
+$('#download').onclick=()=>{const text=output.textContent;if(!text||text.startsWith('Здесь появится')){setStatus(outputStatus,'Сначала сформируй результат.','bad');return}const blob=new Blob([text+'\n'],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='close-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+input.addEventListener('input',()=>{setStatus(inputStatus,'Есть несохранённые изменения. Нажми «Проверить» или «Форматировать».');$('#chars').textContent=input.value.length.toLocaleString('ru-RU')});
+input.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=input.selectionStart,b=input.selectionEnd;input.setRangeText('  ',a,b,'end')}if((e.ctrlKey||e.metaKey)&&e.key==='Enter')run('format')});
+stats(null);
+</script></body></html>
