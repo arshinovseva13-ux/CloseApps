@@ -23,9 +23,27 @@
   "build": {
     "appId": "ru.closeapps.seabattle",
     "productName": "Close Sea Battle",
-    "directories": { "output": "dist" },
-    "files": ["electron/**/*", "www/**/*", "package.json"],
-    "win": { "target": ["nsis"], "icon": "assets/icon.ico" },
-    "nsis": { "oneClick": true, "perMachine": false, "allowToChangeInstallationDirectory": false, "createDesktopShortcut": true, "createStartMenuShortcut": true }
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "www/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "CloseSeaBattle-Setup-${version}.${ext}"
+    }
   }
 }
