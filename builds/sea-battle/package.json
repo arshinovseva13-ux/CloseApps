@@ -1,8 +1,8 @@
 {
   "name": "close-sea-battle-build",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
-  "description": "Windows and Android packages for Close Sea Battle",
+  "description": "Windows and Android packages for Close Sea Battle — fleet visibility and battle logic fixes",
   "main": "electron/main.cjs",
   "scripts": {
     "prepare:web": "node scripts/prepare.mjs",
