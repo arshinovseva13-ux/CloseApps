@@ -10,6 +10,9 @@ on:
       - 'sea-battle.html'
       - '.github/workflows/build-sea-battle.yml'
   workflow_dispatch:
+concurrency:
+  group: close-sea-battle-build
+  cancel-in-progress: true
 permissions:
   contents: write
   actions: read
