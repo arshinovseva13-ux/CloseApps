@@ -108,12 +108,49 @@ body[data-theme="light"] .notice{
 .particle{box-shadow:0 0 26px currentColor,0 0 12px rgba(255,255,255,.5),inset -4px -5px 10px rgba(0,0,0,.08)!important}
 
 
-/* CLOSE VIDEO STUDIO — собственная визуальная тема, не затрагивающая BBB */
-:root{--bubble-blue:#8b5cf6;--bubble-orange:#22d3ee;--bubble-pink:#ec4899;--bubble-green:#2dd4bf;--bubble-yellow:#a78bfa}
-body{background:radial-gradient(ellipse at 15% 20%,rgba(124,58,237,.45),transparent 38%),radial-gradient(ellipse at 85% 15%,rgba(6,182,212,.32),transparent 34%),radial-gradient(ellipse at 55% 90%,rgba(219,39,119,.22),transparent 42%),linear-gradient(135deg,#080817,#11132b 48%,#071b2b)!important;background-size:160% 160%!important;animation:studioAurora 24s ease-in-out infinite alternate!important}
-body[data-theme="light"]{background:radial-gradient(ellipse at 15% 20%,rgba(167,139,250,.34),transparent 38%),radial-gradient(ellipse at 85% 15%,rgba(103,232,249,.32),transparent 34%),linear-gradient(135deg,#f5f3ff,#e0f2fe 55%,#fce7f3)!important;background-size:160% 160%!important}
-@keyframes studioAurora{0%{background-position:0% 0%}100%{background-position:100% 100%}}
-
+/* CLOSE VIDEO STUDIO — уникальный фон «Digital Blueprint» */
+#particles{display:none!important}
+body{
+ min-height:100vh!important;
+ background-color:#070b18!important;
+ background-image:
+  radial-gradient(ellipse at 12% 18%,rgba(34,211,238,.19),transparent 34%),
+  radial-gradient(ellipse at 88% 76%,rgba(99,102,241,.22),transparent 38%),
+  linear-gradient(125deg,#070b18 0%,#101a35 48%,#091526 100%)!important;
+ background-size:cover!important;
+ background-attachment:fixed!important;
+ animation:none!important;
+ position:relative;
+}
+body::before{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+ background-image:
+  linear-gradient(rgba(125,170,220,.075) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(125,170,220,.075) 1px,transparent 1px),
+  linear-gradient(115deg,transparent 0%,rgba(34,211,238,.045) 48%,transparent 52%);
+ background-size:42px 42px,42px 42px,100% 100%;
+ mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 95%);
+}
+body::after{
+ content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;
+ background:linear-gradient(115deg,transparent 38%,rgba(56,189,248,.055) 49%,transparent 60%);
+ transform:translateX(-30%);
+ animation:studioScan 18s ease-in-out infinite alternate;
+}
+body>header,body>main{position:relative;z-index:1}
+@keyframes studioScan{from{transform:translateX(-25%)}to{transform:translateX(25%)}}
+body[data-theme="light"]{
+ background-color:#edf3fc!important;
+ background-image:
+  radial-gradient(ellipse at 12% 18%,rgba(14,165,233,.16),transparent 34%),
+  radial-gradient(ellipse at 88% 76%,rgba(129,140,248,.17),transparent 38%),
+  linear-gradient(125deg,#f8fbff 0%,#e8f0fc 48%,#edf7fb 100%)!important;
+ background-attachment:fixed!important;
+}
+body[data-theme="light"]::before{
+ background-image:linear-gradient(rgba(65,95,145,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(65,95,145,.09) 1px,transparent 1px);
+}
+body[data-theme="light"]::after{background:linear-gradient(115deg,transparent 38%,rgba(14,165,233,.06) 49%,transparent 60%)}
 </style>
 </head>
 <body>
