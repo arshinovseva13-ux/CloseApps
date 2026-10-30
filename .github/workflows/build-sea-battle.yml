@@ -2,7 +2,11 @@ name: Build Close Sea Battle installers
 on:
   push:
     paths:
-      - 'builds/**'
+      - 'builds/sea-battle/package.json'
+      - 'builds/sea-battle/capacitor.config.ts'
+      - 'builds/sea-battle/scripts/**'
+      - 'builds/sea-battle/electron/**'
+      - 'builds/sea-battle/assets/**'
       - 'sea-battle.html'
       - '.github/workflows/build-sea-battle.yml'
   workflow_dispatch:
