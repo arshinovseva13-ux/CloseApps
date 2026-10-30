@@ -51,7 +51,7 @@ jobs:
       - name: Prepare APK
         run: |
           mkdir -p dist
-          cp builds/sea-battle/android/app/build/outputs/apk/debug/app-debug.apk dist/CloseSeaBattle-Android-1.0.0.apk
+          cp builds/sea-battle/android/app/build/outputs/apk/debug/app-debug.apk dist/CloseSeaBattle-Android-1.0.1.apk
       - uses: actions/upload-artifact@v4
         with:
           name: android-apk
@@ -68,10 +68,10 @@ jobs:
       - name: Publish direct-download release assets
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: sea-battle-v1.0.0
-          name: Close Sea Battle 1.0.0
+          tag_name: sea-battle-v1.0.1
+          name: Close Sea Battle 1.0.1
           body: |
-            Первая установочная сборка Close Sea Battle.
+            Обновление Close Sea Battle 1.0.1: исправления отображения флота и игрового состояния.
             - Windows x64: EXE installer
             - Android: APK
             Страница прямого скачивания: https://arshinovseva13-ux.github.io/CloseApps/builds/sea-battle.html
