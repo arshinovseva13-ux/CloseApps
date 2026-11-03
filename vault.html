@@ -78,14 +78,16 @@
     <section class="panel" id="questExpansion" style="grid-column:1/-1;border-color:#6c55b8;background:linear-gradient(145deg,#1b1634ee,#0b1420f2);margin-bottom:28px">
       <div class="panel-label">06 / QUEST CLEARANCE</div><h2>🔓 Уровень 2 — Исследователь</h2>
       <p id="questAccessText">Проверка допуска CLOSE // QUEST…</p>
-      <div id="questLockedNote" class="console"><div class="accent">[LOCKED] researcher.clearance — missing</div><div>Заверши все 12 испытаний в CLOSE // QUEST, чтобы получить доступ к расширению архива.</div><div style="margin-top:10px"><a class="btn primary" href="quest.html">Пройти CLOSE // QUEST ↗</a></div></div>
+      <div id="questLockedNote" class="console"><div class="accent">[LOCKED] researcher.clearance — missing</div><div>Заверши все 12 испытаний в CLOSE // QUEST, чтобы получить доступ к расширению архива. Если у тебя есть внутренний доступ PLANS, открой третий уровень напрямую.</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary" href="quest.html">Пройти CLOSE // QUEST ↗</a><a class="btn" href="./vault.html?from=plans">PLANS · открыть Level 3 ↗</a></div></div>
       <div id="questUnlockedTools" class="hidden">
         <div class="mini-grid"><div class="mini"><strong>12/12</strong><span>MISSIONS CLEARED</span></div><div class="mini"><strong>LEVEL 02</strong><span>RESEARCHER</span></div><div class="mini"><strong>ZERO-7</strong><span>EXPERIMENTAL ACCESS</span></div></div>
         <div class="feed" style="margin-top:18px">
+          <div class="feed-row"><div class="feed-icon">🔐</div><div><strong>PLANS — Уровень 3 / Носитель привилегий</strong><small>Третий уровень доступен через внутренний маршрут PLANS или команду PLANS в чате второго уровня.</small></div></div>
           <div class="feed-row"><div class="feed-icon">📁</div><div><strong>Досье 012 — Последний исследователь</strong><small>Ты доказал, что умеешь связывать подсказки и находить скрытые связи.</small></div></div>
           <div class="feed-row"><div class="feed-icon">⌘</div><div><strong>Команда ZERO-REPORT</strong><small>Показывает системный отчёт о твоём допуске.</small></div></div>
           <div class="feed-row"><div class="feed-icon">🧩</div><div><strong>Бонусная команда ZERO-7</strong><small>Открывает экспериментальный протокол и секретное послание.</small></div></div>
         </div>
+        <div class="feed-row" style="margin-top:12px"><div class="feed-icon">🗺️</div><div><strong>PLANS / маршрут третьего уровня</strong><small>Внутренний доступ: команда PLANS открывает Level 3 без повторного прохождения квеста.</small></div><button class="btn" id="openLevel3FromPlans" type="button">Открыть Level 3</button></div>
         <div style="margin-top:18px;font-weight:850;color:var(--cyan)">💬 ZERO CHAT / ЧАТ ВТОРОГО УРОВНЯ</div><div class="console" id="zeroTerminal" aria-live="polite"><div class="ok">[ACCESS] researcher clearance verified</div><div class="accent">[INFO] доступны команды ZERO-REPORT и ZERO-7</div></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><input id="zeroCommandInput" aria-label="Сообщение в чате второго уровня" placeholder="Напиши сообщение или команду…" style="flex:1;min-width:180px;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px"><button class="btn primary" id="zeroCommandBtn" type="button">Выполнить</button></div>
         <div id="zeroBonus" class="hidden" style="margin-top:15px;padding:16px;border:1px solid #48b995;border-radius:14px;background:#0d2a24"><div class="panel-label" style="color:var(--green)">EXPERIMENTAL MODE · UNLOCKED</div><h3>Протокол ZERO-7</h3><p>«Архив — это не место, а последовательность решений. Первый ключ открывает дверь. Второй показывает, что за ней. Третий доказывает, что ты готов создать собственный путь».</p><p style="margin-top:10px"><strong>Бонусный статус:</strong> Носитель протокола ZERO-7</p></div>
@@ -132,15 +134,20 @@
   let found=[];
   try{found=JSON.parse(localStorage.getItem('closeAppsVaultCodes')||'[]')}catch(e){}
   const required=['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
-  const plansAccess=new URLSearchParams(window.location.search).get('from')==='plans'||window.location.hash==='#questExpansion';
+  const accessParams=new URLSearchParams(window.location.search);
+  const plansAccess=accessParams.get('from')==='plans'||accessParams.get('plans')==='1'||accessParams.get('access')==='plans'||window.location.hash==='#questExpansion'||localStorage.getItem('closeZeroPlansAccess')==='granted';
+  let questProgress=[];try{questProgress=JSON.parse(localStorage.getItem('closeQuestProgressV1')||'[]')}catch(e){}
+  const questProgressComplete=Array.isArray(questProgress)&&new Set(questProgress).size>=12;
+  if(questProgressComplete&&!found.includes('QUEST-COMPLETE-2026')){found.push('QUEST-COMPLETE-2026');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}}
   const allowed=plansAccess||required.every(code=>found.includes(code));
   document.getElementById('locked').classList.toggle('hidden',allowed);
   document.getElementById('app').classList.toggle('hidden',!allowed);
   if(!allowed)return;
-  if(plansAccess&&!required.every(code=>found.includes(code))){
+  if(plansAccess){
     document.querySelector('.status').textContent='PLANS OVERRIDE · INTERNAL ACCESS';
+    try{localStorage.setItem('closeZeroPlansAccess','granted')}catch(e){}
   }
-  const questCleared=found.includes('QUEST-COMPLETE-2026')||plansAccess;
+  const questCleared=found.includes('QUEST-COMPLETE-2026')||questProgressComplete||found.includes('ZERO-LEVEL3-UNLOCKED')||plansAccess;
   document.getElementById('questLockedNote').classList.toggle('hidden',questCleared);
   document.getElementById('questUnlockedTools').classList.toggle('hidden',!questCleared);
   document.getElementById('questAccessText').textContent=questCleared?'Уровень 2 активирован: допуск исследователя подтверждён.':'Уровень 2 закрыт. Для доступа нужно завершить все 12 испытаний CLOSE // QUEST.';
@@ -163,7 +170,8 @@
   const level3Locked=document.getElementById('level3Locked');
   const level3Challenge=document.getElementById('level3Challenge');
   const level3Tools=document.getElementById('level3Tools');
-  function unlockLevel3FromChat(viaPlans){if(!found.includes('ZERO-LEVEL3-UNLOCKED'))found.push('ZERO-LEVEL3-UNLOCKED');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}let granted=getStore('closeZeroLevel3Privileges');if(!granted.includes('ROOT ACCESS')){granted.push('ROOT ACCESS');setStore('closeZeroLevel3Privileges',granted)}level3Unlocked=true;level3Text.textContent=viaPlans?'Уровень 3 открыт командой PLANS.':'Уровень 3 открыт секретной командой.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');initPrivilegeTerminal();}
+  function unlockLevel3FromChat(viaPlans){if(viaPlans){try{localStorage.setItem('closeZeroPlansAccess','granted')}catch(e){}}if(!found.includes('ZERO-LEVEL3-UNLOCKED'))found.push('ZERO-LEVEL3-UNLOCKED');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}let granted=getStore('closeZeroLevel3Privileges');if(!granted.includes('ROOT ACCESS')){granted.push('ROOT ACCESS');setStore('closeZeroLevel3Privileges',granted)}level3Unlocked=true;level3Text.textContent=viaPlans?'Уровень 3 открыт командой PLANS.':'Уровень 3 открыт секретной командой.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');initPrivilegeTerminal();}
+  const plansLevel3Link=document.getElementById('openLevel3FromPlans');if(plansLevel3Link)plansLevel3Link.addEventListener('click',()=>unlockLevel3FromChat(true));
   if(level3Unlocked){level3Text.textContent=plansAccess?'Уровень 3 открыт через внутренний доступ plans.':'Уровень 3 активирован: допуск подтверждён.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');}
   else{level3Text.textContent='Третий уровень закрыт. Введи секретную команду в чате второго уровня.';level3Challenge.classList.add('hidden');}
   const getStore=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}};
