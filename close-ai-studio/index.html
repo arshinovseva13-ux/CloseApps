@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b16">
+<title>Close AI Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#080b16;--panel:#111729;--panel2:#151e33;--line:#293653;--text:#eef3ff;--muted:#91a0bd;--accent:#9b8cff;--cyan:#65e6df;--danger:#ff738b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% -10%,#34285f 0,transparent 42%),radial-gradient(ellipse at 100% 15%,#123b49 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width:1440px;margin:auto;padding:20px;min-height:100vh;display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px}
+.sidebar,.main{border:1px solid #ffffff13;background:#0d1424d9;backdrop-filter:blur(18px);border-radius:22px;box-shadow:0 22px 80px #0004}.sidebar{padding:18px;display:flex;flex-direction:column;gap:18px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;letter-spacing:-.5px}.logo{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#9d8cff,#59dfd6);color:#101426;font-weight:950;font-size:20px}.sub{color:var(--muted);font-size:12px}.side-title{color:#7889a8;text-transform:uppercase;font-size:10px;letter-spacing:1.5px;font-weight:800;margin:8px 0}.nav{display:grid;gap:7px}.nav button,.secondary{border:1px solid transparent;background:transparent;color:#bdc9e1;text-align:left;padding:10px 12px;border-radius:11px}.nav button.active,.nav button:hover{background:#202b45;border-color:#3c4d70;color:white}.provider{padding:13px;border:1px solid var(--line);border-radius:15px;background:#111b2e}.provider strong{display:block}.status{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;margin-top:7px}.dot{width:8px;height:8px;border-radius:50%;background:#78849a}.dot.ok{background:#51d7a2;box-shadow:0 0 12px #51d7a288}.side-bottom{margin-top:auto;display:grid;gap:9px}.main{display:flex;flex-direction:column;min-height:calc(100vh - 40px);overflow:hidden}.top{padding:21px 25px;border-bottom:1px solid #ffffff12;display:flex;align-items:center;justify-content:space-between;gap:12px}.top h1{font-size:21px;margin:0;letter-spacing:-.6px}.top p{margin:3px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px}.btn{border:1px solid #3c4d70;background:#202b45;color:#f1f4ff;border-radius:11px;padding:9px 13px;font-weight:700}.btn:hover{filter:brightness(1.15)}.btn.primary{border:0;background:linear-gradient(110deg,#8e7cff,#4cbfc7);color:#08111e}.btn:disabled{opacity:.45;cursor:not-allowed}.chat{padding:24px;display:flex;flex-direction:column;gap:17px;flex:1;min-height:0}.welcome{margin:auto;max-width:620px;text-align:center;padding:30px 10px}.orb{margin:0 auto 17px;width:66px;height:66px;border-radius:22px;background:linear-gradient(135deg,#9b8cff,#55dfd6);display:grid;place-items:center;color:#101426;font-size:30px;box-shadow:0 0 55px #8c7cff55}.welcome h2{font-size:28px;margin:0 0 8px;letter-spacing:-1px}.welcome p{color:var(--muted);margin:0}.suggestions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}.suggestions button{border:1px solid var(--line);border-radius:20px;background:#121d31;color:#cbd6eb;padding:8px 12px;font-size:12px}.messages{display:flex;flex-direction:column;gap:17px;max-width:900px;width:100%;margin:0 auto}.msg{display:flex;gap:11px;align-items:flex-start}.avatar{width:32px;height:32px;flex:none;border-radius:11px;display:grid;place-items:center;background:#273353;color:#c7bbff;font-weight:900}.msg.user .avatar{background:#17434a;color:#7ff3e7}.bubble{max-width:min(100%,780px);border:1px solid #ffffff12;background:#151f33;border-radius:4px 15px 15px 15px;padding:12px 15px;white-space:pre-wrap;overflow-wrap:anywhere}.msg.user .bubble{background:#182d3b;border-color:#28505c}.msg small{display:block;color:#8090ad;font-size:10px;margin-bottom:5px}.composer-wrap{padding:0 24px 20px}.composer{max-width:900px;margin:auto;border:1px solid #344363;background:#111b2e;border-radius:17px;padding:10px;box-shadow:0 12px 40px #0003}.composer textarea{width:100%;resize:vertical;min-height:65px;max-height:220px;background:transparent;border:0;outline:0;color:var(--text);padding:8px}.compose-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:3px 4px 0}.hint{font-size:11px;color:#7788a7}.select{background:#17243a;border:1px solid #344363;color:#e9efff;border-radius:10px;padding:9px;max-width:100%}.model-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.modal-back{position:fixed;inset:0;background:#030611c9;backdrop-filter:blur(9px);display:none;place-items:center;padding:16px;z-index:10}.modal-back.open{display:grid}.modal{width:min(520px,100%);background:#111a2d;border:1px solid #344363;border-radius:20px;padding:22px;box-shadow:0 30px 100px #0009}.modal h2{margin:0 0 5px}.modal p{color:var(--muted);font-size:13px;margin:0 0 18px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;color:#b8c5df;font-weight:700}.field input{width:100%;padding:11px 12px;border:1px solid #354563;background:#0a1221;color:white;border-radius:10px;outline:none}.field input:focus,textarea:focus{border-color:#9b8cff}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.notice{font-size:12px;color:#e6c98b;background:#3a2d1b66;border:1px solid #70572e;border-radius:11px;padding:10px 12px}.error{color:#ff9aaa;font-size:12px;white-space:pre-wrap}.empty{color:#7889a8;font-size:12px;text-align:center;padding:20px}.history-item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 10px;border-radius:10px;color:#b9c7df;font-size:12px}.history-item:hover{background:#202b45}.history-item button{border:0;background:none;color:#8292ae}.hidden{display:none!important}
+@media(max-width:850px){.shell{grid-template-columns:1fr;padding:10px;gap:10px}.sidebar{padding:13px;gap:10px}.nav{grid-template-columns:repeat(3,1fr)}.nav button{text-align:center;padding:8px 5px;font-size:12px}.side-bottom{margin-top:0}.main{min-height:75vh}.top{padding:16px}.chat{padding:14px}.composer-wrap{padding:0 12px 12px}}
+@media(max-width:480px){.top{align-items:flex-start}.top-actions{flex-direction:column}.nav{grid-template-columns:repeat(2,1fr)}.compose-bottom{align-items:flex-start;flex-direction:column}.composer .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">✦</div><div>Close AI Studio<div class="sub">Единое пространство моделей</div></div></div>
+  <div class="provider"><strong>Opus Proxy</strong><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">Не подключён</span></div><div class="sub" style="margin-top:8px">OpenAI-compatible API</div></div>
+  <div><div class="side-title">Рабочее пространство</div><nav class="nav"><button class="active" data-view="chat">✦ Чат</button><button data-view="models">▦ Модели</button><button data-view="history">◷ История</button></nav></div>
+  <div class="side-bottom"><button class="btn" id="connectBtn">⚙ Подключить API</button><button class="secondary" id="newChatBtn">＋ Новый диалог</button><div class="sub">Ключ хранится только в памяти текущей вкладки и не записывается в файлы сайта.</div></div>
+</aside>
+<main class="main">
+<header class="top"><div><h1 id="viewTitle">Новый диалог</h1><p id="viewSub">Выбери модель и начни общение</p></div><div class="top-actions"><select class="select" id="modelSelect" aria-label="Выбрать модель"><option value="">Сначала подключи API</option></select></div></header>
+<section class="chat" id="chatView">
+  <div class="welcome" id="welcome"><div class="orb">✦</div><h2>Один чат. Много моделей.</h2><p>Подключи Opus Proxy, загрузи доступные модели и выбери, с кем работать.</p><div class="suggestions"><button>Объясни сложную тему простыми словами</button><button>Помоги написать программу</button><button>Сравни несколько подходов к задаче</button></div></div>
+  <div class="messages" id="messages"></div>
+</section>
+<section class="chat hidden" id="modelsView"><div><h2>Доступные модели</h2><p class="sub">Список загружается непосредственно из API провайдера.</p><div id="modelList" class="messages"></div></div></section>
+<section class="chat hidden" id="historyView"><div><h2>История диалогов</h2><p class="sub">Диалоги сохраняются локально на этом устройстве.</p><div id="historyList"></div></div></section>
+<div class="composer-wrap" id="composerWrap"><div class="composer"><textarea id="promptInput" placeholder="Напиши сообщение… (Enter — отправить, Shift + Enter — новая строка)"></textarea><div class="compose-bottom"><span class="hint" id="usageHint">Ответы генерируются через подключённый API. Возможны расходы по тарифу провайдера.</span><button class="btn primary" id="sendBtn" disabled>Отправить ↑</button></div><div class="error" id="errorBox"></div></div></div>
+</main>
+</div>
+<div class="modal-back" id="settingsModal"><div class="modal"><h2>Подключение Opus Proxy</h2><p>Используется совместимый с OpenAI формат API.</p><div class="notice">Не вставляй ключ, который уже публиковал в переписке. Отзови его в кабинете провайдера и создай новый. Ключ не будет сохранён после закрытия или перезагрузки вкладки.</div><div class="field"><label for="apiKeyInput">Новый API-ключ</label><input id="apiKeyInput" type="password" placeholder="ak-…" autocomplete="off"></div><div class="field"><label for="baseUrlInput">Base URL</label><input id="baseUrlInput" value="https://opus.abhibots.com/v1"></div><div class="modal-actions"><button class="btn" id="cancelSettings">Отмена</button><button class="btn primary" id="saveSettings">Подключить и загрузить модели</button></div><div class="error" id="settingsError"></div></div></div>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+let apiKey = '';
+let baseUrl = 'https://opus.abhibots.com/v1';
+let models = [];
+let messages = [];
+let busy = false;
+let currentView = 'chat';
+let conversations = [];
+const HISTORY_KEY = 'closeAIStudioHistory';
+try { conversations = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); if (!Array.isArray(conversations)) conversations = []; } catch (_) { conversations = []; }
+const cleanBase = value => value.trim().replace(/\/+$/, '');
+function setStatus(ok, label) { $('statusDot').classList.toggle('ok', ok); $('statusText').textContent = label; }
+function showError(message, target='errorBox') { $(target).textContent = message || ''; }
+function setView(view) {
+ currentView = view;
+ ['chat','models','history'].forEach(v => $(v+'View').classList.toggle('hidden', v !== view));
+ $('composerWrap').classList.toggle('hidden', view !== 'chat');
+ document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+ $('viewTitle').textContent = view === 'chat' ? 'Новый диалог' : view === 'models' ? 'Каталог моделей' : 'История диалогов';
+ $('viewSub').textContent = view === 'chat' ? 'Выбери модель и начни общение' : view === 'models' ? models.length+' моделей получено от провайдера' : 'Локальные сохранённые диалоги';
+ if (view === 'models') renderModels();
+ if (view === 'history') renderHistory();
+}
+async function api(path, options={}) {
+ if (!apiKey) throw new Error('Сначала подключи API-ключ в настройках.');
+ const response = await fetch(baseUrl + path, {...options, headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json',...(options.headers||{})}});
+ if (!response.ok) {
+  let detail=''; try { const data=await response.json(); detail=data.error?.message || data.message || JSON.stringify(data); } catch (_) { detail=response.statusText; }
+  throw new Error('API '+response.status+': '+detail);
+ }
+ return response;
+}
+async function loadModels() {
+ showError('', 'settingsError');
+ $('saveSettings').disabled = true; $('saveSettings').textContent = 'Подключение…';
+ try {
+  const response = await api('/models', {method:'GET',headers:{}});
+  const data = await response.json();
+  models = Array.isArray(data.data) ? data.data : Array.isArray(data.models) ? data.models : [];
+  models = models.map(m => ({id:m.id || m.name, name:m.name || m.id})).filter(m => m.id);
+  if (!models.length) throw new Error('Провайдер не вернул список моделей.');
+  models.sort((a,b)=>a.id.localeCompare(b.id));
+  $('modelSelect').innerHTML = models.map(m=>'<option value="'+escapeHtml(m.id)+'">'+escapeHtml(m.name)+'</option>').join('');
+  $('sendBtn').disabled = false;
+  setStatus(true, 'Подключён · '+models.length+' моделей');
+  $('settingsModal').classList.remove('open');
+  $('apiKeyInput').value = '';
+  showError('');
+  renderModels();
+  $('viewSub').textContent = 'Подключено '+models.length+' моделей';
+ } catch (e) {
+  setStatus(false, 'Ошибка подключения');
+  showError(e.message + (e instanceof TypeError ? '\nВозможно, провайдер не разрешает запросы из браузера (CORS).' : ''), 'settingsError');
+ } finally { $('saveSettings').disabled=false; $('saveSettings').textContent='Подключить и загрузить модели'; }
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function renderModels() {
+ $('modelList').innerHTML = models.length ? models.map(m=>'<div class="provider"><strong>'+escapeHtml(m.name)+'</strong><div class="status">ID: '+escapeHtml(m.id)+'</div><button class="btn choose-model" data-id="'+escapeHtml(m.id)+'" style="margin-top:10px">Использовать модель</button></div>').join('') : '<div class="empty">Подключи API, чтобы загрузить список моделей.</div>';
+ document.querySelectorAll('.choose-model').forEach(b=>b.addEventListener('click',()=>{$('modelSelect').value=b.dataset.id;setView('chat');}));
+}
+function renderMessages() {
+ $('welcome').classList.toggle('hidden', messages.length > 0);
+ $('messages').innerHTML = messages.map(m=>'<div class="msg '+(m.role==='user'?'user':'assistant')+'"><div class="avatar">'+(m.role==='user'?'Я':'✦')+'</div><div class="bubble"><small>'+(m.role==='user'?'Вы':escapeHtml(m.model || $('modelSelect').value || 'Модель'))+'</small>'+escapeHtml(m.content)+'</div></div>').join('');
+ $('chatView').scrollTop=$('chatView').scrollHeight;
+}
+function saveConversation() {
+ if (!messages.length) return;
+ const item={id:Date.now(),title:(messages.find(m=>m.role==='user')?.content || 'Новый диалог').slice(0,70),updated:new Date().toISOString(),messages};
+ conversations=[item,...conversations.filter(c=>c.id!==item.id)].slice(0,40);
+ try { localStorage.setItem(HISTORY_KEY,JSON.stringify(conversations)); } catch (_) {}
+}
+function renderHistory() {
+ $('historyList').innerHTML = conversations.length ? conversations.map(c=>'<div class="history-item"><button class="open-history" data-id="'+c.id+'" style="text-align:left;flex:1">'+escapeHtml(c.title)+'<div class="sub">'+new Date(c.updated).toLocaleString('ru-RU')+'</div></button><button class="delete-history" data-id="'+c.id+'" aria-label="Удалить">✕</button></div>').join('') : '<div class="empty">Сохранённых диалогов пока нет.</div>';
+ document.querySelectorAll('.open-history').forEach(b=>b.addEventListener('click',()=>{const c=conversations.find(x=>x.id===Number(b.dataset.id));if(c){messages=c.messages||[];renderMessages();setView('chat');}}));
+ document.querySelectorAll('.delete-history').forEach(b=>b.addEventListener('click',()=>{conversations=conversations.filter(x=>x.id!==Number(b.dataset.id));localStorage.setItem(HISTORY_KEY,JSON.stringify(conversations));renderHistory();}));
+}
+async function sendMessage() {
+ const text=$('promptInput').value.trim();
+ if (!text || busy) return;
+ if (!apiKey) { $('settingsModal').classList.add('open'); return; }
+ const model=$('modelSelect').value;
+ if (!model) { showError('Выбери модель.'); return; }
+ messages.push({role:'user',content:text});
+ $('promptInput').value=''; renderMessages(); showError('');
+ busy=true; $('sendBtn').disabled=true; $('sendBtn').textContent='Думает…';
+ const assistant={role:'assistant',content:'',model}; messages.push(assistant); renderMessages();
+ try {
+  const response=await api('/chat/completions',{method:'POST',body:JSON.stringify({model,messages:messages.slice(0,-1).map(m=>({role:m.role,content:m.content})),temperature:0.7,max_tokens:4096,stream:true})});
+  if (!response.body) throw new Error('Потоковый ответ не поддерживается браузером.');
+  const reader=response.body.getReader(); const decoder=new TextDecoder(); let buffer='';
+  while(true) {
+   const {value,done}=await reader.read(); if(done) break;
+   buffer+=decoder.decode(value,{stream:true});
+   const parts=buffer.split('\n'); buffer=parts.pop();
+   for(const line of parts) {
+    const trimmed=line.trim(); if(!trimmed.startsWith('data:')) continue;
+    const payload=trimmed.slice(5).trim(); if(payload==='[DONE]') continue;
+    try { const data=JSON.parse(payload); assistant.content += data.choices?.[0]?.delta?.content || ''; renderMessages(); } catch (_) {}
+   }
+  }
+  if (!assistant.content) assistant.content='Модель вернула пустой ответ.';
+  saveConversation();
+ } catch(e) {
+  assistant.content='Не удалось получить ответ: '+e.message;
+  showError(e.message);
+  renderMessages();
+ } finally { busy=false; $('sendBtn').disabled=false; $('sendBtn').textContent='Отправить ↑'; }
+}
+$('connectBtn').addEventListener('click',()=>$('settingsModal').classList.add('open'));
+$('cancelSettings').addEventListener('click',()=>$('settingsModal').classList.remove('open'));
+$('saveSettings').addEventListener('click',()=>{const key=$('apiKeyInput').value.trim();if(!key){showError('Вставь API-ключ.','settingsError');return;}apiKey=key;baseUrl=cleanBase($('baseUrlInput').value||'https://opus.abhibots.com/v1');loadModels();});
+$('sendBtn').addEventListener('click',sendMessage);
+$('promptInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
+$('newChatBtn').addEventListener('click',()=>{messages=[];renderMessages();setView('chat');showError('');});
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+document.querySelectorAll('.suggestions button').forEach(b=>b.addEventListener('click',()=>{$('promptInput').value=b.textContent;$('promptInput').focus();}));
+window.addEventListener('beforeunload',()=>{apiKey='';});
+renderMessages();
+})();
+</script>
+</body>
+</html>
