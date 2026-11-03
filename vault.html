@@ -100,34 +100,20 @@
 </main>
 <script>
 (function(){
-  const readArray=key=>{try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}};
-  const required=['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
-  const codes=readArray('closeAppsVaultCodes');
-  const level1Complete=required.every(code=>codes.includes(code));
-  const quest=readArray('closeQuestProgressV1').map(Number).filter(n=>Number.isInteger(n)&&n>=0&&n<12);
-  const questComplete=new Set(quest).size===12||codes.includes('QUEST-COMPLETE-2026');
   const params=new URLSearchParams(location.search);
   const requestedLevel=params.get('level')==='2'?'2':'1';
-  const level2Complete=level1Complete&&questComplete;
-  const allowed=requestedLevel==='1'?level1Complete:level2Complete;
-  document.getElementById('locked').classList.toggle('hidden',allowed);
-  document.getElementById('app').classList.toggle('hidden',!allowed);
-  if(!allowed){
-    const message=document.querySelector('.locked-card p');
-    if(requestedLevel==='2'&&!level1Complete)message.textContent='Сначала открой первый уровень: собери и введи все три кода. Только после этого можно получить второй уровень.';
-    else if(requestedLevel==='2'&&!questComplete)message.textContent='Первый уровень подтверждён. Теперь пройди все 12 испытаний CLOSE // QUEST, чтобы открыть второй уровень.';
-    return;
-  }
+  document.getElementById('locked').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
   const level1Content=document.getElementById('level1Content');
   const questPanel=document.getElementById('questExpansion');
   level1Content.classList.toggle('hidden',requestedLevel==='2');
   questPanel.classList.toggle('hidden',requestedLevel!=='2');
   const status=document.querySelector('.status');
-  status.innerHTML='<span class="pulse"></span> '+(requestedLevel==='1'?'LEVEL 1 VERIFIED':'LEVEL 2 VERIFIED')+' · LOCAL SESSION';
+  status.innerHTML='<span class="pulse"></span> '+(requestedLevel==='1'?'LEVEL 1 · DIRECT LINK':'LEVEL 2 · DIRECT LINK')+' · LOCAL SESSION';
   if(requestedLevel==='2'){
-    document.getElementById('questLockedNote').classList.toggle('hidden',!questComplete);
-    document.getElementById('questUnlockedTools').classList.toggle('hidden',!questComplete);
-    document.getElementById('questAccessText').textContent='Уровень 2 подтверждён: первый уровень и все 12 испытаний CLOSE // QUEST пройдены.';
+    document.getElementById('questLockedNote').classList.add('hidden');
+    document.getElementById('questUnlockedTools').classList.remove('hidden');
+    document.getElementById('questAccessText').textContent='Прямой вход по персональной ссылке. Проверка кодов и прохождения квеста при открытии страницы не выполняется.';
     if(location.hash==='#questExpansion')questPanel.scrollIntoView({block:'start'});
     const run=()=>{
       const input=document.getElementById('zeroCommandInput');
@@ -136,7 +122,7 @@
       const line=document.createElement('div');
       if(cmd==='ZERO-REPORT'){
         line.className='ok';
-        line.textContent='[REPORT] LEVEL 1 ✓ · QUEST 12/12 · RESEARCHER ACCESS VERIFIED';
+        line.textContent='[REPORT] LEVEL 2 · DIRECT LINK · RESEARCHER SPACE';
       }else if(cmd==='ZERO-7'){
         line.className='ok';
         line.textContent='[OK] экспериментальный протокол ZERO-7 разблокирован';
