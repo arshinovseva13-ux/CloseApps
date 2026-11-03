@@ -65,6 +65,20 @@
         </section>
 
         <main class="content-area">
+            <section id="projectZeroAnnouncementTop" aria-labelledby="projectZeroTitle" style="position:relative;overflow:hidden;margin:24px 0;padding:clamp(24px,5vw,42px);border:1px solid #8b5cf688;border-radius:24px;background:radial-gradient(circle at 80% 15%,#7c3aed44,transparent 35%),linear-gradient(125deg,#080d1d,#17102d 58%,#071a26);color:#f8f7ff;box-shadow:0 20px 65px #0005;text-align:center;">
+                            <div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#c4b5fd;font-weight:800;">Секретный анонс · CloseApps</div>
+                            <div style="font-size:clamp(38px,8vw,68px);font-weight:950;letter-spacing:-.06em;margin:12px 0 4px;background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent;">PROJECT: ZERO</div>
+                            <p style="max-width:620px;margin:0 auto 22px;color:#d7d4e8;line-height:1.65;">Нечто новое уже приближается. Подробности пока засекречены. Следующий сигнал появится, когда обратный отсчёт завершится.</p>
+                            <div style="font-size:11px;letter-spacing:.2em;color:#a5a0bd;text-transform:uppercase;margin-bottom:12px;">До следующего сигнала</div>
+                            <div id="projectZeroTimerTop" role="timer" aria-live="off" style="display:flex;justify-content:center;gap:clamp(8px,2vw,18px);flex-wrap:wrap;font-variant-numeric:tabular-nums;">
+                                <div style="min-width:76px;padding:14px 12px;border:1px solid #a78bfa55;border-radius:15px;background:#ffffff0b;"><div id="pzHoursTop" style="font-size:clamp(30px,6vw,46px);font-weight:850;">24</div><div style="font-size:10px;color:#bcb6d1;letter-spacing:.15em;">ЧАСОВ</div></div>
+                                <div style="min-width:76px;padding:14px 12px;border:1px solid #a78bfa55;border-radius:15px;background:#ffffff0b;"><div id="pzMinutesTop" style="font-size:clamp(30px,6vw,46px);font-weight:850;">00</div><div style="font-size:10px;color:#bcb6d1;letter-spacing:.15em;">МИНУТ</div></div>
+                                <div style="min-width:76px;padding:14px 12px;border:1px solid #a78bfa55;border-radius:15px;background:#ffffff0b;"><div id="pzSecondsTop" style="font-size:clamp(30px,6vw,46px);font-weight:850;">00</div><div style="font-size:10px;color:#bcb6d1;letter-spacing:.15em;">СЕКУНД</div></div>
+                            </div>
+                            <div id="pzFinishedTop" hidden style="margin-top:22px;font-size:20px;font-weight:850;color:#fde68a;">СИГНАЛ ПОЛУЧЕН</div>
+                            <div style="margin-top:20px;font-size:11px;color:#88839f;">ZERO // ОЖИДАНИЕ СИГНАЛА</div>
+                        </section>
+
             <a id="projectZeroTopLink" href="./project-zero/" hidden style="display:none;align-items:center;justify-content:center;gap:12px;margin:0 0 22px;padding:16px 20px;border:1px solid #a78bfa88;border-radius:16px;background:linear-gradient(100deg,#21143d,#102c38);color:#f5f3ff;text-decoration:none;font-weight:850;letter-spacing:.04em;box-shadow:0 12px 38px #0004;">
                 <span style="font-size:20px;">🔓</span><span>PROJECT: ZERO — ОТКРЫТЬ СЕКРЕТНЫЙ САЙТ</span><span>→</span>
             </a>
@@ -1906,28 +1920,30 @@
 
     <script>
     (() => {
-        // Единый абсолютный дедлайн: одинаковый для всех посетителей.
+        // Один общий абсолютный дедлайн для всех посетителей.
         const deadline = new Date("2026-11-04T12:37:00Z").getTime();
         const pad = n => String(n).padStart(2, "0");
         function tick() {
             const remaining = Math.max(0, deadline - Date.now());
-            const hours = Math.floor(remaining / 3600000);
-            const minutes = Math.floor((remaining % 3600000) / 60000);
-            const seconds = Math.floor((remaining % 60000) / 1000);
-            const h = document.getElementById("pzHours");
-            const m = document.getElementById("pzMinutes");
-            const sec = document.getElementById("pzSeconds");
-            if (!h || !m || !sec) return;
-            h.textContent = pad(hours);
-            m.textContent = pad(minutes);
-            sec.textContent = pad(seconds);
+            const values = {
+                hours: pad(Math.floor(remaining / 3600000)),
+                minutes: pad(Math.floor((remaining % 3600000) / 60000)),
+                seconds: pad(Math.floor((remaining % 60000) / 1000))
+            };
+            [["pzHours","pzMinutes","pzSeconds"],["pzHoursTop","pzMinutesTop","pzSecondsTop"]].forEach(ids => {
+                const h=document.getElementById(ids[0]), m=document.getElementById(ids[1]), sec=document.getElementById(ids[2]);
+                if(h) h.textContent=values.hours;
+                if(m) m.textContent=values.minutes;
+                if(sec) sec.textContent=values.seconds;
+            });
             if (remaining <= 0) {
                 const topLink = document.getElementById("projectZeroTopLink");
                 if (topLink) { topLink.hidden = false; topLink.style.display = "flex"; }
-                const timer = document.getElementById("projectZeroTimer");
-                const finished = document.getElementById("pzFinished");
-                if (timer) timer.hidden = true;
-                if (finished) finished.hidden = false;
+                [["projectZeroTimer","pzFinished"],["projectZeroTimerTop","pzFinishedTop"]].forEach(ids => {
+                    const timer=document.getElementById(ids[0]), finished=document.getElementById(ids[1]);
+                    if(timer) timer.hidden=true;
+                    if(finished) finished.hidden=false;
+                });
                 clearInterval(interval);
             }
         }
