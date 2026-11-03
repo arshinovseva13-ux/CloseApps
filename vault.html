@@ -140,6 +140,7 @@
   const level3Locked=document.getElementById('level3Locked');
   const level3Challenge=document.getElementById('level3Challenge');
   const level3Tools=document.getElementById('level3Tools');
+  function unlockLevel3FromChat(viaPlans){if(!found.includes('ZERO-LEVEL3-UNLOCKED'))found.push('ZERO-LEVEL3-UNLOCKED');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}level3Unlocked=true;level3Text.textContent=viaPlans?'Уровень 3 открыт командой PLANS.':'Уровень 3 открыт секретной командой.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');initPrivilegeTerminal();}
   if(level3Unlocked){level3Text.textContent=plansAccess?'Уровень 3 открыт через внутренний доступ plans.':'Уровень 3 активирован: ключ подтверждён.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');}
   else{level3Text.textContent='Третий уровень закрыт. Собери три сигнала и введи ключ активации.';level3Challenge.classList.remove('hidden');}
   const getStore=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}};
