@@ -135,7 +135,7 @@
     document.getElementById('zeroCommandInput').addEventListener('keydown',e=>{if(e.key==='Enter')runZeroCommand()});
     if(localStorage.getItem('closeZeroProtocol7')==='unlocked')document.getElementById('zeroBonus').classList.remove('hidden');
   }
-  const level3Unlocked=plansAccess||found.includes('ZERO-LEVEL3-UNLOCKED');
+  let level3Unlocked=plansAccess||found.includes('ZERO-LEVEL3-UNLOCKED');
   const level3Text=document.getElementById('level3AccessText');
   const level3Locked=document.getElementById('level3Locked');
   const level3Challenge=document.getElementById('level3Challenge');
