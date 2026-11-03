@@ -137,9 +137,11 @@
   const accessParams=new URLSearchParams(window.location.search);
   const plansAccess=accessParams.get('from')==='plans'||accessParams.get('plans')==='1'||accessParams.get('access')==='plans'||window.location.hash==='#questExpansion'||localStorage.getItem('closeZeroPlansAccess')==='granted';
   let questProgress=[];try{questProgress=JSON.parse(localStorage.getItem('closeQuestProgressV1')||'[]')}catch(e){}
-  const questProgressComplete=Array.isArray(questProgress)&&new Set(questProgress).size>=12;
+  const questFragments=Array.isArray(questProgress)?[...new Set(questProgress.map(Number).filter(n=>Number.isInteger(n)&&n>=0&&n<12))]:[];
+  const questProgressComplete=questFragments.length===12||found.includes('QUEST-COMPLETE-2026');
   if(questProgressComplete&&!found.includes('QUEST-COMPLETE-2026')){found.push('QUEST-COMPLETE-2026');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}}
-  const allowed=plansAccess||required.every(code=>found.includes(code));
+  // CLOSE // QUEST is an independent valid route to Level II; don't block it behind legacy vault keys.
+  const allowed=plansAccess||questProgressComplete||required.every(code=>found.includes(code));
   document.getElementById('locked').classList.toggle('hidden',allowed);
   document.getElementById('app').classList.toggle('hidden',!allowed);
   if(!allowed)return;
