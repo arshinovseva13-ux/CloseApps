@@ -42,13 +42,17 @@ h1{font-size:clamp(44px,10vw,100px);letter-spacing:-.075em;line-height:.95;margi
 </main>
 <script>
 (() => {
- const deadline = new Date("2026-11-04T12:37:00Z").getTime();
  const start = document.getElementById("start"), status = document.getElementById("status");
  const log = document.getElementById("log"), bar = document.getElementById("bar");
- function gate(){const ready=Date.now()>=deadline;start.disabled=!ready;start.textContent=ready?"ЗАПУСТИТЬ PROJECT: ZERO":"ЗАПУСК ЗАБЛОКИРОВАН";status.textContent=ready?"СИГНАЛ ПОЛУЧЕН":"Ожидание сигнала";document.getElementById("phase").textContent=ready?"PHASE 1 / READY":"PHASE 0 / LOCKED";document.getElementById("percent").textContent=ready?"100%":"0%";bar.style.width=ready?"100%":"0%";}
- gate();setInterval(gate,1000);
+ // Страница и симуляция доступны сразу; общий таймер на главной управляет только публикацией ссылки.
+ start.disabled=false;
+ start.textContent="ЗАПУСТИТЬ PROJECT: ZERO";
+ status.textContent="СИГНАЛ ДОСТУПЕН";
+ document.getElementById("phase").textContent="PHASE 1 / READY";
+ document.getElementById("percent").textContent="0%";
+ bar.style.width="0%";
  start.addEventListener("click",()=>{
-  if(Date.now()<deadline)return;
+  start.disabled=true;
   start.classList.add("hidden");log.innerHTML="";status.textContent="Выполняется инициализация";
   const lines=["initializing virtual environment...","loading fictional system modules...","checking simulated security layer...","SECURITY BREACH DETECTED","ACCESS GRANTED","SIMULATING CONTROL SEQUENCE","SYSTEM COMPROMISED"];
   let i=0;const interval=setInterval(()=>{if(i>=lines.length){clearInterval(interval);document.getElementById("ending").classList.remove("hidden");status.textContent="СИСТЕМА... ШУТИТ";document.getElementById("dot").style.background="#facc15";return;}const row=document.createElement("div");row.textContent=lines[i];if(lines[i].includes("BREACH")||lines[i].includes("COMPROMISED"))row.className="warning";if(lines[i].includes("GRANTED"))row.className="success";log.appendChild(row);log.scrollTop=log.scrollHeight;bar.style.width=Math.round((i+1)/lines.length*100)+"%";document.getElementById("percent").textContent=Math.round((i+1)/lines.length*100)+"%";document.getElementById("phase").textContent="PHASE 2 / SIMULATION";i++;},850);
