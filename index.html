@@ -65,6 +65,9 @@
         </section>
 
         <main class="content-area">
+            <a id="projectZeroTopLink" href="./project-zero/" hidden style="display:none;align-items:center;justify-content:center;gap:12px;margin:0 0 22px;padding:16px 20px;border:1px solid #a78bfa88;border-radius:16px;background:linear-gradient(100deg,#21143d,#102c38);color:#f5f3ff;text-decoration:none;font-weight:850;letter-spacing:.04em;box-shadow:0 12px 38px #0004;">
+                <span style="font-size:20px;">🔓</span><span>PROJECT: ZERO — ОТКРЫТЬ СЕКРЕТНЫЙ САЙТ</span><span>→</span>
+            </a>
             <div class="about-section">
                 <div class="about-title">О компании</div>
                 <p class="about-text">
@@ -1919,6 +1922,8 @@
             m.textContent = pad(minutes);
             sec.textContent = pad(seconds);
             if (remaining <= 0) {
+                const topLink = document.getElementById("projectZeroTopLink");
+                if (topLink) { topLink.hidden = false; topLink.style.display = "flex"; }
                 const timer = document.getElementById("projectZeroTimer");
                 const finished = document.getElementById("pzFinished");
                 if (timer) timer.hidden = true;
