@@ -15,32 +15,30 @@
 <div class="wrap">
 <header class="top">
  <div class="brand"><div class="logo">⌑</div><div>CLOSE <span style="color:var(--cyan)">KEYVAULT</span><small>PRIVATE KEY STORAGE</small></div></div>
- <div class="topright"><span class="dot"></span> LOCAL ENCRYPTION</div>
+ <div class="topright"><span class="dot"></span> LOCAL STORAGE</div>
 </header>
 <section class="hero">
  <div class="eyebrow">CLOSE APPS · SECURITY TOOL</div>
  <h1>Твои ключи.<br><span>Под твоим контролем.</span></h1>
  <p>Личное хранилище API-ключей, токенов и секретов. Организуй доступы к сервисам и быстро копируй нужные значения.</p>
 </section>
-<div class="notice"><strong>🔐 Шифрование на устройстве.</strong> Данные шифруются в браузере алгоритмом AES‑GCM. Мастер-пароль не отправляется на сервер и не сохраняется. Не забудь его: восстановить доступ без него невозможно.</div>
-<section id="setup" class="panel center">
- <div class="eyebrow">FIRST LAUNCH</div><h2 id="gateTitle">Создай мастер-пароль</h2>
- <p class="muted" id="gateText">Он будет защищать всё хранилище. Используй длинную уникальную фразу, которую нигде больше не применяешь.</p>
+<div class="notice"><strong>⚠️ Хранение без пароля.</strong> Ключи сохраняются только в локальном хранилище этого браузера, без шифрования и без отправки на сервер. Не используй это устройство совместно с посторонними и не сохраняй критически важные production-секреты.</div>
+<section id="setup" class="panel center hidden">
+ <div class="eyebrow">ONE-TIME MIGRATION</div><h2 id="gateTitle">Перенос старого хранилища</h2>
+ <p class="muted" id="gateText">В старой версии данные были зашифрованы. Введи прежний мастер-пароль один раз, чтобы перенести записи в новую версию без пароля.</p>
  <form id="gateForm">
-  <div class="field"><label for="master">Мастер-пароль</label><input id="master" type="password" minlength="10" autocomplete="new-password" required placeholder="Не менее 10 символов"></div>
-  <div class="field hidden" id="confirmWrap"><label for="confirm">Повтори мастер-пароль</label><input id="confirm" type="password" autocomplete="new-password"></div>
+  <div class="field"><label for="master">Прежний мастер-пароль</label><input id="master" type="password" autocomplete="current-password" required placeholder="Только для однократного переноса"></div>
   <div class="error" id="gateError" role="status"></div>
-  <button class="btn primary" id="gateButton" type="submit" style="width:100%">Создать зашифрованное хранилище</button>
+  <button class="btn primary" id="gateButton" type="submit" style="width:100%">Перенести хранилище</button>
  </form>
- <p class="hint">Совет: сохрани мастер-пароль в надёжном менеджере паролей. Потеря пароля означает потерю доступа к данным.</p>
 </section>
 <main id="vault" class="hidden">
- <div class="apphead"><div><div class="eyebrow">YOUR PRIVATE SPACE</div><h2 style="margin:5px 0">Моё хранилище</h2><div class="muted" style="font-size:12px">Только это устройство · зашифрованное локальное хранилище</div></div><div class="stats"><div class="stat"><strong id="count">0</strong><span>ЗАПИСЕЙ</span></div><div class="stat"><strong id="providers">0</strong><span>СЕРВИСОВ</span></div></div></div>
+ <div class="apphead"><div><div class="eyebrow">YOUR PRIVATE SPACE</div><h2 style="margin:5px 0">Моё хранилище</h2><div class="muted" style="font-size:12px">Только это устройство · без пароля</div></div><div class="stats"><div class="stat"><strong id="count">0</strong><span>ЗАПИСЕЙ</span></div><div class="stat"><strong id="providers">0</strong><span>СЕРВИСОВ</span></div></div></div>
  <div class="toolbar"><input id="search" class="search" type="search" placeholder="Поиск по названию, сервису или тегу…"><button class="btn primary" id="add">＋ Добавить ключ</button><button class="btn" id="lock">Заблокировать</button></div>
  <div id="cards" class="vault-grid"></div>
- <div id="empty" class="empty hidden"><b>Пока здесь пусто</b>Добавь первый API-ключ. Он будет зашифрован перед сохранением на устройстве.</div>
- <div class="actions" style="margin:0 0 26px"><button class="btn" id="export">↓ Экспорт зашифрованной копии</button><button class="btn" id="import">↑ Импорт копии</button><button class="btn danger" id="wipe">Удалить всё хранилище</button><input type="file" id="file" accept="application/json,.json" class="hidden"></div>
- <div class="notice danger-note">Не вставляй реальные ключи в публичные демо и не делись экспортом вместе с мастер-паролем. Для критически важных production-секретов лучше использовать специализированный менеджер секретов.</div>
+ <div id="empty" class="empty hidden"><b>Пока здесь пусто</b>Добавь первый API-ключ. Он сохранится локально в браузере.</div>
+ <div class="actions" style="margin:0 0 26px"><button class="btn" id="export">↓ Экспорт резервной копии</button><button class="btn" id="import">↑ Импорт копии</button><button class="btn danger" id="wipe">Удалить всё хранилище</button><input type="file" id="file" accept="application/json,.json" class="hidden"></div>
+ <div class="notice danger-note">Резервная копия содержит ключи в открытом виде. Храни её в безопасном месте и не отправляй другим людям. Для критически важных production-секретов используй специализированный менеджер секретов.</div>
 </main>
 <footer class="foot"><span>© 2026 CLOSE APPS · KEYVAULT</span><span>NO ACCOUNT · NO SERVER · NO TRACKING</span></footer>
 </div>
@@ -52,44 +50,34 @@
  <div class="field"><label for="endpoint">Endpoint (необязательно)</label><input id="endpoint" maxlength="300" placeholder="https://api.example.com/v1"></div>
  <div class="field"><label for="tags">Теги через запятую</label><input id="tags" maxlength="160" placeholder="production, личный, тест"></div>
  <div class="field"><label for="notes">Заметка</label><textarea id="notes" maxlength="1000" placeholder="Для чего используется этот ключ…"></textarea></div>
- <div class="error" id="formError"></div><div class="actions"><button class="btn primary" type="submit">Сохранить зашифрованно</button><button class="btn" type="button" id="cancel">Отмена</button></div>
+ <div class="error" id="formError"></div><div class="actions"><button class="btn primary" type="submit">Сохранить ключ</button><button class="btn" type="button" id="cancel">Отмена</button></div>
 </form></section></div>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
-(()=> {
+(()=>{
 'use strict';
-const DB='close-keyvault-v1',ITER=310000;
+const DB='close-keyvault-v1';
 const $=id=>document.getElementById(id);
-let master='',entries=[],editing=null,lockTimer=null;
-const enc=new TextEncoder(),dec=new TextDecoder();
-const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
-const un64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-const random=n=>crypto.getRandomValues(new Uint8Array(n));
+let entries=[],editing=null;
 const dbRead=()=>{try{return JSON.parse(localStorage.getItem(DB)||'null')}catch{return null}};
-const dbWrite=o=>localStorage.setItem(DB,JSON.stringify(o));
-async function derive(password,salt){const base=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:ITER,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
-async function seal(data,password,salt=random(16)){const iv=random(12),key=await derive(password,salt),cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,enc.encode(JSON.stringify(data)));return {version:1,kdf:'PBKDF2-SHA256',iterations:ITER,salt:b64(salt),iv:b64(iv),ciphertext:b64(cipher)}}
-async function openBox(box,password){if(box.version!==1||box.kdf!=='PBKDF2-SHA256')throw Error('Неподдерживаемый формат резервной копии');const key=await derive(password,un64(box.salt));const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:un64(box.iv)},key,un64(box.ciphertext));return JSON.parse(dec.decode(plain))}
-async function persist(){const box=await seal(entries,master);dbWrite(box)}
+const dbWrite=()=>localStorage.setItem(DB,JSON.stringify({version:2,entries}));
 function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2100)}
-function resetTimer(){clearTimeout(lockTimer);if(master)lockTimer=setTimeout(lock,5*60*1000)}
-function lock(){master='';entries=[];editing=null;$('vault').classList.add('hidden');$('setup').classList.remove('hidden');$('master').value='';$('confirm').value='';$('gateError').textContent='';$('gateTitle').textContent='Хранилище заблокировано';$('gateText').textContent='Введи мастер-пароль, чтобы расшифровать локальную копию.';$('confirmWrap').classList.add('hidden');$('gateButton').textContent='Открыть хранилище';clearTimeout(lockTimer)}
-function enter(data,password){master=password;entries=Array.isArray(data)?data:[];$('setup').classList.add('hidden');$('vault').classList.remove('hidden');render();resetTimer()}
+function enter(data){entries=Array.isArray(data)?data:[];$('setup').classList.add('hidden');$('vault').classList.remove('hidden');render()}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function render(){const q=$('search').value.trim().toLowerCase(),filtered=entries.filter(e=>[e.name,e.service,e.endpoint,e.notes,...(e.tags||[])].join(' ').toLowerCase().includes(q));$('count').textContent=entries.length;$('providers').textContent=new Set(entries.map(e=>e.service).filter(Boolean)).size;$('empty').classList.toggle('hidden',filtered.length>0);$('cards').innerHTML=filtered.map(e=>{const id=esc(e.id);return `<article class="keycard"><div class="keytop"><div><div class="provider">${esc(e.service||'PERSONAL KEY')}</div><h3>${esc(e.name)}</h3></div><span style="color:var(--green)">●</span></div><div class="keymeta">${esc(e.endpoint||e.notes||'Зашифрованная запись')}</div><div>${(e.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('')}</div><div class="secret"><code>••••••••••••••••••••••••</code><button class="btn small reveal" data-id="${id}">Показать</button></div><div class="keyactions"><button class="btn small copy" data-id="${id}">Копировать</button><button class="btn small edit" data-id="${id}">Изменить</button><button class="btn small danger delete" data-id="${id}">Удалить</button></div></article>`}).join('');$('cards').querySelectorAll('.reveal').forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.id),code=b.closest('.keycard').querySelector('code');const showing=b.dataset.show==='1';code.textContent=showing?'••••••••••••••••••••••••':e.value;b.textContent=showing?'Показать':'Скрыть';b.dataset.show=showing?'0':'1';resetTimer()});$('cards').querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{const e=entries.find(x=>x.id===b.dataset.id);try{await navigator.clipboard.writeText(e.value);toast('Ключ скопирован');resetTimer()}catch{toast('Браузер запретил доступ к буферу обмена')}});$('cards').querySelectorAll('.edit').forEach(b=>b.onclick=()=>openEditor(entries.find(x=>x.id===b.dataset.id)));$('cards').querySelectorAll('.delete').forEach(b=>b.onclick=async()=>{const e=entries.find(x=>x.id===b.dataset.id);if(confirm('Удалить запись «'+e.name+'»?')){entries=entries.filter(x=>x.id!==e.id);await persist();render();toast('Запись удалена')}})}
+function render(){const q=$('search').value.trim().toLowerCase(),filtered=entries.filter(e=>[e.name,e.service,e.endpoint,e.notes,...(e.tags||[])].join(' ').toLowerCase().includes(q));$('count').textContent=entries.length;$('providers').textContent=new Set(entries.map(e=>e.service).filter(Boolean)).size;$('empty').classList.toggle('hidden',filtered.length>0);$('cards').innerHTML=filtered.map(e=>{const id=esc(e.id);return `<article class="keycard"><div class="keytop"><div><div class="provider">${esc(e.service||'PERSONAL KEY')}</div><h3>${esc(e.name)}</h3></div><span style="color:var(--green)">●</span></div><div class="keymeta">${esc(e.endpoint||e.notes||'Локальная запись')}</div><div>${(e.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('')}</div><div class="secret"><code>••••••••••••••••••••••••</code><button class="btn small reveal" data-id="${id}">Показать</button></div><div class="keyactions"><button class="btn small copy" data-id="${id}">Копировать</button><button class="btn small edit" data-id="${id}">Изменить</button><button class="btn small danger delete" data-id="${id}">Удалить</button></div></article>`}).join('');$('cards').querySelectorAll('.reveal').forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.id),code=b.closest('.keycard').querySelector('code'),showing=b.dataset.show==='1';code.textContent=showing?'••••••••••••••••••••••••':e.value;b.textContent=showing?'Показать':'Скрыть';b.dataset.show=showing?'0':'1'});$('cards').querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{const e=entries.find(x=>x.id===b.dataset.id);try{await navigator.clipboard.writeText(e.value);toast('Ключ скопирован')}catch{toast('Браузер запретил доступ к буферу обмена')}});$('cards').querySelectorAll('.edit').forEach(b=>b.onclick=()=>openEditor(entries.find(x=>x.id===b.dataset.id)));$('cards').querySelectorAll('.delete').forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.id);if(confirm('Удалить запись «'+e.name+'»?')){entries=entries.filter(x=>x.id!==e.id);dbWrite();render();toast('Запись удалена')}})}
 function openEditor(e=null){editing=e?.id||null;$('modalTitle').textContent=e?'Изменить ключ':'Новый ключ';$('formError').textContent='';$('name').value=e?.name||'';$('service').value=e?.service||'';$('secretValue').value=e?.value||'';$('endpoint').value=e?.endpoint||'';$('tags').value=(e?.tags||[]).join(', ');$('notes').value=e?.notes||'';$('modal').classList.remove('hidden');$('name').focus()}
 function closeEditor(){$('modal').classList.add('hidden');$('entryForm').reset();editing=null}
-$('gateForm').addEventListener('submit',async ev=>{ev.preventDefault();const p=$('master').value,box=dbRead();$('gateError').textContent='';$('gateButton').disabled=true;try{if(!box){if(p.length<10)throw Error('Используй не менее 10 символов.');if(p!==$('confirm').value)throw Error('Пароли не совпадают.');dbWrite(await seal([],p));enter([],p)}else{const data=await openBox(box,p);enter(data,p)}}catch(e){$('gateError').textContent=box?'Не удалось открыть хранилище. Проверь мастер-пароль.':e.message}finally{$('gateButton').disabled=false}});
-$('master').addEventListener('input',()=>{if(!dbRead()){$('confirmWrap').classList.remove('hidden');$('gateButton').textContent='Создать зашифрованное хранилище'}});
-if(dbRead()){$('gateTitle').textContent='Хранилище заблокировано';$('gateText').textContent='Введи мастер-пароль, чтобы открыть зашифрованную копию.';$('gateButton').textContent='Открыть хранилище'}else{$('confirmWrap').classList.remove('hidden')}
+$('gateForm').addEventListener('submit',async ev=>{ev.preventDefault();const old=dbRead(),p=$('master').value;$('gateError').textContent='';$('gateButton').disabled=true;try{const enc=new TextEncoder(),un64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));const base=await crypto.subtle.importKey('raw',enc.encode(p),'PBKDF2',false,['deriveKey']);const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:un64(old.salt),iterations:old.iterations,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:un64(old.iv)},key,un64(old.ciphertext));entries=JSON.parse(new TextDecoder().decode(plain));dbWrite();enter(entries);toast('Перенос завершён. Пароль больше не нужен.')}catch(e){$('gateError').textContent='Не удалось перенести данные. Проверь прежний пароль.'}finally{$('gateButton').disabled=false}});
+const saved=dbRead();
+if(saved?.version===2&&Array.isArray(saved.entries)){enter(saved.entries)}
+else if(saved?.ciphertext){$('setup').classList.remove('hidden')}
+else{entries=[];dbWrite();enter([])}
 $('add').onclick=()=>openEditor();$('modalClose').onclick=closeEditor;$('cancel').onclick=closeEditor;$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeEditor()});
-$('entryForm').addEventListener('submit',async ev=>{ev.preventDefault();const value=$('secretValue').value.trim();if(!value){$('formError').textContent='Добавь значение ключа.';return}const item={id:editing||crypto.randomUUID(),name:$('name').value.trim(),service:$('service').value.trim(),value,endpoint:$('endpoint').value.trim(),tags:$('tags').value.split(',').map(x=>x.trim()).filter(Boolean),notes:$('notes').value.trim(),updated:new Date().toISOString()};if(editing)entries=entries.map(e=>e.id===editing?item:e);else entries.unshift(item);await persist();closeEditor();render();toast('Зашифровано и сохранено');resetTimer()});
-$('search').oninput=render;$('lock').onclick=lock;
-$('wipe').onclick=()=>{if(confirm('Удалить всё хранилище без возможности восстановления?')){localStorage.removeItem(DB);lock();toast('Локальное хранилище удалено')}};
-$('export').onclick=()=>{const box=dbRead();const blob=new Blob([JSON.stringify({app:'Close KeyVault',...box},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='close-keyvault-encrypted-backup.json';a.click();URL.revokeObjectURL(url);toast('Зашифрованная копия экспортирована')};
-$('import').onclick=()=>$('file').click();$('file').onchange=async()=>{const f=$('file').files[0];if(!f)return;try{const raw=JSON.parse(await f.text());const box=raw.ciphertext?raw:null;if(!box)throw Error('Файл не похож на резервную копию KeyVault');const p=prompt('Введи мастер-пароль от резервной копии');if(p===null)return;const data=await openBox(box,p);if(!Array.isArray(data))throw Error('Некорректные данные');if(!confirm('Заменить текущее хранилище данными из копии?'))return;master=p;entries=data;dbWrite(box);render();toast('Копия импортирована')}catch(e){alert(e.message==='OperationError'?'Неверный пароль или повреждённая копия.':e.message)}finally{$('file').value=''}};
-['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(master)resetTimer()},{passive:true}));
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&master)lock()});
+$('entryForm').addEventListener('submit',ev=>{ev.preventDefault();const value=$('secretValue').value.trim();if(!value){$('formError').textContent='Добавь значение ключа.';return}const item={id:editing||crypto.randomUUID(),name:$('name').value.trim(),service:$('service').value.trim(),value,endpoint:$('endpoint').value.trim(),tags:$('tags').value.split(',').map(x=>x.trim()).filter(Boolean),notes:$('notes').value.trim(),updated:new Date().toISOString()};if(editing)entries=entries.map(e=>e.id===editing?item:e);else entries.unshift(item);dbWrite();closeEditor();render();toast('Ключ сохранён локально')});
+$('search').oninput=render;
+$('wipe').onclick=()=>{if(confirm('Удалить всё хранилище без возможности восстановления?')){entries=[];dbWrite();render();toast('Локальное хранилище очищено')}};
+$('export').onclick=()=>{const blob=new Blob([JSON.stringify({app:'Close KeyVault',version:2,entries},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='close-keyvault-backup.json';a.click();URL.revokeObjectURL(url);toast('Резервная копия экспортирована')};
+$('import').onclick=()=>$('file').click();$('file').onchange=async()=>{const f=$('file').files[0];if(!f)return;try{const raw=JSON.parse(await f.text());if(!Array.isArray(raw.entries))throw Error('Файл не похож на резервную копию KeyVault');if(!confirm('Заменить текущее хранилище данными из копии?'))return;entries=raw.entries;dbWrite();render();toast('Копия импортирована')}catch(e){alert(e.message)}finally{$('file').value=''}};
 })();
 </script>
 </body>
