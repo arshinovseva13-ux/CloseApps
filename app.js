@@ -933,6 +933,20 @@
                 questButton.addEventListener('click', function() { window.open('https://arshinovseva13-ux.github.io/CloseApps/vault.html?from=plans#questExpansion', '_blank', 'noopener'); });
                 questButtonLine.appendChild(questButton);
                 terminalBody.appendChild(questButtonLine);
+
+                const level3ButtonLine = document.createElement('div');
+                level3ButtonLine.className = 'terminal-line';
+                level3ButtonLine.style.margin = '10px 0';
+                const level3Button = document.createElement('button');
+                level3Button.type = 'button';
+                level3Button.textContent = '↗ Уровень 3 — PRIVILEGE TERMINAL';
+                level3Button.setAttribute('aria-label', 'Открыть третий уровень CLOSE ZERO');
+                level3Button.style.cssText = vaultButton.style.cssText;
+                level3Button.addEventListener('click', function() {
+                    window.open('https://arshinovseva13-ux.github.io/CloseApps/vault.html?from=plans#level3', '_blank', 'noopener');
+                });
+                level3ButtonLine.appendChild(level3Button);
+                terminalBody.appendChild(level3ButtonLine);
                 terminalBody.scrollTop = terminalBody.scrollHeight;
             },
             codes: function() {
