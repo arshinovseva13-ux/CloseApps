@@ -67,6 +67,22 @@
             });
         });
 
+        // ===== ЛОКАЛЬНЫЕ ПРИЛОЖЕНИЯ CLOSE ZERO =====
+        (function(){
+            let custom=[];try{custom=JSON.parse(localStorage.getItem('closeAppsCustomApps')||'[]')}catch(e){}
+            const first=document.querySelector('.app-link');
+            if(first&&first.parentElement&&Array.isArray(custom))custom.forEach(app=>{
+                if(!app||typeof app.name!=='string'||typeof app.url!=='string'||typeof app.desc!=='string')return;
+                let url;try{url=new URL(app.url)}catch(e){return}if(!['http:','https:'].includes(url.protocol))return;
+                const card=document.createElement('a');card.href='#';card.className='app-link local-custom-app';card.dataset.search=(app.name+' '+app.desc).toLowerCase();card.dataset.category='other';card.dataset.id=app.id;card.dataset.icon=app.icon||'🧩';card.dataset.title=app.name;card.dataset.desc=app.desc;card.dataset.url=url.href;card.dataset.urlDisplay=url.href;card.dataset.badges='[]';
+                const icon=document.createElement('div');icon.className='link-icon';icon.textContent=app.icon||'🧩';const info=document.createElement('div');info.className='link-info';const title=document.createElement('div');title.className='link-title';title.textContent=app.name;const desc=document.createElement('div');desc.className='link-desc';desc.textContent=app.desc;const meta=document.createElement('div');meta.className='link-meta';const link=document.createElement('span');link.className='link-url';link.textContent=url.hostname+url.pathname;meta.append(link);info.append(title,desc,meta);const arrow=document.createElement('span');arrow.className='arrow-icon';arrow.textContent='→';card.append(icon,info,arrow);first.parentElement.insertBefore(card,first);
+            });
+            let cfg={};try{cfg=JSON.parse(localStorage.getItem('closeAppsLocalSettings')||'{}')}catch(e){}
+            const themes={purple:['#30204c','#9b83ff'],ocean:['#102f43','#5ce6f4'],forest:['#173a2c','#77f4be']};
+            if(themes[cfg.theme]){document.body.style.backgroundImage='radial-gradient(ellipse at 15% 0%,'+themes[cfg.theme][0]+' 0,transparent 48%)';document.body.style.backgroundColor=themes[cfg.theme][0];}
+            if(cfg.banner){const candidates=[...document.querySelectorAll('h1,h2,.banner-title,.hero-title')];const target=candidates.find(el=>/приложен|добро пожаловать|каталог/i.test(el.textContent));if(target)target.textContent=cfg.banner;}
+        })();
+
         // ===== ПОИСК =====
         const searchInput = document.getElementById('searchInput');
         const appLinks = document.querySelectorAll('.app-link, .article-link');
