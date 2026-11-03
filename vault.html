@@ -141,10 +141,11 @@
   const level3Challenge=document.getElementById('level3Challenge');
   const level3Tools=document.getElementById('level3Tools');
   function unlockLevel3FromChat(viaPlans){if(!found.includes('ZERO-LEVEL3-UNLOCKED'))found.push('ZERO-LEVEL3-UNLOCKED');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}let granted=getStore('closeZeroLevel3Privileges');if(!granted.includes('ROOT ACCESS')){granted.push('ROOT ACCESS');setStore('closeZeroLevel3Privileges',granted)}level3Unlocked=true;level3Text.textContent=viaPlans?'Уровень 3 открыт командой PLANS.':'Уровень 3 открыт секретной командой.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');initPrivilegeTerminal();}
-  if(level3Unlocked){level3Text.textContent=plansAccess?'Уровень 3 открыт через внутренний доступ plans.':'Уровень 3 активирован: ключ подтверждён.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');}
+  if(level3Unlocked){level3Text.textContent=plansAccess?'Уровень 3 открыт через внутренний доступ plans.':'Уровень 3 активирован: допуск подтверждён.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');}
   else{level3Text.textContent='Третий уровень закрыт. Введи секретную команду в чате второго уровня.';level3Challenge.classList.add('hidden');}
   const getStore=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}};
   const setStore=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch(e){}};
+  if(plansAccess){let p=getStore('closeZeroLevel3Privileges');if(!p.includes('ROOT ACCESS')){p.push('ROOT ACCESS');setStore('closeZeroLevel3Privileges',p)}}
   function initPrivilegeTerminal(){
     const terminal=document.getElementById('privilegeTerminal'),input=document.getElementById('privilegeCommandInput');
     if(!terminal||terminal.dataset.ready)return;terminal.dataset.ready='1';
