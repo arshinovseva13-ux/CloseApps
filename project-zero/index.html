@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b16">
+<title>PROJECT: ZERO — CloseApps</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#f5f3ff;background:radial-gradient(ellipse at 50% -10%,#432477 0,transparent 48%),radial-gradient(ellipse at 90% 80%,#073344 0,transparent 35%),#070a13;display:grid;place-items:center;padding:22px;overflow-x:hidden}
+main{width:min(900px,100%);text-align:center}.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#b9a5f5;font-weight:800}
+h1{font-size:clamp(44px,10vw,100px);letter-spacing:-.075em;line-height:.95;margin:18px 0;background:linear-gradient(100deg,#fff,#c4b5fd 48%,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:650px;margin:0 auto 30px;color:#c9c5d9;line-height:1.7}
+.panel{border:1px solid #9b83e65c;border-radius:24px;background:linear-gradient(145deg,#151329dd,#0b1722dd);padding:clamp(22px,5vw,42px);box-shadow:0 30px 100px #0008;position:relative;overflow:hidden}
+.status{display:flex;justify-content:center;gap:9px;align-items:center;color:#c7b8f3;font-size:12px;letter-spacing:.15em;text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:#a78bfa;box-shadow:0 0 15px #a78bfa;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}
+.progress{height:7px;background:#ffffff12;border-radius:9px;margin:22px 0 10px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);box-shadow:0 0 18px #8b5cf6;transition:width .4s}
+.log{font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;color:#9fa6bc;text-align:left;background:#050811a8;border:1px solid #ffffff12;border-radius:14px;padding:16px;min-height:116px;max-height:190px;overflow:hidden;margin-top:22px}
+.log div:before{content:"> ";color:#8b5cf6}.warning{color:#fb7185!important}.success{color:#86efac!important}
+.action{border:1px solid #a78bfa88;background:linear-gradient(100deg,#7c3aed,#4f46e5);color:white;border-radius:999px;padding:14px 24px;font-weight:800;font-size:14px;cursor:pointer;margin-top:22px;box-shadow:0 8px 30px #6d28d944}.action:disabled{opacity:.45;cursor:not-allowed}
+.small{font-size:11px;color:#77738b;margin-top:22px}.reveal{font-size:clamp(30px,7vw,64px);font-weight:950;letter-spacing:-.05em;color:#facc15;margin:12px 0}.laugh{font-size:clamp(17px,3vw,24px);font-weight:800}.back{display:inline-block;color:#c4b5fd;text-decoration:none;margin-top:24px;font-size:13px}.hidden{display:none}
+</style></head>
+<body><main>
+<div class="eyebrow">CloseApps presents · classified experience</div>
+<h1>PROJECT: ZERO</h1>
+<p class="lead">Система ожидает подтверждения. После запуска начнётся последовательность инициализации. Не закрывайте окно.</p>
+<section class="panel" aria-live="polite">
+<div class="status"><span class="dot" id="dot"></span><span id="status">Ожидание сигнала</span></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div style="display:flex;justify-content:space-between;color:#77738b;font-size:11px"><span id="phase">PHASE 0 / LOCKED</span><span id="percent">0%</span></div>
+<div class="log" id="log"><div>secure channel established</div><div>waiting for launch authorization...</div><div>project zero is standing by</div></div>
+<button class="action" id="start" disabled>ЗАПУСК ЗАБЛОКИРОВАН</button>
+<div id="ending" class="hidden">
+<div class="reveal">😂 ПРИКОЛ!</div>
+<div class="laugh">Тебя разыграли. Никакого взлома не было.</div>
+<p style="color:#bcb8cc;line-height:1.6">Это была постановочная анимация от CloseApps. Страница не сканировала устройство, не открывала файлы и ничего не отправляла.</p>
+<a class="action" href="../" style="display:inline-block;text-decoration:none">Вернуться в CloseApps</a>
+</div>
+</section>
+<p class="small">ZERO // SIMULATED SYSTEM SEQUENCE · NO REAL ACCESS OR SCANNING</p>
+<a class="back" href="../">← Вернуться на главную CloseApps</a>
+</main>
+<script>
+(() => {
+ const deadline = new Date("2026-11-04T12:37:00Z").getTime();
+ const start = document.getElementById("start"), status = document.getElementById("status");
+ const log = document.getElementById("log"), bar = document.getElementById("bar");
+ function gate(){const ready=Date.now()>=deadline;start.disabled=!ready;start.textContent=ready?"ЗАПУСТИТЬ PROJECT: ZERO":"ЗАПУСК ЗАБЛОКИРОВАН";status.textContent=ready?"СИГНАЛ ПОЛУЧЕН":"Ожидание сигнала";document.getElementById("phase").textContent=ready?"PHASE 1 / READY":"PHASE 0 / LOCKED";document.getElementById("percent").textContent=ready?"100%":"0%";bar.style.width=ready?"100%":"0%";}
+ gate();setInterval(gate,1000);
+ start.addEventListener("click",()=>{
+  if(Date.now()<deadline)return;
+  start.classList.add("hidden");log.innerHTML="";status.textContent="Выполняется инициализация";
+  const lines=["initializing virtual environment...","loading fictional system modules...","checking simulated security layer...","SECURITY BREACH DETECTED","ACCESS GRANTED","SIMULATING CONTROL SEQUENCE","SYSTEM COMPROMISED"];
+  let i=0;const interval=setInterval(()=>{if(i>=lines.length){clearInterval(interval);document.getElementById("ending").classList.remove("hidden");status.textContent="СИСТЕМА... ШУТИТ";document.getElementById("dot").style.background="#facc15";return;}const row=document.createElement("div");row.textContent=lines[i];if(lines[i].includes("BREACH")||lines[i].includes("COMPROMISED"))row.className="warning";if(lines[i].includes("GRANTED"))row.className="success";log.appendChild(row);log.scrollTop=log.scrollHeight;bar.style.width=Math.round((i+1)/lines.length*100)+"%";document.getElementById("percent").textContent=Math.round((i+1)/lines.length*100)+"%";document.getElementById("phase").textContent="PHASE 2 / SIMULATION";i++;},850);
+ });
+})();
+</script></body></html>
