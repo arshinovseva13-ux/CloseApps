@@ -870,12 +870,14 @@
                 printLine('CLOSE // QUEST: '+quest.length+'/12 испытаний');
                 printLine(secondDone?'УРОВЕНЬ 2 ПОДТВЕРЖДЁН':'Для уровня 2 сначала заверши уровень 1, затем пройди все 12 испытаний.',secondDone?'success':'warn');
                 printLine('');
-                printLine('Все действия доступны по отдельным ссылкам ниже. PLANS проверяет сохранённый прогресс и не выдаёт доступ автоматически.','dim');
+                printLine('Ссылки выдаются после выполнения условий. Сам CLOSE // ZERO не проверяет коды при открытии.','dim');
                 const style='display:inline-flex;align-items:center;padding:10px 15px;border:1px solid #8b5cf6;border-radius:9px;background:rgba(139,92,246,.18);color:#e9ddff;font:600 13px inherit;cursor:pointer;';
                 const add=(label,fn)=>{const row=document.createElement('div');row.className='terminal-line';row.style.margin='10px 0';const b=document.createElement('button');b.type='button';b.textContent=label;b.style.cssText=style;b.addEventListener('click',fn);row.appendChild(b);terminalBody.appendChild(row);};
-                add('↗ Уровень 1 — открыть архив',()=>window.open('https://arshinovseva13-ux.github.io/CloseApps/vault.html?level=1','_blank','noopener'));
+                if(firstDone)add('↗ Получить ссылку уровня 1 — открыть архив',()=>window.open('https://arshinovseva13-ux.github.io/CloseApps/vault.html?level=1','_blank','noopener'));
+                else printLine('Ссылка уровня 1 появится после сбора трёх фрагментов.','warn');
                 add('⌁ Ввести коды уровня 1',()=>openCodePanel());
-                add('↗ Уровень 2 — CLOSE // QUEST',()=>window.open('https://arshinovseva13-ux.github.io/CloseApps/vault.html?level=2#questExpansion','_blank','noopener'));
+                if(secondDone)add('↗ Твоя ссылка уровня 2 — CLOSE // ZERO',()=>window.open('https://arshinovseva13-ux.github.io/CloseApps/vault.html?level=2#questExpansion','_blank','noopener'));
+                else printLine('Ссылка уровня 2 появится после трёх фрагментов и прохождения 12/12 испытаний CLOSE // QUEST.','warn');
                 add('⌘ Открыть страницу испытаний',()=>window.open('https://arshinovseva13-ux.github.io/CloseApps/quest.html','_blank','noopener'));
                 terminalBody.scrollTop=terminalBody.scrollHeight;
             },
