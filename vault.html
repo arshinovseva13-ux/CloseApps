@@ -16,7 +16,7 @@
     <div class="lock-icon">⌁</div>
     <div class="eyebrow">CLOSE / RESTRICTED</div>
     <h1>Доступ не подтверждён</h1>
-    <p>Этот цифровой архив закрыт. Он откроется только после подтверждения доступа в основном хабе Close Приложений.</p>
+    <p>Для первого уровня введи все три кода. Для второго сначала подтверди первый уровень, затем заверши все 12 испытаний CLOSE // QUEST.</p>
     <a class="btn primary" href="./">Вернуться в хаб ↗</a>
   </section>
 </div>
@@ -26,6 +26,7 @@
       <div class="brand"><div class="mark">⌁</div><div>CLOSE <span style="color:var(--cyan)">// ZERO</span><div class="tiny">PRIVATE DIGITAL SPACE</div></div></div>
       <div class="status"><span class="pulse"></span> ACCESS GRANTED · LOCAL SESSION</div>
     </header>
+    <div id="level1Content">
     <section class="hero">
       <div class="eyebrow">ARCHIVE 015 / RESTRICTED ENVIRONMENT</div>
       <h1>WELCOME TO<br><span>THE ZERO</span></h1>
@@ -75,172 +76,93 @@
         <button class="btn" id="signal" style="margin-top:17px;width:100%">Отправить сигнал</button>
       </article>
     </section>
+    </div>
     <section class="panel" id="questExpansion" style="grid-column:1/-1;border-color:#6c55b8;background:linear-gradient(145deg,#1b1634ee,#0b1420f2);margin-bottom:28px">
-      <div class="panel-label">06 / QUEST CLEARANCE</div><h2>🔓 Уровень 2 — Исследователь</h2>
+      <div class="panel-label">02 / QUEST CLEARANCE</div><h2>🔓 Уровень 2 — Исследователь</h2>
       <p id="questAccessText">Проверка допуска CLOSE // QUEST…</p>
-      <div id="questLockedNote" class="console"><div class="accent">[LOCKED] researcher.clearance — missing</div><div>Заверши все 12 испытаний в CLOSE // QUEST, чтобы получить доступ к расширению архива. Если у тебя есть внутренний доступ PLANS, открой третий уровень напрямую.</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary" href="quest.html">Пройти CLOSE // QUEST ↗</a><a class="btn" href="./vault.html?from=plans">PLANS · открыть Level 3 ↗</a></div></div>
+      <div id="questLockedNote" class="console"><div class="accent">[LOCKED] researcher.clearance — missing</div><div>Для доступа ко второму уровню сначала нужно подтвердить все три кода первого уровня, затем завершить все 12 испытаний CLOSE // QUEST.</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary" href="quest.html">Пройти CLOSE // QUEST ↗</a><a class="btn" href="./vault.html?level=1">Проверить уровень 1 ↗</a></div></div>
       <div id="questUnlockedTools" class="hidden">
         <div class="mini-grid"><div class="mini"><strong>12/12</strong><span>MISSIONS CLEARED</span></div><div class="mini"><strong>LEVEL 02</strong><span>RESEARCHER</span></div><div class="mini"><strong>ZERO-7</strong><span>EXPERIMENTAL ACCESS</span></div></div>
         <div class="feed" style="margin-top:18px">
-          <div class="feed-row"><div class="feed-icon">🔐</div><div><strong>PLANS — Уровень 3 / Носитель привилегий</strong><small>Третий уровень доступен через внутренний маршрут PLANS или команду PLANS в чате второго уровня.</small></div></div>
+          
           <div class="feed-row"><div class="feed-icon">📁</div><div><strong>Досье 012 — Последний исследователь</strong><small>Ты доказал, что умеешь связывать подсказки и находить скрытые связи.</small></div></div>
           <div class="feed-row"><div class="feed-icon">⌘</div><div><strong>Команда ZERO-REPORT</strong><small>Показывает системный отчёт о твоём допуске.</small></div></div>
           <div class="feed-row"><div class="feed-icon">🧩</div><div><strong>Бонусная команда ZERO-7</strong><small>Открывает экспериментальный протокол и секретное послание.</small></div></div>
         </div>
-        <div class="feed-row" style="margin-top:12px"><div class="feed-icon">🗺️</div><div><strong>PLANS / маршрут третьего уровня</strong><small>Внутренний доступ: команда PLANS открывает Level 3 без повторного прохождения квеста.</small></div><button class="btn" id="openLevel3FromPlans" type="button">Открыть Level 3</button></div>
+        
         <div style="margin-top:18px;font-weight:850;color:var(--cyan)">💬 ZERO CHAT / ЧАТ ВТОРОГО УРОВНЯ</div><div class="console" id="zeroTerminal" aria-live="polite"><div class="ok">[ACCESS] researcher clearance verified</div><div class="accent">[INFO] доступны команды ZERO-REPORT и ZERO-7</div></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><input id="zeroCommandInput" aria-label="Сообщение в чате второго уровня" placeholder="Напиши сообщение или команду…" style="flex:1;min-width:180px;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px"><button class="btn primary" id="zeroCommandBtn" type="button">Выполнить</button></div>
         <div id="zeroBonus" class="hidden" style="margin-top:15px;padding:16px;border:1px solid #48b995;border-radius:14px;background:#0d2a24"><div class="panel-label" style="color:var(--green)">EXPERIMENTAL MODE · UNLOCKED</div><h3>Протокол ZERO-7</h3><p>«Архив — это не место, а последовательность решений. Первый ключ открывает дверь. Второй показывает, что за ней. Третий доказывает, что ты готов создать собственный путь».</p><p style="margin-top:10px"><strong>Бонусный статус:</strong> Носитель протокола ZERO-7</p></div>
       </div>
     </section>
-    <section class="panel" id="level3" style="border-color:#48b995;background:linear-gradient(145deg,#102b2aee,#101629f2);margin:0 0 28px">
-      <div class="panel-label" style="color:var(--green)">07 / PRIVILEGE PROTOCOL</div><h2>🔐 Уровень 3 — Носитель привилегий</h2>
-      <p id="level3AccessText">Проверка допуска третьего уровня…</p>
-      <div id="level3Locked" class="console"><div class="accent">[LOCKED] ZERO privilege layer is sealed</div><div>Введи секретную команду в чате второго уровня. Внутренний доступ через PLANS открывает его напрямую.</div></div>
-      <div id="level3Challenge" class="hidden"></div>
-      <div id="level3Tools" class="hidden"><div class="mini-grid"><div class="mini"><strong>LEVEL 03</strong><span>PRIVILEGE HOLDER</span></div><div class="mini"><strong>ZERO CORE</strong><span>ACCESS MODE</span></div><div class="mini"><strong id="privilegeCount">00</strong><span>ACTIVE PRIVILEGES</span></div></div>
-      <div class="feed" style="margin-top:18px"><div class="feed-row"><div class="feed-icon">⌘</div><div><strong>Терминал привилегий ZERO</strong><small>Отдельная консоль третьего уровня. Её команды не относятся к терминалу Close Приложений.</small></div></div><div class="feed-row"><div class="feed-icon">🔑</div><div><strong>Система разрешений</strong><small>Получай локальные привилегии, проверяй статус и историю активаций.</small></div></div></div>
-      <div class="console" id="privilegeTerminal" aria-live="polite"><div class="ok">[ZERO-CORE] level 03 authenticated</div><div class="accent">[INFO] введи HELP, чтобы увидеть команды</div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><input id="privilegeCommandInput" aria-label="Команда терминала привилегий ZERO" placeholder="ZERO:// command" autocomplete="off" style="flex:1;min-width:180px;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px"><button class="btn primary" id="privilegeCommandBtn" type="button">Выполнить</button></div></div>
-    </section>
-
-      <section class="panel" id="siteControlPanel" style="margin:18px 0;border-color:#7d6bce;background:linear-gradient(145deg,#19172fee,#0b1420f2)">
-        <div class="panel-label">08 / LOCAL SITE CONTROL</div><h2>⚙️ Локальное управление CloseApps</h2>
-        <p>Настройки и пользовательские приложения сохраняются только в этом браузере. Они не меняют опубликованный каталог для других посетителей.</p>
-        <div class="mini-grid"><div class="mini"><strong id="customAppCount">0</strong><span>МОИ ПРИЛОЖЕНИЯ</span></div><div class="mini"><strong>LOCAL</strong><span>ХРАНЕНИЕ</span></div><div class="mini"><strong>PRIVATE</strong><span>ТОЛЬКО ЭТО УСТРОЙСТВО</span></div></div>
-        <h3 style="margin:22px 0 10px">Добавить приложение</h3>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px">
-          <input id="siteAppName" placeholder="Название приложения" maxlength="60" style="min-width:0;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px">
-          <input id="siteAppIcon" placeholder="Иконка, например 🚀" maxlength="8" value="🧩" style="min-width:0;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px">
-          <input id="siteAppUrl" placeholder="Ссылка https://..." type="url" style="grid-column:1/-1;min-width:0;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px">
-          <textarea id="siteAppDesc" placeholder="Краткое описание" maxlength="240" rows="3" style="grid-column:1/-1;min-width:0;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:10px;padding:12px;resize:vertical"></textarea>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn primary" id="siteAppSave" type="button">＋ Добавить в каталог</button><button class="btn" id="siteAppCancel" type="button" hidden>Отмена редактирования</button></div>
-        <div class="console" id="siteAppList" style="margin-top:14px"><div class="accent">[LOCAL] Здесь появятся твои приложения.</div></div>
-        <h3 style="margin:24px 0 10px">Настройки каталога</h3>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px">
-          <label class="mini">Тема каталога<select id="siteLocalTheme" style="display:block;width:100%;margin-top:8px;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:8px;padding:9px"><option value="default">Стандартная</option><option value="purple">Фиолетовая</option><option value="ocean">Океан</option><option value="forest">Лесная</option></select></label>
-          <label class="mini">Баннер на устройстве<input id="siteLocalBanner" maxlength="100" placeholder="Локальный текст баннера" style="display:block;width:100%;margin-top:8px;background:#080b15;color:#edf1ff;border:1px solid #3a4162;border-radius:8px;padding:9px"></label>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="siteSettingsSave" type="button">Сохранить настройки</button><button class="btn" id="siteExport" type="button">Экспорт настроек</button><label class="btn" for="siteImportFile" style="cursor:pointer">Импорт настроек<input id="siteImportFile" type="file" accept="application/json" hidden></label><button class="btn" id="siteReset" type="button">Сбросить локальные данные</button></div>
-        <div id="siteControlStatus" class="tiny" style="margin-top:12px;letter-spacing:.3px">Ожидание действий…</div>
-      </section>
-
     <footer class="footer"><span>© 2026 CLOSE APPS · PRIVATE ARCHIVE</span><span>BUILT WITH CURIOSITY, NOT MAGIC.</span></footer>
   </div>
 </main>
 <script>
 (function(){
-  let found=[];
-  try{found=JSON.parse(localStorage.getItem('closeAppsVaultCodes')||'[]')}catch(e){}
+  const readArray=key=>{try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}};
   const required=['STARFINDER-2026','TERMINAL-2026','FIFTEEN-2027'];
-  const accessParams=new URLSearchParams(window.location.search);
-  const plansAccess=accessParams.get('from')==='plans'||accessParams.get('plans')==='1'||accessParams.get('access')==='plans'||accessParams.get('level')==='3'||window.location.hash==='#questExpansion'||window.location.hash==='#level3'||localStorage.getItem('closeZeroPlansAccess')==='granted';
-  let questProgress=[];try{questProgress=JSON.parse(localStorage.getItem('closeQuestProgressV1')||'[]')}catch(e){}
-  const questFragments=Array.isArray(questProgress)?[...new Set(questProgress.map(Number).filter(n=>Number.isInteger(n)&&n>=0&&n<12))]:[];
-  const questProgressComplete=questFragments.length===12||found.includes('QUEST-COMPLETE-2026');
-  if(questProgressComplete&&!found.includes('QUEST-COMPLETE-2026')){found.push('QUEST-COMPLETE-2026');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}}
-  // CLOSE // QUEST is an independent valid route to Level II; don't block it behind legacy vault keys.
-  const allowed=plansAccess||questProgressComplete||required.every(code=>found.includes(code));
+  const codes=readArray('closeAppsVaultCodes');
+  const level1Complete=required.every(code=>codes.includes(code));
+  const quest=readArray('closeQuestProgressV1').map(Number).filter(n=>Number.isInteger(n)&&n>=0&&n<12);
+  const questComplete=new Set(quest).size===12||codes.includes('QUEST-COMPLETE-2026');
+  const params=new URLSearchParams(location.search);
+  const requestedLevel=params.get('level')==='2'?'2':'1';
+  const level2Complete=level1Complete&&questComplete;
+  const allowed=requestedLevel==='1'?level1Complete:level2Complete;
   document.getElementById('locked').classList.toggle('hidden',allowed);
   document.getElementById('app').classList.toggle('hidden',!allowed);
-  if(!allowed)return;
-  if(plansAccess){
-    document.querySelector('.status').textContent='PLANS OVERRIDE · LEVELS II + III CONFIRMED';
-    try{
-      localStorage.setItem('closeZeroPlansAccess','granted');
-      localStorage.setItem('closeZeroLevel2Access','granted');
-      localStorage.setItem('closeZeroLevel3Access','granted');
-    }catch(e){}
-    if(!found.includes('ZERO-LEVEL3-UNLOCKED')){found.push('ZERO-LEVEL3-UNLOCKED');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}}
+  if(!allowed){
+    const message=document.querySelector('.locked-card p');
+    if(requestedLevel==='2'&&!level1Complete)message.textContent='Сначала открой первый уровень: собери и введи все три кода. Только после этого можно получить второй уровень.';
+    else if(requestedLevel==='2'&&!questComplete)message.textContent='Первый уровень подтверждён. Теперь пройди все 12 испытаний CLOSE // QUEST, чтобы открыть второй уровень.';
+    return;
   }
-  const questCleared=plansAccess||localStorage.getItem('closeZeroLevel2Access')==='granted'||found.includes('QUEST-COMPLETE-2026')||questProgressComplete||found.includes('ZERO-LEVEL3-UNLOCKED');
-  document.getElementById('questLockedNote').classList.toggle('hidden',questCleared);
-  document.getElementById('questUnlockedTools').classList.toggle('hidden',!questCleared);
-  document.getElementById('questAccessText').textContent=questCleared?'Уровень 2 активирован: допуск исследователя подтверждён.':'Уровень 2 закрыт. Для доступа нужно завершить все 12 испытаний CLOSE // QUEST.';
-  if(questCleared){
-    const runZeroCommand=()=>{
-      const input=document.getElementById('zeroCommandInput'), terminal=document.getElementById('zeroTerminal');
-      const cmd=input.value.trim().toUpperCase(), line=document.createElement('div');
-      if(cmd==='ZERO-REPORT'){line.className='ok';line.textContent='[REPORT] QUEST 12/12 · clearance: RESEARCHER · archive: EXTENDED';terminal.appendChild(line);const detail=document.createElement('div');detail.textContent='[NOTE] Досье 012 доступно. Допуск сохранён в этом браузере.';terminal.appendChild(detail);}
-      else if(cmd==='ZERO-7'){line.className='ok';line.textContent='[OK] experimental protocol ZERO-7 unlocked';terminal.appendChild(line);document.getElementById('zeroBonus').classList.remove('hidden');try{localStorage.setItem('closeZeroProtocol7','unlocked')}catch(e){}}
-      else if(cmd==='ZERO://ROOT'||cmd==='PLANS'){line.className='ok';line.textContent='[ACCESS] LEVEL III AUTHORIZED';terminal.appendChild(line);unlockLevel3FromChat(cmd==='PLANS');}
-      else{line.textContent='[ERROR] команда не найдена. Доступны ZERO-REPORT, ZERO-7 и PLANS.';terminal.appendChild(line);}
-      terminal.scrollTop=terminal.scrollHeight;input.value='';
+  const level1Content=document.getElementById('level1Content');
+  const questPanel=document.getElementById('questExpansion');
+  level1Content.classList.toggle('hidden',requestedLevel==='2');
+  questPanel.classList.toggle('hidden',requestedLevel!=='2');
+  const status=document.querySelector('.status');
+  status.innerHTML='<span class="pulse"></span> '+(requestedLevel==='1'?'LEVEL 1 VERIFIED':'LEVEL 2 VERIFIED')+' · LOCAL SESSION';
+  if(requestedLevel==='2'){
+    document.getElementById('questLockedNote').classList.toggle('hidden',!questComplete);
+    document.getElementById('questUnlockedTools').classList.toggle('hidden',!questComplete);
+    document.getElementById('questAccessText').textContent='Уровень 2 подтверждён: первый уровень и все 12 испытаний CLOSE // QUEST пройдены.';
+    if(location.hash==='#questExpansion')questPanel.scrollIntoView({block:'start'});
+    const run=()=>{
+      const input=document.getElementById('zeroCommandInput');
+      const terminal=document.getElementById('zeroTerminal');
+      const cmd=input.value.trim().toUpperCase();
+      const line=document.createElement('div');
+      if(cmd==='ZERO-REPORT'){
+        line.className='ok';
+        line.textContent='[REPORT] LEVEL 1 ✓ · QUEST 12/12 · RESEARCHER ACCESS VERIFIED';
+      }else if(cmd==='ZERO-7'){
+        line.className='ok';
+        line.textContent='[OK] экспериментальный протокол ZERO-7 разблокирован';
+        document.getElementById('zeroBonus').classList.remove('hidden');
+        try{localStorage.setItem('closeZeroProtocol7','unlocked')}catch(e){}
+      }else{
+        line.className='accent';
+        line.textContent='[ERROR] доступны команды ZERO-REPORT и ZERO-7';
+      }
+      terminal.appendChild(line);terminal.scrollTop=terminal.scrollHeight;input.value='';
     };
-    document.getElementById('zeroCommandBtn').addEventListener('click',runZeroCommand);
-    document.getElementById('zeroCommandInput').addEventListener('keydown',e=>{if(e.key==='Enter')runZeroCommand()});
+    document.getElementById('zeroCommandBtn').addEventListener('click',run);
+    document.getElementById('zeroCommandInput').addEventListener('keydown',e=>{if(e.key==='Enter')run()});
     if(localStorage.getItem('closeZeroProtocol7')==='unlocked')document.getElementById('zeroBonus').classList.remove('hidden');
   }
-  let level3Unlocked=plansAccess||localStorage.getItem('closeZeroLevel3Access')==='granted'||found.includes('ZERO-LEVEL3-UNLOCKED');
-  const level3Text=document.getElementById('level3AccessText');
-  const level3Locked=document.getElementById('level3Locked');
-  const level3Challenge=document.getElementById('level3Challenge');
-  const level3Tools=document.getElementById('level3Tools');
-  function unlockLevel3FromChat(viaPlans){if(viaPlans){try{localStorage.setItem('closeZeroPlansAccess','granted')}catch(e){}}if(!found.includes('ZERO-LEVEL3-UNLOCKED'))found.push('ZERO-LEVEL3-UNLOCKED');try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found))}catch(e){}let granted=getStore('closeZeroLevel3Privileges');if(!granted.includes('ROOT ACCESS')){granted.push('ROOT ACCESS');setStore('closeZeroLevel3Privileges',granted)}level3Unlocked=true;level3Text.textContent=viaPlans?'Уровень 3 открыт командой PLANS.':'Уровень 3 открыт секретной командой.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');initPrivilegeTerminal();}
-  const plansLevel3Link=document.getElementById('openLevel3FromPlans');if(plansLevel3Link)plansLevel3Link.addEventListener('click',()=>unlockLevel3FromChat(true));
-  if(level3Unlocked){level3Text.textContent=plansAccess?'Уровень 3 открыт через PLANS: допуск подтверждён.':'Уровень 3 активирован: допуск подтверждён.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');if(window.location.hash==='#level3'){setTimeout(()=>document.getElementById('level3').scrollIntoView({behavior:'smooth',block:'start'}),120);}}
-  else{level3Text.textContent='Третий уровень закрыт. Введи секретную команду в чате второго уровня.';level3Challenge.classList.add('hidden');}
-  const getStore=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}};
-  const setStore=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch(e){}};
-  if(plansAccess){let p=getStore('closeZeroLevel3Privileges');if(!p.includes('ROOT ACCESS')){p.push('ROOT ACCESS');setStore('closeZeroLevel3Privileges',p)}}
-  function initLocalSiteControl(){
-    const $=id=>document.getElementById(id),read=(key,fallback)=>{try{const x=JSON.parse(localStorage.getItem(key));return x??fallback}catch(e){return fallback}},write=(key,val)=>{try{localStorage.setItem(key,JSON.stringify(val));return true}catch(e){return false}};
-    const apps=read('closeAppsCustomApps',[]),settings=read('closeAppsLocalSettings',{});let editing=null;
-    const status=msg=>{$('siteControlStatus').textContent=msg};
-    const render=()=>{$('customAppCount').textContent=apps.length;const list=$('siteAppList');list.replaceChildren();if(!apps.length){const d=document.createElement('div');d.className='accent';d.textContent='[LOCAL] Здесь появятся твои приложения.';list.append(d);return;}apps.forEach(app=>{const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 0;border-bottom:1px solid #28324e';const title=document.createElement('strong');title.textContent=(app.icon||'🧩')+' '+app.name;title.style.flex='1';const edit=document.createElement('button');edit.className='btn';edit.textContent='Изменить';edit.type='button';edit.onclick=()=>{editing=app.id;$('siteAppName').value=app.name;$('siteAppIcon').value=app.icon||'🧩';$('siteAppUrl').value=app.url;$('siteAppDesc').value=app.desc;$('siteAppSave').textContent='Сохранить изменения';$('siteAppCancel').hidden=false;};const del=document.createElement('button');del.className='btn';del.textContent='Удалить';del.type='button';del.onclick=()=>{if(!confirm('Удалить приложение «'+app.name+'» только из локального каталога?'))return;const idx=apps.findIndex(x=>x.id===app.id);if(idx>=0)apps.splice(idx,1);write('closeAppsCustomApps',apps);render();status('Приложение удалено из локального каталога.');};row.append(title,edit,del);list.append(row);});};
-    $('siteAppSave').onclick=()=>{const name=$('siteAppName').value.trim(),icon=$('siteAppIcon').value.trim()||'🧩',url=$('siteAppUrl').value.trim(),desc=$('siteAppDesc').value.trim();if(!name||!url||!desc){status('Заполни название, ссылку и описание.');return;}let parsed;try{parsed=new URL(url)}catch(e){status('Некорректная ссылка.');return;}if(!['http:','https:'].includes(parsed.protocol)){status('Разрешены только ссылки http:// и https://');return;}if(editing){const item=apps.find(x=>x.id===editing);if(item)Object.assign(item,{name,icon,url:parsed.href,desc});}else{apps.push({id:'local-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6),name,icon,url:parsed.href,desc});}if(!write('closeAppsCustomApps',apps)){status('Не удалось сохранить: хранилище браузера заполнено.');return;}editing=null;$('siteAppName').value='';$('siteAppIcon').value='🧩';$('siteAppUrl').value='';$('siteAppDesc').value='';$('siteAppSave').textContent='＋ Добавить в каталог';$('siteAppCancel').hidden=true;render();status('Сохранено. Обнови каталог CloseApps, чтобы увидеть карточку.');};
-    $('siteAppCancel').onclick=()=>{editing=null;$('siteAppName').value='';$('siteAppIcon').value='🧩';$('siteAppUrl').value='';$('siteAppDesc').value='';$('siteAppSave').textContent='＋ Добавить в каталог';$('siteAppCancel').hidden=true;};
-    $('siteLocalTheme').value=settings.theme||'default';$('siteLocalBanner').value=settings.banner||'';
-    $('siteSettingsSave').onclick=()=>{const val={theme:$('siteLocalTheme').value,banner:$('siteLocalBanner').value.trim()};write('closeAppsLocalSettings',val);status('Настройки сохранены локально. Перезагрузи главную страницу каталога.');};
-    $('siteExport').onclick=()=>{const data={version:1,apps,settings};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='closeapps-local-control.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status('Резервная копия подготовлена.');};
-    $('siteImportFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!Array.isArray(data.apps)||!data.settings||typeof data.settings!=='object')throw Error();apps.splice(0,apps.length,...data.apps.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string'&&typeof x.desc==='string'));write('closeAppsCustomApps',apps);write('closeAppsLocalSettings',data.settings);$('siteLocalTheme').value=data.settings.theme||'default';$('siteLocalBanner').value=data.settings.banner||'';render();status('Резервная копия импортирована.');}catch(err){status('Файл резервной копии не распознан.');}e.target.value='';};
-    $('siteReset').onclick=()=>{if(!confirm('Сбросить пользовательские приложения и локальные настройки сайта?'))return;localStorage.removeItem('closeAppsCustomApps');localStorage.removeItem('closeAppsLocalSettings');apps.splice(0);$('siteLocalTheme').value='default';$('siteLocalBanner').value='';render();status('Локальные настройки сброшены.');};render();
-  }
-  initLocalSiteControl();
-  function initPrivilegeTerminal(){
-    const terminal=document.getElementById('privilegeTerminal'),input=document.getElementById('privilegeCommandInput');
-    if(!terminal||terminal.dataset.ready)return;terminal.dataset.ready='1';
-    let id=localStorage.getItem('closeZeroPrivilegeId');
-    if(!id){id='ZERO-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();try{localStorage.setItem('closeZeroPrivilegeId',id)}catch(e){}}
-    const privileges=getStore('closeZeroLevel3Privileges'),history=getStore('closeZeroLevel3History');
-    const out=(message,cls)=>{const d=document.createElement('div');d.textContent=message;if(cls)d.className=cls;terminal.appendChild(d);terminal.scrollTop=terminal.scrollHeight;};
-    const record=(action,detail)=>{history.push({at:new Date().toISOString(),action,detail});setStore('closeZeroLevel3History',history);};
-    const refresh=()=>{document.getElementById('privilegeCount').textContent=String(privileges.length).padStart(2,'0');};
-    const run=()=>{
-      const parts=input.value.trim().toUpperCase().split(' '),cmd=parts.shift(),arg=parts.join(' ');
-      if(!cmd)return;
-      if(cmd==='HELP'){['HELP — список команд','PRIVILEGES — активные привилегии','STATUS — статус допуска','MY ID — идентификатор носителя','CLAIM — получить ARCHIVE-KEEPER','CLAIM AUDITOR — получить аудитора','CLAIM THEME-ARCHITECT — получить архитектора интерфейса','CLAIM TIMEKEEPER — получить хранителя времени','CLAIM KEYSMITH — получить кузнеца ключей','ARCHIVE — открыть досье (нужен ARCHIVE-KEEPER)','BACKUP — скачать копию прогресса (нужен ROOT ACCESS)','CONFIG — сменить акцент интерфейса (нужен ROOT ACCESS)','AUDIT — проверить целостность локального прогресса (нужен AUDITOR)','THEME — переключить режим свечения (нужен THEME-ARCHITECT)','TIMELINE — показать расширенную хронологию (нужен TIMEKEEPER)','ROTATE-ID — сменить ID носителя (нужен KEYSMITH)','SITE CONTROL — открыть локальную панель сайта (нужен ROOT ACCESS)','HISTORY — история действий','REDEEM ZERO-7 — активировать протокол ZERO-7','PROTOCOL — выполнить ZERO-7 (нужен ZERO-7-CARRIER)','EXIT — очистить консоль'].forEach((v,i)=>out(v,i===0?'accent':''));}
-      else if(cmd==='PRIVILEGES')out(privileges.length?'[PRIVILEGES] '+privileges.join(' · '):'[PRIVILEGES] активных привилегий пока нет','accent');
-      else if(cmd==='STATUS'){out('[STATUS] LEVEL 03 · AUTHORIZED · '+privileges.length+' privilege(s)','ok');out('[STATUS] access source: '+(plansAccess?'PLANS OVERRIDE':'KEY VALIDATION'));}
-      else if(cmd==='MY'&&arg==='ID')out('[IDENTITY] '+id,'ok');
-      else if(cmd==='ARCHIVE'){if(!privileges.includes('ARCHIVE-KEEPER'))out('[DENIED] требуется ARCHIVE-KEEPER','accent');else{out('[ARCHIVE] DOSSIER 012 · QUEST CLEARANCE','ok');out('CLOSE // QUEST: 12 испытаний · допуск RESEARCHER');out('ZERO-7: экспериментальный протокол');out('LEVEL III: узел привилегий активен');record('ARCHIVE','DOSSIER 012 OPENED');}}
-      else if(cmd==='CLAIM'){const claimMap={'':'ARCHIVE-KEEPER','AUDITOR':'AUDITOR','THEME-ARCHITECT':'THEME-ARCHITECT','TIMEKEEPER':'TIMEKEEPER','KEYSMITH':'KEYSMITH'};const target=claimMap[arg];if(!target)out('[ERROR] доступные наборы: CLAIM, CLAIM AUDITOR, CLAIM THEME-ARCHITECT, CLAIM TIMEKEEPER, CLAIM KEYSMITH','accent');else if(privileges.includes(target))out('[CLAIM] '+target+' уже получена');else{privileges.push(target);setStore('closeZeroLevel3Privileges',privileges);record('CLAIM',target);refresh();const labels={'ARCHIVE-KEEPER':'базовый хранитель архива','AUDITOR':'аудитор целостности','THEME-ARCHITECT':'архитектор интерфейса','TIMEKEEPER':'хранитель хронологии','KEYSMITH':'кузнец идентификаторов'};out('[GRANTED] '+target+' — '+labels[target],'ok');}}
-      else if(cmd==='BACKUP'){if(!privileges.includes('ROOT ACCESS'))out('[DENIED] требуется ROOT ACCESS','accent');else{const data={product:'CLOSE // ZERO',createdAt:new Date().toISOString(),codes:getStore('closeAppsVaultCodes'),quest:getStore('closeQuestProgressV1'),privileges:privileges,history:history};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='close-zero-backup.json';a.click();URL.revokeObjectURL(url);record('BACKUP','PROGRESS EXPORTED');out('[BACKUP] close-zero-backup.json скачан','ok');}}
-      else if(cmd==='CONFIG'){if(!privileges.includes('ROOT ACCESS'))out('[DENIED] требуется ROOT ACCESS','accent');else{const colors=[['#9b83ff','#5ce6f4'],['#ff70b7','#ffc66e'],['#67e6b5','#65a9ff']];let n=Number(localStorage.getItem('closeZeroAccentIndex')||0);n=(n+1)%colors.length;localStorage.setItem('closeZeroAccentIndex',String(n));document.documentElement.style.setProperty('--violet',colors[n][0]);document.documentElement.style.setProperty('--cyan',colors[n][1]);record('CONFIG','ACCENT THEME '+(n+1));out('[CONFIG] акцент интерфейса изменён','ok');}}
-      else if(cmd==='AUDIT'){if(!privileges.includes('AUDITOR'))out('[DENIED] требуется AUDITOR','accent');else{const codes=getStore('closeAppsVaultCodes'),quest=getStore('closeQuestProgressV1'),checks=[['LEVEL III',found.includes('ZERO-LEVEL3-UNLOCKED')],['ROOT ACCESS',privileges.includes('ROOT ACCESS')],['QUEST CLEARANCE',found.includes('QUEST-COMPLETE-2026')||plansAccess],['PRIVILEGE STORE',Array.isArray(privileges)],['HISTORY STORE',Array.isArray(history)]];out('[AUDIT] локальная проверка запущена','accent');checks.forEach(x=>out('['+(x[1]?'OK':'WARN')+'] '+x[0],x[1]?'ok':'accent'));out('[AUDIT] vault codes: '+codes.length+' · quest records: '+(Array.isArray(quest)?quest.length:0));record('AUDIT','LOCAL INTEGRITY CHECK');}}\n      else if(cmd==='THEME'){if(!privileges.includes('THEME-ARCHITECT'))out('[DENIED] требуется THEME-ARCHITECT','accent');else{const active=localStorage.getItem('closeZeroGlowMode')==='on';localStorage.setItem('closeZeroGlowMode',active?'off':'on');document.body.style.textShadow=active?'none':'0 0 1px #9b83ff55';document.querySelectorAll('.panel').forEach(p=>p.style.boxShadow=active?'':'0 0 22px #8e70ff22');record('THEME','GLOW MODE '+(active?'OFF':'ON'));out('[THEME] режим свечения '+(active?'выключен':'включён'),'ok');}}\n      else if(cmd==='TIMELINE'){if(!privileges.includes('TIMEKEEPER'))out('[DENIED] требуется TIMEKEEPER','accent');else{out('[TIMELINE] полная хронология · '+history.length+' событий','ok');history.forEach(x=>out(new Date(x.at).toLocaleString()+' · '+x.action+' · '+x.detail));record('TIMELINE','FULL HISTORY VIEWED');}}\n      else if(cmd==='ROTATE-ID'){if(!privileges.includes('KEYSMITH'))out('[DENIED] требуется KEYSMITH','accent');else{const previous=id;id='ZERO-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();try{localStorage.setItem('closeZeroPrivilegeId',id)}catch(e){}record('ROTATE-ID','IDENTITY ROTATED FROM '+previous+' TO '+id);out('[KEYSMITH] новый ID носителя: '+id,'ok');}}\n      else if(cmd==='SITE'&&arg==='CONTROL'){if(!privileges.includes('ROOT ACCESS'))out('[DENIED] требуется ROOT ACCESS','accent');else{const panel=document.getElementById('siteControlPanel');panel.scrollIntoView({behavior:'smooth',block:'start'});record('SITE CONTROL','LOCAL SITE CONTROL OPENED');out('[SITE CONTROL] локальная панель управления открыта ниже','ok');}}
-      else if(cmd==='HISTORY'){if(!history.length)out('[HISTORY] записей пока нет','accent');else history.slice(-8).forEach(x=>out('['+new Date(x.at).toLocaleString()+'] '+x.action+' · '+x.detail));}
-      else if(cmd==='REDEEM'&&arg==='ZERO-7'){if(privileges.includes('ZERO-7-CARRIER'))out('[REDEEM] протокол уже активирован');else{privileges.push('ZERO-7-CARRIER');setStore('closeZeroLevel3Privileges',privileges);record('REDEEM','ZERO-7-CARRIER');try{localStorage.setItem('closeZeroProtocol7','unlocked')}catch(e){}refresh();out('[GRANTED] ZERO-7-CARRIER — экспериментальный протокол активирован','ok');}}
-      else if(cmd==='PROTOCOL'){if(!privileges.includes('ZERO-7-CARRIER'))out('[DENIED] требуется ZERO-7-CARRIER','accent');else{out('[PROTOCOL 7] EXECUTING…','ok');out('[PROTOCOL 7] экспериментальный узел активирован.');document.getElementById('zeroBonus').classList.remove('hidden');record('PROTOCOL','ZERO-7 EXECUTED');}}
-      else if(cmd==='EXIT')terminal.innerHTML='<div class="accent">[ZERO-CORE] консоль очищена. Введи HELP для списка команд.</div>';
-      else out('[ERROR] неизвестная команда. Введи HELP.','accent');
-      input.value='';
-    };
-    document.getElementById('privilegeCommandBtn').addEventListener('click',run);input.addEventListener('keydown',e=>{if(e.key==='Enter')run();});refresh();
-  }
-  if(level3Unlocked)initPrivilegeTerminal();
-  const started=Date.now(), uptime=document.getElementById('uptime'), log=document.getElementById('console');
-  setInterval(()=>{const s=Math.floor((Date.now()-started)/1000);uptime.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
-  function line(text,cls){const d=document.createElement('div');if(cls)d.className=cls;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight}
-  document.getElementById('diagnose').addEventListener('click',()=>{
-    const b=document.getElementById('diagnose');b.disabled=true;b.textContent='Диагностика запущена…';
-    const tasks=['checking app registry','checking local session','checking archive integrity','all systems nominal'];
-    let i=0;const timer=setInterval(()=>{if(i>=tasks.length){clearInterval(timer);b.textContent='Диагностика завершена ✓';b.disabled=false;return}line('['+(i===tasks.length-1?'OK':'RUN')+'] '+tasks[i],i===tasks.length-1?'ok':'accent');i++},550);
+  const started=Date.now(),uptime=document.getElementById('uptime'),log=document.getElementById('console');
+  setInterval(()=>{const seconds=Math.floor((Date.now()-started)/1000);uptime.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')},1000);
+  const line=(message,cls)=>{const node=document.createElement('div');if(cls)node.className=cls;node.textContent=message;log.appendChild(node);log.scrollTop=log.scrollHeight};
+  const diagnose=document.getElementById('diagnose');
+  if(diagnose)diagnose.addEventListener('click',()=>{
+    diagnose.disabled=true;diagnose.textContent='Диагностика запущена…';
+    const tasks=['checking app registry','checking local session','checking archive integrity','all systems nominal'];let i=0;
+    const timer=setInterval(()=>{if(i>=tasks.length){clearInterval(timer);diagnose.textContent='Диагностика завершена ✓';diagnose.disabled=false;return}line('['+(i===tasks.length-1?'OK':'RUN')+'] '+tasks[i],i===tasks.length-1?'ok':'accent');i++},550);
   });
-  document.getElementById('signal').addEventListener('click',()=>{
-    line('[SIGNAL] packet sent from CLOSE // ZERO','accent');
-    line('[REPLY] привет, исследователь. хорошего дня!','ok');
-  });
+  const signal=document.getElementById('signal');
+  if(signal)signal.addEventListener('click',()=>{line('[SIGNAL] packet sent from CLOSE // ZERO','accent');line('[REPLY] привет, исследователь. хорошего дня!','ok')});
 })();
 </script>
 </body>
