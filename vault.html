@@ -170,13 +170,6 @@
     };
     document.getElementById('privilegeCommandBtn').addEventListener('click',run);input.addEventListener('keydown',e=>{if(e.key==='Enter')run();});refresh();
   }
-  document.getElementById('level3Unlock').addEventListener('click',()=>{
-    const key=document.getElementById('level3Key').value.trim().toUpperCase().replace(/\s/g,'');
-    if(key!=='ORBIT-ECHO-NOVA'){level3Text.textContent='Ключ не принят. Проверь порядок трёх сигналов.';return;}
-    if(!found.includes('ZERO-LEVEL3-UNLOCKED'))found.push('ZERO-LEVEL3-UNLOCKED');
-    try{localStorage.setItem('closeAppsVaultCodes',JSON.stringify(found));}catch(e){}
-    level3Text.textContent='Уровень 3 активирован: ключ подтверждён.';level3Locked.classList.add('hidden');level3Challenge.classList.add('hidden');level3Tools.classList.remove('hidden');initPrivilegeTerminal();
-  });
   if(level3Unlocked)initPrivilegeTerminal();
   const started=Date.now(), uptime=document.getElementById('uptime'), log=document.getElementById('console');
   setInterval(()=>{const s=Math.floor((Date.now()-started)/1000);uptime.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
