@@ -127,7 +127,8 @@
       const cmd=input.value.trim().toUpperCase(), line=document.createElement('div');
       if(cmd==='ZERO-REPORT'){line.className='ok';line.textContent='[REPORT] QUEST 12/12 · clearance: RESEARCHER · archive: EXTENDED';terminal.appendChild(line);const detail=document.createElement('div');detail.textContent='[NOTE] Досье 012 доступно. Допуск сохранён в этом браузере.';terminal.appendChild(detail);}
       else if(cmd==='ZERO-7'){line.className='ok';line.textContent='[OK] experimental protocol ZERO-7 unlocked';terminal.appendChild(line);document.getElementById('zeroBonus').classList.remove('hidden');try{localStorage.setItem('closeZeroProtocol7','unlocked')}catch(e){}}
-      else{line.textContent='[ERROR] команда не найдена. Доступны ZERO-REPORT и ZERO-7.';terminal.appendChild(line);}
+      else if(cmd==='ZERO://ROOT'||cmd==='PLANS'){line.className='ok';line.textContent='[ACCESS] LEVEL III AUTHORIZED';terminal.appendChild(line);unlockLevel3FromChat(cmd==='PLANS');}
+      else{line.textContent='[ERROR] команда не найдена. Доступны ZERO-REPORT, ZERO-7 и PLANS.';terminal.appendChild(line);}
       terminal.scrollTop=terminal.scrollHeight;input.value='';
     };
     document.getElementById('zeroCommandBtn').addEventListener('click',runZeroCommand);
