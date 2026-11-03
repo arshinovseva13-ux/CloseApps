@@ -2,60 +2,108 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080b16">
+<meta name="theme-color" content="#050811">
 <title>PROJECT: ZERO — CloseApps</title>
 <style>
-:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#f5f3ff;background:radial-gradient(ellipse at 50% -10%,#432477 0,transparent 48%),radial-gradient(ellipse at 90% 80%,#073344 0,transparent 35%),#070a13;display:grid;place-items:center;padding:22px;overflow-x:hidden}
-main{width:min(900px,100%);text-align:center}.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#b9a5f5;font-weight:800}
-h1{font-size:clamp(44px,10vw,100px);letter-spacing:-.075em;line-height:.95;margin:18px 0;background:linear-gradient(100deg,#fff,#c4b5fd 48%,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{max-width:650px;margin:0 auto 30px;color:#c9c5d9;line-height:1.7}
-.panel{border:1px solid #9b83e65c;border-radius:24px;background:linear-gradient(145deg,#151329dd,#0b1722dd);padding:clamp(22px,5vw,42px);box-shadow:0 30px 100px #0008;position:relative;overflow:hidden}
-.status{display:flex;justify-content:center;gap:9px;align-items:center;color:#c7b8f3;font-size:12px;letter-spacing:.15em;text-transform:uppercase}
-.dot{width:8px;height:8px;border-radius:50%;background:#a78bfa;box-shadow:0 0 15px #a78bfa;animation:pulse 1.2s infinite}
-@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}
-.progress{height:7px;background:#ffffff12;border-radius:9px;margin:22px 0 10px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);box-shadow:0 0 18px #8b5cf6;transition:width .4s}
-.log{font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;color:#9fa6bc;text-align:left;background:#050811a8;border:1px solid #ffffff12;border-radius:14px;padding:16px;min-height:116px;max-height:190px;overflow:hidden;margin-top:22px}
-.log div:before{content:"> ";color:#8b5cf6}.warning{color:#fb7185!important}.success{color:#86efac!important}
-.action{border:1px solid #a78bfa88;background:linear-gradient(100deg,#7c3aed,#4f46e5);color:white;border-radius:999px;padding:14px 24px;font-weight:800;font-size:14px;cursor:pointer;margin-top:22px;box-shadow:0 8px 30px #6d28d944}.action:disabled{opacity:.45;cursor:not-allowed}
-.small{font-size:11px;color:#77738b;margin-top:22px}.reveal{font-size:clamp(30px,7vw,64px);font-weight:950;letter-spacing:-.05em;color:#facc15;margin:12px 0}.laugh{font-size:clamp(17px,3vw,24px);font-weight:800}.back{display:inline-block;color:#c4b5fd;text-decoration:none;margin-top:24px;font-size:13px}.hidden{display:none}
-</style></head>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:#050811;color:#e8edf7}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#26305b 0,transparent 45%),radial-gradient(ellipse at 100% 80%,#073b42 0,transparent 32%),#050811;padding:26px 16px 40px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#8ca0c51a 1px,transparent 1px),linear-gradient(90deg,#8ca0c51a 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+main{width:min(1080px,100%);margin:auto;position:relative}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#8996ad;font:11px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.brand{color:#c4b5fd;font-weight:800}.live{display:flex;align-items:center;gap:8px}.live i{width:7px;height:7px;border-radius:50%;background:#f59e0b;box-shadow:0 0 12px #f59e0b}
+h1{text-align:center;font-size:clamp(46px,9vw,88px);line-height:.95;letter-spacing:-.075em;margin:34px 0 12px;background:linear-gradient(100deg,#fff,#b7c5ff 48%,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{text-align:center;color:#9ba8bd;font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 28px}
+.shell{border:1px solid #65749a55;border-radius:22px;background:linear-gradient(145deg,#10182aee,#090f1bee);box-shadow:0 28px 100px #0009;overflow:hidden}
+.shell-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #ffffff12;background:#ffffff05}.dots{display:flex;gap:6px}.dots i{width:8px;height:8px;border-radius:50%;background:#ef4444}.dots i:nth-child(2){background:#eab308}.dots i:nth-child(3){background:#22c55e}.shell-title{font:11px ui-monospace,monospace;color:#8290a8}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:16px}
+.terminal{border:1px solid #ffffff12;background:#030711;border-radius:14px;min-height:350px;display:flex;flex-direction:column;overflow:hidden}
+.terminal-head{display:flex;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #ffffff10;color:#8e9bb2;font:10px ui-monospace,monospace;letter-spacing:.1em}
+#log{padding:14px;font:12px/1.85 ui-monospace,SFMono-Regular,Consolas,monospace;color:#9eacc3;overflow:auto;max-height:330px;flex:1;scroll-behavior:smooth}
+.line{white-space:pre-wrap;overflow-wrap:anywhere}.prompt{color:#67e8f9}.ok{color:#86efac}.warn{color:#fbbf24}.bad{color:#fb7185}.muted{color:#64748b}
+.side{display:flex;flex-direction:column;gap:12px}.card{border:1px solid #ffffff12;background:#ffffff05;border-radius:14px;padding:14px}.card-title{font:10px ui-monospace,monospace;letter-spacing:.14em;color:#8493ad;text-transform:uppercase;margin-bottom:12px}
+.metric-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #ffffff0b;font:11px ui-monospace,monospace;color:#8795ad}.metric-row:last-child{border:0}.metric-row b{color:#d9e4f7;font-weight:600}
+.map{height:118px;position:relative;overflow:hidden;background:radial-gradient(circle at center,#142d45,#07101d 70%);border:1px solid #ffffff0c;border-radius:10px}
+.map svg{width:100%;height:100%}.route{stroke:#22d3ee;stroke-width:1.5;stroke-dasharray:5 6;fill:none;animation:dash 1.5s linear infinite}.node{fill:#a78bfa;filter:drop-shadow(0 0 5px #a78bfa)}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.progress-wrap{padding:0 18px 18px}.progress-label{display:flex;justify-content:space-between;color:#7f8da5;font:10px ui-monospace,monospace;margin-bottom:8px}.track{height:5px;border-radius:8px;background:#ffffff12;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);box-shadow:0 0 16px #22d3ee;transition:width .35s}
+.controls{text-align:center;padding:6px 18px 22px}.action{border:1px solid #a78bfa88;background:linear-gradient(100deg,#6d28d9,#4338ca);color:white;border-radius:999px;padding:14px 28px;font-weight:850;font-size:13px;letter-spacing:.06em;cursor:pointer;box-shadow:0 8px 30px #6d28d944}.action:disabled{opacity:.55;cursor:default}.hint{font-size:11px;color:#738098;margin-top:12px}
+.disclaimer{text-align:center;color:#64748b;font:10px ui-monospace,monospace;letter-spacing:.08em;margin:20px 0 0}.ending{display:none;text-align:center;padding:28px 18px 32px;border-top:1px solid #ffffff12;background:radial-gradient(ellipse at 50% 0,#49351c55,transparent 65%)}
+.reveal{font-size:clamp(38px,8vw,68px);font-weight:950;letter-spacing:-.06em;color:#facc15;margin:0 0 8px}.ending h2{font-size:20px;margin:0 0 10px}.ending p{max-width:620px;margin:0 auto 20px;color:#aab5c8;line-height:1.7;font-size:13px}
+.back{display:inline-block;color:#b9a5f5;text-decoration:none;font-size:12px;margin-top:22px}.back:hover{text-decoration:underline}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.terminal{min-height:300px}.side{display:grid;grid-template-columns:1fr 1fr}.side .card:first-child{grid-column:1/-1}.top{font-size:9px}.subtitle{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
 <body><main>
-<div class="eyebrow">CloseApps presents · classified experience</div>
+<div class="top"><span class="brand">CLOSEAPPS // EXPERIMENTAL</span><span class="live"><i></i> SESSION SIMULATION</span></div>
 <h1>PROJECT: ZERO</h1>
-<p class="lead">Система ожидает подтверждения. После запуска начнётся последовательность инициализации. Не закрывайте окно.</p>
-<section class="panel" aria-live="polite">
-<div class="status"><span class="dot" id="dot"></span><span id="status">Ожидание сигнала</span></div>
-<div class="progress"><div class="bar" id="bar"></div></div>
-<div style="display:flex;justify-content:space-between;color:#77738b;font-size:11px"><span id="phase">PHASE 0 / LOCKED</span><span id="percent">0%</span></div>
-<div class="log" id="log"><div>secure channel established</div><div>waiting for launch authorization...</div><div>project zero is standing by</div></div>
-<button class="action" id="start" disabled>ЗАПУСК ЗАБЛОКИРОВАН</button>
-<div id="ending" class="hidden">
-<div class="reveal">😂 ПРИКОЛ!</div>
-<div class="laugh">Тебя разыграли. Никакого взлома не было.</div>
-<p style="color:#bcb8cc;line-height:1.6">Это была постановочная анимация от CloseApps. Страница не сканировала устройство, не открывала файлы и ничего не отправляла.</p>
-<a class="action" href="../" style="display:inline-block;text-decoration:none">Вернуться в CloseApps</a>
+<p class="subtitle">Autonomous security sequence · build 0.9.4</p>
+<section class="shell" aria-live="polite">
+<div class="shell-head"><div class="dots"><i></i><i></i><i></i></div><span class="shell-title">zero-console — isolated sandbox</span><span class="shell-title">LOCAL DEMO</span></div>
+<div class="grid">
+ <div class="terminal">
+  <div class="terminal-head"><span>EVENT STREAM / SYSTEM LOG</span><span id="clock">00:00:00</span></div>
+  <div id="log"><div class="line"><span class="muted">[00:00:00]</span> <span class="prompt">zero@simulator:~$</span> awaiting operator command</div><div class="line"><span class="muted">[00:00:01]</span> sandbox environment initialized</div><div class="line"><span class="muted">[00:00:01]</span> external connections: <span class="ok">disabled</span></div></div>
+ </div>
+ <aside class="side">
+  <div class="card"><div class="card-title">Simulated network topology</div><div class="map"><svg viewBox="0 0 320 118" aria-label="Схема вымышленной сети"><path class="route" d="M28 60 L105 25 L185 54 L278 24 M105 25 L118 91 L185 54 L278 91"/><circle class="node" cx="28" cy="60" r="4"/><circle class="node" cx="105" cy="25" r="4"/><circle class="node" cx="118" cy="91" r="4"/><circle class="node" cx="185" cy="54" r="5"/><circle class="node" cx="278" cy="24" r="4"/><circle class="node" cx="278" cy="91" r="4"/><g fill="#71839e" font-size="8" font-family="monospace"><text x="12" y="77">NODE A</text><text x="86" y="14">ROUTER</text><text x="100" y="108">GATE</text><text x="164" y="42">CORE</text><text x="257" y="13">EDGE 01</text><text x="256" y="108">EDGE 02</text></g></svg></div></div>
+  <div class="card"><div class="card-title">Runtime telemetry</div><div class="metric-row"><span>CPU LOAD</span><b id="cpu">—</b></div><div class="metric-row"><span>MEMORY</span><b id="mem">—</b></div><div class="metric-row"><span>NODES</span><b id="nodes">0 / 6</b></div><div class="metric-row"><span>ACCESS</span><b id="access" class="ok">SANDBOX</b></div></div>
+  <div class="card"><div class="card-title">Operation status</div><div class="metric-row"><span>PHASE</span><b id="phase">STANDBY</b></div><div class="metric-row"><span>INTEGRITY</span><b id="integrity" class="ok">100%</b></div><div class="metric-row"><span>ENCRYPTION</span><b id="encryption">IDLE</b></div><div class="metric-row"><span>THREAT LEVEL</span><b id="threat" class="ok">NONE</b></div></div>
+ </aside>
 </div>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText">SEQUENCE PROGRESS</span><span id="percent">0%</span></div><div class="track"><div class="bar" id="bar"></div></div></div>
+<div class="controls"><button class="action" id="start">INITIALIZE SEQUENCE</button><div class="hint" id="hint">Запускается только локальная визуальная симуляция.</div></div>
+<div class="ending" id="ending"><div class="reveal">😂 ПРИКОЛ!</div><h2>Никакого взлома не было.</h2><p>Ты только что увидел постановочную сцену: все узлы, журналы, показатели и события были сгенерированы внутри этой страницы. Она не подключалась к чужим системам, не сканировала устройство, не читала файлы и ничего никуда не отправляла.</p><a class="action" href="../" style="display:inline-block;text-decoration:none">ВЕРНУТЬСЯ В CLOSEAPPS</a></div>
 </section>
-<p class="small">ZERO // SIMULATED SYSTEM SEQUENCE · NO REAL ACCESS OR SCANNING</p>
+<p class="disclaimer">FICTIONAL CYBERSECURITY DEMO · NO NETWORK ACTIVITY · NO DEVICE ACCESS</p>
 <a class="back" href="../">← Вернуться на главную CloseApps</a>
 </main>
 <script>
 (() => {
- const start = document.getElementById("start"), status = document.getElementById("status");
- const log = document.getElementById("log"), bar = document.getElementById("bar");
- // Страница и симуляция доступны сразу; общий таймер на главной управляет только публикацией ссылки.
- start.disabled=false;
- start.textContent="ЗАПУСТИТЬ PROJECT: ZERO";
- status.textContent="СИГНАЛ ДОСТУПЕН";
- document.getElementById("phase").textContent="PHASE 1 / READY";
- document.getElementById("percent").textContent="0%";
- bar.style.width="0%";
+ const start=document.getElementById("start"),log=document.getElementById("log"),bar=document.getElementById("bar");
+ const $=id=>document.getElementById(id);
+ const events=[
+  ["BOOT","Starting isolated runtime environment...", "ok"],
+  ["BOOT","Loading virtual kernel modules [simulated]", "muted"],
+  ["SCAN","Enumerating fictional network segment 10.0.0.0/24", "warn"],
+  ["SCAN","Discovered node 10.0.0.1 — gateway / response 4 ms", "ok"],
+  ["SCAN","Discovered node 10.0.0.12 — edge service / response 8 ms", "ok"],
+  ["SCAN","Discovered node 10.0.0.24 — auth proxy / response 11 ms", "ok"],
+  ["TRACE","Mapping route: NODE A → ROUTER → CORE", "muted"],
+  ["TRACE","Handshake negotiation: TLS 1.3 [mock exchange]", "ok"],
+  ["AUTH","Testing decoy credentials against sandbox identity provider", "warn"],
+  ["AUTH","Token signature mismatch — access denied", "bad"],
+  ["ANALYSIS","Inspecting fictional service banner: ZERO/0.9.4", "muted"],
+  ["ANALYSIS","Correlating 6 simulated telemetry signals...", "ok"],
+  ["ALERT","ANOMALOUS PATTERN DETECTED IN DECOY ENVIRONMENT", "bad"],
+  ["RESPONSE","Triggering simulated containment protocol", "warn"],
+  ["RESPONSE","Isolating virtual nodes: 6/6", "ok"],
+  ["AUDIT","Writing event trace to temporary in-memory buffer", "muted"],
+  ["AUDIT","No host files accessed · no packets transmitted", "ok"],
+  ["FINAL","SIMULATION COMPLETE — OPERATOR DEBRIEF READY", "ok"]
+ ];
+ let running=false;
+ function addLine(t,kind){
+  const row=document.createElement("div");row.className="line";
+  const stamp=new Date().toLocaleTimeString("ru-RU",{hour12:false});
+  const time=document.createElement("span");time.className="muted";time.textContent="["+stamp+"] ";
+  const tag=document.createElement("span");tag.className=kind==="ok"?"ok":kind==="warn"?"warn":kind==="bad"?"bad":"muted";tag.textContent="["+t[0]+"] ";
+  const msg=document.createElement("span");msg.textContent=t[1];
+  row.append(time,tag,msg);log.appendChild(row);log.scrollTop=log.scrollHeight;
+ }
+ function set(id,value){$(id).textContent=value;}
  start.addEventListener("click",()=>{
-  start.disabled=true;
-  start.classList.add("hidden");log.innerHTML="";status.textContent="Выполняется инициализация";
-  const lines=["initializing virtual environment...","loading fictional system modules...","checking simulated security layer...","SECURITY BREACH DETECTED","ACCESS GRANTED","SIMULATING CONTROL SEQUENCE","SYSTEM COMPROMISED"];
-  let i=0;const interval=setInterval(()=>{if(i>=lines.length){clearInterval(interval);document.getElementById("ending").classList.remove("hidden");status.textContent="СИСТЕМА... ШУТИТ";document.getElementById("dot").style.background="#facc15";return;}const row=document.createElement("div");row.textContent=lines[i];if(lines[i].includes("BREACH")||lines[i].includes("COMPROMISED"))row.className="warning";if(lines[i].includes("GRANTED"))row.className="success";log.appendChild(row);log.scrollTop=log.scrollHeight;bar.style.width=Math.round((i+1)/lines.length*100)+"%";document.getElementById("percent").textContent=Math.round((i+1)/lines.length*100)+"%";document.getElementById("phase").textContent="PHASE 2 / SIMULATION";i++;},850);
+  if(running)return;running=true;start.disabled=true;start.textContent="SEQUENCE RUNNING...";
+  $("hint").textContent="Идёт демонстрация. Все данные вымышлены и существуют только на экране.";
+  log.innerHTML="";let i=0;const began=Date.now();
+  const timer=setInterval(()=>{
+   if(i>=events.length){clearInterval(timer);set("phase","COMPLETE");set("integrity","100%");set("threat","CLEARED");$("threat").className="ok";set("access","SANDBOX");set("encryption","IDLE");set("progressText","SEQUENCE COMPLETE");set("percent","100%");bar.style.width="100%";$("ending").style.display="block";start.style.display="none";$("hint").textContent="Демонстрация завершена.";return;}
+   const e=events[i];addLine(e,e[2]);const pct=Math.round((i+1)/events.length*100);bar.style.width=pct+"%";set("percent",pct+"%");set("phase",e[0]);set("clock",new Date(Date.now()-began).toISOString().slice(11,19));set("cpu",(18+Math.round(Math.random()*67))+"%");set("mem",(320+Math.round(Math.random()*900))+" MB");set("nodes",Math.min(6,Math.floor((i+1)/3))+" / 6");
+   if(e[0]==="AUTH")set("encryption","NEGOTIATING");
+   if(e[0]==="ALERT"){set("threat","ELEVATED");$("threat").className="bad";set("integrity","—");$("integrity").className="warn";}
+   if(e[0]==="RESPONSE"){set("access","ISOLATING");$("access").className="warn";}
+   if(e[0]==="FINAL"){set("access","SANDBOX");$("access").className="ok";}
+   i++;
+  },850);
  });
 })();
-</script></body></html>
+</script>
+</body></html>
