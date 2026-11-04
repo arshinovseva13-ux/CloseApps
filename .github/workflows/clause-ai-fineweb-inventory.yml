@@ -7,6 +7,9 @@ on:
         description: "Optional FineWeb source commit SHA (blank pins current main)"
         required: false
         type: string
+  push:
+    paths:
+      - "datasets/clause-ai/mirror-fineweb/**"
 
 permissions:
   contents: read
