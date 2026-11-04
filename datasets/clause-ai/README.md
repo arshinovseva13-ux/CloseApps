@@ -1,46 +1,38 @@
-# Clause AI — Dataset
+# Clause AI — Universal Knowledge Corpus
 
-**Release:** 0.1.0 (starter sample)  
+**Release:** 0.2.0  
 **Project:** Close Приложения / CLOSE Датасеты
 
-Clause AI is a downloadable dataset project. It is not a model or chatbot.
+Clause AI is a downloadable multilingual knowledge corpus, not a model or chatbot. Its canonical content is knowledge-first: concepts, principles, processes, explanations, and relations between ideas. It is not primarily a question-and-answer dataset.
 
-## Current release
+## Release 0.2.0
 
-This release contains only a small illustrative JSONL sample to establish the record format. It is **not** a large-scale training corpus and does not claim to contain billions or trillions of tokens. The sample records are synthetic demonstrations and should not be treated as verified factual knowledge.
+The first library, **Foundations**, contains 10 original Russian and English knowledge records across physics, biology, mathematics, and computer science.
 
-## Intended workflows
+## Repository structure
 
-- **SFT:** map `instruction`, `input`, and `output` into the trainer's expected conversation format.
-- **RAG:** split approved documents into chunks, preserve metadata, embed and index them. This does not modify model weights.
-- **Continued pretraining:** tokenize an appropriately licensed text corpus using the target model tokenizer. This requires an actual training pipeline and compute.
+- `manifest.json` — release catalog, libraries, shards, languages, and record counts.
+- `schema/record.schema.json` — JSON Schema for knowledge records.
+- `libraries/<library-id>/*.jsonl` — knowledge shards, one JSON object per line.
+- `libraries/foundations/README.md` — description of the first library.
+- `data/sample.jsonl` — legacy format demonstration, not part of the main corpus.
 
-## Record format
+## Record design
 
-Each line in `data/sample.jsonl` is a standalone JSON object:
+Each record includes a stable ID, record type, domain, language, title, summary, detailed body, key points, limitations, relations, provenance, rights, quality state, and tags. Russian and English versions are separate records.
 
-- `id`: stable record identifier
-- `record_type`: `instruction`, `knowledge`, or `code`
-- `domain`: subject area
-- `language`: BCP-47 language tag
-- `content`: task or text fields
-- `provenance`: source and collection metadata
-- `rights`: license and usage notes
-- `quality`: review state
-- `tags`: searchable labels
+## Quality and licensing
 
-## Responsible data policy
+The first library contains original explanatory syntheses. It has not yet undergone independent expert fact-checking or professional language review. All records are marked `draft_review_required`; they must not be treated as verified ground truth.
 
-Before adding real external data, record its source, license, attribution requirements, and permitted uses. Exclude personal data, credentials, private messages, and confidential material. Deduplicate, validate, and review data. Synthetic examples must be labeled as synthetic and must not be presented as verified facts.
+The original explanatory text is released under **CC BY 4.0** by CloseApps / Clause AI. External links and future third-party source material remain subject to their own licenses and restrictions. Record provenance and rights before adding external content. Exclude personal data, secrets, private communications, and confidential information.
 
-## Planned releases
+## Using the corpus
 
-1. Freeze and document the schema.
-2. Add a validator and automated quality checks.
-3. Add source-backed, rights-cleared domain collections.
-4. Publish language/domain shards with manifests and SHA-256 checksums.
-5. Add export recipes for common training and RAG workflows.
+- **RAG:** split the body into chunks while retaining record IDs, language, domain, and references. Index relations separately when useful.
+- **Continued pretraining:** use only after licensing review, quality filtering, deduplication, and token counting with the target model's tokenizer.
+- **Fine-tuning:** derive task examples as a separate transformed dataset. Keep the canonical corpus knowledge-first.
 
-## License
+## Scale and releases
 
-The sample is provided as an illustrative project fixture. No blanket license for future dataset releases is granted by this README. Each release must state its own dataset license and source-specific restrictions.
+The long-term goal is a very large corpus, but no token-volume claim is made. Token counts must be measured with a named tokenizer. Every release should publish record counts, language/domain balance, quality states, licenses, and checksums.
