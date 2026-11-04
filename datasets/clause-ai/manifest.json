@@ -1,6 +1,6 @@
 {
   "dataset": "Clause AI",
-  "release": "0.3.0",
+  "release": "0.3.1",
   "release_date": "2026-11-04",
   "description": "Universal bilingual knowledge corpus. Knowledge records, not question-answer exercises.",
   "languages": [
@@ -141,5 +141,16 @@
       "integration": "Начать с тематических выборок и метаданных; сохранять идентификаторы, DOI и связи цитирования.",
       "caution": "Полный snapshot занимает сотни гигабайт. Метаданные и полные тексты имеют разные условия доступа и права."
     }
+  ],
+  "management": {
+    "notion_control_center": "https://app.notion.com/p/40e542a83e97813aa57cd7044b919c2d",
+    "notion_dataset_registry": "https://app.notion.com/p/552f39d689d14342b449c6d5aed52b34",
+    "access": "private_workspace",
+    "role": "source registry, licensing review, import tracking, quality and release management",
+    "note": "Notion stores project metadata and workflow state. Large dataset shards are stored separately; external candidates are not counted as imported records."
+  },
+  "release_notes": [
+    "0.3.1: Added Notion control center and dataset registry links; documented separation between management metadata and corpus storage.",
+    "0.3.0: Added external large-dataset source catalogue. Sources are candidates and have not been imported into the canonical corpus."
   ]
 }
