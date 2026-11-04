@@ -1,0 +1,50 @@
+{
+  "dataset": "Clause AI",
+  "release": "0.2.0",
+  "release_date": "2026-11-04",
+  "description": "Universal bilingual knowledge corpus. Knowledge records, not question-answer exercises.",
+  "languages": [
+    "ru",
+    "en"
+  ],
+  "record_schema": "./schema/record.schema.json",
+  "libraries": [
+    {
+      "id": "foundations",
+      "title": "Foundations — Фундаментальные знания",
+      "description": "Initial bilingual library of foundational concepts and principles across science, mathematics, computing, Earth science, astronomy, chemistry, and economics.",
+      "files": [
+        {
+          "path": "./libraries/foundations/knowledge.ru-en.jsonl",
+          "format": "jsonl",
+          "records": 22,
+          "languages": [
+            "ru",
+            "en"
+          ],
+          "domains": [
+            "physics",
+            "biology",
+            "mathematics",
+            "computer_science",
+            "earth_science",
+            "astronomy",
+            "chemistry",
+            "economics"
+          ]
+        }
+      ]
+    }
+  ],
+  "total_records": 22,
+  "token_count": null,
+  "token_count_note": "Not measured. Token counts depend on tokenizer and encoding.",
+  "integrity": {
+    "checksums": "./checksums.sha256",
+    "generated_at": "pending"
+  },
+  "quality_policy": {
+    "draft_records_allowed": true,
+    "unreviewed_records_must_not_be_mislabeled_as_verified": true
+  }
+}
