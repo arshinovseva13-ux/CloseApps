@@ -17,7 +17,7 @@
         {
           "path": "./libraries/foundations/knowledge.ru-en.jsonl",
           "format": "jsonl",
-          "records": 22,
+          "records": 10,
           "languages": [
             "ru",
             "en"
@@ -26,17 +26,13 @@
             "physics",
             "biology",
             "mathematics",
-            "computer_science",
-            "earth_science",
-            "astronomy",
-            "chemistry",
-            "economics"
+            "computer_science"
           ]
         }
       ]
     }
   ],
-  "total_records": 22,
+  "total_records": 10,
   "token_count": null,
   "token_count_note": "Not measured. Token counts depend on tokenizer and encoding.",
   "integrity": {
