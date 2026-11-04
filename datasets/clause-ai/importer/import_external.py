@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import re
+import random
 import sys
 import time
 from datetime import datetime, timezone
@@ -170,6 +171,10 @@ def wikidata_records(limit: int) -> Iterator[dict]:
                 continue
             if entity.get("type") not in ("item", "property"):
                 continue
+            # Deterministic stride sampling spreads the subset across the complete ID range.
+            numeric_id = re.search(r"([QP])(\\d+)$", safe_text(entity.get("id")))
+            if numeric_id and int(numeric_id.group(2)) % 100 != 0:
+                continue
             labels = entity.get("labels", {})
             descriptions = entity.get("descriptions", {})
             label = safe_text(labels.get("ru", {}).get("value") or labels.get("en", {}).get("value"))
@@ -216,7 +221,9 @@ def openalex_records(limit: int) -> Iterator[dict]:
     r = requests.get(manifest_url, headers={"User-Agent": UA}, timeout=TIMEOUT)
     r.raise_for_status()
     manifest = r.json()
-    files = manifest.get("files", [])
+    files = list(manifest.get("files", []))
+    # Spread the sample over snapshot partitions, not only the first update dates.
+    random.Random(20261104).shuffle(files)
     emitted = 0
     for entry in files:
         s3_url = entry.get("url", "")
