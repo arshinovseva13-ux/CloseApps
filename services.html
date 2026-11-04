@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b14">
+<title>Услуги — CloseApps</title>
+<style>
+:root{color-scheme:dark;--bg:#080b14;--panel:#111a2b;--line:#293852;--text:#eef4ff;--muted:#a7b5ce;--cyan:#65e5ff;--violet:#a78bfa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0,#20345b,transparent 38%),var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:inherit}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.topbar{position:sticky;top:0;z-index:5;background:#080d18eF;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.nav{height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:900;letter-spacing:2px}.brand span{color:var(--cyan)}.nav a{font-size:13px;text-decoration:none;color:var(--muted)}.nav a:hover{color:white}.hero{padding:64px 0 40px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:3px}.hero h1{font-size:clamp(42px,8vw,76px);line-height:.98;letter-spacing:-3px;margin:14px 0}.hero h1 em{font-style:normal;color:var(--cyan)}.hero p{max-width:720px;color:var(--muted);font-size:17px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 17px;border-radius:11px;text-decoration:none;font-weight:750;border:1px solid var(--line);background:#17233a}.btn.primary{background:linear-gradient(110deg,#48cfe9,#9286f6);color:#08111c;border:0}.section{padding:28px 0 46px}.section h2{font-size:clamp(25px,4vw,36px);margin:0 0 8px}.lead{color:var(--muted);margin:0 0 20px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.card{border:1px solid var(--line);background:linear-gradient(145deg,#141f33,#0e1524);border-radius:16px;padding:19px;display:flex;flex-direction:column;min-height:220px}.tag{font-size:10px;letter-spacing:1.5px;color:var(--cyan);font-weight:800}.card h3{font-size:19px;margin:9px 0 5px}.card p{color:var(--muted);font-size:13px;margin:0 0 18px}.price{font-size:27px;font-weight:900;margin-top:auto}.price small{font-size:12px;color:var(--muted);font-weight:500}.note{border:1px solid #4c4774;background:#17172b;border-radius:13px;padding:15px 17px;color:#d9d4f5;font-size:13px;margin-top:18px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{border:1px solid var(--line);border-radius:13px;padding:16px;background:#0e1625}.step b{display:block;margin-bottom:5px}.step span{font-size:13px;color:var(--muted)}.contact{border:1px solid var(--line);border-radius:18px;padding:24px;background:linear-gradient(130deg,#14243a,#111526)}.contact p{color:var(--muted);max-width:700px}.contact .btn{margin-top:8px}.footer{border-top:1px solid var(--line);padding:22px 0 35px;color:var(--muted);font-size:12px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:1fr}}@media(max-width:540px){.wrap{width:min(100% - 24px,1120px)}.hero{padding:44px 0 28px}.hero h1{letter-spacing:-2px}.grid{grid-template-columns:1fr}.card{min-height:185px}.nav{height:56px}.nav a{font-size:12px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap nav"><a class="brand" href="./">CLOSE<span>APPS</span></a><a href="./">← На главную</a></div></header>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">CLOSEAPPS · DIGITAL SERVICES</div>
+<h1>Идеи в<br><em>готовые проекты.</em></h1>
+<p>Доступная разработка небольших сайтов и веб-приложений. Помогаем превратить задачу в работающий результат: продумываем структуру, собираем интерфейс, проверяем отображение на телефонах.</p>
+<div class="actions"><a class="btn primary" href="#services">Посмотреть услуги</a><a class="btn" href="#process">Как проходит заказ</a></div>
+</section>
+<section class="section" id="services">
+<h2>Услуги и цены</h2>
+<p class="lead">Стартовые цены для небольших задач. Итоговая стоимость подтверждается после обсуждения требований — никаких неожиданных доплат.</p>
+<div class="grid">
+<article class="card"><div class="tag">WEB · START</div><h3>Простой сайт</h3><p>Одна аккуратная страница с текстом, блоками и кнопками. Подойдёт для небольшой идеи или проекта.</p><div class="price">790 ₽ <small>от</small></div></article>
+<article class="card"><div class="tag">WEB · BUSINESS</div><h3>Сайт-визитка</h3><p>Страница о проекте, услугах или авторе: структура, оформление и удобная навигация.</p><div class="price">1 490 ₽ <small>от</small></div></article>
+<article class="card"><div class="tag">WEB · MULTI-PAGE</div><h3>Многостраничный сайт</h3><p>Несколько связанных страниц с единым стилем и адаптацией под мобильные экраны.</p><div class="price">2 490 ₽ <small>от</small></div></article>
+<article class="card"><div class="tag">APP · MINI</div><h3>Мини-приложение</h3><p>Небольшой инструмент в браузере: калькулятор, таймер, планировщик или генератор.</p><div class="price">990 ₽ <small>от</small></div></article>
+<article class="card"><div class="tag">APP · CUSTOM</div><h3>Веб-приложение на заказ</h3><p>Индивидуальная логика, интерфейс и функции под конкретную задачу.</p><div class="price">1 990 ₽ <small>от</small></div></article>
+<article class="card"><div class="tag">FIX · SUPPORT</div><h3>Исправление и адаптация</h3><p>Небольшие исправления, улучшение мобильной версии или настройка отдельных элементов.</p><div class="price">300 ₽ <small>от</small></div></article>
+</div>
+<div class="note"><b>Честно о цене:</b> указана начальная стоимость простых проектов. Сложные функции, серверная часть, авторизация, базы данных, платные сервисы и публикация на сторонних платформах оцениваются отдельно. До начала работы согласуем объём, сроки и итоговую цену.</div>
+</section>
+<section class="section" id="process">
+<h2>Как проходит работа</h2><p class="lead">Понятный процесс без лишних обещаний.</p>
+<div class="steps">
+<div class="step"><b>01 · Обсуждаем</b><span>Вы описываете идею, назначение сайта и нужные функции.</span></div>
+<div class="step"><b>02 · Согласуем</b><span>Уточняем объём, цену, сроки и формат результата до начала работы.</span></div>
+<div class="step"><b>03 · Создаём и проверяем</b><span>Готовим проект, проверяем основные сценарии и передаём результат.</span></div>
+</div>
+</section>
+<section class="section">
+<div class="contact"><div class="eyebrow">LET'S BUILD SOMETHING</div><h2>Есть идея?</h2><p>Подготовьте короткое описание задачи: что нужно сделать, какие функции важны и есть ли примеры желаемого результата. Контакт для заказов будет добавлен после настройки безопасного рабочего канала связи.</p><span class="btn" aria-disabled="true">Контакт скоро появится</span></div>
+</section>
+</main>
+<footer class="footer"><div class="wrap">© CloseApps · Услуги разработки. Все проекты и сроки согласуются индивидуально.</div></footer>
+</body></html>
