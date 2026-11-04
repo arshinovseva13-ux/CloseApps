@@ -7,7 +7,7 @@ Clause AI is a downloadable multilingual knowledge corpus, not a model or chatbo
 
 ## Release 0.2.0
 
-The first library, **Foundations**, contains 10 original Russian and English knowledge records across physics, biology, mathematics, and computer science.
+The first library, **Foundations**, contains 22 original Russian and English knowledge records across physics, biology, mathematics, computer science, Earth science, astronomy, chemistry, and economics.
 
 ## Repository structure
 
