@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080c18">
+<title>Clause AI — датасет</title>
+<style>
+:root{color-scheme:dark;--bg:#080c18;--panel:#111a2d;--line:#293754;--text:#edf3ff;--muted:#a9b7d0;--accent:#a78bfa;--cyan:#67e8f9}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#35205c 0,transparent 42%),radial-gradient(ellipse at 90% 20%,#123a4c 0,transparent 36%),var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif;min-height:100vh}
+main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:48px 0 72px}.back{color:var(--cyan);text-decoration:none;font-weight:700}.hero{padding:34px;margin:26px 0;border:1px solid #8b5cf655;border-radius:26px;background:linear-gradient(135deg,#17152cdd,#0d2631dd);box-shadow:0 24px 80px #0006}.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#c4b5fd;font-weight:800}.hero h1{font-size:clamp(42px,9vw,76px);line-height:1;margin:14px 0;background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);background-clip:text;color:transparent}.hero p{max-width:720px;color:#d1d9e9}.tag{display:inline-block;border:1px solid #8b5cf677;border-radius:999px;padding:5px 11px;color:#ddd6fe;font-size:12px;font-weight:800;margin:4px 5px 0 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0}.panel{padding:21px;border:1px solid var(--line);border-radius:18px;background:#111a2de8}.panel h2{margin:0 0 8px;font-size:19px}.muted{color:var(--muted)}a.download{display:inline-flex;align-items:center;gap:9px;margin:10px 8px 0 0;padding:12px 17px;border-radius:12px;background:linear-gradient(100deg,#7656df,#287f9a);color:white;text-decoration:none;font-weight:800}.secondary{background:#18243a!important;border:1px solid #435474}.notice{padding:16px;border-left:3px solid var(--cyan);background:#102434;border-radius:10px;color:#d9f7ff}.footer{margin-top:42px;color:#8090aa;font-size:13px}
+code{color:#c4b5fd}
+</style>
+</head>
+<body><main>
+<a class="back" href="../../">← Вернуться в Close Приложения</a>
+<section class="hero">
+<div class="eyebrow">CLOSE DATASETS · RELEASE 0.1.0</div>
+<h1>Clause AI</h1>
+<p>Универсальный открытый корпус данных, задуманный для подготовки, обучения и расширения возможностей языковых моделей. Это набор данных, а не нейросеть и не чат-бот.</p>
+<span class="tag">JSONL</span><span class="tag">Hugging Face workflows</span><span class="tag">SFT / RAG / pretraining</span><span class="tag">Мультиязычный проект</span>
+</section>
+<div class="notice"><strong>Важно:</strong> текущий релиз — небольшой стартовый пример схемы и формата. Он не является большим обучающим корпусом и не содержит триллионы токенов. Масштабирование будет идти поэтапно, с проверкой источников, лицензий, качества и приватности.</div>
+<div class="grid">
+<section class="panel"><h2>Что это</h2><p class="muted">Структурированные текстовые данные и инструкции, которые можно преобразовывать под разные сценарии обучения и поиска знаний.</p></section>
+<section class="panel"><h2>Для чего</h2><p class="muted">Supervised fine-tuning, подготовка корпуса для continued pretraining после токенизации и RAG без изменения весов модели.</p></section>
+<section class="panel"><h2>Форматы</h2><p class="muted">Основной обменный формат — JSONL. В следующих релизах планируются Parquet-шарды, манифесты, контрольные суммы и экспортёры.</p></section>
+</div>
+<section class="panel">
+<h2>Стартовый набор</h2>
+<p class="muted">Небольшие демонстрационные записи показывают структуру файлов. Примеры созданы специально для демонстрации формата и не должны восприниматься как проверенная энциклопедическая база.</p>
+<a class="download" href="./data/sample.jsonl" download>↓ Скачать sample.jsonl</a>
+<a class="download secondary" href="./README.md">Документация</a>
+</section>
+<section class="panel" style="margin-top:14px">
+<h2>Принципы качества</h2>
+<ul class="muted"><li>У каждого внешнего материала должны быть источник и сведения о правах использования.</li><li>Персональные данные, секреты и чувствительная информация не включаются.</li><li>Дубликаты удаляются; спорные и синтетические записи маркируются.</li><li>Обучающие и тестовые выборки разделяются, чтобы снизить утечки.</li><li>Лицензия каждого релиза публикуется отдельно и не выводится автоматически из лицензии кода.</li></ul>
+</section>
+<div class="footer">Clause AI · Close Приложения · Версия 0.1.0 · Проект находится в разработке.</div>
+</main></body></html>
