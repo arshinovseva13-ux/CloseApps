@@ -40,11 +40,11 @@ code{color:#c4b5fd}
 </section>
 <section class="panel" id="datasetViewer" style="margin-top:14px">
 <h2>Текстовый просмотр датасета</h2>
-<p class="muted">Просматривай записи в удобном виде или переключайся на исходный JSONL. Поиск работает по содержимому, тематике и тегам.</p>
+<p class="muted">Переключайся между двумя режимами: читаемым представлением знаний и исходными строками JSONL. Поиск работает по содержимому, тематике и тегам.</p>
 <div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0">
 <input id="datasetSearch" type="search" placeholder="Найти в датасете…" aria-label="Поиск по датасету" style="flex:1;min-width:190px;padding:12px 14px;border:1px solid #435474;border-radius:11px;background:#0a1222;color:#edf3ff;font:inherit">
-<button id="textMode" type="button" style="padding:11px 15px;border:1px solid #8b5cf6;border-radius:11px;background:#35245e;color:white;font-weight:800">Текстовый вид</button>
-<button id="rawMode" type="button" style="padding:11px 15px;border:1px solid #435474;border-radius:11px;background:#18243a;color:white;font-weight:800">JSONL</button>
+<button id="textMode" type="button" style="padding:11px 15px;border:1px solid #8b5cf6;border-radius:11px;background:#35245e;color:white;font-weight:800">📖 Читаемый вид</button>
+<button id="rawMode" type="button" style="padding:11px 15px;border:1px solid #435474;border-radius:11px;background:#18243a;color:white;font-weight:800">{ } Исходный JSONL</button>
 </div>
 <div id="datasetStatus" class="muted" role="status" aria-live="polite">Загружаем записи…</div>
 <div id="datasetRecords" style="display:grid;gap:12px;margin-top:14px"></div>
