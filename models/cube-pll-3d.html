@@ -1,110 +1,65 @@
 <!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080d1b">
-<title>CUBE PLL 3D · Close Приложения</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080b14"><title>CUBE PLL 3D · Close Приложения</title>
 <style>
-:root{color-scheme:dark;--bg:#080d1b;--panel:#101a2d;--line:#263753;--muted:#9aabc4;--text:#f3f7ff;--cyan:#67e8f9;--violet:#a78bfa}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#253768 0,transparent 52%),linear-gradient(160deg,#080d1b,#0b1222 55%,#080d1b);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-header{max-width:1200px;margin:auto;padding:24px 22px 10px;display:flex;justify-content:space-between;align-items:center;gap:16px}a{color:var(--cyan);text-decoration:none}.brand{font-weight:900;letter-spacing:.04em}.brand span{color:var(--cyan)}.back{border:1px solid var(--line);border-radius:999px;padding:9px 14px;color:#dce8ff}
-main{max-width:1200px;margin:auto;padding:16px 22px 50px}.hero{margin:12px 0 22px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}.hero h1{font-size:clamp(32px,6vw,58px);line-height:1.02;margin:8px 0;background:linear-gradient(90deg,#fff,#b7caff 55%,#67e8f9);background-clip:text;color:transparent;letter-spacing:-.055em}.hero p{color:var(--muted);max-width:700px;margin:12px 0}
-.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.8fr);gap:18px}.panel{border:1px solid var(--line);background:linear-gradient(145deg,#111d32eF,#0c1425f2);border-radius:22px;box-shadow:0 20px 60px #0005;overflow:hidden}.viewer{min-height:520px;position:relative;background:radial-gradient(ellipse at 50% 45%,#1c3154,#0a1120 70%)}#stage{position:absolute;inset:0;touch-action:none}.view-label{position:absolute;top:16px;left:18px;z-index:2;color:#c4d5f5;font-size:11px;letter-spacing:.16em;text-transform:uppercase;pointer-events:none}.view-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#8295b5;font-size:12px;pointer-events:none}.side{padding:20px}.side h2{font-size:23px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 17px}.case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.case{border:1px solid #2b3d5c;background:#0b1425;color:#e9f1ff;border-radius:13px;padding:12px;text-align:left;cursor:pointer;transition:.2s}.case:hover,.case.active{border-color:var(--cyan);background:linear-gradient(120deg,#12324a,#201b42);box-shadow:0 0 0 1px #67e8f944}.case b{display:block;font-size:15px}.case small{color:#9eb2d2}.algo{margin-top:18px;padding:14px;border-radius:14px;background:#080f1e;border:1px solid #253653}.algo-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.algo-head strong{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9eb2d2}.copy{border:1px solid #334b70;background:#13213a;color:#dceaff;border-radius:8px;padding:6px 10px;cursor:pointer}.notation{font:600 16px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;color:#fff;margin-top:9px}.meaning{color:var(--muted);font-size:13px;margin-top:8px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.controls button,.speed{border:1px solid #314665;background:#14213a;color:#f0f6ff;border-radius:11px;padding:10px 13px;cursor:pointer;font-weight:700}.controls .primary{background:linear-gradient(100deg,#0e7490,#6d28d9);border:0}.controls button:disabled{opacity:.4;cursor:not-allowed}.speedrow{display:flex;align-items:center;gap:10px;margin-top:14px;color:var(--muted);font-size:12px}.speedrow input{flex:1;accent-color:var(--cyan)}.progress{height:5px;background:#1c2a42;border-radius:9px;margin-top:14px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .2s}.sequence-note{font-size:12px;color:#8295b5;margin-top:9px}.footer{text-align:center;color:#6f82a3;font-size:12px;margin-top:22px}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.viewer{min-height:420px}.side{padding:17px}}@media(max-width:480px){header{padding:17px 15px}.back{font-size:12px}main{padding:12px 13px 35px}.viewer{min-height:350px}.case-list{grid-template-columns:repeat(2,1fr)}.notation{font-size:14px}}
-</style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-</head>
-<body>
-<header><div class="brand"><span>CLOSE</span> / CUBE LAB</div><a class="back" href="../">← На главную CloseApps</a></header>
-<main>
-<section class="hero"><div class="eyebrow">3D model collection · PLL</div><h1>CUBE PLL 3D</h1><p>Шесть PLL-комбинаций в интерактивной 3D-модели. Выбирай случай, вращай кубик, запускай алгоритм целиком или проходи его ход за ходом.</p></section>
-<div class="layout">
-<section class="panel viewer"><div class="view-label">3D CUBE · DRAG TO ROTATE</div><div id="stage"></div><div class="view-hint">Проведи пальцем или мышью, чтобы осмотреть кубик</div></section>
-<section class="panel side">
-<h2 id="caseTitle">T-Perm · Т-шка</h2><p class="sub" id="caseSub">Первый этап · перестановка углов и рёбер</p>
-<div class="case-list" id="caseList"></div>
-<div class="algo"><div class="algo-head"><strong>Алгоритм</strong><button class="copy" id="copyBtn">Копировать</button></div><div class="notation" id="notation"></div><div class="meaning" id="caseMeaning"></div></div>
-<div class="controls"><button class="primary" id="playBtn">▶ Воспроизвести</button><button id="stepBtn">Следующий ход →</button><button id="resetBtn">↺ Сбросить</button></div>
-<div class="progress"><span id="progressBar"></span></div><div class="sequence-note" id="progressText">Готово к выполнению · 0 ходов</div>
-<div class="speedrow"><label for="speed">Скорость</label><input id="speed" type="range" min="1" max="10" value="5"><span id="speedValue">5/10</span></div>
-</section>
-</div>
-<div class="footer">CUBE PLL 3D · Close Приложения · Интерактивная учебная 3D-модель</div>
-</main>
+:root{color-scheme:dark;--line:#293a54;--muted:#9aabc4;--cyan:#67e8f9}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#25385f,transparent 50%),linear-gradient(155deg,#080b14,#0b1220 60%,#080b14);color:#f8fafc;font:15px/1.5 system-ui,sans-serif}header,main{max-width:1240px;margin:auto}header{padding:22px 24px 8px;display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{font-weight:900;letter-spacing:.09em}.brand span{color:var(--cyan)}a{color:var(--cyan);text-decoration:none}.back{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:#dbeafe;font-size:13px}main{padding:16px 24px 48px}.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--cyan);font-weight:800}.hero h1{font-size:clamp(34px,6vw,62px);letter-spacing:-.06em;line-height:1;margin:9px 0;background:linear-gradient(90deg,#fff,#c4d2ff 58%,#67e8f9);background-clip:text;color:transparent}.hero p{color:var(--muted);max-width:760px}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.8fr);gap:18px}.panel{border:1px solid var(--line);border-radius:23px;background:linear-gradient(145deg,#131e31f5,#0c1423f5);box-shadow:0 24px 70px #0006;overflow:hidden}.viewer{position:relative;min-height:590px;background:radial-gradient(ellipse at 50% 43%,#243b60,#111d32 45%,#090f1c 80%)}#stage{position:absolute;inset:0;touch-action:none}.view-label{position:absolute;top:17px;left:19px;z-index:2;font-size:10px;letter-spacing:.18em;color:#b8c9e5;pointer-events:none}.view-hint{position:absolute;bottom:15px;left:12px;right:12px;text-align:center;color:#8fa2c0;font-size:12px;pointer-events:none}.side{padding:20px}.side h2{margin:0;font-size:24px}.sub{margin:4px 0 17px;color:var(--muted);font-size:13px}.case-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.case{cursor:pointer;text-align:left;padding:12px;border:1px solid #2b3b54;border-radius:13px;background:#0b1322;color:#eef5ff}.case b{display:block}.case small{color:#94a9c8}.case.active,.case:hover{border-color:var(--cyan);background:linear-gradient(120deg,#12344a,#201b42)}.algo{margin-top:17px;padding:14px;border-radius:15px;border:1px solid #273852;background:#080f1c}.algo-head{display:flex;align-items:center;justify-content:space-between}.algo-head strong{font-size:11px;letter-spacing:.14em;color:#9eb2d2}.copy,.controls button,.actions button{cursor:pointer;border:1px solid #344965;background:#14223a;color:#eaf2ff;border-radius:10px;padding:10px 12px;font-weight:700}.notation{font:650 16px/1.9 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;margin-top:8px}.meaning{font-size:13px;color:var(--muted);margin-top:7px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}.actions button{min-height:43px}.actions .setup{background:linear-gradient(110deg,#164e63,#155e75);border:0}.actions .solve{background:linear-gradient(110deg,#5b21b6,#4338ca);border:0}.controls{display:flex;gap:8px;margin-top:9px}.controls button{flex:1}.controls button:disabled,.actions button:disabled{opacity:.4}.progress{height:5px;background:#1c2b41;border-radius:10px;overflow:hidden;margin-top:15px}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--cyan),#a78bfa)}.status{font-size:12px;color:#91a5c5;margin-top:8px;min-height:19px}.speedrow{display:flex;align-items:center;gap:10px;margin-top:12px;color:var(--muted);font-size:12px}.speedrow input{flex:1;accent-color:var(--cyan)}.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.legend span{font-size:11px;color:#9fb1cd;border:1px solid #2b3b54;border-radius:99px;padding:4px 8px}.notice,.footer{color:#8194b2;font-size:12px}.notice{margin-top:13px}.footer{text-align:center;margin-top:22px}@media(max-width:900px){.layout{grid-template-columns:1fr}.viewer{min-height:490px}.side{padding:17px}}@media(max-width:520px){header{padding:16px 14px}.back{font-size:11px;padding:8px 10px}main{padding:12px 13px 35px}.viewer{min-height:390px}.side{padding:15px}.notation{font-size:14px}}
+</style><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script></head>
+<body><header><div class="brand"><span>CLOSE</span> / CUBE LAB</div><a class="back" href="../">← На главную CloseApps</a></header><main>
+<section class="hero"><div class="eyebrow">INTERACTIVE 3D · CFOP / PLL</div><h1>CUBE PLL 3D</h1><p>Каждый ход действительно поворачивает слой кубика. Подготовь PLL-ситуацию обратным алгоритмом, затем реши её выбранным пермом.</p></section>
+<div class="layout"><section class="panel viewer"><div class="view-label">REAL CUBIE ROTATION · 3×3×3</div><div id="stage"></div><div class="view-hint">Перетаскивай для вращения · колесо или щипок для масштаба</div></section>
+<section class="panel side"><h2 id="caseTitle">T-Perm · Т-шка</h2><p class="sub" id="caseSub">Первый этап · углы и рёбра</p><div class="case-list" id="caseList"></div>
+<div class="algo"><div class="algo-head"><strong>АЛГОРИТМ PLL</strong><button class="copy" id="copyBtn">Копировать</button></div><div class="notation" id="notation"></div><div class="meaning" id="meaning"></div></div>
+<div class="actions"><button class="setup" id="setupBtn">↶ Подготовить случай</button><button class="solve" id="solveBtn">▶ Решить алгоритмом</button></div><div class="controls"><button id="stepBtn">Следующий ход →</button><button id="resetBtn">↺ Сбросить</button></div><div class="progress"><span id="progressBar"></span></div><div class="status" id="status">Кубик собран. Нажми «Подготовить случай».</div>
+<div class="speedrow"><label for="speed">Скорость</label><input id="speed" type="range" min="1" max="10" value="6"><span id="speedValue">6/10</span></div><div class="legend"><span>U — верх</span><span>R — право</span><span>F — перед</span><span>M — средний слой</span></div><div class="notice">Стандартная нотация Singmaster. H- и Z-Perm используют средний слой M.</div></section></div><div class="footer">CUBE PLL 3D · Close Приложения</div></main>
 <script type="module">
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-const cases=[
-{id:'T',name:'T-Perm',ru:'Т-шка',stage:'Первый этап · перестановка углов и рёбер',alg:"R U R' U' R' F R2 U' R' U' R U R' F'",meaning:'Меняет местами два соседних угла и два соседних ребра.'},
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+const CASES=[
+{id:'T',name:'T-Perm',ru:'Т-шка',stage:'Первый этап · углы и рёбра',alg:"R U R' U' R' F R2 U' R' U' R U R' F'",meaning:'Переставляет две соседние пары: два угла и два ребра.'},
 {id:'Y',name:'Y-Perm',ru:'Копьё',stage:'Первый этап · диагональная перестановка',alg:"F R U' R' U' R U R' F' R U R' U' R' F R F'",meaning:'Диагональная перестановка углов и перестановка рёбер.'},
-{id:'Ua',name:'Ua-Perm',ru:'Цикл по часовой',stage:'Второй этап · перестановка рёбер',alg:"R U' R U R U R U' R' U' R2",meaning:'Три ребра циклически перемещаются по часовой стрелке.'},
-{id:'Ub',name:'Ub-Perm',ru:'Цикл против часовой',stage:'Второй этап · перестановка рёбер',alg:"R2 U R U R' U' R' U' R' U R'",meaning:'Три ребра циклически перемещаются против часовой стрелки.'},
-{id:'H',name:'H-Perm',ru:'Две пары напротив',stage:'Второй этап · перестановка рёбер',alg:"M2 U M2 U2 M2 U M2",meaning:'Две пары противоположных рёбер меняются местами.'},
-{id:'Z',name:'Z-Perm',ru:'Две соседние пары',stage:'Второй этап · перестановка рёбер',alg:"M' U M2 U M2 U M' U2 M2",meaning:'Две пары соседних рёбер меняются местами.'}
-];
-const stage=document.getElementById('stage');
-const scene=new THREE.Scene();scene.background=null;
-const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(5.7,5.2,7.2);
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;stage.appendChild(renderer.domElement);
-const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.minDistance=5;controls.maxDistance=12;
-scene.add(new THREE.HemisphereLight(0xddeaff,0x24304a,2));
-const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(5,8,7);key.castShadow=true;scene.add(key);
-const rim=new THREE.PointLight(0x4fdcff,25,18);rim.position.set(-5,2,-4);scene.add(rim);
-const floor=new THREE.Mesh(new THREE.CircleGeometry(5,64),new THREE.MeshBasicMaterial({color:0x111e34,transparent:true,opacity:.42}));floor.rotation.x=-Math.PI/2;floor.position.y=-2.05;scene.add(floor);
-const cubeGroup=new THREE.Group();scene.add(cubeGroup);const cubies=[];
-const colors={R:0xdc2626,L:0xf97316,U:0xffffff,D:0xfacc15,F:0x16a34a,B:0x2563eb};
-function makeCube(){
- while(cubeGroup.children.length)cubeGroup.remove(cubeGroup.children[0]);cubies.length=0;
- const gap=.055,size=.96;
- for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++){
-  const mats=[
-   new THREE.MeshStandardMaterial({color:x===1?colors.R:0x111827,roughness:.32,metalness:.05}),
-   new THREE.MeshStandardMaterial({color:x===-1?colors.L:0x111827,roughness:.32,metalness:.05}),
-   new THREE.MeshStandardMaterial({color:y===1?colors.U:0x111827,roughness:.32,metalness:.05}),
-   new THREE.MeshStandardMaterial({color:y===-1?colors.D:0x111827,roughness:.32,metalness:.05}),
-   new THREE.MeshStandardMaterial({color:z===1?colors.F:0x111827,roughness:.32,metalness:.05}),
-   new THREE.MeshStandardMaterial({color:z===-1?colors.B:0x111827,roughness:.32,metalness:.05})
-  ];
-  const mesh=new THREE.Mesh(new THREE.BoxGeometry(size,size,size),mats);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;
-  const edges=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry),new THREE.LineBasicMaterial({color:0x020617,transparent:true,opacity:.9}));mesh.add(edges);
-  cubeGroup.add(mesh);cubies.push(mesh);
- }
-}
-makeCube();
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}new ResizeObserver(resize).observe(stage);resize();
-function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera)}render();
-
-let selected=cases[0],moves=[],moveIndex=0,busy=false,playTimer=null;
-const $=id=>document.getElementById(id);
-function parseAlg(a){return a.trim().split(/\s+/).map(t=>({face:t[0],turn:t.endsWith('2')?2:t.endsWith("'")?-1:1,token:t}));}
-function updateProgress(){$('progressBar').style.width=(moves.length?moveIndex/moves.length*100:0)+'%';$('progressText').textContent=moveIndex>=moves.length?'Алгоритм завершён · '+moves.length+' ходов':'Выполнено '+moveIndex+' из '+moves.length+' ходов';}
-function renderCase(){
- $('caseTitle').textContent=selected.name+' · '+selected.ru;$('caseSub').textContent=selected.stage;$('notation').textContent=selected.alg;$('caseMeaning').textContent=selected.meaning;
- $('caseList').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.id===selected.id));
- stopPlay();resetCube();moves=parseAlg(selected.alg);moveIndex=0;updateProgress();
-}
-function renderList(){const list=$('caseList');cases.forEach(c=>{const b=document.createElement('button');b.className='case';b.dataset.id=c.id;b.innerHTML='<b>'+c.name+'</b><small>'+c.ru+'</small>';b.addEventListener('click',()=>{selected=c;renderCase()});list.appendChild(b)});}
-function stopPlay(){if(playTimer){clearTimeout(playTimer);playTimer=null}busy=false;$('playBtn').textContent='▶ Воспроизвести'}
-function resetCube(){stopPlay();makeCube();moveIndex=0;updateProgress();}
-const axes={R:['x',1,-1],L:['x',-1,1],M:['x',0,1],U:['y',1,-1],D:['y',-1,1],E:['y',0,1],F:['z',1,-1],B:['z',-1,1],S:['z',0,-1]};
-function doMove(move,done){
- if(busy)return;busy=true;const [axis,layer,sign]=axes[move.face]||axes.R;const pivot=new THREE.Group();cubeGroup.add(pivot);
- const selectedCubies=cubies.filter(c=>Math.round(c.position[axis])===layer);
- selectedCubies.forEach(c=>pivot.attach(c));
- const angle=sign*move.turn*Math.PI/2*(move.turn===2?1:1);const duration=550-(+$('speed').value)*42;const start=performance.now();
- function animate(now){const t=Math.min(1,(now-start)/duration);const eased=t*t*(3-2*t);pivot.rotation[axis]=angle*eased;
-  if(t<1){requestAnimationFrame(animate);return}
-  selectedCubies.forEach(c=>{cubeGroup.attach(c);c.position.set(Math.round(c.position.x),Math.round(c.position.y),Math.round(c.position.z));c.rotation.set(Math.round(c.rotation.x/(Math.PI/2))*Math.PI/2,Math.round(c.rotation.y/(Math.PI/2))*Math.PI/2,Math.round(c.rotation.z/(Math.PI/2))*Math.PI/2);});
-  cubeGroup.remove(pivot);busy=false;done?.();
- }requestAnimationFrame(animate);
-}
-function nextMove(onDone){if(moveIndex>=moves.length||busy){onDone?.();return}const m=moves[moveIndex++];doMove(m,()=>{updateProgress();onDone?.()});}
-function play(){if(playTimer){stopPlay();return}if(moveIndex>=moves.length)resetCube();$('playBtn').textContent='Ⅱ Пауза';const run=()=>{if(moveIndex>=moves.length){stopPlay();updateProgress();return}nextMove(()=>{playTimer=setTimeout(run,100)})};run();}
-$('playBtn').addEventListener('click',play);$('stepBtn').addEventListener('click',()=>{if(!busy){stopPlay();nextMove()}});$('resetBtn').addEventListener('click',resetCube);
-$('copyBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(selected.alg);$('copyBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyBtn').textContent='Копировать',1300)}catch{$('copyBtn').textContent='Не удалось';}});
-$('speed').addEventListener('input',e=>$('speedValue').textContent=e.target.value+'/10');
-renderList();renderCase();
-</script>
-</body></html>
+{id:'Ua',name:'Ua-Perm',ru:'Цикл по часовой',stage:'Второй этап · рёбра',alg:"R U' R U R U R U' R' U' R2",meaning:'Циклически перемещает три ребра по часовой стрелке.'},
+{id:'Ub',name:'Ub-Perm',ru:'Цикл против часовой',stage:'Второй этап · рёбра',alg:"R2 U R U R' U' R' U' R' U R'",meaning:'Циклически перемещает три ребра против часовой стрелки.'},
+{id:'H',name:'H-Perm',ru:'Две пары напротив',stage:'Второй этап · рёбра',alg:"M2 U M2 U2 M2 U M2",meaning:'Меняет местами две пары противоположных рёбер.'},
+{id:'Z',name:'Z-Perm',ru:'Две соседние пары',stage:'Второй этап · рёбра',alg:"M' U M2 U M2 U M' U2 M2",meaning:'Меняет местами две пары соседних рёбер.'}];
+const $=id=>document.getElementById(id),stage=$('stage');
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(6.4,5.6,8);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;stage.appendChild(renderer.domElement);
+const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;orbit.dampingFactor=.075;orbit.minDistance=5;orbit.maxDistance=13;
+scene.add(new THREE.HemisphereLight(0xe7f0ff,0x253044,2.1));
+const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(5,8,7);scene.add(key);
+const fill=new THREE.DirectionalLight(0x82cfff,1.3);fill.position.set(-6,2,-5);scene.add(fill);
+const rim=new THREE.PointLight(0x6d7dff,16,18);rim.position.set(0,4,-3);scene.add(rim);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(5,64),new THREE.MeshBasicMaterial({color:0x182842,transparent:true,opacity:.32}));floor.rotation.x=-Math.PI/2;floor.position.y=-2.15;scene.add(floor);
+const cubeRoot=new THREE.Group();scene.add(cubeRoot);const cubies=[];
+const C={R:0xc62828,L:0xff7a18,U:0xf8fafc,D:0xffd21f,F:0x18a558,B:0x2463d8},DARK=0x111722;
+function mat(color){return new THREE.MeshStandardMaterial({color,roughness:.3,metalness:.035})}
+function createCube(){while(cubeRoot.children.length)cubeRoot.remove(cubeRoot.children[0]);cubies.length=0;
+for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++){
+const m=[mat(x===1?C.R:DARK),mat(x===-1?C.L:DARK),mat(y===1?C.U:DARK),mat(y===-1?C.D:DARK),mat(z===1?C.F:DARK),mat(z===-1?C.B:DARK)];
+const c=new THREE.Mesh(new THREE.BoxGeometry(.94,.94,.94),m);c.position.set(x,y,z);const edge=new THREE.LineSegments(new THREE.EdgesGeometry(c.geometry),new THREE.LineBasicMaterial({color:0x02050a,transparent:true,opacity:.9}));c.add(edge);cubeRoot.add(c);cubies.push(c);
+}}
+createCube();
+function resize(){const w=Math.max(stage.clientWidth,1),h=Math.max(stage.clientHeight,1);camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}new ResizeObserver(resize).observe(stage);resize();
+(function render(){requestAnimationFrame(render);orbit.update();renderer.render(scene,camera)})();
+function parse(alg){return alg.trim().split(/\s+/).map(t=>({face:t[0],turn:t.endsWith('2')?2:t.endsWith("'")?-1:1,token:t}))}
+function invert(seq){return [...seq].reverse().map(m=>({...m,turn:m.turn===2?2:-m.turn}))}
+const AX={R:['x',1,-1],L:['x',-1,1],M:['x',0,1],U:['y',1,-1],D:['y',-1,1],E:['y',0,1],F:['z',1,-1],B:['z',-1,1],S:['z',0,-1]};
+let selected=CASES[0],queue=[],index=0,busy=false,mode='idle',timer=null,token=0;
+function say(t){$('status').textContent=t}
+function progress(){$('progressBar').style.width=(queue.length?index/queue.length*100:0)+'%'}
+function lock(v){busy=v;['stepBtn','setupBtn','solveBtn','resetBtn'].forEach(id=>$(id).disabled=v)}
+function stop(){token++;if(timer){clearTimeout(timer);timer=null}}
+function reset(){stop();lock(false);createCube();queue=[];index=0;mode='idle';progress();say('Кубик собран. Нажми «Подготовить случай».')}
+function snap(c){c.position.set(Math.round(c.position.x),Math.round(c.position.y),Math.round(c.position.z));const e=new THREE.Euler().setFromQuaternion(c.quaternion,'XYZ');e.set(Math.round(e.x/(Math.PI/2))*Math.PI/2,Math.round(e.y/(Math.PI/2))*Math.PI/2,Math.round(e.z/(Math.PI/2))*Math.PI/2);c.quaternion.setFromEuler(e)}
+function turn(move,done){const [axis,layer,sign]=AX[move.face],pivot=new THREE.Group();cubeRoot.add(pivot);const group=cubies.filter(c=>Math.round(c.position[axis])===layer);group.forEach(c=>pivot.attach(c));const angle=sign*move.turn*Math.PI/2,duration=650-Number($('speed').value)*43,start=performance.now();
+function tick(now){const t=Math.min(1,(now-start)/duration),e=t*t*(3-2*t);pivot.rotation[axis]=angle*e;if(t<1){requestAnimationFrame(tick);return}group.forEach(c=>{cubeRoot.attach(c);snap(c)});cubeRoot.remove(pivot);done()}requestAnimationFrame(tick)}
+function advance(){if(busy||index>=queue.length)return;const m=queue[index++];lock(true);say((mode==='setup'?'Подготавливаем':'Выполняем')+': '+m.face+(m.turn===2?'2':m.turn===-1?"'":'')+' · '+index+'/'+queue.length);turn(m,()=>{lock(false);progress();if(index>=queue.length){if(mode==='setup')say(selected.name+': PLL-ситуация подготовлена. Теперь нажми «Решить алгоритмом».');else say(selected.name+': алгоритм завершён. Кубик должен быть собран.');mode='idle'}})}
+function run(seq,nextMode){stop();lock(false);queue=seq;index=0;mode=nextMode;progress();if(!seq.length)return;const my=token;const loop=()=>{if(my!==token||mode==='idle'||index>=queue.length)return;advance();timer=setTimeout(loop,Math.max(180,720-Number($('speed').value)*48))};loop()}
+function prepare(){reset();run(invert(parse(selected.alg)),'setup')}
+function solve(){if(mode!=='idle'&&index<queue.length){say('Сначала дождись окончания или сбрось кубик.');return}run(parse(selected.alg),'solve')}
+function showCase(){ $('caseTitle').textContent=selected.name+' · '+selected.ru;$('caseSub').textContent=selected.stage;$('notation').textContent=selected.alg;$('meaning').textContent=selected.meaning;$('caseList').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.id===selected.id));reset()}
+CASES.forEach(c=>{const b=document.createElement('button');b.className='case';b.dataset.id=c.id;b.innerHTML='<b>'+c.name+'</b><small>'+c.ru+'</small>';b.onclick=()=>{selected=c;showCase()};$('caseList').appendChild(b)});
+$('setupBtn').onclick=prepare;$('solveBtn').onclick=solve;$('resetBtn').onclick=reset;
+$('stepBtn').onclick=()=>{if(!queue.length){say('Сначала подготовь PLL-ситуацию.');return}stop();if(index>=queue.length){say('Последовательность завершена.');return}advance()};
+$('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(selected.alg);$('copyBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyBtn').textContent='Копировать',1300)}catch{$('copyBtn').textContent='Скопируй формулу вручную'}};
+$('speed').oninput=e=>$('speedValue').textContent=e.target.value+'/10';showCase();
+</script></body></html>
