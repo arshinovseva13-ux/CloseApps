@@ -1,6 +1,6 @@
 {
   "dataset": "Clause AI",
-  "release": "0.3.1",
+  "release": "0.4.0",
   "release_date": "2026-11-04",
   "description": "Universal bilingual knowledge corpus. Knowledge records, not question-answer exercises.",
   "languages": [
@@ -150,7 +150,30 @@
     "note": "Notion stores project metadata and workflow state. Large dataset shards are stored separately; external candidates are not counted as imported records."
   },
   "release_notes": [
+    "0.4.0: Added a streaming import pipeline and source-document schema for FineWeb, FineWeb2, Wikidata and OpenAlex. Target: 1,000,000 records per source; no external records have been counted or published yet.",
     "0.3.1: Added Notion control center and dataset registry links; documented separation between management metadata and corpus storage.",
     "0.3.0: Added external large-dataset source catalogue. Sources are candidates and have not been imported into the canonical corpus."
-  ]
+  ],
+  "external_import_plan": {
+    "status": "pipeline_prepared_not_yet_executed",
+    "target_records_per_source": 1000000,
+    "target_sources": [
+      "fineweb",
+      "fineweb2",
+      "wikidata",
+      "openalex"
+    ],
+    "planned_records": 4000000,
+    "imported_records": 0,
+    "record_schema": "./schema/external-document.schema.json",
+    "output_format": "gzip-compressed JSONL shards, 50000 records per shard",
+    "temporary_delivery": "GitHub Actions artifact, 30-day retention",
+    "permanent_storage": "Not configured; do not count records or expose download links until shards are copied to durable dataset storage and verified",
+    "excluded_sources": {
+      "huggingface_hub": "Discovery catalogue, not a single dataset",
+      "common_crawl": "Blocked pending source-level rights, privacy and opt-out review"
+    },
+    "workflow": "https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-import.yml",
+    "documentation": "./importer/README.md"
+  }
 }
