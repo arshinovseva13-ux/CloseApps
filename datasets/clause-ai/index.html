@@ -15,7 +15,7 @@ code{color:#c4b5fd}
 <body><main>
 <a class="back" href="../../">← Вернуться в Close Приложения</a>
 <section class="hero">
-<div class="eyebrow">CLOSE DATASETS · RELEASE 0.1.0</div>
+<div class="eyebrow">CLOSE DATASETS · RELEASE 0.2.0</div>
 <h1>Clause AI</h1>
 <p>Универсальный открытый корпус данных, задуманный для подготовки, обучения и расширения возможностей языковых моделей. Это набор данных, а не нейросеть и не чат-бот.</p>
 <span class="tag">JSONL</span><span class="tag">Hugging Face workflows</span><span class="tag">SFT / RAG / pretraining</span><span class="tag">Мультиязычный проект</span>
@@ -26,9 +26,15 @@ code{color:#c4b5fd}
 <section class="panel"><h2>Для чего</h2><p class="muted">Supervised fine-tuning, подготовка корпуса для continued pretraining после токенизации и RAG без изменения весов модели.</p></section>
 <section class="panel"><h2>Форматы</h2><p class="muted">Основной обменный формат — JSONL. В следующих релизах планируются Parquet-шарды, манифесты, контрольные суммы и экспортёры.</p></section>
 </div>
+<section class="panel" style="margin-top:14px">
+<h2>Библиотеки знаний</h2>
+<p class="muted">Основной корпус организован как тематические библиотеки. В них собраны понятия, принципы и подробные объяснения, а не упражнения или пары «вопрос — ответ».</p>
+<div id="libraryCatalog" class="grid"><div class="panel"><strong>Загрузка каталога…</strong></div></div>
+<div class="notice" style="margin-top:12px">Foundations — первая библиотека: 10 записей на русском и английском. Все записи пока ожидают экспертной проверки.</div>
+</section>
 <section class="panel">
 <h2>Стартовый набор</h2>
-<p class="muted">Небольшие демонстрационные записи показывают структуру файлов. Примеры созданы специально для демонстрации формата и не должны восприниматься как проверенная энциклопедическая база.</p>
+<p class="muted">Основной корпус теперь состоит из тематических библиотек знаний. Демонстрационный sample.jsonl сохранён отдельно и не входит в основной корпус.</p>
 <a class="download" href="./data/sample.jsonl" download>↓ Скачать sample.jsonl</a>
 <a class="download secondary" href="./README.md">Документация</a>
 </section>
@@ -48,50 +54,48 @@ code{color:#c4b5fd}
 <h2>Принципы качества</h2>
 <ul class="muted"><li>У каждого внешнего материала должны быть источник и сведения о правах использования.</li><li>Персональные данные, секреты и чувствительная информация не включаются.</li><li>Дубликаты удаляются; спорные и синтетические записи маркируются.</li><li>Обучающие и тестовые выборки разделяются, чтобы снизить утечки.</li><li>Лицензия каждого релиза публикуется отдельно и не выводится автоматически из лицензии кода.</li></ul>
 </section>
-<div class="footer">Clause AI · Close Приложения · Версия 0.1.0 · Проект находится в разработке.</div>
+<div class="footer">Clause AI · Close Приложения · Версия 0.2.0 · Universal Knowledge Corpus.</div>
 
 <script>
 (() => {
- const dataUrl='./data/sample.jsonl';
  const status=document.getElementById('datasetStatus');
  const recordsBox=document.getElementById('datasetRecords');
  const rawBox=document.getElementById('datasetRaw');
  const search=document.getElementById('datasetSearch');
  const textBtn=document.getElementById('textMode');
  const rawBtn=document.getElementById('rawMode');
- let records=[],rawText='',mode='text';
- const safe=value=>String(value??'').replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
- function contentText(content){
-   if(!content||typeof content!=='object')return String(content??'');
-   return Object.entries(content).map(([key,value])=>{
-     const label=({instruction:'Задание',input:'Входные данные',output:'Ответ',text:'Текст',explanation:'Объяснение',code:'Код'}[key]||key);
-     return '<div style="margin-top:10px"><strong style="color:#c4b5fd">'+safe(label)+'</strong><div style="white-space:pre-wrap;overflow-wrap:anywhere;color:#dce6f7;margin-top:3px">'+safe(value)+'</div></div>';
-   }).join('');
+ const catalogBox=document.getElementById('libraryCatalog');
+ let records=[],rawText='';
+ const safe=v=>String(v??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ function renderContent(content){
+   if(!content||typeof content!=='object')return safe(content??'');
+   const labels={summary:'Кратко',body:'Подробное объяснение',key_points:'Ключевые положения',limitations:'Ограничения'};
+   return Object.entries(content).map(([k,v])=>'<div style="margin-top:12px"><strong style="color:#c4b5fd">'+safe(labels[k]||k)+'</strong><div style="white-space:pre-wrap;overflow-wrap:anywhere;color:#dce6f7;margin-top:4px">'+(Array.isArray(v)?'<ul>'+v.map(x=>'<li>'+safe(x)+'</li>').join('')+'</ul>':safe(v))+'</div></div>').join('');
  }
  function render(){
    const q=search.value.trim().toLowerCase();
-   const filtered=records.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
-   status.textContent='Записей: '+filtered.length+' из '+records.length+(q?' · найдено по запросу':'');
-   recordsBox.innerHTML=filtered.map((r,i)=>{
-     const c=r.content||{};
-     const tags=Array.isArray(r.tags)?r.tags:[];
-     return '<article style="padding:17px;border:1px solid #293754;border-radius:14px;background:#0c1526"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong style="color:#fff">'+safe(r.id||('Запись '+(i+1)))+'</strong><span class="tag">'+safe(r.domain||'без темы')+'</span><span class="tag">'+safe(r.language||'язык не указан')+'</span></div>'+contentText(c)+'<div style="margin-top:12px;color:#94a6c2;font-size:12px">Тип: '+safe(r.record_type||'не указан')+' · Качество: '+safe(r.quality?.status||'не указано')+'</div>'+(tags.length?'<div style="margin-top:7px">'+tags.map(t=>'<span class="tag">'+safe(t)+'</span>').join('')+'</div>':'')+'<details style="margin-top:12px;color:#a9b7d0"><summary style="cursor:pointer">Метаданные записи</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;color:#b9c9df;font-size:12px">'+safe(JSON.stringify({provenance:r.provenance,rights:r.rights,quality:r.quality},null,2))+'</pre></details></article>';
-   }).join('');
-   if(!filtered.length)recordsBox.innerHTML='<p class="muted">По этому запросу ничего не найдено.</p>';
+   const found=records.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+   status.textContent='Записей: '+found.length+' из '+records.length+(q?' · найдено по запросу':'');
+   recordsBox.innerHTML=found.map((r,i)=>'<article style="padding:19px;border:1px solid #293754;border-radius:14px;background:#0c1526"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong style="font-size:18px">'+safe(r.title||r.id||('Запись '+(i+1)))+'</strong><span class="tag">'+safe(r.domain)+'</span><span class="tag">'+safe(r.language)+'</span><span class="tag">'+safe(r.record_type)+'</span></div>'+renderContent(r.content)+'<div style="margin-top:12px;color:#94a6c2;font-size:12px">Качество: '+safe(r.quality?.status||'не указано')+' · Проверка фактов: '+(r.quality?.fact_checked?'да':'нет')+'</div><details style="margin-top:12px;color:#a9b7d0"><summary style="cursor:pointer">Происхождение, права и связи</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;color:#b9c9df;font-size:12px">'+safe(JSON.stringify({relations:r.relations,provenance:r.provenance,rights:r.rights},null,2))+'</pre></details></article>').join('');
+   if(!found.length)recordsBox.innerHTML='<p class="muted">По этому запросу ничего не найдено.</p>';
  }
- function setMode(next){
-   mode=next;const raw=mode==='raw';
-   recordsBox.hidden=raw;rawBox.hidden=!raw;
-   textBtn.style.background=raw?'#18243a':'#35245e';rawBtn.style.background=raw?'#35245e':'#18243a';
- }
+ function setMode(raw){recordsBox.hidden=raw;rawBox.hidden=!raw;textBtn.style.background=raw?'#18243a':'#35245e';rawBtn.style.background=raw?'#35245e':'#18243a';}
  search.addEventListener('input',render);
- textBtn.addEventListener('click',()=>setMode('text'));
- rawBtn.addEventListener('click',()=>setMode('raw'));
- fetch(dataUrl).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(text=>{
-   rawText=text;rawBox.textContent=rawText;
-   records=rawText.split(/\r?\n/).filter(line=>line.trim()).map((line,index)=>{try{return JSON.parse(line)}catch(e){throw new Error('Ошибка JSON в строке '+(index+1))}});
-   render();setMode('text');
- }).catch(err=>{status.textContent='Не удалось загрузить датасет: '+err.message;recordsBox.innerHTML='<p class="muted">Проверь доступность файла sample.jsonl и обнови страницу.</p>';});
+ textBtn.addEventListener('click',()=>setMode(false));
+ rawBtn.addEventListener('click',()=>setMode(true));
+ async function load(){
+   const response=await fetch('./manifest.json');
+   if(!response.ok)throw new Error('manifest.json: HTTP '+response.status);
+   const manifest=await response.json();
+   catalogBox.innerHTML=(manifest.libraries||[]).map(lib=>'<article class="panel"><div class="eyebrow">KNOWLEDGE LIBRARY</div><h2>'+safe(lib.title)+'</h2><p class="muted">'+safe(lib.description)+'</p><span class="tag">'+(lib.files||[]).reduce((n,f)=>n+(f.records||0),0)+' записей</span></article>').join('');
+   const shards=(manifest.libraries||[]).flatMap(lib=>lib.files||[]);
+   const texts=await Promise.all(shards.map(async file=>{const r=await fetch(file.path);if(!r.ok)throw new Error(file.path+': HTTP '+r.status);return r.text();}));
+   rawText=texts.join('\n');
+   records=rawText.split(/\r?\n/).filter(x=>x.trim()).map((line,i)=>{try{return JSON.parse(line)}catch(e){throw new Error('Некорректный JSONL, строка '+(i+1));}});
+   rawBox.textContent=rawText;render();setMode(false);
+   status.textContent='Релиз '+manifest.release+' · библиотек: '+shards.length+' · записей: '+records.length;
+ }
+ load().catch(e=>{status.textContent='Ошибка загрузки: '+e.message;recordsBox.innerHTML='<p class="muted">Проверь manifest.json и файлы библиотек.</p>';});
 })();
-</script>
+</script>>
 </main></body></html>
