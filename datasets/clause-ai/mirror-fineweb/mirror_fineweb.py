@@ -11,11 +11,8 @@ import hashlib
 import json
 import os
 import sqlite3
-import sys
-import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Iterable
 
 from huggingface_hub import HfApi, hf_hub_download
 from huggingface_hub.hf_api import RepoFile, CommitOperationAdd
@@ -213,11 +210,12 @@ def run_mirror(args: argparse.Namespace) -> None:
             pending.append(row)
     db.commit()
 
+    already_verified_count = len(rows) - len(pending)
     if args.max_files is not None:
         pending = pending[:args.max_files]
 
     print(f"Pinned source revision: {expected_revision}")
-    print(f"Inventory files: {len(rows)}; already verified remotely: {len(rows)-len(pending)}")
+    print(f"Inventory files: {len(rows)}; already verified remotely: {already_verified_count}")
     print(f"Files queued in this run: {len(pending)}")
 
     batch: list[tuple[InventoryItem, Path]] = []
@@ -238,14 +236,24 @@ def run_mirror(args: argparse.Namespace) -> None:
             operations=operations,
             commit_message=f"Mirror FineWeb data batch ({len(items)} files)",
         )
-        # Re-check destination metadata after commit before marking verified.
+        # Confirm the committed objects on the Hub before marking them verified.
+        remote_batch = api.get_paths_info(
+            repo_id=DEST_REPO,
+            paths=[item.path for item, _ in items],
+            repo_type=REPO_TYPE,
+            expand=True,
+        )
+        remote_by_path = {entry.path: entry for entry in remote_batch if isinstance(entry, RepoFile)}
         for item, local_path in items:
             update_state(db, item.path, "uploaded")
-        for item, local_path in items:
-            local_digest = sha256_file(local_path)
-            if item.source_sha256 and local_digest != item.source_sha256:
-                update_state(db, item.path, "failed", "Local SHA-256 differs from source LFS OID")
-                raise RuntimeError(f"SHA-256 mismatch for {item.path}")
+            remote_entry = remote_by_path.get(item.path)
+            remote_digest, _ = lfs_metadata(remote_entry) if remote_entry else (None, None)
+            if remote_entry is None or int(remote_entry.size or 0) != item.size:
+                update_state(db, item.path, "failed", "Destination object missing or size mismatch")
+                raise RuntimeError(f"Destination verification failed for {item.path}")
+            if item.source_sha256 and remote_digest != item.source_sha256:
+                update_state(db, item.path, "failed", "Destination SHA-256 differs from source LFS OID")
+                raise RuntimeError(f"Destination SHA-256 mismatch for {item.path}")
             completed_this_run += 1
             update_state(db, item.path, "verified")
             local_path.unlink(missing_ok=True)
@@ -260,7 +268,7 @@ def run_mirror(args: argparse.Namespace) -> None:
                     filename=item.path,
                     repo_type=REPO_TYPE,
                     revision=expected_revision,
-                    cache_dir=str(workdir / "hf-cache"),
+                    local_dir=str(workdir / "downloads"),
                     force_download=False,
                 ))
                 if local.stat().st_size != item.size:
