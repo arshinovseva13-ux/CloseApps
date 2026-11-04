@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arshinovseva13-ux.github.io/CloseApps/datasets/clause-ai/schema/record.schema.json",
+  "title": "Clause AI Knowledge Record",
+  "type": "object",
+  "required": [
+    "id",
+    "record_type",
+    "domain",
+    "language",
+    "title",
+    "content",
+    "relations",
+    "provenance",
+    "rights",
+    "quality",
+    "tags"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "record_type": {
+      "type": "string",
+      "enum": [
+        "concept",
+        "fact",
+        "theory",
+        "principle",
+        "relationship",
+        "process",
+        "history",
+        "research",
+        "structure",
+        "knowledge_document"
+      ]
+    },
+    "domain": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "ru",
+        "en"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "content": {
+      "type": "object",
+      "required": [
+        "summary",
+        "body",
+        "key_points",
+        "limitations"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 20
+        },
+        "body": {
+          "type": "string",
+          "minLength": 100
+        },
+        "key_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2
+        },
+        "limitations": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "relation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "method",
+        "created_by",
+        "created_at",
+        "references"
+      ],
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "url",
+              "role"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "role": {
+                "type": "string"
+              },
+              "retrieved_at": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "required": [
+        "license",
+        "holder",
+        "notes"
+      ],
+      "properties": {
+        "license": {
+          "type": "string"
+        },
+        "holder": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "status",
+        "fact_checked",
+        "language_reviewed"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "fact_checked": {
+          "type": "boolean"
+        },
+        "language_reviewed": {
+          "type": "boolean"
+        },
+        "reviewed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
