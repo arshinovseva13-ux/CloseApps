@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arshinovseva13-ux.github.io/CloseApps/datasets/clause-ai/schema/external-document.schema.json",
+  "title": "Clause AI External Corpus Record",
+  "type": "object",
+  "required": [
+    "id",
+    "record_type",
+    "source_id",
+    "source_record_id",
+    "language",
+    "title",
+    "text",
+    "metadata",
+    "provenance",
+    "rights",
+    "quality",
+    "tags"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "record_type": {
+      "const": "external_document"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "source_record_id": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_url",
+        "retrieved_at",
+        "source_version"
+      ]
+    },
+    "rights": {
+      "type": "object",
+      "required": [
+        "license",
+        "notes"
+      ]
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "status",
+        "fact_checked",
+        "language_reviewed"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
