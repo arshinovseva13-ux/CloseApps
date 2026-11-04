@@ -1,0 +1,58 @@
+name: Clause AI external corpus import
+
+on:
+  workflow_dispatch:
+    inputs:
+      records_per_source:
+        description: "Maximum records to import from each approved source"
+        required: true
+        default: "1000000"
+        type: string
+      sources:
+        description: "Sources (comma-separated) or all"
+        required: true
+        default: "all"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clause-ai-external-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: datasets/clause-ai/importer/requirements.txt
+
+      - name: Install importer dependencies
+        run: python -m pip install -r datasets/clause-ai/importer/requirements.txt
+
+      - name: Run streaming import
+        env:
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: |
+          python datasets/clause-ai/importer/import_external.py \
+            --source "${{ inputs.sources }}" \
+            --limit "${{ inputs.records_per_source }}" \
+            --out ./clause-ai-import
+
+      - name: Upload corpus shards and import report
+        uses: actions/upload-artifact@v4
+        with:
+          name: clause-ai-external-corpus-${{ github.run_id }}
+          path: clause-ai-import/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
