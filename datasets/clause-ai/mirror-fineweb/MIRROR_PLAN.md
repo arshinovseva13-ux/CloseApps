@@ -11,6 +11,7 @@ Last reviewed: 2026-11-04
 - Funding: apply for a Hugging Face storage grant; no paid expansion authorized.
 - Estimated source size: Dataset Viewer reports 53,418 GB. Treat this as an estimate pending a file-level inventory.
 - Capacity request planning target: approximately 60 TB (source estimate plus operational headroom); confirm actual inventory and grant policy before upload.
+- Inventory workflow: manual dispatch remains available; a push affecting this project directory also starts metadata-only inventory. This commit is intended to trigger the first run automatically.
 
 ## Phases and gates
 
