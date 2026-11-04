@@ -28,17 +28,30 @@
             "mathematics",
             "computer_science"
           ]
+        },
+        {
+          "path": "./libraries/foundations/knowledge.ru-en-02.jsonl",
+          "format": "jsonl",
+          "records": 12,
+          "languages": [
+            "ru",
+            "en"
+          ],
+          "domains": [
+            "biology",
+            "earth_science",
+            "astronomy",
+            "chemistry",
+            "computer_science",
+            "economics"
+          ]
         }
       ]
     }
   ],
-  "total_records": 10,
+  "total_records": 22,
   "token_count": null,
   "token_count_note": "Not measured. Token counts depend on tokenizer and encoding.",
-  "integrity": {
-    "checksums": "./checksums.sha256",
-    "generated_at": "pending"
-  },
   "quality_policy": {
     "draft_records_allowed": true,
     "unreviewed_records_must_not_be_mislabeled_as_verified": true
