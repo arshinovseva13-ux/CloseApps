@@ -32,9 +32,66 @@ code{color:#c4b5fd}
 <a class="download" href="./data/sample.jsonl" download>↓ Скачать sample.jsonl</a>
 <a class="download secondary" href="./README.md">Документация</a>
 </section>
+<section class="panel" id="datasetViewer" style="margin-top:14px">
+<h2>Текстовый просмотр датасета</h2>
+<p class="muted">Просматривай записи в удобном виде или переключайся на исходный JSONL. Поиск работает по содержимому, тематике и тегам.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0">
+<input id="datasetSearch" type="search" placeholder="Найти в датасете…" aria-label="Поиск по датасету" style="flex:1;min-width:190px;padding:12px 14px;border:1px solid #435474;border-radius:11px;background:#0a1222;color:#edf3ff;font:inherit">
+<button id="textMode" type="button" style="padding:11px 15px;border:1px solid #8b5cf6;border-radius:11px;background:#35245e;color:white;font-weight:800">Текстовый вид</button>
+<button id="rawMode" type="button" style="padding:11px 15px;border:1px solid #435474;border-radius:11px;background:#18243a;color:white;font-weight:800">JSONL</button>
+</div>
+<div id="datasetStatus" class="muted" role="status" aria-live="polite">Загружаем записи…</div>
+<div id="datasetRecords" style="display:grid;gap:12px;margin-top:14px"></div>
+<pre id="datasetRaw" hidden style="max-height:520px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;border:1px solid #293754;border-radius:12px;background:#080d18;color:#c4e7ff;font-size:12px"></pre>
+</section>
 <section class="panel" style="margin-top:14px">
 <h2>Принципы качества</h2>
 <ul class="muted"><li>У каждого внешнего материала должны быть источник и сведения о правах использования.</li><li>Персональные данные, секреты и чувствительная информация не включаются.</li><li>Дубликаты удаляются; спорные и синтетические записи маркируются.</li><li>Обучающие и тестовые выборки разделяются, чтобы снизить утечки.</li><li>Лицензия каждого релиза публикуется отдельно и не выводится автоматически из лицензии кода.</li></ul>
 </section>
 <div class="footer">Clause AI · Close Приложения · Версия 0.1.0 · Проект находится в разработке.</div>
+
+<script>
+(() => {
+ const dataUrl='./data/sample.jsonl';
+ const status=document.getElementById('datasetStatus');
+ const recordsBox=document.getElementById('datasetRecords');
+ const rawBox=document.getElementById('datasetRaw');
+ const search=document.getElementById('datasetSearch');
+ const textBtn=document.getElementById('textMode');
+ const rawBtn=document.getElementById('rawMode');
+ let records=[],rawText='',mode='text';
+ const safe=value=>String(value??'').replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+ function contentText(content){
+   if(!content||typeof content!=='object')return String(content??'');
+   return Object.entries(content).map(([key,value])=>{
+     const label=({instruction:'Задание',input:'Входные данные',output:'Ответ',text:'Текст',explanation:'Объяснение',code:'Код'}[key]||key);
+     return '<div style="margin-top:10px"><strong style="color:#c4b5fd">'+safe(label)+'</strong><div style="white-space:pre-wrap;overflow-wrap:anywhere;color:#dce6f7;margin-top:3px">'+safe(value)+'</div></div>';
+   }).join('');
+ }
+ function render(){
+   const q=search.value.trim().toLowerCase();
+   const filtered=records.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+   status.textContent='Записей: '+filtered.length+' из '+records.length+(q?' · найдено по запросу':'');
+   recordsBox.innerHTML=filtered.map((r,i)=>{
+     const c=r.content||{};
+     const tags=Array.isArray(r.tags)?r.tags:[];
+     return '<article style="padding:17px;border:1px solid #293754;border-radius:14px;background:#0c1526"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong style="color:#fff">'+safe(r.id||('Запись '+(i+1)))+'</strong><span class="tag">'+safe(r.domain||'без темы')+'</span><span class="tag">'+safe(r.language||'язык не указан')+'</span></div>'+contentText(c)+'<div style="margin-top:12px;color:#94a6c2;font-size:12px">Тип: '+safe(r.record_type||'не указан')+' · Качество: '+safe(r.quality?.status||'не указано')+'</div>'+(tags.length?'<div style="margin-top:7px">'+tags.map(t=>'<span class="tag">'+safe(t)+'</span>').join('')+'</div>':'')+'<details style="margin-top:12px;color:#a9b7d0"><summary style="cursor:pointer">Метаданные записи</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;color:#b9c9df;font-size:12px">'+safe(JSON.stringify({provenance:r.provenance,rights:r.rights,quality:r.quality},null,2))+'</pre></details></article>';
+   }).join('');
+   if(!filtered.length)recordsBox.innerHTML='<p class="muted">По этому запросу ничего не найдено.</p>';
+ }
+ function setMode(next){
+   mode=next;const raw=mode==='raw';
+   recordsBox.hidden=raw;rawBox.hidden=!raw;
+   textBtn.style.background=raw?'#18243a':'#35245e';rawBtn.style.background=raw?'#35245e':'#18243a';
+ }
+ search.addEventListener('input',render);
+ textBtn.addEventListener('click',()=>setMode('text'));
+ rawBtn.addEventListener('click',()=>setMode('raw'));
+ fetch(dataUrl).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(text=>{
+   rawText=text;rawBox.textContent=rawText;
+   records=rawText.split(/\r?\n/).filter(line=>line.trim()).map((line,index)=>{try{return JSON.parse(line)}catch(e){throw new Error('Ошибка JSON в строке '+(index+1))}});
+   render();setMode('text');
+ }).catch(err=>{status.textContent='Не удалось загрузить датасет: '+err.message;recordsBox.innerHTML='<p class="muted">Проверь доступность файла sample.jsonl и обнови страницу.</p>';});
+})();
+</script>
 </main></body></html>
