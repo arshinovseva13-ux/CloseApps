@@ -172,7 +172,7 @@ def wikidata_records(limit: int) -> Iterator[dict]:
             if entity.get("type") not in ("item", "property"):
                 continue
             # Deterministic stride sampling spreads the subset across the complete ID range.
-            numeric_id = re.search(r"([QP])(\\d+)$", safe_text(entity.get("id")))
+            numeric_id = re.search(r"([QP])(\d+)$", safe_text(entity.get("id")))
             if numeric_id and int(numeric_id.group(2)) % 100 != 0:
                 continue
             labels = entity.get("labels", {})
