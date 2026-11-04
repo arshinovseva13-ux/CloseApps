@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Streaming importer for the approved Clause AI external corpus sources."""
+"""Streaming importer for the approved Clause AI external corpus sources.
+
+Initial batch target: 1,000,000 records per approved source.
+"""
 from __future__ import annotations
 
 import argparse
