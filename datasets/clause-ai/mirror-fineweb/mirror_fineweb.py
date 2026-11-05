@@ -15,7 +15,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from huggingface_hub import HfApi, hf_hub_download
-from huggingface_hub.hf_api import RepoFile, CommitOperationAdd
+from huggingface_hub import CommitOperationAdd
+from huggingface_hub.hf_api import RepoFile
 
 SOURCE_REPO = "HuggingFaceFW/fineweb"
 DEST_REPO = "Seva-35/clause-ai-fineweb-mirror"
