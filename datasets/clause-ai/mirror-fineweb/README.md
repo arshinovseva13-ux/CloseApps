@@ -11,7 +11,7 @@ This directory contains the controlled, resumable workflow for creating a public
 - File-level inventory completed successfully on 2026-11-05.
 - Pinned source revision: `9bb295ddab0e05d785b879661af7260fed5140fc`.
 - Inventory: **27,468 unique Parquet files**, **53,417,984,478,442 bytes** (48.583 TiB), under 110 crawl snapshot directories.
-- The inventory API did not expose source SHA-256/LFS OIDs for these files; content checksums must be computed during the transfer pilot.
+- The inventory API did not expose source SHA-256/LFS OIDs for these files. The transfer code now computes SHA-256 for each downloaded source file and verifies the destination content hash; if Hub metadata does not expose a digest, it downloads the destination copy for a byte-level hash comparison.
 - Mirror status: **transfer not started**. No source data has been copied yet.
 - Storage grant: **not approved**. Do not start the full transfer until capacity and terms are confirmed.
 
@@ -27,8 +27,8 @@ The source revision is pinned to a commit SHA before inventory and stored in the
 2. **Capacity gate** — compare total bytes plus operational headroom against the approved destination quota. Recommended headroom: at least 10%.
 3. **Grant gate** — obtain explicit confirmation from Hugging Face before any multi-terabyte upload.
 4. **Transfer** — download one bounded batch to a persistent local/attached disk, then upload it to the destination with Xet enabled.
-5. **Resume** — SQLite tracks file state locally. Existing destination objects are checked against source size and SHA-256 before being skipped.
-6. **Verify** — every copied object must match source size and, where available, source LFS SHA-256. A mirror is complete only when every inventory row is verified.
+5. **Resume** — SQLite tracks file state locally. Existing destination objects are skipped only when both size and a source/destination SHA-256 match are available. If source hashes are absent, matching size alone is never accepted as proof; the file is re-transferred and content-verified.
+6. **Verify** — every copied object must match source size and a computed source SHA-256; destination SHA-256 is checked from Hub metadata or by downloading and hashing the destination copy. A mirror is complete only when every inventory row is verified.
 7. **Publish** — write the final inventory, verification report, source revision, license and attribution into the destination Dataset Card.
 
 ## Requirements
