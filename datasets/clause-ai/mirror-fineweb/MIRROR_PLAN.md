@@ -1,6 +1,6 @@
 # FineWeb mirror — execution plan
 
-Last reviewed: 2026-11-04
+Last reviewed: 2026-11-05
 
 ## Decision record
 
@@ -9,9 +9,11 @@ Last reviewed: 2026-11-04
 - Scope: the source Dataset Card's `default/train` config, defined as `data/*/*`; physically mirror each source Parquet file under `data/` exactly once.
 - License: ODC-By 1.0; preserve attribution and provenance.
 - Funding: apply for a Hugging Face storage grant; no paid expansion authorized.
-- Estimated source size: Dataset Viewer reports 53,418 GB. Treat this as an estimate pending a file-level inventory.
-- Capacity request planning target: approximately 60 TB (source estimate plus operational headroom); confirm actual inventory and grant policy before upload.
-- Inventory workflow: manual dispatch remains available; a push affecting this project directory also starts metadata-only inventory. This commit is intended to trigger the first run automatically.
+- Exact inventory completed 2026-11-05: 27,468 unique Parquet files, 53,417,984,478,442 bytes (48.583 TiB), 110 crawl snapshot directories.
+- Pinned source revision: `9bb295ddab0e05d785b879661af7260fed5140fc`.
+- Source SHA-256/LFS OIDs were not exposed by the inventory API; calculate and verify content checksums during transfer.
+- Capacity request planning target remains approximately 60 TB (exact bytes plus operational headroom); confirm grant policy before upload.
+- Successful inventory workflow: [run #2](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42038315807). Artifact retained until 2026-12-05.
 
 ## Phases and gates
 
@@ -24,10 +26,11 @@ Last reviewed: 2026-11-04
 - [ ] Publish destination Dataset Card and project attribution files.
 
 ### Phase 1 — exact inventory
-- [ ] Run `mirror_fineweb.py inventory` from a persistent runner.
-- [ ] Record source commit SHA, every Parquet path, byte size and source LFS SHA-256.
-- [ ] Produce an inventory summary with file count and exact total bytes.
-- [ ] Compare inventory total with the Dataset Viewer estimate; explain any difference.
+- [x] Run `mirror_fineweb.py inventory` from GitHub Actions (metadata only).
+- [x] Record source commit SHA, every Parquet path and byte size.
+- [x] Produce inventory summary: 27,468 files; 53,417,984,478,442 bytes (48.583 TiB).
+- [x] Compare exact inventory with the Dataset Viewer estimate; totals are consistent at approximately 53,418 GB.
+- [ ] Obtain source content checksums or calculate SHA-256 during the pilot; source LFS OIDs were not available in the inventory response.
 
 ### Phase 2 — grant and capacity
 - [ ] Submit the grant request in `GRANT_REQUEST.md` to Hugging Face.
