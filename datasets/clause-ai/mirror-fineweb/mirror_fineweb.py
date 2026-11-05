@@ -138,6 +138,9 @@ def init_db(path: Path) -> sqlite3.Connection:
             verified_at TEXT
         )
     """)
+    columns = {row[1] for row in db.execute("PRAGMA table_info(files)")}
+    if "computed_sha256" not in columns:
+        db.execute("ALTER TABLE files ADD COLUMN computed_sha256 TEXT")
     db.commit()
     return db
 
@@ -169,12 +172,14 @@ def remote_files(api: HfApi) -> dict[str, tuple[int, str | None]]:
 
 
 def update_state(db: sqlite3.Connection, path: str, state: str,
-                 error: str | None = None) -> None:
+                 error: str | None = None,
+                 digest: str | None = None) -> None:
     db.execute(
         "UPDATE files SET state=?, attempts=attempts+1, last_error=?, "
+        "computed_sha256=COALESCE(?,computed_sha256), "
         "verified_at=CASE WHEN ?='verified' THEN CURRENT_TIMESTAMP ELSE verified_at END "
         "WHERE path=?",
-        (state, error, state, path),
+        (state, error, digest, state, path),
     )
     db.commit()
 
@@ -201,11 +206,28 @@ def run_mirror(args: argparse.Namespace) -> None:
     for row in rows:
         remote_meta = remote.get(row.path)
         # Never treat matching byte size as proof of identical content.
-        # The source inventory may not contain a checksum; in that case we
-        # re-transfer and perform a content-level destination verification.
-        if (remote_meta and remote_meta[0] == row.size
-                and row.source_sha256 is not None
-                and remote_meta[1] == row.source_sha256):
+        # Reuse a locally computed source digest across restarts; otherwise
+        # the pinned source hash is the only acceptable comparison value.
+        stored = db.execute(
+            "SELECT computed_sha256 FROM files WHERE path=?", (row.path,)
+        ).fetchone()
+        expected_digest = row.source_sha256 or (stored[0] if stored else None)
+        verified_remote = False
+        if remote_meta and remote_meta[0] == row.size and expected_digest:
+            remote_digest = remote_meta[1]
+            if remote_digest:
+                verified_remote = remote_digest.removeprefix("sha256:") == expected_digest
+            else:
+                verify_path = Path(hf_hub_download(
+                    repo_id=DEST_REPO,
+                    filename=row.path,
+                    repo_type=REPO_TYPE,
+                    local_dir=str(workdir / "destination-verification"),
+                    force_download=True,
+                ))
+                verified_remote = sha256_file(verify_path) == expected_digest
+                verify_path.unlink(missing_ok=True)
+        if verified_remote:
             db.execute(
                 "UPDATE files SET state='verified',last_error=NULL,verified_at=CURRENT_TIMESTAMP WHERE path=?",
                 (row.path,),
@@ -255,15 +277,16 @@ def run_mirror(args: argparse.Namespace) -> None:
             if remote_entry is None or int(remote_entry.size or 0) != item.size:
                 update_state(db, item.path, "failed", "Destination object missing or size mismatch")
                 raise RuntimeError(f"Destination verification failed for {item.path}")
-            # The inventory API did not expose source hashes for FineWeb.
-            # Compute the source content hash locally and verify the committed
-            # destination by its Xet/LFS SHA-256 when available. If the Hub
-            # does not expose that digest, download the destination copy and
-            # hash it; size-only verification is deliberately insufficient.
-            source_digest = sha256_file(local_path)
-            if item.source_sha256 and source_digest != item.source_sha256:
-                update_state(db, item.path, "failed", "Downloaded source SHA-256 differs from inventory")
-                raise RuntimeError(f"Source SHA-256 mismatch for {item.path}")
+            # The source digest was computed and persisted before upload so
+            # a restart can verify an already-committed object without
+            # blindly re-uploading it.
+            stored = db.execute(
+                "SELECT computed_sha256 FROM files WHERE path=?", (item.path,)
+            ).fetchone()
+            source_digest = item.source_sha256 or (stored[0] if stored else None)
+            if not source_digest:
+                update_state(db, item.path, "failed", "Missing computed source SHA-256")
+                raise RuntimeError(f"Missing source SHA-256 for {item.path}")
             if remote_digest:
                 destination_digest = remote_digest.removeprefix("sha256:")
             else:
@@ -281,7 +304,7 @@ def run_mirror(args: argparse.Namespace) -> None:
                 update_state(db, item.path, "failed", "Destination content SHA-256 mismatch")
                 raise RuntimeError(f"Destination SHA-256 mismatch for {item.path}")
             completed_this_run += 1
-            update_state(db, item.path, "verified")
+            update_state(db, item.path, "verified", digest=source_digest)
             local_path.unlink(missing_ok=True)
         print(f"Verified {completed_this_run} files in this run.")
 
@@ -301,11 +324,12 @@ def run_mirror(args: argparse.Namespace) -> None:
                     raise RuntimeError(
                         f"Size mismatch for {item.path}: {local.stat().st_size} != {item.size}"
                     )
-                if item.source_sha256 and sha256_file(local) != item.source_sha256:
+                source_digest = sha256_file(local)
+                if item.source_sha256 and source_digest != item.source_sha256:
                     raise RuntimeError(f"Source SHA-256 mismatch for {item.path}")
+                update_state(db, item.path, "downloaded", digest=source_digest)
                 batch.append((item, local))
                 batch_bytes += item.size
-                update_state(db, item.path, "downloaded")
                 if batch_bytes >= args.max_batch_bytes:
                     upload_batch(batch)
                     batch, batch_bytes = [], 0
