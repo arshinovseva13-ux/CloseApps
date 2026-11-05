@@ -1,6 +1,6 @@
 # FineWeb mirror — execution plan
 
-Last reviewed: 2026-11-05
+Last reviewed: 2026-11-05 (grant policy and transfer verification rechecked)
 
 ## Decision record
 
@@ -11,7 +11,7 @@ Last reviewed: 2026-11-05
 - Funding: apply for a Hugging Face storage grant; no paid expansion authorized.
 - Exact inventory completed 2026-11-05: 27,468 unique Parquet files, 53,417,984,478,442 bytes (48.583 TiB), 110 crawl snapshot directories.
 - Pinned source revision: `9bb295ddab0e05d785b879661af7260fed5140fc`.
-- Source SHA-256/LFS OIDs were not exposed by the inventory API; calculate and verify content checksums during transfer.
+- Source SHA-256/LFS OIDs were not exposed by the inventory API. The mirror script now computes source SHA-256 during download and verifies destination content by Hub digest or destination re-download; size-only verification is not accepted.
 - Capacity request planning target remains approximately 60 TB (exact bytes plus operational headroom); confirm grant policy before upload.
 - Successful inventory workflow: [run #2](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42038315807). Artifact retained until 2026-12-05.
 
@@ -33,8 +33,10 @@ Last reviewed: 2026-11-05
 - [ ] Obtain source content checksums or calculate SHA-256 during the pilot; source LFS OIDs were not available in the inventory response.
 
 ### Phase 2 — grant and capacity
-- [ ] Submit the grant request in `GRANT_REQUEST.md` to Hugging Face.
+- [x] Prepare a grant inquiry with exact inventory totals, project status, and staged-allocation questions in `GRANT_REQUEST.md`.
+- [ ] Submit the inquiry to datasets@huggingface.co (submission is not yet confirmed).
 - [ ] Obtain written confirmation of storage quota, eligibility, duration and any egress/transfer constraints.
+- [x] Review current official Hub storage policy: grants are case-by-case for impactful open-source work; evidence such as downloads, likes, citations, and adoption is relevant. Current destination count observed: 13 downloads; no strong adoption evidence yet.
 - [ ] Do not begin bulk transfer until capacity is explicitly sufficient.
 - [ ] If grant is declined, pause and present alternatives; do not incur paid storage without approval.
 
