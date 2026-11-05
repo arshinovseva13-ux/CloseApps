@@ -200,9 +200,12 @@ def run_mirror(args: argparse.Namespace) -> None:
     pending: list[InventoryItem] = []
     for row in rows:
         remote_meta = remote.get(row.path)
-        if remote_meta and remote_meta[0] == row.size and (
-            row.source_sha256 is None or remote_meta[1] == row.source_sha256
-        ):
+        # Never treat matching byte size as proof of identical content.
+        # The source inventory may not contain a checksum; in that case we
+        # re-transfer and perform a content-level destination verification.
+        if (remote_meta and remote_meta[0] == row.size
+                and row.source_sha256 is not None
+                and remote_meta[1] == row.source_sha256):
             db.execute(
                 "UPDATE files SET state='verified',last_error=NULL,verified_at=CURRENT_TIMESTAMP WHERE path=?",
                 (row.path,),
@@ -252,8 +255,30 @@ def run_mirror(args: argparse.Namespace) -> None:
             if remote_entry is None or int(remote_entry.size or 0) != item.size:
                 update_state(db, item.path, "failed", "Destination object missing or size mismatch")
                 raise RuntimeError(f"Destination verification failed for {item.path}")
-            if item.source_sha256 and remote_digest != item.source_sha256:
-                update_state(db, item.path, "failed", "Destination SHA-256 differs from source LFS OID")
+            # The inventory API did not expose source hashes for FineWeb.
+            # Compute the source content hash locally and verify the committed
+            # destination by its Xet/LFS SHA-256 when available. If the Hub
+            # does not expose that digest, download the destination copy and
+            # hash it; size-only verification is deliberately insufficient.
+            source_digest = sha256_file(local_path)
+            if item.source_sha256 and source_digest != item.source_sha256:
+                update_state(db, item.path, "failed", "Downloaded source SHA-256 differs from inventory")
+                raise RuntimeError(f"Source SHA-256 mismatch for {item.path}")
+            if remote_digest:
+                destination_digest = remote_digest.removeprefix("sha256:")
+            else:
+                verify_dir = workdir / "destination-verification"
+                verify_path = Path(hf_hub_download(
+                    repo_id=DEST_REPO,
+                    filename=item.path,
+                    repo_type=REPO_TYPE,
+                    local_dir=str(verify_dir),
+                    force_download=True,
+                ))
+                destination_digest = sha256_file(verify_path)
+                verify_path.unlink(missing_ok=True)
+            if destination_digest != source_digest:
+                update_state(db, item.path, "failed", "Destination content SHA-256 mismatch")
                 raise RuntimeError(f"Destination SHA-256 mismatch for {item.path}")
             completed_this_run += 1
             update_state(db, item.path, "verified")
