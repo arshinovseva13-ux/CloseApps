@@ -8,8 +8,11 @@ This directory contains the controlled, resumable workflow for creating a public
 - Source: [HuggingFaceFW/fineweb](https://huggingface.co/datasets/HuggingFaceFW/fineweb)
 - Source configuration: `default`, split `train`, defined by `data/*/*` in the source Dataset Card.
 - Source license: ODC-By 1.0 (preserve attribution and provenance).
-- Dataset Viewer reports approximately 53,418 GB for `default/train`; this is a source-side estimate, not a measurement of our mirror.
-- Mirror status: **not started**. No source data has been copied yet.
+- File-level inventory completed successfully on 2026-11-05.
+- Pinned source revision: `9bb295ddab0e05d785b879661af7260fed5140fc`.
+- Inventory: **27,468 unique Parquet files**, **53,417,984,478,442 bytes** (48.583 TiB), under 110 crawl snapshot directories.
+- The inventory API did not expose source SHA-256/LFS OIDs for these files; content checksums must be computed during the transfer pilot.
+- Mirror status: **transfer not started**. No source data has been copied yet.
 - Storage grant: **not approved**. Do not start the full transfer until capacity and terms are confirmed.
 
 ## Important scope decision
@@ -54,8 +57,10 @@ python datasets/clause-ai/mirror-fineweb/mirror_fineweb.py inventory \
 ```
 
 It writes:
-- `source-inventory.jsonl`
+- `source-inventory.jsonl` (27,468 file records)
 - `inventory-summary.json`
+
+The successful GitHub Actions artifact is [clause-ai-fineweb-source-inventory](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42038315807). It is retained by GitHub until 2026-12-05.
 
 ## Transfer
 
