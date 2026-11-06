@@ -46,7 +46,8 @@
         }
       },
       "import_mode": "stream_sample",
-      "notes": "The 1M normalized sample is distinct from the complete 48.583 TiB source mirror."
+      "notes": "The 1M normalized sample is distinct from the complete 48.583 TiB source mirror.",
+      "attribution_file": "./attribution/fineweb.md"
     },
     {
       "id": "fineweb2",
@@ -76,7 +77,8 @@
         "published_records": 0
       },
       "import_mode": "stream_sample",
-      "notes": "Russian Cyrillic subset for the first import batch."
+      "notes": "Russian Cyrillic subset for the first import batch.",
+      "attribution_file": "./attribution/fineweb2.md"
     },
     {
       "id": "wikidata",
@@ -102,7 +104,8 @@
         "published_records": 0
       },
       "import_mode": "stream_filter",
-      "notes": "CC0 applies to structured data; linked media and external resources are not bundled."
+      "notes": "CC0 applies to structured data; linked media and external resources are not bundled.",
+      "attribution_file": "./attribution/wikidata.md"
     },
     {
       "id": "openalex",
@@ -132,7 +135,8 @@
         "published_records": 0
       },
       "import_mode": "stream_sample",
-      "notes": "Metadata and abstract fields supplied by OpenAlex only; full-text archive is excluded."
+      "notes": "Metadata and abstract fields supplied by OpenAlex only; full-text archive is excluded.",
+      "attribution_file": "./attribution/openalex.md"
     }
   ],
   "excluded_sources": [
