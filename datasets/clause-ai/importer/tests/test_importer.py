@@ -48,11 +48,11 @@ class ImporterContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             writer = ShardWriter(Path(tmp), "fixture")
             for index in range(3):
-                writer.write({"id": str(index), "text": f"record {index}"})
+                writer.write({"id": str(index), "text": f"record {index}", "provenance": {"source_version": "fixture-v1"}, "rights": {"license": "CC0"}})
             report = writer.finish()
             self.assertEqual(report["records"], 3)
-            self.assertEqual(report["source_versions"], [])
-            self.assertEqual(report["licenses"], [])
+            self.assertEqual(report["source_versions"], ["fixture-v1"])
+            self.assertEqual(report["licenses"], ["CC0"])
             self.assertEqual(len(report["shards"]), 1)
             shard = Path(report["shards"][0]["path"])
             self.assertEqual(report["shards"][0]["bytes"], shard.stat().st_size)
