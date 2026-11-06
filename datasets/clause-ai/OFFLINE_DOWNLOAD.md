@@ -28,3 +28,17 @@ The output contains gzip JSONL shards, a corpus manifest, and exact duplicate gr
 ## Storage
 
 The size depends on source data and text lengths. Keep several GB free for the initial 100k-per-source pack; a 1M-per-source pack can require substantially more. Do not use the full 48.583 TiB FineWeb mirror for this first offline pack.
+
+
+## Publish the offline pack to Hugging Face
+
+If you want the archive available for download from the Clause AI dataset page:
+
+1. Install/login once: `py -3 -m pip install -U huggingface_hub` then `hf auth login`.
+2. Run after the offline ZIP has been created:
+
+```bash
+py -3 datasets/clause-ai/importer/download_offline.py --skip-download --upload-to-hub
+```
+
+This uploads the generated ZIP and a dataset card to [Seva-35/clause-ai-unified](https://huggingface.co/datasets/Seva-35/clause-ai-unified). The repo exists but currently contains no corpus shards; the upload command populates it. Hugging Face storage quotas and large-file limits apply.
