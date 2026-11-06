@@ -1,6 +1,6 @@
 # Clause AI — Universal Knowledge Corpus
 
-**Release:** 0.3.1  
+**Release:** 0.5.0  
 **Project:** Close Приложения / CLOSE Датасеты  
 **Languages:** Russian and English, with planned multilingual expansion.
 
@@ -12,7 +12,7 @@ The canonical in-repository library **Foundations** contains 22 original Russian
 
 These 22 records are original explanatory syntheses, but have not undergone independent expert fact-checking or professional language review. They remain marked `draft_review_required`.
 
-The external source catalogue contains candidate datasets only. **Those external corpora have not yet been imported into the canonical Clause AI corpus and are not included in its record count.** Counts and token volumes must be measured from actual published shards, never inferred from source catalogue estimates.
+The external source registry now defines four selected datasets—FineWeb, FineWeb2, Wikidata, and OpenAlex—as one provenance-preserving Clause AI corpus. **No external records have yet been imported or published** and they are not included in the current record count. Counts and token volumes must be measured from actual, verified shards, never inferred from source catalogue estimates. See [the unified corpus architecture](./CORPUS_ARCHITECTURE.md) and [canonical source registry](./sources/registry.json).
 
 ## Notion control center
 
@@ -42,6 +42,8 @@ A source is not considered imported merely because it appears in the catalogue. 
 ## Repository structure
 
 - `manifest.json` — release catalog, libraries, shards, languages, counts, source candidates, and management links.
+- `CORPUS_ARCHITECTURE.md` — unified corpus model, source-preserving layers, rights, quality gates, and execution order.
+- `sources/registry.json` — canonical machine-readable registry of selected datasets, initial selections, licenses, and import status.
 - `schema/record.schema.json` — JSON Schema for canonical knowledge records.
 - `libraries/<library-id>/*.jsonl` — canonical knowledge shards, one JSON object per line.
 - `libraries/foundations/README.md` — description of the first library.
@@ -84,6 +86,7 @@ Exclude personal data, secrets, private communications, and confidential informa
 
 ## Release history
 
+- **0.5.0** — Unified corpus architecture and canonical source registry for FineWeb, FineWeb2, Wikidata, and OpenAlex; source pinning and manual-only bulk imports.
 - **0.3.1** — Added Notion control center and source registry; clarified that management metadata and bulk corpus storage are separate.
 - **0.3.0** — Added catalogue of large external dataset candidates; no external corpus imported.
 - **0.2.0** — Foundations library expanded to 22 bilingual records, manifest, schema, and dual-mode viewer.
