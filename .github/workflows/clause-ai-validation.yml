@@ -1,0 +1,23 @@
+name: Clause AI corpus validation
+
+on:
+  push:
+    paths:
+      - "datasets/clause-ai/importer/merge_corpus.py"
+      - "datasets/clause-ai/tests/**"
+      - ".github/workflows/clause-ai-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  merge-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run corpus merger regression tests
+        run: python -m unittest discover -s datasets/clause-ai/tests -p "test_*.py" -v
