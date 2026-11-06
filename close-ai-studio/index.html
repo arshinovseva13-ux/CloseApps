@@ -29,7 +29,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width
   <div class="messages" id="messages"></div>
 </section>
 <section class="chat hidden" id="modelsView"><div><h2>Доступные модели</h2><p class="sub">Список загружается непосредственно из API провайдера.</p><div id="modelList" class="messages"></div></div></section>
-<section class="chat hidden" id="historyView"><div><h2>История диалогов</h2><p class="sub">Диалоги сохраняются локально на этом устройстве.</p><div id="historyList"></div></div></section>\n<section class="chat hidden" id="updatesView"><div><h2>История обновлений</h2><p class="sub">Что нового появилось в Close AI Studio.</p><div id="updatesList" class="messages"></div></div></section>
+<section class="chat hidden" id="historyView"><div><h2>История диалогов</h2><p class="sub">Диалоги сохраняются локально на этом устройстве.</p><div id="historyList"></div></div></section>
+<section class="chat hidden" id="updatesView"><div><h2>История обновлений</h2><p class="sub">Что нового появилось в Close AI Studio.</p><div id="updatesList" class="messages"></div></div></section>
 <div class="composer-wrap" id="composerWrap"><div class="composer"><textarea id="promptInput" placeholder="Напиши сообщение… (Enter — отправить, Shift + Enter — новая строка)"></textarea><div class="attach-row"><input id="fileInput" type="file" multiple hidden><button class="btn" type="button" id="attachBtn">＋ Прикрепить файлы</button><span class="hint">Текстовые файлы и изображения можно передать модели; остальные будут добавлены как сведения о вложении.</span></div><div id="attachedFiles" class="attach-row"></div><div class="compose-bottom"><span class="hint" id="usageHint">Ответы генерируются через подключённый API. Возможны расходы по тарифу провайдера.</span><button class="btn primary" id="sendBtn" disabled>Отправить ↑</button></div><div class="error" id="errorBox"></div></div></div>
 </main>
 </div>
@@ -61,7 +62,8 @@ function setView(view) {
  $('viewTitle').textContent = view === 'chat' ? 'Новый диалог' : view === 'models' ? 'Каталог моделей' : view === 'history' ? 'История диалогов' : 'История обновлений';
  $('viewSub').textContent = view === 'chat' ? 'Выбери модель и начни общение' : view === 'models' ? models.length+' моделей получено от провайдера' : view === 'history' ? 'Локальные сохранённые диалоги' : 'Журнал версий приложения';
  if (view === 'models') renderModels();
- if (view === 'history') renderHistory();\n if (view === 'updates') renderUpdates();
+ if (view === 'history') renderHistory();
+ if (view === 'updates') renderUpdates();
 }
 async function api(path, options={}) {
  if (!apiKey) throw new Error('Сначала подключи API-ключ в настройках.');
