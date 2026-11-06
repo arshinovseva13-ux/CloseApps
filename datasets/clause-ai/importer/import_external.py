@@ -132,7 +132,7 @@ def hf_records(source: str, limit: int) -> Iterator[dict]:
 
     # Resolve the mutable Hub branch exactly once, then read only that
     # immutable commit so every record in this source batch has reproducible provenance.
-    revision = HfApi().dataset_info(repo_id=repo, repo_type="dataset").sha
+    revision = HfApi().dataset_info(repo_id=repo).sha
     version = f"revision={revision}; config={config}; split=train"
     ds = load_dataset(
         repo, name=config, split="train", streaming=True, revision=revision
