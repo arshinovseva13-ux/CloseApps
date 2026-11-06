@@ -1,6 +1,6 @@
 # Clause AI — Universal Knowledge Corpus
 
-**Release:** 0.5.0  
+**Release:** 0.5.1  
 **Project:** Close Приложения / CLOSE Датасеты  
 **Languages:** Russian and English, with planned multilingual expansion.
 
@@ -86,6 +86,7 @@ Exclude personal data, secrets, private communications, and confidential informa
 
 ## Release history
 
+- **0.5.1** — Passed a 400-record real-source smoke test (100 records per source); exact revisions and snapshot identifiers recorded. No external data has been durably published yet.
 - **0.5.0** — Unified corpus architecture and canonical source registry for FineWeb, FineWeb2, Wikidata, and OpenAlex; source pinning and manual-only bulk imports.
 - **0.3.1** — Added Notion control center and source registry; clarified that management metadata and bulk corpus storage are separate.
 - **0.3.0** — Added catalogue of large external dataset candidates; no external corpus imported.
