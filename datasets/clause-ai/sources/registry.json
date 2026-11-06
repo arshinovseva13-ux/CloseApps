@@ -43,7 +43,12 @@
           "files": 27468,
           "bytes": 53417984478442,
           "tib": 48.583
-        }
+        },
+        "verified_smoke_revision": "9bb295ddab0e05d785b879661af7260fed5140fc",
+        "verified_smoke_config": "CC-MAIN-2024-10",
+        "verified_smoke_split": "train",
+        "smoke_test_records": 100,
+        "smoke_test": "passed"
       },
       "import_mode": "stream_sample",
       "notes": "The 1M normalized sample is distinct from the complete 48.583 TiB source mirror.",
@@ -74,7 +79,12 @@
       },
       "status": {
         "first_batch": "planned_not_run",
-        "published_records": 0
+        "published_records": 0,
+        "verified_smoke_revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+        "verified_smoke_config": "rus_Cyrl",
+        "verified_smoke_split": "train",
+        "smoke_test_records": 100,
+        "smoke_test": "passed"
       },
       "import_mode": "stream_sample",
       "notes": "Russian Cyrillic subset for the first import batch.",
@@ -101,7 +111,10 @@
       },
       "status": {
         "first_batch": "planned_not_run",
-        "published_records": 0
+        "published_records": 0,
+        "verified_smoke_dump_last_modified": "Tue, 27 Oct 2026 16:38:44 GMT",
+        "smoke_test_records": 100,
+        "smoke_test": "passed"
       },
       "import_mode": "stream_filter",
       "notes": "CC0 applies to structured data; linked media and external resources are not bundled.",
@@ -132,7 +145,11 @@
       },
       "status": {
         "first_batch": "planned_not_run",
-        "published_records": 0
+        "published_records": 0,
+        "verified_smoke_snapshot_date": "2026-10-14",
+        "verified_smoke_manifest_sha256": "00ea35c5696d31ca88d814c4ba3ded371cac48681f843966191024f4609fc794",
+        "smoke_test_records": 100,
+        "smoke_test": "passed"
       },
       "import_mode": "stream_sample",
       "notes": "Metadata and abstract fields supplied by OpenAlex only; full-text archive is excluded.",
@@ -148,5 +165,16 @@
       "id": "common_crawl_raw",
       "reason": "Raw crawl has no blanket license; source-level rights, privacy, and opt-out controls required before direct ingestion."
     }
-  ]
+  ],
+  "smoke_test": {
+    "status": "passed",
+    "run_id": 42175135062,
+    "url": "https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175135062",
+    "records_per_source": 100,
+    "total_records": 400,
+    "artifact_id": 13482174317,
+    "artifact_sha256": "1ad103a2bd30174df40d3c467e936bcb651757c5f3d30cdf5164faee6667ff74",
+    "artifact_expires_at": "2026-11-13T06:34:11Z",
+    "note": "Temporary validation artifact only; not counted as published corpus data."
+  }
 }
