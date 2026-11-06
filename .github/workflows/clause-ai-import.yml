@@ -1,10 +1,6 @@
 name: Clause AI external corpus import
 
 on:
-  push:
-    paths:
-      - "datasets/clause-ai/importer/**"
-      - "datasets/clause-ai/schema/external-document.schema.json"
   workflow_dispatch:
     inputs:
       records_per_source:
