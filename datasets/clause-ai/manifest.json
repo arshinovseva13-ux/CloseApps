@@ -1,6 +1,6 @@
 {
   "dataset": "Clause AI",
-  "release": "0.5.3",
+  "release": "0.5.4",
   "release_date": "2026-11-06",
   "description": "Unified provenance-preserving knowledge corpus combining original Clause AI records with separately licensed external datasets.",
   "languages": [
@@ -160,6 +160,7 @@
     "note": "Notion stores project metadata and workflow state. Large dataset shards are stored separately; external candidates are not counted as imported records."
   },
   "release_notes": [
+    "0.5.4: Added a reproducible merge pipeline for one physical corpus containing Foundations and all selected external source shards, with a unified manifest and exact-duplicate report.",
     "0.5.3: Added a durable quality report for the 400-record four-source smoke test, including exact source versions, licenses, shard sizes, and SHA-256 checksums.",
     "0.5.2: Verified SHA-256 for all four smoke-test shards; import report now records shard checksums, source versions, and licenses.",
     "0.5.1: Passed a real 400-record source smoke test (100 each from FineWeb, FineWeb2, Wikidata, OpenAlex); exact source revisions and snapshot identifiers are now recorded in the registry. Smoke data remains temporary and is not counted as published.",
@@ -206,5 +207,26 @@
   "source_registry": "./sources/registry.json",
   "quality_reports": [
     "./quality/smoke-test-2026-11-06.json"
-  ]
+  ],
+  "unified_corpus": {
+    "status": "merge_pipeline_ready_not_yet_built",
+    "merge_guide": "./MERGE_GUIDE.md",
+    "merger_script": "./importer/merge_corpus.py",
+    "record_schema": "./schema/external-document.schema.json",
+    "included_original_libraries": [
+      "foundations"
+    ],
+    "selected_external_sources": [
+      "fineweb",
+      "fineweb2",
+      "wikidata",
+      "openalex"
+    ],
+    "foundations_records": 22,
+    "published_external_records": 0,
+    "first_batch_target_external_records": 4000000,
+    "expected_records_after_first_batch": 4000022,
+    "merge_policy": "One gzip JSONL corpus with source provenance and license retained; exact duplicates reported, not removed by default.",
+    "training_ready": false
+  }
 }
