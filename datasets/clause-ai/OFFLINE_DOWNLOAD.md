@@ -8,7 +8,7 @@
 4. Wait for the download and merge to finish.
 5. The offline archive will be created at `ClauseAI-Offline/ClauseAI-Offline-Data.zip`.
 
-The default first batch is 100,000 records from each of FineWeb, FineWeb2 (Russian Cyrillic), Wikidata and OpenAlex, plus the 22 original Foundations records. This is a practical first offline pack, not the full upstream datasets. It requires internet during the initial download; after the ZIP is created, extraction and reading the corpus work offline.
+The default first batch is 1,000,000 records from each of FineWeb, FineWeb2 (Russian Cyrillic), Wikidata and OpenAlex, plus the 22 original Foundations records. This is a practical first offline pack, not the full upstream datasets. It requires internet during the initial download; after the ZIP is created, extraction and reading the corpus work offline.
 
 For a larger first batch, run from the repository root:
 
@@ -27,7 +27,7 @@ The output contains gzip JSONL shards, a corpus manifest, and exact duplicate gr
 
 ## Storage
 
-The size depends on source data and text lengths. Keep several GB free for the initial 100k-per-source pack; a 1M-per-source pack can require substantially more. Do not use the full 48.583 TiB FineWeb mirror for this first offline pack.
+The size depends on source data and text lengths. Keep substantial free disk space for the 1M-per-source pack; actual size depends on document lengths and compression. Check available storage before starting. Do not use the full 48.583 TiB FineWeb mirror for this first offline pack.
 
 
 ## Publish the offline pack to Hugging Face
