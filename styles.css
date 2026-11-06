@@ -1936,3 +1936,12 @@ body[data-theme="light"] .quick-access-item { color:var(--text-primary); backgro
 .world-link:hover{border-color:rgba(127,214,255,.72);box-shadow:0 10px 32px rgba(25,130,180,.17)}
 .world-card-icon{background:linear-gradient(135deg,rgba(127,214,255,.22),rgba(124,92,252,.2));color:#c5f1ff;border:1px solid rgba(127,214,255,.28)}
 @media(max-width:650px){.world-section-intro{font-size:.88rem}}
+
+
+/* Dedicated AI section for Clause Astra 1 */
+.ai-category-btn{border-color:rgba(126,232,238,.36)!important;background:linear-gradient(100deg,rgba(78,210,221,.09),rgba(132,104,255,.08))}
+.ai-category-btn.active,.ai-category-btn:hover{border-color:rgba(126,232,238,.78)!important;background:linear-gradient(100deg,rgba(78,210,221,.19),rgba(132,104,255,.16))!important;color:#c5fbff!important}
+.ai-section-label{margin-top:28px;color:#9deef0}
+.ai-link{border-color:rgba(126,232,238,.28);background:linear-gradient(105deg,rgba(61,184,201,.10),rgba(124,92,252,.07))}
+.ai-link:hover{border-color:rgba(126,232,238,.75);box-shadow:0 10px 32px rgba(42,173,194,.16)}
+.ai-card-icon{background:linear-gradient(135deg,rgba(91,224,232,.24),rgba(124,92,252,.28));color:#c5fbff;border:1px solid rgba(126,232,238,.32)}
