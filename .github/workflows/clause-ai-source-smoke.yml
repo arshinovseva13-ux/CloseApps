@@ -36,7 +36,7 @@ jobs:
       - name: Verify generated gzip JSONL and report
         run: |
           python - <<'PY'
-          import gzip, json
+          import gzip, json, hashlib
           from pathlib import Path
           root = Path("clause-ai-smoke")
           report = json.loads((root / "import-report.json").read_text())
@@ -44,9 +44,12 @@ jobs:
           assert len(report["reports"]) == 4
           for source in report["reports"]:
               assert source["records"] == 100, (source["source"], source["records"])
+              assert source["source_versions"]
+              assert source["licenses"]
               for shard in source["shards"]:
                   path = Path(shard["path"])
                   assert path.is_file() and path.stat().st_size == shard["bytes"]
+                  assert hashlib.sha256(path.read_bytes()).hexdigest() == shard["sha256"]
                   with gzip.open(path, "rt", encoding="utf-8") as stream:
                       rows = [json.loads(line) for line in stream]
                   assert len(rows) == shard["records"]
