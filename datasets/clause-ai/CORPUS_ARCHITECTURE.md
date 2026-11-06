@@ -135,6 +135,7 @@ A source import is not "in Clause AI" until all required gates pass:
 ## Current reality
 
 - Foundations: 22 original RU/EN records in GitHub; draft review required.
+- Source smoke test: passed with 100 records from each of the four sources (400 total); source revisions and snapshot identifiers recorded. The seven-day artifact is temporary validation evidence, not a published corpus release.
 - External first batch: target 1,000,000 records per source; imported/published count remains zero until real artifacts pass all gates.
 - FineWeb full mirror: inventory complete; data transfer not started.
 - FineWeb2, Wikidata, OpenAlex full mirrors: not started.
