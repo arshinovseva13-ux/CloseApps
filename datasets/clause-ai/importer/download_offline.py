@@ -3,6 +3,7 @@
 from __future__ import annotations
 import argparse
 import hashlib
+import io
 import json
 import subprocess
 import sys
@@ -78,10 +79,12 @@ def main():
                         repo_id="Seva-35/clause-ai-unified", repo_type="dataset",
                         commit_message="Upload offline Clause AI corpus pack")
         card = "# Clause AI Unified Corpus\n\nDownload the offline corpus archive below. Extract it locally; the JSONL shards can then be read without an internet connection. See the archive report for record counts and SHA-256.\n"
-        api.upload_file(path_or_fileobj=card.encode("utf-8"), path_in_repo="README.md",
+        api.upload_file(path_or_fileobj=io.BytesIO(card.encode("utf-8")), path_in_repo="README.md",
                         repo_id="Seva-35/clause-ai-unified", repo_type="dataset",
                         commit_message="Document offline Clause AI corpus")
         report["hub_url"] = "https://huggingface.co/datasets/Seva-35/clause-ai-unified"
+        (work / "OFFLINE-DOWNLOAD-REPORT.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     print(f"\nOFFLINE ARCHIVE READY: {archive}")
 
