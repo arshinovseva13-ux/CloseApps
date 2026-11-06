@@ -17,6 +17,9 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
