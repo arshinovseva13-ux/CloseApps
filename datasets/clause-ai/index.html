@@ -15,7 +15,7 @@ code{color:#c4b5fd}
 <body><main>
 <a class="back" href="../../">← Вернуться в Close Приложения</a>
 <section class="hero">
-<div class="eyebrow">CLOSE DATASETS · RELEASE 0.5.3</div>
+<div class="eyebrow">CLOSE DATASETS · RELEASE 0.5.4</div>
 <h1>Clause AI</h1>
 <p>Единый корпус Clause AI: оригинальные библиотеки знаний плюс выбранные внешние датасеты с сохранением источников, версий и отдельных лицензий. Это набор данных, а не нейросеть и не чат-бот.</p>
 <span class="tag">JSONL</span><span class="tag">Hugging Face workflows</span><span class="tag">SFT / RAG / pretraining</span><span class="tag">Мультиязычный проект</span>
@@ -29,13 +29,41 @@ code{color:#c4b5fd}
 </div>
 <p class="muted" style="font-size:12px;margin-top:10px">Notion-панель приватная: для открытия нужен доступ к рабочему пространству. Публичный просмотр корпуса доступен ниже.</p>
 </section>
-<div class="notice"><strong>Важно:</strong> текущий релиз — небольшой стартовый пример схемы и формата. Он не является большим обучающим корпусом и не содержит триллионы токенов. Масштабирование будет идти поэтапно, с проверкой источников, лицензий, качества и приватности.</div>
+<div class="notice"><strong>Текущий статус:</strong> в основной библиотеке Foundations опубликованы 22 оригинальные RU/EN записи. Внешние источники прошли ограниченный smoke test — по 100 записей из FineWeb, FineWeb2, Wikidata и OpenAlex (400 временных тестовых записей). Эти 400 записей не опубликованы в постоянном хранилище и не входят в счётчик корпуса. Полноценная первая партия импорта ещё не запущена.</div>
+<section class="panel" id="releaseStatus" style="margin:14px 0;border-color:#6d5bd6;background:linear-gradient(135deg,#17152cdd,#0d2631dd)">
+<h2>📊 Состояние релиза 0.5.4</h2>
+<div class="grid">
+<div class="panel"><div class="eyebrow">FOUNDATIONS</div><h2>22</h2><p class="muted">Оригинальные записи на русском и английском. Статус: черновики, ожидают экспертной проверки.</p></div>
+<div class="panel"><div class="eyebrow">SMOKE TEST</div><h2>400</h2><p class="muted">По 100 записей из четырёх внешних источников. Временный проверочный артефакт, не опубликованная часть корпуса.</p></div>
+<div class="panel"><div class="eyebrow">PUBLISHED EXTERNAL</div><h2>0</h2><p class="muted">Внешние записи пока не прошли полный цикл долговременной публикации и проверки.</p></div>
+</div>
+<p class="muted">Подтверждено: JSONL-файлы тестового импорта прочитаны, source ID / версии / лицензии сохранены, SHA-256 всех четырёх шардов проверены. Артефакт теста временный и истекает 13 ноября 2026 года.</p>
+<a class="download" href="https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641" target="_blank" rel="noopener noreferrer">✓ Отчёт smoke test</a>
+<a class="download secondary" href="./quality/smoke-test-2026-11-06.json">JSON-отчёт и SHA-256</a>
+<a class="download secondary" href="./MERGE_GUIDE.md">Инструкция по объединению</a>
+</section>
+<section class="panel" id="astraDataset" style="margin:14px 0;border-color:#287f9a">
+<h2>🧪 Связанный проект: Clause Astra 1 Dataset v1</h2>
+<p class="muted">Отдельный подготовленный учебный корпус для экспериментов с Clause Astra 1. Он не является частью текущих 22 записей Foundations и не включён в счётчик опубликованных внешних записей Clause AI.</p>
+<div class="grid">
+<div class="panel"><div class="eyebrow">UNIQUE EXAMPLES</div><h2>42 572</h2><p class="muted">Уникальных примеров после дедупликации.</p></div>
+<div class="panel"><div class="eyebrow">TRAIN / VALIDATION</div><h2>41 720 / 852</h2><p class="muted">Разделение без пересечения хешей между выборками.</p></div>
+<div class="panel"><div class="eyebrow">SFT PAIRS</div><h2>12</h2><p class="muted">Отдельная подборка instruction-tuning.</p></div>
+</div>
+<p class="muted">Архив Dataset v1: 164 192 231 байт. ZIP integrity проверена; SHA-256: <code>b01fb5abc4ee119efb9ac92b9b2c4cf5cb4e479716c9783b9160eb4fdabbbcb5</code>. Реальное обучение модели на этом корпусе ещё не запускалось. Архив хранится в проекте Deepnote и не считается публично опубликованным.</p>
+<a class="download" href="https://deepnote.com/workspace/closedatasets-e075e88f-b8af-44b5-862e-10a71747e50c/project/Clause-Astra-1-Dataset-Lab-018e2ecf-9a55-4568-9bc2-b9161ab9d16e/notebook/Clause-Astra-1-Dataset-Lab-3c73b30d22af4c51a1a58b0226dac416?utm_content=018e2ecf-9a55-4568-9bc2-b9161ab9d16e" target="_blank" rel="noopener noreferrer">↗ Открыть Dataset Lab</a>
+</section>
 <section class="panel" id="importPipeline" style="margin:14px 0;border-color:#287f9a">
-<h2>⚙️ Импорт больших корпусов · 0.4.0</h2>
-<p class="muted">Clause AI объединяет четыре выбранных источника: FineWeb, FineWeb2 (русский), Wikidata и OpenAlex. Первая партия — до 1 000 000 записей из каждого. Проверочный запуск прошёл успешно: по 100 реальных записей из каждого источника (400 всего). Это временный smoke test, а не первая партия по 1 млн и не постоянная публикация; внешние записи пока не входят в счётчик. Полное зеркало FineWeb — отдельный проект и не заменяется выборкой в 1 млн записей.</p>
-<p class="muted">Сформированные файлы будут временно доступны как GitHub Actions artifact. Источники фиксируются на конкретных ревизиях, а каждая запись сохраняет исходный ID, происхождение и лицензию. Для постоянной публикации потребуется отдельное хранилище; временные артефакты не считаются опубликованным корпусом.</p>
-<a class="download" href="https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641" target="_blank" rel="noopener noreferrer">✓ Проверка 4 источников</a>\n<a class="download secondary" href="./quality/smoke-test-2026-11-06.json">Отчёт и SHA-256</a>\n<a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-import.yml" target="_blank" rel="noopener noreferrer">↗ Первая партия импорта</a>
-<a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/blob/main/datasets/clause-ai/importer/README.md" target="_blank" rel="noopener noreferrer">Инструкция</a>\n<a class="download secondary" href="./CORPUS_ARCHITECTURE.md">Архитектура Clause</a>\n<a class="download secondary" href="./sources/registry.json">Реестр источников</a>\n<a class="download secondary" href="./mirror-fineweb/README.md">Полное зеркало FineWeb</a>
+<h2>⚙️ Импорт больших корпусов · 0.5.4</h2>
+<p class="muted">Выбраны четыре источника для первой партии — FineWeb, FineWeb2 (русский), Wikidata и OpenAlex; целевой объём до 1 000 000 записей на источник. Сейчас успешно пройден только smoke test: 100 записей на источник, 400 временных записей суммарно. Первая партия ещё не запускалась. Полное зеркало FineWeb — отдельный проект и не заменяется выборкой в 1 млн записей.</p>
+<p class="muted">Smoke test зафиксировал точные ревизии источников, исходные ID и лицензии; контрольные суммы всех четырёх gzip JSONL-шардов проверены. Временный артефакт не является постоянной публикацией. Для выпуска корпуса нужно выполнить первую партию, проверить права и качество, перенести шарды в долговременное хранилище и повторно проверить их контрольные суммы.</p>
+<a class="download" href="https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641" target="_blank" rel="noopener noreferrer">✓ Проверка 4 источников</a>
+<a class="download secondary" href="./quality/smoke-test-2026-11-06.json">Отчёт и SHA-256</a>
+<a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-import.yml" target="_blank" rel="noopener noreferrer">↗ Первая партия импорта</a>
+<a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/blob/main/datasets/clause-ai/importer/README.md" target="_blank" rel="noopener noreferrer">Инструкция</a>
+<a class="download secondary" href="./CORPUS_ARCHITECTURE.md">Архитектура Clause</a>
+<a class="download secondary" href="./sources/registry.json">Реестр источников</a>
+<a class="download secondary" href="./mirror-fineweb/README.md">Полное зеркало FineWeb</a>
 </section>
 <div class="grid">
 <section class="panel"><h2>Что это</h2><p class="muted">Структурированные текстовые данные и инструкции, которые можно преобразовывать под разные сценарии обучения и поиска знаний.</p></section>
@@ -76,7 +104,7 @@ code{color:#c4b5fd}
 <h2>Принципы качества</h2>
 <ul class="muted"><li>У каждого внешнего материала должны быть источник и сведения о правах использования.</li><li>Персональные данные, секреты и чувствительная информация не включаются.</li><li>Дубликаты удаляются; спорные и синтетические записи маркируются.</li><li>Обучающие и тестовые выборки разделяются, чтобы снизить утечки.</li><li>Лицензия каждого релиза публикуется отдельно и не выводится автоматически из лицензии кода.</li></ul>
 </section>
-<div class="footer">Clause AI · Close Приложения · Версия 0.5.3 · Universal Knowledge Corpus.</div>
+<div class="footer">Clause AI · Close Приложения · Версия 0.5.4 · Universal Knowledge Corpus. Обновлено 06.11.2026.</div>
 
 <script>
 (() => {
@@ -124,7 +152,8 @@ code{color:#c4b5fd}
     const r=await fetch(url.href,{cache:'no-store'});
     if(!r.ok)throw new Error('HTTP '+r.status);
     const text=await r.text();
-    const lines=text.split(/\r?\n/).filter(line=>line.trim());
+    const lines=text.split(/\r?
+/).filter(line=>line.trim());
     const parsed=lines.map((line,index)=>{try{return JSON.parse(line)}catch(e){throw new Error('ошибка JSON в строке '+(index+1))}});
     return {file,text,records:parsed,error:null,url:url.href};
    }catch(error){return {file,text:'',records:[],error:String(error.message||error),url:url.href};}
@@ -133,12 +162,14 @@ code{color:#c4b5fd}
   for(const result of results){
    if(result.error){failed.push(result);continue;}
    records.push(...result.records);
-   rawText+=(rawText?'\n':'')+result.text;
+   rawText+=(rawText?'
+':'')+result.text;
    loadedFiles.push(result.file.path);
   }
   rawBox.textContent=rawText;
   render();setMode(false);
-  const details=results.map(r=>(r.error?'❌ ':'✓ ')+r.file.path+(r.error?' — '+r.error:' — '+r.records.length+' записей')).join('\n');
+  const details=results.map(r=>(r.error?'❌ ':'✓ ')+r.file.path+(r.error?' — '+r.error:' — '+r.records.length+' записей')).join('
+');
   status.textContent='Релиз '+manifest.release+' · загружено '+records.length+' из '+(manifest.total_records??records.length)+' записей · файлов: '+loadedFiles.length+'/'+shards.length;
   const report=document.createElement('pre');
   report.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;margin-top:12px;padding:12px;border:1px solid #293754;border-radius:10px;background:#0a1222;color:#a9b7d0;font-size:12px';
