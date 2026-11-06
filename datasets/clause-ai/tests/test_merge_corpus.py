@@ -26,7 +26,7 @@ class MergeCorpusTests(unittest.TestCase):
         }
         path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    def make_external(self, path: Path, text: str = "shared exact text") -> None:
+    def make_external(self, path: Path, text: str = "shared exact text\\n\\nДополнительное объяснение\\n\\nKey points:\\n- Пункт") -> None:
         row = {
             "id": "external-test-1",
             "record_type": "external_document",
