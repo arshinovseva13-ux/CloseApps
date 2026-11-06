@@ -24,6 +24,14 @@ The source inventory is complete and pinned to revision `9bb295ddab0e05d785b8796
 
 The inventory records paths and byte sizes. The source listing API did not provide source SHA-256/LFS OIDs for these files; checksums will therefore be calculated and compared during a controlled transfer pilot before any full-scale copy.
 
+## Clause AI integration progress
+
+The FineWeb mirror is now one source-preservation track within the broader Clause AI unified corpus. The ingestion pipeline also targets FineWeb2 (Russian Cyrillic), Wikidata structured entities, and OpenAlex Works metadata. Each source has a separate attribution and rights notice; the project does not relicense all data under one blanket license.
+
+On 2026-11-06, a live smoke test successfully imported 100 records from each of the four sources (400 total), validated gzip JSONL output and record counts, pinned the two Hugging Face source revisions, recorded the Wikidata dump timestamp and OpenAlex manifest hash, and verified SHA-256 for all four output shards. The temporary evidence is available in [GitHub Actions run #42175440641](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641). These 400 smoke-test records are not counted as a published corpus release and are not stored as a permanent dataset.
+
+The storage request in this document remains specifically for the complete FineWeb source mirror (48.583 TiB), not for the four-source sample import.
+
 ## Why this mirror may be useful
 
 - Preserve a pinned, reproducible public copy of a widely used open dataset.
