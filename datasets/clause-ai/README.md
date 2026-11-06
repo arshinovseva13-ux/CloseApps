@@ -1,6 +1,6 @@
 # Clause AI — Universal Knowledge Corpus
 
-**Release:** 0.5.2  
+**Release:** 0.5.3  
 **Project:** Close Приложения / CLOSE Датасеты  
 **Languages:** Russian and English, with planned multilingual expansion.
 
@@ -44,6 +44,7 @@ A source is not considered imported merely because it appears in the catalogue. 
 - `manifest.json` — release catalog, libraries, shards, languages, counts, source candidates, and management links.
 - `CORPUS_ARCHITECTURE.md` — unified corpus model, source-preserving layers, rights, quality gates, and execution order.
 - `sources/registry.json` — canonical machine-readable registry of selected datasets, initial selections, licenses, and import status.
+- `quality/smoke-test-2026-11-06.json` — durable report of the four-source smoke test and shard checksums.
 - `schema/record.schema.json` — JSON Schema for canonical knowledge records.
 - `libraries/<library-id>/*.jsonl` — canonical knowledge shards, one JSON object per line.
 - `libraries/foundations/README.md` — description of the first library.
@@ -86,6 +87,7 @@ Exclude personal data, secrets, private communications, and confidential informa
 
 ## Release history
 
+- **0.5.3** — Added a permanent quality report with source versions, licenses, shard sizes, and SHA-256 for the 400-record smoke test.
 - **0.5.2** — Repeated the 400-record live-source smoke test and verified SHA-256 for all four gzip JSONL shards; exact source versions and licenses are recorded. No external data has been durably published yet.
 - **0.5.0** — Unified corpus architecture and canonical source registry for FineWeb, FineWeb2, Wikidata, and OpenAlex; source pinning and manual-only bulk imports.
 - **0.3.1** — Added Notion control center and source registry; clarified that management metadata and bulk corpus storage are separate.
