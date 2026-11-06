@@ -19,11 +19,11 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width
 <aside class="sidebar">
   <div class="brand"><div class="logo">✦</div><div>Close AI Studio<div class="sub">Единое пространство моделей</div></div></div>
   <div class="provider"><strong>Opus Proxy</strong><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">Не подключён</span></div><div class="sub" style="margin-top:8px">OpenAI-compatible API</div></div>
-  <div><div class="side-title">Рабочее пространство</div><nav class="nav"><button class="active" data-view="chat">✦ Чат</button><button data-view="models">▦ Модели</button><button data-view="history">◷ История</button></nav></div>
+  <div><div class="side-title">Рабочее пространство</div><nav class="nav"><button class="active" data-view="chat">✦ Чат</button><button data-view="models">▦ Модели</button></nav></div>
   <div class="side-bottom"><button class="btn" id="connectBtn">⚙ Подключить API</button><button class="secondary" id="newChatBtn">＋ Новый диалог</button><div class="sub">Ключ хранится только в памяти текущей вкладки и не записывается в файлы сайта.</div></div>
 </aside>
 <main class="main">
-<header class="top"><div><h1 id="viewTitle">Новый диалог</h1><p id="viewSub">Выбери модель и начни общение</p></div><div class="top-actions"><select class="select" id="modelSelect" aria-label="Выбрать модель"><option value="">Сначала подключи API</option></select></div></header>
+<header class="top"><div><h1 id="viewTitle">Новый диалог</h1><p id="viewSub">Выбери модель и начни общение</p></div><div class="top-actions"><button class="btn" id="topHistoryBtn" type="button">◷ История</button><select class="select" id="modelSelect" aria-label="Выбрать модель"><option value="">Сначала подключи API</option></select></div></header>
 <section class="chat" id="chatView">
   <div class="welcome" id="welcome"><div class="orb">✦</div><h2>Один чат. Много моделей.</h2><p>Подключи Opus Proxy, загрузи доступные модели и выбери, с кем работать.</p><div class="suggestions"><button>Объясни сложную тему простыми словами</button><button>Помоги написать программу</button><button>Сравни несколько подходов к задаче</button></div></div>
   <div class="messages" id="messages"></div>
@@ -222,6 +222,7 @@ async function sendMessage() {
   saveConversation();
  } finally { busy=false; $('sendBtn').disabled=false; $('sendBtn').textContent='Отправить ↑'; }
 }
+$('topHistoryBtn').addEventListener('click',()=>setView(currentView==='history'?'chat':'history'));
 $('connectBtn').addEventListener('click',()=>$('settingsModal').classList.add('open'));
 $('cancelSettings').addEventListener('click',()=>$('settingsModal').classList.remove('open'));
 $('saveSettings').addEventListener('click',()=>{const key=$('apiKeyInput').value.trim();if(!key){showError('Вставь API-ключ.','settingsError');return;}apiKey=key;baseUrl=cleanBase($('baseUrlInput').value||'https://opus.abhibots.com/v1');loadModels();});
