@@ -13,11 +13,11 @@ The Hugging Face Hub registry entry is a **discovery catalogue**, not a dataset,
 
 ## Important storage boundary
 
-The importer resolves and pins an immutable Hugging Face commit for each HF source, records the Wikidata dump's Last-Modified value, and records the SHA-256 of the OpenAlex manifest. It writes gzip-compressed JSONL shards locally. The GitHub Actions workflow is manual-only and uploads them as a temporary workflow artifact (30-day retention). **It does not commit multi-gigabyte data into the CloseApps source repository or GitHub Pages.** To make the corpus permanently downloadable from the Clause AI site, the generated shards must then be copied to a durable dataset store (for example, a dedicated Hugging Face dataset repository or object storage) and the resulting URLs/checksums added to the manifest.
+The importer resolves and pins an immutable Hugging Face commit for each HF source, records the Wikidata dump's Last-Modified value, and records the SHA-256 of the OpenAlex manifest. Every output shard receives a SHA-256 checksum; the import report records source versions and licenses. It writes gzip-compressed JSONL shards locally. The GitHub Actions workflow is manual-only and uploads them as a temporary workflow artifact (30-day retention). **It does not commit multi-gigabyte data into the CloseApps source repository or GitHub Pages.** To make the corpus permanently downloadable from the Clause AI site, the generated shards must then be copied to a durable dataset store (for example, a dedicated Hugging Face dataset repository or object storage) and the resulting URLs/checksums added to the manifest.
 
 No record counter is increased until all shards are downloaded, validated, and published to durable storage. The master registry and manifest remain at zero published external records until this gate passes.
 
-## Run locally
+## Smoke-test result\n\nA bounded live-source test passed on 2026-11-06: 100 records each from FineWeb, FineWeb2, Wikidata, and OpenAlex (400 total). The generated files were parsed, their record counts and source IDs were checked, and shard checksums were verified. [GitHub Actions evidence](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175135062). The artifact is temporary and expires after seven days; it is not counted as a published Clause AI corpus release.\n\n## Run locally
 
 Python 3.11+:
 
