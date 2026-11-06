@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4]
+ROOT = Path(__file__).resolve().parents[3]
 MERGER = ROOT / "datasets" / "clause-ai" / "importer" / "merge_corpus.py"
 
 class MergeCorpusTests(unittest.TestCase):
