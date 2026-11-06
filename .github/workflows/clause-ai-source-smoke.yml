@@ -1,4 +1,4 @@
-name: Clause AI source smoke test
+name: Clause AI source smoke test # re-run after importer compatibility fix
 
 on:
   push:
