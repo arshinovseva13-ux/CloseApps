@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Iterable, Iterator
 
 import requests
+from huggingface_hub import HfApi
 
 UA = "ClauseAI-ExternalCorpusImporter/0.1 (CloseApps; provenance-preserving research import)"
 SHARD_SIZE = 50_000
@@ -129,7 +130,13 @@ def hf_records(source: str, limit: int) -> Iterator[dict]:
         version = "rus_Cyrl filtered train; resolve and record exact Hub revision at execution"
         language = "ru"
 
-    ds = load_dataset(repo, name=config, split="train", streaming=True)
+    # Resolve the mutable Hub branch exactly once, then read only that
+    # immutable commit so every record in this source batch has reproducible provenance.
+    revision = HfApi().dataset_info(repo_id=repo, repo_type="dataset").sha
+    version = f"revision={revision}; config={config}; split=train"
+    ds = load_dataset(
+        repo, name=config, split="train", streaming=True, revision=revision
+    )
     emitted = 0
     for item in ds:
         text = safe_text(item.get("text"))
@@ -149,6 +156,7 @@ def wikidata_records(limit: int) -> Iterator[dict]:
     url = "https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2"
     response = requests.get(url, headers={"User-Agent": UA}, stream=True, timeout=TIMEOUT)
     response.raise_for_status()
+    dump_version = response.headers.get("Last-Modified") or "latest-all (Last-Modified unavailable)"
     decompressor = bz2.BZ2Decompressor()
     buffer = b""
     emitted = 0
@@ -210,7 +218,7 @@ def wikidata_records(limit: int) -> Iterator[dict]:
                     for lang, vals in entity.get("aliases", {}).items() if lang in ("ru", "en")
                 }, "claims": claim_summary},
                 "https://www.wikidata.org/wiki/" + key,
-                "latest-all.json.bz2; dump date recorded at execution",
+                f"latest-all.json.bz2; Last-Modified={dump_version}",
                 "CC0", "Wikidata structured data is CC0; linked media and external references are not included.",
                 ["structured_knowledge", "entity", language]
             )
@@ -223,8 +231,14 @@ def openalex_records(limit: int) -> Iterator[dict]:
     manifest_url = "https://openalex.s3.amazonaws.com/data/jsonl/works/manifest.json"
     r = requests.get(manifest_url, headers={"User-Agent": UA}, timeout=TIMEOUT)
     r.raise_for_status()
+    manifest_bytes = r.content
+    manifest_sha256 = hashlib.sha256(manifest_bytes).hexdigest()
     manifest = r.json()
     files = list(manifest.get("files", []))
+    snapshot_version = (
+        f"date={manifest.get('date', 'unknown')}; "
+        f"manifest_sha256={manifest_sha256}"
+    )
     # Spread the sample over snapshot partitions, not only the first update dates.
     random.Random(20261104).shuffle(files)
     emitted = 0
@@ -266,7 +280,7 @@ def openalex_records(limit: int) -> Iterator[dict]:
                 yield base_record(
                     "openalex", key, lang, title, body, meta,
                     "https://openalex.org/" + key.rsplit("/", 1)[-1],
-                    manifest.get("date", "public JSONL snapshot; date in manifest"),
+                    snapshot_version,
                     "CC0 (OpenAlex metadata)", "Metadata-only. Do not include or infer rights to linked full-text documents.",
                     ["scientific_metadata", "research", lang]
                 )
