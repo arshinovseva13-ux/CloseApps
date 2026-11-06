@@ -1,0 +1,60 @@
+name: Clause AI source smoke test
+
+on:
+  push:
+    paths:
+      - ".github/workflows/clause-ai-source-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clause-ai-source-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install importer dependencies
+        run: python -m pip install -r datasets/clause-ai/importer/requirements.txt
+      - name: Import a bounded sample from each approved source
+        run: |
+          python datasets/clause-ai/importer/import_external.py \
+            --source all \
+            --limit 100 \
+            --out ./clause-ai-smoke
+      - name: Verify generated gzip JSONL and report
+        run: |
+          python - <<'PY'
+          import gzip, json
+          from pathlib import Path
+          root = Path("clause-ai-smoke")
+          report = json.loads((root / "import-report.json").read_text())
+          assert report["total_records"] > 0
+          assert len(report["reports"]) == 4
+          for source in report["reports"]:
+              assert source["records"] == 100, (source["source"], source["records"])
+              for shard in source["shards"]:
+                  path = Path(shard["path"])
+                  assert path.is_file() and path.stat().st_size == shard["bytes"]
+                  with gzip.open(path, "rt", encoding="utf-8") as stream:
+                      rows = [json.loads(line) for line in stream]
+                  assert len(rows) == shard["records"]
+                  assert all(row["source_id"] == source["source"] for row in rows)
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload smoke-test evidence (temporary only)
+        uses: actions/upload-artifact@v4
+        with:
+          name: clause-ai-source-smoke-${{ github.run_id }}
+          path: clause-ai-smoke/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
