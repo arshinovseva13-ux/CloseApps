@@ -19,7 +19,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width
 <aside class="sidebar">
   <div class="brand"><div class="logo">✦</div><div>Close AI Studio<div class="sub">Единое пространство моделей</div></div></div>
   <div class="provider"><strong>Opus Proxy</strong><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">Не подключён</span></div><div class="sub" style="margin-top:8px">OpenAI-compatible API</div></div>
-  <div><div class="side-title">Рабочее пространство</div><nav class="nav"><button class="active" data-view="chat">✦ Чат</button><button data-view="models">▦ Модели</button></nav></div>
+  <div><div class="side-title">Рабочее пространство</div><nav class="nav"><button class="active" data-view="chat">✦ Чат</button><button data-view="models">▦ Модели</button><button data-view="updates">◷ Обновления</button></nav></div>
   <div class="side-bottom"><button class="btn" id="connectBtn">⚙ Подключить API</button><button class="secondary" id="newChatBtn">＋ Новый диалог</button><div class="sub">Ключ хранится только в памяти текущей вкладки и не записывается в файлы сайта.</div></div>
 </aside>
 <main class="main">
@@ -29,7 +29,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width
   <div class="messages" id="messages"></div>
 </section>
 <section class="chat hidden" id="modelsView"><div><h2>Доступные модели</h2><p class="sub">Список загружается непосредственно из API провайдера.</p><div id="modelList" class="messages"></div></div></section>
-<section class="chat hidden" id="historyView"><div><h2>История диалогов</h2><p class="sub">Диалоги сохраняются локально на этом устройстве.</p><div id="historyList"></div></div></section>
+<section class="chat hidden" id="historyView"><div><h2>История диалогов</h2><p class="sub">Диалоги сохраняются локально на этом устройстве.</p><div id="historyList"></div></div></section>\n<section class="chat hidden" id="updatesView"><div><h2>История обновлений</h2><p class="sub">Что нового появилось в Close AI Studio.</p><div id="updatesList" class="messages"></div></div></section>
 <div class="composer-wrap" id="composerWrap"><div class="composer"><textarea id="promptInput" placeholder="Напиши сообщение… (Enter — отправить, Shift + Enter — новая строка)"></textarea><div class="attach-row"><input id="fileInput" type="file" multiple hidden><button class="btn" type="button" id="attachBtn">＋ Прикрепить файлы</button><span class="hint">Текстовые файлы и изображения можно передать модели; остальные будут добавлены как сведения о вложении.</span></div><div id="attachedFiles" class="attach-row"></div><div class="compose-bottom"><span class="hint" id="usageHint">Ответы генерируются через подключённый API. Возможны расходы по тарифу провайдера.</span><button class="btn primary" id="sendBtn" disabled>Отправить ↑</button></div><div class="error" id="errorBox"></div></div></div>
 </main>
 </div>
@@ -55,13 +55,13 @@ function setStatus(ok, label) { $('statusDot').classList.toggle('ok', ok); $('st
 function showError(message, target='errorBox') { $(target).textContent = message || ''; }
 function setView(view) {
  currentView = view;
- ['chat','models','history'].forEach(v => $(v+'View').classList.toggle('hidden', v !== view));
+ ['chat','models','history','updates'].forEach(v => $(v+'View').classList.toggle('hidden', v !== view));
  $('composerWrap').classList.toggle('hidden', view !== 'chat');
  document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
- $('viewTitle').textContent = view === 'chat' ? 'Новый диалог' : view === 'models' ? 'Каталог моделей' : 'История диалогов';
- $('viewSub').textContent = view === 'chat' ? 'Выбери модель и начни общение' : view === 'models' ? models.length+' моделей получено от провайдера' : 'Локальные сохранённые диалоги';
+ $('viewTitle').textContent = view === 'chat' ? 'Новый диалог' : view === 'models' ? 'Каталог моделей' : view === 'history' ? 'История диалогов' : 'История обновлений';
+ $('viewSub').textContent = view === 'chat' ? 'Выбери модель и начни общение' : view === 'models' ? models.length+' моделей получено от провайдера' : view === 'history' ? 'Локальные сохранённые диалоги' : 'Журнал версий приложения';
  if (view === 'models') renderModels();
- if (view === 'history') renderHistory();
+ if (view === 'history') renderHistory();\n if (view === 'updates') renderUpdates();
 }
 async function api(path, options={}) {
  if (!apiKey) throw new Error('Сначала подключи API-ключ в настройках.');
@@ -116,6 +116,14 @@ function saveConversation() {
  const item={id:Date.now(),title:(messages.find(m=>m.role==='user')?.content || 'Новый диалог').slice(0,70),updated:new Date().toISOString(),messages};
  conversations=[item,...conversations.filter(c=>c.id!==item.id)].slice(0,40);
  try { localStorage.setItem(HISTORY_KEY,JSON.stringify(conversations)); } catch (_) {}
+}
+function renderUpdates() {
+ const updates = [
+  {date:'06.11.2026',version:'Обновление',title:'Автоматическое продолжение длинных ответов',items:['Если модель достигает лимита длины, приложение автоматически запрашивает следующую часть ответа.','Части объединяются в одно сообщение.','Добавлена защита от бесконечного цикла продолжений.']},
+  {date:'06.11.2026',version:'Исправление',title:'Сохранение незавершённых ответов',items:['Если генерация прерывается из-за ошибки, уже полученный текст не теряется.','Частичный ответ сохраняется в истории диалогов.']},
+  {date:'06.11.2026',version:'Интерфейс',title:'История диалогов в верхней панели',items:['Быстрый переход к сохранённым чатам перенесён в верхнюю панель приложения.']}
+ ];
+ $('updatesList').innerHTML = updates.map(u=>'<article class="provider"><div class="status">'+escapeHtml(u.date)+' · '+escapeHtml(u.version)+'</div><strong style="margin-top:7px">'+escapeHtml(u.title)+'</strong><ul style="margin:9px 0 0;padding-left:19px;color:#b9c7df;font-size:13px">'+u.items.map(x=>'<li style="margin:5px 0">'+escapeHtml(x)+'</li>').join('')+'</ul></article>').join('');
 }
 function renderHistory() {
  $('historyList').innerHTML = conversations.length ? conversations.map(c=>'<div class="history-item"><button class="open-history" data-id="'+c.id+'" style="text-align:left;flex:1">'+escapeHtml(c.title)+'<div class="sub">'+new Date(c.updated).toLocaleString('ru-RU')+'</div></button><button class="delete-history" data-id="'+c.id+'" aria-label="Удалить">✕</button></div>').join('') : '<div class="empty">Сохранённых диалогов пока нет.</div>';
