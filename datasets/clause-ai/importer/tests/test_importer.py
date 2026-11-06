@@ -25,6 +25,24 @@ class ImporterContractTests(unittest.TestCase):
         self.assertEqual(record["quality"]["status"], "imported_unreviewed")
         self.assertFalse(record["quality"]["fact_checked"])
 
+    def test_canonical_registry_manifest_and_attribution_files(self):
+        root = Path(__file__).resolve().parents[4]
+        clause = root / "datasets" / "clause-ai"
+        registry = json.loads((clause / "sources" / "registry.json").read_text(encoding="utf-8"))
+        manifest = json.loads((clause / "manifest.json").read_text(encoding="utf-8"))
+        schema = json.loads((clause / "schema" / "external-document.schema.json").read_text(encoding="utf-8"))
+        source_ids = {source["id"] for source in registry["sources"]}
+        self.assertEqual(source_ids, {"fineweb", "fineweb2", "wikidata", "openalex"})
+        self.assertEqual(manifest["source_registry"], "./sources/registry.json")
+        self.assertEqual(manifest["corpus_architecture"], "./CORPUS_ARCHITECTURE.md")
+        self.assertEqual(manifest["external_import_plan"]["imported_records"], 0)
+        self.assertEqual(manifest["total_records"], 22)
+        self.assertIn("source_id", schema["required"])
+        for source in registry["sources"]:
+            self.assertEqual(source["first_batch"]["target_records"], 1_000_000)
+            attribution = clause / "sources" / "attribution" / f'{source["id"]}.md'
+            self.assertTrue(attribution.is_file(), str(attribution))
+
     def test_shard_writer_emits_valid_gzip_jsonl_and_exact_counts(self):
         with tempfile.TemporaryDirectory() as tmp:
             writer = ShardWriter(Path(tmp), "fixture")
