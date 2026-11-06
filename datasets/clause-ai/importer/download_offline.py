@@ -22,7 +22,7 @@ def run(args):
 
 def main():
     p = argparse.ArgumentParser(description="Download Clause AI data and prepare offline archives.")
-    p.add_argument("--records-per-source", type=int, default=100_000)
+    p.add_argument("--records-per-source", type=int, default=1_000_000)
     p.add_argument("--workdir", type=Path, default=Path("ClauseAI-Offline"))
     p.add_argument("--skip-download", action="store_true", help="Merge existing source shards only.")
     p.add_argument("--upload-to-hub", action="store_true", help="Upload the finished ZIP to Seva-35/clause-ai-unified (requires prior hf auth login).")
