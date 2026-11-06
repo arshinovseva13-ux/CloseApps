@@ -1,6 +1,6 @@
 {
   "dataset": "Clause AI",
-  "release": "0.5.2",
+  "release": "0.5.3",
   "release_date": "2026-11-06",
   "description": "Unified provenance-preserving knowledge corpus combining original Clause AI records with separately licensed external datasets.",
   "languages": [
@@ -160,6 +160,7 @@
     "note": "Notion stores project metadata and workflow state. Large dataset shards are stored separately; external candidates are not counted as imported records."
   },
   "release_notes": [
+    "0.5.3: Added a durable quality report for the 400-record four-source smoke test, including exact source versions, licenses, shard sizes, and SHA-256 checksums.",
     "0.5.2: Verified SHA-256 for all four smoke-test shards; import report now records shard checksums, source versions, and licenses.",
     "0.5.1: Passed a real 400-record source smoke test (100 each from FineWeb, FineWeb2, Wikidata, OpenAlex); exact source revisions and snapshot identifiers are now recorded in the registry. Smoke data remains temporary and is not counted as published.",
     "0.5.0: Defined the unified Clause AI corpus architecture and canonical source registry; separated full FineWeb mirroring from its 1M-record normalized import; imports are manual-only and pin immutable source revisions/manifests.",
@@ -202,5 +203,8 @@
     }
   },
   "corpus_architecture": "./CORPUS_ARCHITECTURE.md",
-  "source_registry": "./sources/registry.json"
+  "source_registry": "./sources/registry.json",
+  "quality_reports": [
+    "./quality/smoke-test-2026-11-06.json"
+  ]
 }
