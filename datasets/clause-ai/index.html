@@ -15,7 +15,7 @@ code{color:#c4b5fd}
 <body><main>
 <a class="back" href="../../">← Вернуться в Close Приложения</a>
 <section class="hero">
-<div class="eyebrow">CLOSE DATASETS · RELEASE 0.5.2</div>
+<div class="eyebrow">CLOSE DATASETS · RELEASE 0.5.3</div>
 <h1>Clause AI</h1>
 <p>Единый корпус Clause AI: оригинальные библиотеки знаний плюс выбранные внешние датасеты с сохранением источников, версий и отдельных лицензий. Это набор данных, а не нейросеть и не чат-бот.</p>
 <span class="tag">JSONL</span><span class="tag">Hugging Face workflows</span><span class="tag">SFT / RAG / pretraining</span><span class="tag">Мультиязычный проект</span>
@@ -34,7 +34,7 @@ code{color:#c4b5fd}
 <h2>⚙️ Импорт больших корпусов · 0.4.0</h2>
 <p class="muted">Clause AI объединяет четыре выбранных источника: FineWeb, FineWeb2 (русский), Wikidata и OpenAlex. Первая партия — до 1 000 000 записей из каждого. Проверочный запуск прошёл успешно: по 100 реальных записей из каждого источника (400 всего). Это временный smoke test, а не первая партия по 1 млн и не постоянная публикация; внешние записи пока не входят в счётчик. Полное зеркало FineWeb — отдельный проект и не заменяется выборкой в 1 млн записей.</p>
 <p class="muted">Сформированные файлы будут временно доступны как GitHub Actions artifact. Источники фиксируются на конкретных ревизиях, а каждая запись сохраняет исходный ID, происхождение и лицензию. Для постоянной публикации потребуется отдельное хранилище; временные артефакты не считаются опубликованным корпусом.</p>
-<a class="download" href="https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641" target="_blank" rel="noopener noreferrer">✓ Проверка 4 источников</a>\n<a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-import.yml" target="_blank" rel="noopener noreferrer">↗ Первая партия импорта</a>
+<a class="download" href="https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641" target="_blank" rel="noopener noreferrer">✓ Проверка 4 источников</a>\n<a class="download secondary" href="./quality/smoke-test-2026-11-06.json">Отчёт и SHA-256</a>\n<a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-import.yml" target="_blank" rel="noopener noreferrer">↗ Первая партия импорта</a>
 <a class="download secondary" href="https://github.com/arshinovseva13-ux/CloseApps/blob/main/datasets/clause-ai/importer/README.md" target="_blank" rel="noopener noreferrer">Инструкция</a>\n<a class="download secondary" href="./CORPUS_ARCHITECTURE.md">Архитектура Clause</a>\n<a class="download secondary" href="./sources/registry.json">Реестр источников</a>\n<a class="download secondary" href="./mirror-fineweb/README.md">Полное зеркало FineWeb</a>
 </section>
 <div class="grid">
@@ -76,7 +76,7 @@ code{color:#c4b5fd}
 <h2>Принципы качества</h2>
 <ul class="muted"><li>У каждого внешнего материала должны быть источник и сведения о правах использования.</li><li>Персональные данные, секреты и чувствительная информация не включаются.</li><li>Дубликаты удаляются; спорные и синтетические записи маркируются.</li><li>Обучающие и тестовые выборки разделяются, чтобы снизить утечки.</li><li>Лицензия каждого релиза публикуется отдельно и не выводится автоматически из лицензии кода.</li></ul>
 </section>
-<div class="footer">Clause AI · Close Приложения · Версия 0.5.2 · Universal Knowledge Corpus.</div>
+<div class="footer">Clause AI · Close Приложения · Версия 0.5.3 · Universal Knowledge Corpus.</div>
 
 <script>
 (() => {
