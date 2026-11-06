@@ -214,9 +214,12 @@ async function sendMessage() {
   renderMessages();
   saveConversation();
  } catch(e) {
-  assistant.content='Не удалось получить ответ: '+e.message;
+  assistant.content = assistant.content
+   ? assistant.content+'\n\n⚠️ Генерация прервалась: '+e.message+'\nУже полученная часть ответа сохранена.'
+   : 'Не удалось получить ответ: '+e.message;
   showError(e.message);
   renderMessages();
+  saveConversation();
  } finally { busy=false; $('sendBtn').disabled=false; $('sendBtn').textContent='Отправить ↑'; }
 }
 $('connectBtn').addEventListener('click',()=>$('settingsModal').classList.add('open'));
