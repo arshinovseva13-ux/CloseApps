@@ -17,7 +17,7 @@ The importer resolves and pins an immutable Hugging Face commit for each HF sour
 
 No record counter is increased until all shards are downloaded, validated, and published to durable storage. The master registry and manifest remain at zero published external records until this gate passes.
 
-## Smoke-test result\n\nA bounded live-source test passed on 2026-11-06: 100 records each from FineWeb, FineWeb2, Wikidata, and OpenAlex (400 total). The generated files were parsed, their record counts and source IDs were checked, and shard checksums were verified. [GitHub Actions evidence](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175135062). The artifact is temporary and expires after seven days; it is not counted as a published Clause AI corpus release.\n\n## Run locally
+## Smoke-test result\n\nA bounded live-source test passed on 2026-11-06: 100 records each from FineWeb, FineWeb2, Wikidata, and OpenAlex (400 total). The generated files were parsed, their record counts and source IDs were checked, and shard checksums were verified. [GitHub Actions evidence](https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641). The artifact is temporary and expires after seven days; it is not counted as a published Clause AI corpus release.\n\n## Run locally
 
 Python 3.11+:
 
