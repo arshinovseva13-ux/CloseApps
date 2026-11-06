@@ -43,6 +43,8 @@ A source is not considered imported merely because it appears in the catalogue. 
 
 - `manifest.json` — release catalog, libraries, shards, languages, counts, source candidates, and management links.
 - `CORPUS_ARCHITECTURE.md` — unified corpus model, source-preserving layers, rights, quality gates, and execution order.
+- `MERGE_GUIDE.md` — build one physical Clause AI corpus from Foundations plus all imported source shards.
+- `importer/merge_corpus.py` — reproducible merger that writes unified gzip JSONL shards and a checksum manifest.
 - `sources/registry.json` — canonical machine-readable registry of selected datasets, initial selections, licenses, and import status.
 - `quality/smoke-test-2026-11-06.json` — durable report of the four-source smoke test and shard checksums.
 - `schema/record.schema.json` — JSON Schema for canonical knowledge records.
@@ -53,6 +55,10 @@ A source is not considered imported merely because it appears in the catalogue. 
 ## Record design
 
 Each record includes a stable ID, record type, domain, language, title, summary, detailed body, key points, limitations, relations, provenance, rights, quality state, and tags. Russian and English versions are separate records.
+
+## One merged training corpus
+
+All selected sources are normalized to one record schema and can be assembled into one set of gzip JSONL shards with `importer/merge_corpus.py`. The merger includes the original Foundations library and imported FineWeb, FineWeb2, Wikidata, and OpenAlex shards. It preserves each record's source ID, source version, license, provenance, and quality state. Exact duplicates are reported by default rather than silently deleted. See [MERGE_GUIDE.md](./MERGE_GUIDE.md).
 
 ## Professional ingestion requirements
 
@@ -87,6 +93,7 @@ Exclude personal data, secrets, private communications, and confidential informa
 
 ## Release history
 
+- **0.5.4** — Added a reproducible merger for one physical corpus containing Foundations and all imported source shards, with a unified manifest and duplicate report.
 - **0.5.3** — Added a permanent quality report with source versions, licenses, shard sizes, and SHA-256 for the 400-record smoke test.
 - **0.5.2** — Repeated the 400-record live-source smoke test and verified SHA-256 for all four gzip JSONL shards; exact source versions and licenses are recorded. No external data has been durably published yet.
 - **0.5.0** — Unified corpus architecture and canonical source registry for FineWeb, FineWeb2, Wikidata, and OpenAlex; source pinning and manual-only bulk imports.
