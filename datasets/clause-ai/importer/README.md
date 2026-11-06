@@ -1,6 +1,6 @@
 # Clause AI — external corpus importer
 
-This pipeline prepares **four real source imports**, with a target of 1,000,000 records per source:
+This pipeline prepares **four real source imports**, with a target of 1,000,000 records per source. It is a normalized first batch for the unified Clause AI corpus, not a full mirror of each source:
 
 | Source | Selection | Notes |
 |---|---|---|
@@ -13,9 +13,9 @@ The Hugging Face Hub registry entry is a **discovery catalogue**, not a dataset,
 
 ## Important storage boundary
 
-The importer writes gzip-compressed JSONL shards locally. The GitHub Actions workflow uploads them as a temporary workflow artifact (30-day retention). **It does not commit multi-gigabyte data into the CloseApps source repository or GitHub Pages.** To make the corpus permanently downloadable from the Clause AI site, the generated shards must then be copied to a durable dataset store (for example, a dedicated Hugging Face dataset repository or object storage) and the resulting URLs/checksums added to the manifest.
+The importer resolves and pins an immutable Hugging Face commit for each HF source, records the Wikidata dump's Last-Modified value, and records the SHA-256 of the OpenAlex manifest. It writes gzip-compressed JSONL shards locally. The GitHub Actions workflow is manual-only and uploads them as a temporary workflow artifact (30-day retention). **It does not commit multi-gigabyte data into the CloseApps source repository or GitHub Pages.** To make the corpus permanently downloadable from the Clause AI site, the generated shards must then be copied to a durable dataset store (for example, a dedicated Hugging Face dataset repository or object storage) and the resulting URLs/checksums added to the manifest.
 
-No record counter is increased until all shards are downloaded, validated, and published to durable storage.
+No record counter is increased until all shards are downloaded, validated, and published to durable storage. The master registry and manifest remain at zero published external records until this gate passes.
 
 ## Run locally
 
