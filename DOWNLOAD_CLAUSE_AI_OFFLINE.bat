@@ -15,7 +15,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-py -3 datasets\clause-ai\importer\download_offline.py --records-per-source 100000
+py -3 datasets\clause-ai\importer\download_offline.py --records-per-source 1000000
 if errorlevel 1 (
   echo Download or merge failed. See the error above.
   pause
