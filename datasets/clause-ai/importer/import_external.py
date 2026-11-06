@@ -82,6 +82,8 @@ class ShardWriter:
         self.file = None
         self.path = None
         self.shards = []
+        self.source_versions = set()
+        self.licenses = set()
 
     def _open(self):
         self.path = self.directory / f"{self.source}-{self.index:05d}.jsonl.gz"
@@ -95,6 +97,12 @@ class ShardWriter:
         self.file.write(json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n")
         self.shards[-1]["records"] += 1
         self.count += 1
+        version = record.get("provenance", {}).get("source_version")
+        license_name = record.get("rights", {}).get("license")
+        if version:
+            self.source_versions.add(version)
+        if license_name:
+            self.licenses.add(license_name)
 
     def close_current(self):
         if self.file:
@@ -107,7 +115,18 @@ class ShardWriter:
         for shard in self.shards:
             p = Path(shard["path"])
             shard["bytes"] = p.stat().st_size
-        return {"source": self.source, "records": self.count, "shards": self.shards}
+            digest = hashlib.sha256()
+            with p.open("rb") as stream:
+                for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                    digest.update(chunk)
+            shard["sha256"] = digest.hexdigest()
+        return {
+            "source": self.source,
+            "records": self.count,
+            "source_versions": sorted(self.source_versions),
+            "licenses": sorted(self.licenses),
+            "shards": self.shards,
+        }
 
 
 def hf_records(source: str, limit: int) -> Iterator[dict]:
