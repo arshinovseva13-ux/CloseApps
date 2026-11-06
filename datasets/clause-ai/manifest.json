@@ -1,8 +1,8 @@
 {
   "dataset": "Clause AI",
-  "release": "0.4.0",
-  "release_date": "2026-11-04",
-  "description": "Universal bilingual knowledge corpus. Knowledge records, not question-answer exercises.",
+  "release": "0.5.0",
+  "release_date": "2026-11-06",
+  "description": "Unified provenance-preserving knowledge corpus combining original Clause AI records with separately licensed external datasets.",
   "languages": [
     "ru",
     "en"
@@ -150,12 +150,13 @@
     "note": "Notion stores project metadata and workflow state. Large dataset shards are stored separately; external candidates are not counted as imported records."
   },
   "release_notes": [
+    "0.5.0: Defined the unified Clause AI corpus architecture and canonical source registry; separated full FineWeb mirroring from its 1M-record normalized import; imports are manual-only and pin immutable source revisions/manifests.",
     "0.4.0: Added a streaming import pipeline and source-document schema for FineWeb, FineWeb2, Wikidata and OpenAlex. Target: 1,000,000 records per source; no external records have been counted or published yet.",
     "0.3.1: Added Notion control center and dataset registry links; documented separation between management metadata and corpus storage.",
     "0.3.0: Added external large-dataset source catalogue. Sources are candidates and have not been imported into the canonical corpus."
   ],
   "external_import_plan": {
-    "status": "pipeline_prepared_not_yet_executed",
+    "status": "planned_manual_execution_source_pinning_added",
     "target_records_per_source": 1000000,
     "target_sources": [
       "fineweb",
@@ -174,6 +175,10 @@
       "common_crawl": "Blocked pending source-level rights, privacy and opt-out review"
     },
     "workflow": "https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-import.yml",
-    "documentation": "./importer/README.md"
-  }
+    "documentation": "./importer/README.md",
+    "published_records": 0,
+    "note": "No external import is counted until a shard is durably published and verified. Full FineWeb mirroring is a separate source-preservation project."
+  },
+  "corpus_architecture": "./CORPUS_ARCHITECTURE.md",
+  "source_registry": "./sources/registry.json"
 }
