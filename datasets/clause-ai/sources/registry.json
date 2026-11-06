@@ -48,7 +48,11 @@
         "verified_smoke_config": "CC-MAIN-2024-10",
         "verified_smoke_split": "train",
         "smoke_test_records": 100,
-        "smoke_test": "passed"
+        "smoke_test": "passed",
+        "smoke_shard": {
+          "bytes": 150021,
+          "sha256": "6b323851f1d1d0c09fb08f642bee9994a9b91ef6669f67c926059bbe8b65e5f9"
+        }
       },
       "import_mode": "stream_sample",
       "notes": "The 1M normalized sample is distinct from the complete 48.583 TiB source mirror.",
@@ -84,7 +88,11 @@
         "verified_smoke_config": "rus_Cyrl",
         "verified_smoke_split": "train",
         "smoke_test_records": 100,
-        "smoke_test": "passed"
+        "smoke_test": "passed",
+        "smoke_shard": {
+          "bytes": 310952,
+          "sha256": "e33bf55fe0cccb946ef40b8986c4bef5153f26a3508a97ac81bcd6a7f132de75"
+        }
       },
       "import_mode": "stream_sample",
       "notes": "Russian Cyrillic subset for the first import batch.",
@@ -114,7 +122,11 @@
         "published_records": 0,
         "verified_smoke_dump_last_modified": "Tue, 27 Oct 2026 16:38:44 GMT",
         "smoke_test_records": 100,
-        "smoke_test": "passed"
+        "smoke_test": "passed",
+        "smoke_shard": {
+          "bytes": 94265,
+          "sha256": "303d4dfdf6637d7bb17e24827f5d9aec6571dc0414c1500b2abab45e3d43ec29"
+        }
       },
       "import_mode": "stream_filter",
       "notes": "CC0 applies to structured data; linked media and external resources are not bundled.",
@@ -149,7 +161,11 @@
         "verified_smoke_snapshot_date": "2026-10-14",
         "verified_smoke_manifest_sha256": "00ea35c5696d31ca88d814c4ba3ded371cac48681f843966191024f4609fc794",
         "smoke_test_records": 100,
-        "smoke_test": "passed"
+        "smoke_test": "passed",
+        "smoke_shard": {
+          "bytes": 132494,
+          "sha256": "e89994ccb4ba3ae74fbe4c4577be99d0e6c10aeece8110d82b647000d720e7ed"
+        }
       },
       "import_mode": "stream_sample",
       "notes": "Metadata and abstract fields supplied by OpenAlex only; full-text archive is excluded.",
@@ -168,13 +184,15 @@
   ],
   "smoke_test": {
     "status": "passed",
-    "run_id": 42175135062,
-    "url": "https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175135062",
+    "run_id": 42175440641,
+    "url": "https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641",
     "records_per_source": 100,
     "total_records": 400,
-    "artifact_id": 13482174317,
-    "artifact_sha256": "1ad103a2bd30174df40d3c467e936bcb651757c5f3d30cdf5164faee6667ff74",
-    "artifact_expires_at": "2026-11-13T06:34:11Z",
+    "artifact_id": 13482339210,
+    "artifact_size_bytes": 690747,
+    "artifact_sha256": "c2f304b12d31b72a32bc246961bba0b6a5d70417837112a4747eb34c103858df",
+    "artifact_expires_at": "2026-11-13T06:36:40Z",
+    "shard_checksums_verified": true,
     "note": "Temporary validation artifact only; not counted as published corpus data."
   }
 }
