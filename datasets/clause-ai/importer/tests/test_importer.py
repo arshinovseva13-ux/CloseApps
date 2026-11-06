@@ -1,0 +1,44 @@
+import gzip
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from import_external import ShardWriter, base_record, record_id
+
+
+class ImporterContractTests(unittest.TestCase):
+    def test_record_ids_are_stable_and_source_namespaced(self):
+        self.assertEqual(record_id("fineweb", "abc"), record_id("fineweb", "abc"))
+        self.assertNotEqual(record_id("fineweb", "abc"), record_id("fineweb2", "abc"))
+
+    def test_external_record_preserves_provenance_rights_and_review_state(self):
+        record = base_record(
+            "wikidata", "Q42", "ru", "Тест", "Текст записи",
+            {"entity_type": "item"},
+            "https://www.wikidata.org/wiki/Q42", "dump=2026-11-06",
+            "CC0-1.0", "Structured data only", ["entity", "ru"]
+        )
+        self.assertEqual(record["source_record_id"], "Q42")
+        self.assertEqual(record["rights"]["license"], "CC0-1.0")
+        self.assertEqual(record["provenance"]["source_version"], "dump=2026-11-06")
+        self.assertEqual(record["quality"]["status"], "imported_unreviewed")
+        self.assertFalse(record["quality"]["fact_checked"])
+
+    def test_shard_writer_emits_valid_gzip_jsonl_and_exact_counts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            writer = ShardWriter(Path(tmp), "fixture")
+            for index in range(3):
+                writer.write({"id": str(index), "text": f"record {index}"})
+            report = writer.finish()
+            self.assertEqual(report["records"], 3)
+            self.assertEqual(len(report["shards"]), 1)
+            shard = Path(report["shards"][0]["path"])
+            self.assertEqual(report["shards"][0]["bytes"], shard.stat().st_size)
+            with gzip.open(shard, "rt", encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            self.assertEqual([row["id"] for row in rows], ["0", "1", "2"])
+
+
+if __name__ == "__main__":
+    unittest.main()
