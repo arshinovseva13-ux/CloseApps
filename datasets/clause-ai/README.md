@@ -105,3 +105,9 @@ Exclude personal data, secrets, private communications, and confidential informa
 
 - [Clause AI website](https://arshinovseva13-ux.github.io/CloseApps/datasets/clause-ai/)
 - [GitHub repository folder](https://github.com/arshinovseva13-ux/CloseApps/tree/main/datasets/clause-ai)
+
+## Unified corpus pilot
+
+A small cloud pilot is available in [GitHub Actions](https://github.com/arshinovseva13-ux/CloseApps/actions/workflows/clause-ai-unified-pilot.yml). Run it with **1,000 records per source** first. It executes the merger regression tests, imports FineWeb, FineWeb2, Wikidata and OpenAlex, combines them with the 22 original Foundations records, and stores the resulting pilot as a temporary 7-day artifact for inspection. This pilot does not publish data to Hugging Face and does not start model training.
+
+The full local offline package remains a separate workflow and is not considered built until the archive is generated and its SHA-256 is verified.
