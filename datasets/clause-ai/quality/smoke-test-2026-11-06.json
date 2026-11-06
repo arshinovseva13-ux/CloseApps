@@ -1,0 +1,71 @@
+{
+  "dataset": "Clause AI",
+  "kind": "live_source_smoke_test",
+  "status": "passed",
+  "tested_at": "2026-11-06T06:36:41Z",
+  "requested_records_per_source": 100,
+  "total_records": 400,
+  "workflow_run": {
+    "id": 42175440641,
+    "url": "https://github.com/arshinovseva13-ux/CloseApps/actions/runs/42175440641"
+  },
+  "artifact": {
+    "id": 13482339210,
+    "name": "clause-ai-source-smoke-42175440641",
+    "size_bytes": 690747,
+    "sha256": "c2f304b12d31b72a32bc246961bba0b6a5d70417837112a4747eb34c103858df",
+    "expires_at": "2026-11-13T06:36:40Z"
+  },
+  "validation": [
+    "All four sources returned exactly 100 records",
+    "All gzip JSONL shards parsed successfully",
+    "Every record retained a source ID, source version, and license",
+    "Every shard SHA-256 was recomputed and matched the import report"
+  ],
+  "sources": [
+    {
+      "id": "fineweb",
+      "records": 100,
+      "license": "ODC-By 1.0",
+      "source_version": "revision=9bb295ddab0e05d785b879661af7260fed5140fc; config=CC-MAIN-2024-10; split=train",
+      "shard": "fineweb/fineweb-00000.jsonl.gz",
+      "bytes": 150021,
+      "sha256": "6b323851f1d1d0c09fb08f642bee9994a9b91ef6669f67c926059bbe8b65e5f9"
+    },
+    {
+      "id": "fineweb2",
+      "records": 100,
+      "license": "ODC-By 1.0",
+      "source_version": "revision=af9c13333eb981300149d5ca60a8e9d659b276b9; config=rus_Cyrl; split=train",
+      "shard": "fineweb2/fineweb2-00000.jsonl.gz",
+      "bytes": 310952,
+      "sha256": "e33bf55fe0cccb946ef40b8986c4bef5153f26a3508a97ac81bcd6a7f132de75"
+    },
+    {
+      "id": "wikidata",
+      "records": 100,
+      "license": "CC0",
+      "source_version": "latest-all.json.bz2; Last-Modified=Tue, 27 Oct 2026 16:38:44 GMT",
+      "shard": "wikidata/wikidata-00000.jsonl.gz",
+      "bytes": 94265,
+      "sha256": "303d4dfdf6637d7bb17e24827f5d9aec6571dc0414c1500b2abab45e3d43ec29"
+    },
+    {
+      "id": "openalex",
+      "records": 100,
+      "license": "CC0 (OpenAlex metadata)",
+      "source_version": "date=2026-10-14; manifest_sha256=00ea35c5696d31ca88d814c4ba3ded371cac48681f843966191024f4609fc794",
+      "shard": "openalex/openalex-00000.jsonl.gz",
+      "bytes": 132494,
+      "sha256": "e89994ccb4ba3ae74fbe4c4577be99d0e6c10aeece8110d82b647000d720e7ed"
+    }
+  ],
+  "accounting": {
+    "temporary_smoke_records": 400,
+    "published_external_records": 0,
+    "first_batch_target_per_source": 1000000,
+    "first_batch_status": "not_started",
+    "fineweb_full_mirror_status": "inventory_complete_transfer_not_started"
+  },
+  "note": "The artifact is temporary validation evidence. No source records from this smoke test are counted as durably published in the Clause AI corpus."
+}
