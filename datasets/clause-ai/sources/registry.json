@@ -1,0 +1,148 @@
+{
+  "registry_version": "1.0.0",
+  "dataset": "Clause AI",
+  "purpose": "One provenance-preserving corpus assembled from selected open datasets and original Clause AI knowledge records.",
+  "policy": {
+    "unified_corpus": true,
+    "single_relicense": false,
+    "preserve_source_identity": true,
+    "preserve_source_license": true,
+    "publish_counts_only_after_durable_verification": true
+  },
+  "sources": [
+    {
+      "id": "fineweb",
+      "title": "FineWeb",
+      "publisher": "HuggingFaceFW",
+      "source_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb",
+      "source_type": "web_text",
+      "first_batch": {
+        "target_records": 1000000,
+        "config": "CC-MAIN-2024-10",
+        "split": "train",
+        "language": [
+          "en"
+        ]
+      },
+      "license": {
+        "name": "ODC-By 1.0",
+        "scope": "Dataset database; source webpages may carry independent rights",
+        "requirements": [
+          "Preserve attribution",
+          "Retain upstream license and provenance",
+          "Review Common Crawl terms"
+        ]
+      },
+      "status": {
+        "first_batch": "planned_not_run",
+        "published_records": 0,
+        "full_mirror": "inventory_complete_transfer_not_started",
+        "full_mirror_destination": "https://huggingface.co/datasets/Seva-35/clause-ai-fineweb-mirror",
+        "pinned_revision": "9bb295ddab0e05d785b879661af7260fed5140fc",
+        "inventory": {
+          "files": 27468,
+          "bytes": 53417984478442,
+          "tib": 48.583
+        }
+      },
+      "import_mode": "stream_sample",
+      "notes": "The 1M normalized sample is distinct from the complete 48.583 TiB source mirror."
+    },
+    {
+      "id": "fineweb2",
+      "title": "FineWeb2",
+      "publisher": "HuggingFaceFW",
+      "source_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2",
+      "source_type": "multilingual_web_text",
+      "first_batch": {
+        "target_records": 1000000,
+        "config": "rus_Cyrl",
+        "split": "train",
+        "language": [
+          "ru"
+        ]
+      },
+      "license": {
+        "name": "ODC-By 1.0",
+        "scope": "Dataset database; Common Crawl terms also apply",
+        "requirements": [
+          "Preserve attribution",
+          "Retain upstream license and provenance",
+          "Review Common Crawl terms"
+        ]
+      },
+      "status": {
+        "first_batch": "planned_not_run",
+        "published_records": 0
+      },
+      "import_mode": "stream_sample",
+      "notes": "Russian Cyrillic subset for the first import batch."
+    },
+    {
+      "id": "wikidata",
+      "title": "Wikidata structured entities",
+      "publisher": "Wikimedia Foundation / Wikidata community",
+      "source_url": "https://www.wikidata.org/wiki/Wikidata:Database_download",
+      "source_type": "structured_knowledge_graph",
+      "first_batch": {
+        "target_records": 1000000,
+        "selection": "items_and_properties_with_RU_or_EN_labels; deterministic selection to be validated",
+        "format": "latest-all.json.bz2"
+      },
+      "license": {
+        "name": "CC0-1.0",
+        "scope": "Structured Wikidata data only",
+        "requirements": [
+          "Exclude media and third-party content",
+          "Retain source IDs and provenance"
+        ]
+      },
+      "status": {
+        "first_batch": "planned_not_run",
+        "published_records": 0
+      },
+      "import_mode": "stream_filter",
+      "notes": "CC0 applies to structured data; linked media and external resources are not bundled."
+    },
+    {
+      "id": "openalex",
+      "title": "OpenAlex Works metadata",
+      "publisher": "OurResearch / OpenAlex",
+      "source_url": "https://help.openalex.org/access/snapshot/",
+      "source_type": "scholarly_metadata",
+      "first_batch": {
+        "target_records": 1000000,
+        "format": "JSONL gzip",
+        "entity": "works",
+        "language": [
+          "multi"
+        ]
+      },
+      "license": {
+        "name": "CC0-1.0",
+        "scope": "OpenAlex metadata",
+        "requirements": [
+          "Do not include linked full-text PDFs",
+          "Do not imply rights to publisher full text",
+          "Preserve OpenAlex IDs and metadata provenance"
+        ]
+      },
+      "status": {
+        "first_batch": "planned_not_run",
+        "published_records": 0
+      },
+      "import_mode": "stream_sample",
+      "notes": "Metadata and abstract fields supplied by OpenAlex only; full-text archive is excluded."
+    }
+  ],
+  "excluded_sources": [
+    {
+      "id": "huggingface_hub",
+      "reason": "Discovery catalogue, not a single dataset or common license."
+    },
+    {
+      "id": "common_crawl_raw",
+      "reason": "Raw crawl has no blanket license; source-level rights, privacy, and opt-out controls required before direct ingestion."
+    }
+  ]
+}
