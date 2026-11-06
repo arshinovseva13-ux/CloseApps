@@ -1,4 +1,5 @@
 import gzip
+import hashlib
 import json
 import tempfile
 import unittest
@@ -50,9 +51,12 @@ class ImporterContractTests(unittest.TestCase):
                 writer.write({"id": str(index), "text": f"record {index}"})
             report = writer.finish()
             self.assertEqual(report["records"], 3)
+            self.assertEqual(report["source_versions"], [])
+            self.assertEqual(report["licenses"], [])
             self.assertEqual(len(report["shards"]), 1)
             shard = Path(report["shards"][0]["path"])
             self.assertEqual(report["shards"][0]["bytes"], shard.stat().st_size)
+            self.assertEqual(report["shards"][0]["sha256"], hashlib.sha256(shard.read_bytes()).hexdigest())
             with gzip.open(shard, "rt", encoding="utf-8") as stream:
                 rows = [json.loads(line) for line in stream]
             self.assertEqual([row["id"] for row in rows], ["0", "1", "2"])
