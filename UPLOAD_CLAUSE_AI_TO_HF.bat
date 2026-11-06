@@ -12,8 +12,8 @@ py -3 -m pip install --upgrade huggingface_hub datasets requests
 py -3 -m pip install --upgrade huggingface_hub
 echo.
 echo Sign in to Hugging Face if you have not already:
-py -3 -m huggingface_hub.commands.huggingface_cli login
+hf auth login
 echo.
 echo Uploading the existing offline corpus ZIP...
-py -3 datasets\clause-ai\importer\download_offline.py --skip-download --upload-to-hub
+py -3 datasets\clause-ai\importer\download_offline.py --workdir ClauseAI-Offline --skip-download --upload-to-hub
 pause
