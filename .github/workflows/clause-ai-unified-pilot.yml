@@ -1,6 +1,12 @@
 name: Clause AI unified corpus pilot
 
 on:
+  push:
+    paths:
+      - ".github/workflows/clause-ai-unified-pilot.yml"
+      - "datasets/clause-ai/importer/**"
+      - "datasets/clause-ai/libraries/foundations/**"
+      - "datasets/clause-ai/tests/**"
   workflow_dispatch:
     inputs:
       records_per_source:
