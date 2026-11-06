@@ -24,6 +24,7 @@ def main():
     p.add_argument("--records-per-source", type=int, default=100_000)
     p.add_argument("--workdir", type=Path, default=Path("ClauseAI-Offline"))
     p.add_argument("--skip-download", action="store_true", help="Merge existing source shards only.")
+    p.add_argument("--upload-to-hub", action="store_true", help="Upload the finished ZIP to Seva-35/clause-ai-unified (requires prior hf auth login).")
     args = p.parse_args()
     if args.records_per_source < 1:
         p.error("--records-per-source must be positive")
@@ -53,11 +54,15 @@ def main():
             with path.open("rb") as f:
                 for chunk in iter(lambda: f.read(1024 * 1024), b""):
                     checksum.update(chunk)
+    digest = hashlib.sha256()
+    with archive.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
     report = {
         "created_at": datetime.now(timezone.utc).isoformat(),
         "archive": archive.name,
         "archive_bytes": archive.stat().st_size,
-        "archive_sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
+        "archive_sha256": digest.hexdigest(),
         "corpus_records": manifest["total_records"],
         "records_by_source": manifest["records_by_source"],
         "shards": len(manifest["shards"]),
@@ -66,6 +71,17 @@ def main():
     }
     (work / "OFFLINE-DOWNLOAD-REPORT.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    if args.upload_to_hub:
+        from huggingface_hub import HfApi
+        api = HfApi()
+        api.upload_file(path_or_fileobj=str(archive), path_in_repo=archive.name,
+                        repo_id="Seva-35/clause-ai-unified", repo_type="dataset",
+                        commit_message="Upload offline Clause AI corpus pack")
+        card = "# Clause AI Unified Corpus\n\nDownload the offline corpus archive below. Extract it locally; the JSONL shards can then be read without an internet connection. See the archive report for record counts and SHA-256.\n"
+        api.upload_file(path_or_fileobj=card.encode("utf-8"), path_in_repo="README.md",
+                        repo_id="Seva-35/clause-ai-unified", repo_type="dataset",
+                        commit_message="Document offline Clause AI corpus")
+        report["hub_url"] = "https://huggingface.co/datasets/Seva-35/clause-ai-unified"
     print(json.dumps(report, ensure_ascii=False, indent=2))
     print(f"\nOFFLINE ARCHIVE READY: {archive}")
 
