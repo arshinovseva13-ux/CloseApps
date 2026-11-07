@@ -121,7 +121,7 @@ async def colab_execute_python(runtime_name: str, code: str, execution_id: str =
     runtime_name = _runtime_name(runtime_name)
     if not code.strip() or len(code) > MAX_CODE_CHARS:
         raise ValueError(f"code must contain 1..{MAX_CODE_CHARS} characters")
-    args: dict[str, Any] = {"runtime": {"name": runtime_name}, "code": code}
+    args: dict[str, Any] = {"runtime": runtime_name, "code": code}
     if execution_id:
         args["executionId"] = execution_id
     return _text_result(await _colab_call("execute_code", args))
