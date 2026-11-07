@@ -190,7 +190,7 @@ valid = {validation_jsonl!r}
 out = {output_dir!r}
 assert pathlib.Path(train).is_file(), f"Missing train file: {{train}}"
 assert pathlib.Path(valid).is_file(), f"Missing validation file: {{valid}}"
-subprocess.run([sys.executable, "-m", "pip", "install", "-q", "torch", "transformers>=4.51.0", "datasets>=3.0.0", "peft>=0.15.0", "accelerate>=1.0.0", "safetensors"], check=True)
+subprocess.run([sys.executable, "-m", "pip", "install", "-q", "transformers>=4.51.0", "datasets>=3.0.0", "peft>=0.15.0", "accelerate>=1.0.0", "safetensors"], check=True)
 script = "/content/train_clause_astra_lora.py"
 subprocess.run(["python", "-c", "import urllib.request; urllib.request.urlretrieve({script_url!r}, {script!r})"], check=True)
 log = open("/content/clause-astra-train.log", "a")
