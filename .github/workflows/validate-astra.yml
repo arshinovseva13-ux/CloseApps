@@ -18,7 +18,7 @@ jobs:
           node - <<'NODE'
           const fs = require('fs');
           const html = fs.readFileSync('AI/chat.html', 'utf8');
-          const match = html.match(/<script>([\\s\\S]*?)<\\/script>/);
+          const match = html.match(/<script>([\s\S]*?)<\/script>/);
           if (!match) throw new Error('Inline chat script not found');
           new Function(match[1]);
           console.log('Chat and worker JavaScript syntax: OK');
