@@ -13,6 +13,8 @@ async function load(){
  if(raw.length!==manifest.weight_bytes)throw Error('Размер файла весов не совпал');
  const dv=new DataView(new ArrayBuffer(0));
  const bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+ const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(x=>x.toString(16).padStart(2,'0')).join('');
+ if(digest!==manifest.weight_sha256)throw Error('Контрольная сумма весов не совпала');
  const view=new DataView(bytes.buffer);
  const flat=new Float32Array(manifest.weight_elements);
  for(let i=0;i<flat.length;i++)flat[i]=half(view.getUint16(i*2,true));
