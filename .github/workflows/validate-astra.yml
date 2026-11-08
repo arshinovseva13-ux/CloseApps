@@ -1,0 +1,45 @@
+name: Validate Clause Astra browser model
+on:
+  push:
+    paths:
+      - 'AI/chat.html'
+      - 'AI/astra-worker.js'
+      - 'AI/models/clause-astra-1-char-v002/**'
+      - '.github/workflows/validate-astra.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          node --check AI/astra-worker.js
+          node - <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('AI/chat.html', 'utf8');
+          const match = html.match(/<script>([\\s\\S]*?)<\\/script>/);
+          if (!match) throw new Error('Inline chat script not found');
+          new Function(match[1]);
+          console.log('Chat and worker JavaScript syntax: OK');
+          NODE
+      - name: Verify model weight shards
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const crypto = require('crypto');
+          const base = 'AI/models/clause-astra-1-char-v002/weights/';
+          let encoded = '';
+          for (let i = 1; i <= 39; i++) {
+            const name = base + 'part-' + String(i).padStart(3, '0') + '.b64';
+            const chunk = fs.readFileSync(name, 'utf8').trim();
+            if (i < 39 && chunk.length !== 60000) throw new Error(name + ' has unexpected length ' + chunk.length);
+            encoded += chunk;
+          }
+          const weights = Buffer.from(encoded, 'base64');
+          if (weights.length !== 1748992) throw new Error('Wrong decoded weight size: ' + weights.length);
+          const sha = crypto.createHash('sha256').update(weights).digest('hex');
+          const expected = 'f6420b52c3de461761c8c1f691287d9a6fa5a192c4f651c4ec6ea4803388c7b3';
+          if (sha !== expected) throw new Error('SHA-256 mismatch: ' + sha);
+          console.log('Weight shards: 39; decoded bytes: ' + weights.length + '; SHA-256: ' + sha);
+          NODE
