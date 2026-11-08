@@ -18,13 +18,19 @@ Control plane and MCP bridge for training Clause Astra on real GPU compute.
 4. **Checkpoint discipline** — saves adapter weights, tokenizer, config, metrics and run metadata. It never overwrites the base model.
 5. **Static dashboard** — GitHub Pages status and documentation. It does not pretend to be connected until the backend reports a real runtime.
 
-## Official Colab MCP
+## Official Colab MCP (primary connection; no Render)
 
 Endpoint: https://colaboratory.googleapis.com/mcp
+
+**Preferred architecture:** connect the ChatGPT MCP client directly to Google's official Colab endpoint. No Render service, always-on VM, or separately hosted bridge is required for this path. The repository's `mcp-server/` folder is an optional self-hosted adapter for clients that need Clause-specific tool names; it is not required to use Colab MCP directly.
 
 Google's documented MCP tools include \`list_runtime_specs\`, \`list_runtimes\`, \`create_runtime\`, \`create_session\`, \`execute_code\`, \`get_runtime\`, and session/runtime management. Google requires MCP server enablement and authentication. Read the [official reference](https://developers.google.com/colab/api/reference/mcp).
 
 The MCP bridge uses a Google OAuth access token supplied at runtime through \`GOOGLE_ACCESS_TOKEN\`. Never commit that token. The access token is short-lived; refresh or replace it using the Google OAuth flow configured by the operator. The bridge intentionally does not create a GPU runtime at server startup.
+
+## Optional: run the Clause-specific bridge locally (not required for direct Colab MCP)
+
+Do not deploy this bridge to Render. Direct Colab MCP is the preferred route for the initial Astra experiment.
 
 ## Run the bridge locally
 
