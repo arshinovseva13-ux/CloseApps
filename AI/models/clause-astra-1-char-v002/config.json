@@ -1,0 +1,14 @@
+{
+  "name": "Clause Astra 1 Character Prototype v0.2",
+  "architecture": "4-layer causal Transformer",
+  "parameters": 874496,
+  "vocab_size": 442,
+  "sequence_length": 192,
+  "batch_size": 16,
+  "steps": 300,
+  "learning_rate": 0.0002,
+  "training_type": "character-level causal language modeling from scratch",
+  "corpus": "data/processed/all-clean.jsonl",
+  "characters_used": 700000,
+  "device": "CPU"
+}

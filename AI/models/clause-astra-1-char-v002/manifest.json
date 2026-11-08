@@ -1,0 +1,450 @@
+{
+  "format": "float16-le",
+  "dtype": "float16",
+  "keys": [
+    {
+      "name": "token.weight",
+      "shape": [
+        442,
+        128
+      ],
+      "offset": 0,
+      "length": 56576
+    },
+    {
+      "name": "pos.weight",
+      "shape": [
+        192,
+        128
+      ],
+      "offset": 56576,
+      "length": 24576
+    },
+    {
+      "name": "blocks.layers.0.self_attn.in_proj_weight",
+      "shape": [
+        384,
+        128
+      ],
+      "offset": 81152,
+      "length": 49152
+    },
+    {
+      "name": "blocks.layers.0.self_attn.in_proj_bias",
+      "shape": [
+        384
+      ],
+      "offset": 130304,
+      "length": 384
+    },
+    {
+      "name": "blocks.layers.0.self_attn.out_proj.weight",
+      "shape": [
+        128,
+        128
+      ],
+      "offset": 130688,
+      "length": 16384
+    },
+    {
+      "name": "blocks.layers.0.self_attn.out_proj.bias",
+      "shape": [
+        128
+      ],
+      "offset": 147072,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.0.linear1.weight",
+      "shape": [
+        512,
+        128
+      ],
+      "offset": 147200,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.0.linear1.bias",
+      "shape": [
+        512
+      ],
+      "offset": 212736,
+      "length": 512
+    },
+    {
+      "name": "blocks.layers.0.linear2.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "offset": 213248,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.0.linear2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 278784,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.0.norm1.weight",
+      "shape": [
+        128
+      ],
+      "offset": 278912,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.0.norm1.bias",
+      "shape": [
+        128
+      ],
+      "offset": 279040,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.0.norm2.weight",
+      "shape": [
+        128
+      ],
+      "offset": 279168,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.0.norm2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 279296,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.1.self_attn.in_proj_weight",
+      "shape": [
+        384,
+        128
+      ],
+      "offset": 279424,
+      "length": 49152
+    },
+    {
+      "name": "blocks.layers.1.self_attn.in_proj_bias",
+      "shape": [
+        384
+      ],
+      "offset": 328576,
+      "length": 384
+    },
+    {
+      "name": "blocks.layers.1.self_attn.out_proj.weight",
+      "shape": [
+        128,
+        128
+      ],
+      "offset": 328960,
+      "length": 16384
+    },
+    {
+      "name": "blocks.layers.1.self_attn.out_proj.bias",
+      "shape": [
+        128
+      ],
+      "offset": 345344,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.1.linear1.weight",
+      "shape": [
+        512,
+        128
+      ],
+      "offset": 345472,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.1.linear1.bias",
+      "shape": [
+        512
+      ],
+      "offset": 411008,
+      "length": 512
+    },
+    {
+      "name": "blocks.layers.1.linear2.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "offset": 411520,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.1.linear2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 477056,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.1.norm1.weight",
+      "shape": [
+        128
+      ],
+      "offset": 477184,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.1.norm1.bias",
+      "shape": [
+        128
+      ],
+      "offset": 477312,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.1.norm2.weight",
+      "shape": [
+        128
+      ],
+      "offset": 477440,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.1.norm2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 477568,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.2.self_attn.in_proj_weight",
+      "shape": [
+        384,
+        128
+      ],
+      "offset": 477696,
+      "length": 49152
+    },
+    {
+      "name": "blocks.layers.2.self_attn.in_proj_bias",
+      "shape": [
+        384
+      ],
+      "offset": 526848,
+      "length": 384
+    },
+    {
+      "name": "blocks.layers.2.self_attn.out_proj.weight",
+      "shape": [
+        128,
+        128
+      ],
+      "offset": 527232,
+      "length": 16384
+    },
+    {
+      "name": "blocks.layers.2.self_attn.out_proj.bias",
+      "shape": [
+        128
+      ],
+      "offset": 543616,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.2.linear1.weight",
+      "shape": [
+        512,
+        128
+      ],
+      "offset": 543744,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.2.linear1.bias",
+      "shape": [
+        512
+      ],
+      "offset": 609280,
+      "length": 512
+    },
+    {
+      "name": "blocks.layers.2.linear2.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "offset": 609792,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.2.linear2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 675328,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.2.norm1.weight",
+      "shape": [
+        128
+      ],
+      "offset": 675456,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.2.norm1.bias",
+      "shape": [
+        128
+      ],
+      "offset": 675584,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.2.norm2.weight",
+      "shape": [
+        128
+      ],
+      "offset": 675712,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.2.norm2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 675840,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.3.self_attn.in_proj_weight",
+      "shape": [
+        384,
+        128
+      ],
+      "offset": 675968,
+      "length": 49152
+    },
+    {
+      "name": "blocks.layers.3.self_attn.in_proj_bias",
+      "shape": [
+        384
+      ],
+      "offset": 725120,
+      "length": 384
+    },
+    {
+      "name": "blocks.layers.3.self_attn.out_proj.weight",
+      "shape": [
+        128,
+        128
+      ],
+      "offset": 725504,
+      "length": 16384
+    },
+    {
+      "name": "blocks.layers.3.self_attn.out_proj.bias",
+      "shape": [
+        128
+      ],
+      "offset": 741888,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.3.linear1.weight",
+      "shape": [
+        512,
+        128
+      ],
+      "offset": 742016,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.3.linear1.bias",
+      "shape": [
+        512
+      ],
+      "offset": 807552,
+      "length": 512
+    },
+    {
+      "name": "blocks.layers.3.linear2.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "offset": 808064,
+      "length": 65536
+    },
+    {
+      "name": "blocks.layers.3.linear2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 873600,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.3.norm1.weight",
+      "shape": [
+        128
+      ],
+      "offset": 873728,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.3.norm1.bias",
+      "shape": [
+        128
+      ],
+      "offset": 873856,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.3.norm2.weight",
+      "shape": [
+        128
+      ],
+      "offset": 873984,
+      "length": 128
+    },
+    {
+      "name": "blocks.layers.3.norm2.bias",
+      "shape": [
+        128
+      ],
+      "offset": 874112,
+      "length": 128
+    },
+    {
+      "name": "norm.weight",
+      "shape": [
+        128
+      ],
+      "offset": 874240,
+      "length": 128
+    },
+    {
+      "name": "norm.bias",
+      "shape": [
+        128
+      ],
+      "offset": 874368,
+      "length": 128
+    }
+  ],
+  "vocab_size": 442,
+  "sequence_length": 192,
+  "layers": 4,
+  "d_model": 128,
+  "heads": 4,
+  "ff_dim": 512,
+  "weight_parts": 39,
+  "weight_elements": 874496,
+  "weight_bytes": 1748992,
+  "weight_sha256": "f6420b52c3de461761c8c1f691287d9a6fa5a192c4f651c4ec6ea4803388c7b3"
+}
