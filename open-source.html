@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Подборка открытых приложений для изучения, скачивания и будущей адаптации в CloseApps.">
+  <title>Open Source проекты · CloseApps</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080d19;--panel:#111a2b;--line:#293a55;--text:#eef4ff;--muted:#a8b7cc;--accent:#a78bfa;--cyan:#67e8f9}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 15% 0%,#30245c66,transparent 42%),radial-gradient(ellipse at 90% 20%,#0e536044,transparent 38%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+    .wrap{width:min(1080px,calc(100% - 32px));margin:auto;padding:28px 0 64px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:36px}
+    a{color:#c4b5fd}
+    .back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffff08}
+    .brand{font-weight:800;letter-spacing:.02em}
+    .hero{padding:clamp(24px,5vw,44px);border:1px solid #8b5cf655;border-radius:24px;background:linear-gradient(125deg,#17132d,#101d2c);box-shadow:0 20px 60px #0005;margin-bottom:26px}
+    .eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+    h1{font-size:clamp(32px,6vw,52px);line-height:1.08;letter-spacing:-.04em;margin:10px 0}
+    .hero p{max-width:760px;color:#c2cde0;margin:0}
+    .notice{margin-top:20px;padding:14px 16px;border-left:3px solid var(--accent);background:#ffffff08;border-radius:8px;color:#d9d5ef;font-size:14px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .project{padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#111b2cdd,#0c1422ee);min-width:0}
+    .project:first-child{border-color:#a78bfa88;background:linear-gradient(145deg,#251d43,#111b2c)}
+    .num{font-size:12px;color:var(--cyan);font-weight:800;letter-spacing:.12em}
+    h2{font-size:21px;margin:5px 0 8px}
+    .desc{color:#c2cde0;margin:0 0 14px;font-size:14px}
+    .meta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+    .tag{font-size:12px;padding:4px 9px;border-radius:999px;border:1px solid #8b9bb855;background:#ffffff09;color:#dbeafe}
+    .tag.license{border-color:#34d39966;color:#a7f3d0}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{font-size:13px;font-weight:700;text-decoration:none;padding:8px 11px;border:1px solid #8b5cf677;border-radius:10px;background:#8b5cf617}
+    .links a.release{border-color:#4b9ac277;background:#38bdf811;color:#a5eaff}
+    .foot{margin-top:24px;color:var(--muted);font-size:13px}
+    @media(max-width:680px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.project{padding:17px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav class="top"><a class="back" href="./index.html">← Вернуться в CloseApps</a><div class="brand">CloseApps · Open Source</div></nav>
+    <header class="hero">
+      <div class="eyebrow">Открытые приложения · GitHub</div>
+      <h1>Open Source проекты</h1>
+      <p>Подборка готовых программ, исходный код которых можно изучать, скачивать, собирать и адаптировать. Ссылки ведут на оригинальные репозитории и страницы релизов.</p>
+      <div class="notice"><strong>Важно:</strong> эти программы созданы не CloseApps. Мы указываем оригинальных авторов и лицензии. Если будем выпускать собственные адаптации, отдельно отметим, что именно изменили, сохраним обязательные уведомления и проверим лицензии встроенных компонентов. Брендинг и товарные знаки оригинальных проектов не присваиваем.</div>
+    </header>
+    <section class="grid" aria-label="Открытые проекты">
+      <article class="project">
+        <div class="num">01 · ПЕРВЫЙ КАНДИДАТ ДЛЯ АДАПТАЦИИ</div><h2>PhotoCraft</h2>
+        <p class="desc">Редактор изображений на Rust: слои, маски, кисти, корректировки, текст, векторные элементы и работа с PSD. Есть Windows x64 MSI и portable ZIP.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Ранняя alpha</span></div>
+        <div class="links"><a href="https://github.com/storytold/photocraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/photocraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">02</div><h2>VectorCraft</h2>
+        <p class="desc">Векторный графический редактор для иллюстраций и дизайна. Доступны Windows x64 MSI и portable ZIP.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Alpha · активная разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/vectorcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/vectorcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">03</div><h2>FilmCraft</h2>
+        <p class="desc">Нелинейный видеоредактор: монтаж, дорожки, цвет, эффекты, титры и экспорт. Есть сборки для Windows.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Alpha</span></div>
+        <div class="links"><a href="https://github.com/storytold/filmcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/filmcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">04</div><h2>WordCraft</h2>
+        <p class="desc">Текстовый редактор и офисный процессор с документами, форматированием и интерфейсом в стиле офисных пакетов.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Alpha</span></div>
+        <div class="links"><a href="https://github.com/storytold/wordcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/wordcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">05</div><h2>GridCraft</h2>
+        <p class="desc">Табличный редактор для расчётов и работы с данными. Windows x64 сборки доступны в релизах.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Активная разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/gridcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/gridcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">06</div><h2>CADCraft</h2>
+        <p class="desc">Система CAD для чертежей и технического проектирования, альтернатива классическим CAD-программам.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Ранняя разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/cadcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/cadcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">07</div><h2>LightCraft</h2>
+        <p class="desc">Неразрушающий редактор фотографий с обработкой изображений и управлением изменениями без потери оригинала.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Активная разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/lightcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/lightcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">08</div><h2>PdfCraft</h2>
+        <p class="desc">Приложение для чтения, просмотра и редактирования PDF-документов. Windows-сборки публикуются в релизах.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Активная разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/pdfcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/pdfcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">09</div><h2>DesignCraft</h2>
+        <p class="desc">Редактор страниц и макетов для графического и интерфейсного дизайна.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Активная разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/designcraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/designcraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+      <article class="project">
+        <div class="num">10</div><h2>TextureCraft</h2>
+        <p class="desc">Инструмент для 3D-текстурирования: слои, кисти, материалы и PBR-просмотр моделей.</p>
+        <div class="meta"><span class="tag license">Apache-2.0</span><span class="tag">Windows</span><span class="tag">Активная разработка</span></div>
+        <div class="links"><a href="https://github.com/storytold/texturecraft" target="_blank" rel="noopener noreferrer">GitHub · ArtCraft Team</a><a class="release" href="https://github.com/storytold/texturecraft/releases/latest" target="_blank" rel="noopener noreferrer">Скачать релиз</a></div>
+      </article>
+    </section>
+    <p class="foot">Статусы и доступность сборок могут меняться. Перед скачиванием проверяйте актуальный релиз, README, LICENSE, NOTICE и лицензии встроенных ресурсов. CloseApps не является частью команды ArtCraft и не связан с ней.</p>
+  </main>
+</body>
+</html>
