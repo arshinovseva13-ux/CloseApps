@@ -685,8 +685,8 @@
                 });
             },
             articles: function() {
-                printLine('Текстовые статьи (5):', 'info');
-                const articles = document.querySelectorAll('.article-link:not(.open-source-link)');
+                const articles = document.querySelectorAll('.article-link[data-category="other"], .article-link[data-category="education"]');
+                printLine('Текстовые статьи (' + articles.length + '):', 'info');
                 articles.forEach(function(art, i) {
                     const title = art.getAttribute('data-title');
                     const icon = art.getAttribute('data-icon');
@@ -699,7 +699,7 @@
             },
             stats: function() {
                 const apps = document.querySelectorAll('.app-link').length;
-                const articles = document.querySelectorAll('.article-link:not(.open-source-link)').length;
+                const articles = document.querySelectorAll('.article-link[data-category="other"], .article-link[data-category="education"]').length;
                 printLine('Статистика хаба:', 'info');
                 printLine('  Приложений: ' + apps);
                 printLine('  Статей: ' + articles);
