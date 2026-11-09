@@ -119,7 +119,7 @@
         const fifteenSearchEgg = document.getElementById('fifteenSearchEgg');
         if (fifteenSearchEgg) {
             const updateFifteenSearchEgg = () => {
-                const query = searchInput.value.toLowerCase().replace(/\\s+/g, ' ').trim();
+                const query = searchInput.value.toLowerCase().replace(/\s+/g, ' ').trim();
                 fifteenSearchEgg.style.display = query.includes('15 приложений') ? 'flex' : 'none';
             };
             searchInput.addEventListener('input', updateFifteenSearchEgg);
