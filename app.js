@@ -214,6 +214,7 @@
             ecosystems: '🌐 Экосистемы',
             datasets: '🗃️ Датасеты',
             ai: '🧠 AI',
+            opensource: '🧩 Open Source проекты',
             other: '📦 Разное'
         };
 
@@ -685,7 +686,7 @@
             },
             articles: function() {
                 printLine('Текстовые статьи (5):', 'info');
-                const articles = document.querySelectorAll('.article-link');
+                const articles = document.querySelectorAll('.article-link:not(.open-source-link)');
                 articles.forEach(function(art, i) {
                     const title = art.getAttribute('data-title');
                     const icon = art.getAttribute('data-icon');
@@ -698,7 +699,7 @@
             },
             stats: function() {
                 const apps = document.querySelectorAll('.app-link').length;
-                const articles = document.querySelectorAll('.article-link').length;
+                const articles = document.querySelectorAll('.article-link:not(.open-source-link)').length;
                 printLine('Статистика хаба:', 'info');
                 printLine('  Приложений: ' + apps);
                 printLine('  Статей: ' + articles);
