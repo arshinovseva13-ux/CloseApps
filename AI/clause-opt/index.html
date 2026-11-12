@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d19">
+<meta name="description" content="CLAUSE-OPT v1.0.0 — гибридный оптимизатор PyTorch для экспериментов Clause Astra.">
+<title>CLAUSE-OPT v1.0.0 | CloseApps AI</title>
+<style>
+:root{color-scheme:dark;--bg:#080d19;--panel:#111a2a;--line:#293c58;--text:#edf5ff;--muted:#9bb0c8;--cyan:#61e6ee;--violet:#9c83ff;--green:#7de4b1}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#26315b 0,transparent 38%),radial-gradient(ellipse at 95% 15%,#103d4a 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1000px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #ffffff18;padding:8px 0 18px}.brand{font-weight:850;letter-spacing:.04em}.brand span{color:var(--cyan)}a{color:inherit}.back,.link{padding:9px 13px;border:1px solid var(--line);border-radius:12px;text-decoration:none;background:#ffffff08}
+.hero{padding:48px 0 30px}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:800}.hero h1{font-size:clamp(40px,8vw,72px);line-height:1.03;letter-spacing:-.06em;margin:14px 0}.hero h1 span{background:linear-gradient(90deg,#b6a6ff,#67e9ef);background-clip:text;color:transparent}.hero p{color:var(--muted);max-width:720px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0 30px}.card{background:linear-gradient(145deg,#111a2af2,#101827f2);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}.wide{grid-column:1/-1}.card h2,.card h3{margin:0 0 8px}.card p{margin:0;color:var(--muted)}.tag{display:inline-flex;border:1px solid #9c83ff66;background:#34275b88;color:#d7ceff;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}.metric{font-size:25px;font-weight:850;letter-spacing:-.04em}.muted{color:var(--muted);font-size:13px}.links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.link{display:inline-flex;background:#1a2942;border-color:#52658a;font-weight:700;font-size:13px}.link.primary{background:linear-gradient(100deg,#8670e8,#3bbfc9);border:0;color:#07121c}.list{margin:12px 0 0;padding-left:19px;color:var(--muted)}.list li{margin:6px 0}pre{overflow:auto;padding:14px;border:1px solid var(--line);border-radius:12px;background:#080f1d;color:#c9f4f4;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.warning{border-left:3px solid var(--violet);padding:10px 14px;background:#9c83ff12;color:#c9d3e6}footer{margin:36px 0 12px;border-top:1px solid #ffffff18;padding-top:16px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.wrap{padding:15px}.hero{padding:35px 0 20px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.top{align-items:flex-start}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="top"><div class="brand">CLOSE<span>APPS</span> / AI / CLAUSE-OPT</div><a class="back" href="../">← Раздел ИИ</a></header>
+<section class="hero"><div class="eyebrow">CloseApps · Optimizer Research · 12.11.2026</div><h1>CLAUSE-<span>OPT</span></h1><p>Гибридный оптимизатор для экспериментов с Clause Astra. Он сочетает матричный путь обновления параметров на основе momentum и Newton–Schulz с адаптивным AdamW-подобным путём для остальных параметров.</p></section>
+<div class="grid">
+<section class="card wide"><span class="tag">V1.0.0 · API зафиксирован</span><h2 style="font-size:27px;margin-top:14px">Первый стабильный релиз интерфейса</h2><p>CLAUSE-OPT 1.0.0 фиксирует начальный публичный API Python-пакета, правила маршрутизации параметров, формат настроек и проверяемое поведение. Это исследовательский оптимизатор: номер V1 означает стабилизацию интерфейса, а не доказанное превосходство над AdamW или Muon.</p><div class="links"><a class="link primary" href="https://github.com/arshinovseva13-ux/CloseApps-Premium" target="_blank" rel="noopener noreferrer">Репозиторий разработки ↗</a><a class="link" href="https://github.com/arshinovseva13-ux/CloseApps-Premium/pull/1" target="_blank" rel="noopener noreferrer">История разработки и проверки ↗</a><a class="link" href="../">Clause Astra AI Lab ↗</a></div><p class="muted" style="margin-top:12px">Репозиторий CloseApps-Premium закрытый. Исходный код доступен участникам с разрешением GitHub; публичный сайт содержит описание и статус проекта.</p></section>
+<section class="card"><h3>01 · Matrix path</h3><div class="metric">Muon-inspired</div><p>Для двумерных матриц: momentum, опциональный Nesterov и итерации Newton–Schulz для приближения ортогонализованного обновления.</p><ul class="list"><li>FP32 расчёты и состояние оптимизатора</li><li>Настраиваемое число итераций</li><li>Отдельный масштаб learning rate</li></ul></section>
+<section class="card"><h3>02 · Adaptive path</h3><div class="metric">AdamW-style</div><p>Для векторов, эмбеддингов, нормализаций, bias и выбранных групп параметров.</p><ul class="list"><li>Первый и второй моменты</li><li>Bias correction</li><li>Decoupled weight decay</li></ul></section>
+<section class="card"><h3>03 · Safety checks</h3><div class="metric">Regression tests</div><p>Проверки параметров конфигурации и поведения оптимизатора на некорректных входах.</p><ul class="list"><li>Невалидные гиперпараметры отклоняются</li><li>Sparse gradients явно не поддерживаются</li><li>Проверяются state_dict и closure</li><li>Опциональный trust cap ограничивает относительный шаг</li></ul></section>
+<section class="card"><h3>04 · Benchmark</h3><div class="metric">AdamW / Muon</div><p>В репозитории есть воспроизводимый синтетический benchmark с одинаковыми seeds, данными и моделью.</p><ul class="list"><li>Validation loss и steps/sec</li><li>CPU и CUDA режимы</li><li>JSON-отчёт для каждого запуска</li><li>Результаты не заменяют тест на настоящей LLM</li></ul></section>
+<section class="card wide"><h2>Быстрый пример API</h2><pre><code>from clause_opt import ClauseOpt
+
+optimizer = ClauseOpt(
+    [
+        {"params": matrix_parameters, "algorithm": "matrix"},
+        {"params": adaptive_parameters, "algorithm": "adaptive"},
+    ],
+    lr=1e-3,
+    weight_decay=0.01,
+)</code></pre><p class="muted">Полная документация, установка, параметры и команды тестирования находятся в CLAUSE-OPT.md внутри репозитория разработки.</p></section>
+<section class="card wide"><h2>Что V1 пока не обещает</h2><p>Пока не завершено сравнение на GPU T4 и обучение реальной языковой модели с одинаковым токен-бюджетом. Синтетический тест не доказывает, что CLAUSE-OPT обучает Clause Astra лучше AdamW или Muon. Trust cap и автоматическая маршрутизация параметров остаются эвристиками, которые предстоит проверять отдельными экспериментами.</p></section>
+</div>
+<footer>CloseApps · CLAUSE-OPT v1.0.0 · Гибридный исследовательский оптимизатор PyTorch для Clause Astra. Версия API стабилизирована; качество и производительность на масштабе LLM ещё требуют экспериментов.</footer>
+</div></body></html>
