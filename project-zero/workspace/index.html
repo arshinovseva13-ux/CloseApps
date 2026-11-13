@@ -95,6 +95,49 @@ async function nnCheckBackend(){const status=$('nnBackendStatus');if(status)stat
 function nnRenderDataset(){let d=nnData();$('nnDataRows').textContent=d.length;$('nnDataInputs').textContent=d[0].length-1;$('nnDataLabels').textContent=new Set(d.map(r=>r[r.length-1])).size;$('nnDatasetStatus').textContent=(nnCustomData?'Пользовательский датасет':'Встроенный набор '+$('nnDataset').value.toUpperCase())+' · '+d.length+' строк';$('nnDataPreview').innerHTML='<table><tbody>'+d.slice(0,10).map(r=>'<tr>'+r.map(v=>'<td>'+Number(v).toFixed(3)+'</td>').join('')+'</tr>').join('')+'</tbody></table>'}
 function nnUseBuiltinDataset(){nnCustomData=null;nnInit();nnRenderDataset();$('nnMessage').textContent='Выбран встроенный набор '+$('nnDataset').value.toUpperCase()+'. Настрой архитектуру и обучи сеть.'}
 function nnImportDataset(e){let f=e.target.files&&e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let raw=String(rd.result),rows;if(f.name.toLowerCase().endsWith('.json')){let j=JSON.parse(raw);rows=Array.isArray(j)?j:(j.data||j.rows)}else{rows=raw.trim().split(/\r?\n/).filter(Boolean).map(line=>line.split(/[;,\t]/).map(Number));if(rows.some(r=>r.some(Number.isNaN)))throw Error('CSV без заголовка, только числа')}if(!Array.isArray(rows)||rows.length<2||rows.some(r=>!Array.isArray(r)||r.length!==3||r.some(v=>!Number.isFinite(Number(v)))))throw Error('Нужны 3 числовые колонки: X1, X2, label');nnCustomData=rows.map(r=>r.map(Number));nnInit();nnRenderDataset();toast('Датасет загружен: '+rows.length+' строк')}catch(err){toast('Ошибка датасета: '+err.message)}};rd.readAsText(f);e.target.value=''}
+function nnGpuSample(){
+$('nnGpuShader').value='@group(0) @binding(0) var<storage, read> inputA: array<f32>;\\n@group(0) @binding(1) var<storage, read> inputB: array<f32>;\\n@group(0) @binding(2) var<storage, read_write> output: array<f32>;\\n@compute @workgroup_size(64)\\nfn main(@builtin(global_invocation_id) id: vec3<u32>) {\\n let i = id.x;\\n if (i < arrayLength(&output)) { output[i] = inputA[i] + inputB[i]; }\\n}';
+toast('Пример WGSL восстановлен');
+}
+async function nnGpuInfo(){
+let log=$('nnGpuLog');
+if(!navigator.gpu){log.textContent='WebGPU API недоступен в этом браузере или контексте.';return}
+try{let adapter=await navigator.gpu.requestAdapter();if(!adapter){log.textContent='WebGPU найден, но GPU adapter недоступен.';return}
+let info=adapter.info||{};log.textContent='WebGPU доступен · '+(info.description||info.device||'устройство скрывает имя')+' · vendor '+(info.vendor||'—')+' · architecture '+(info.architecture||'—');
+}catch(e){log.textContent='Ошибка WebGPU: '+e.message}
+}
+async function nnRunGpuShader(){
+let log=$('nnGpuLog'),btn=$('nnGpuRun');
+if(!navigator.gpu){log.textContent='ОШИБКА: navigator.gpu отсутствует. Нужен браузер с WebGPU и защищённый контекст.';return}
+let count=Math.max(1,Math.min(65536,Number($('nnGpuCount').value)||256));
+btn.disabled=true;btn.textContent='Компиляция / запуск…';
+let device;
+try{
+let adapter=await navigator.gpu.requestAdapter();if(!adapter)throw Error('GPU adapter недоступен');
+device=await adapter.requestDevice();
+let module=device.createShaderModule({code:$('nnGpuShader').value});
+let info=await module.getCompilationInfo(),errors=info.messages.filter(m=>m.type==='error');
+if(errors.length)throw Error(errors.map(m=>'строка '+m.lineNum+': '+m.message).join('\\n'));
+let pipeline=device.createComputePipeline({layout:'auto',compute:{module,entryPoint:'main'}});
+let bytes=count*4,a=new Float32Array(count),b=new Float32Array(count);
+for(let i=0;i<count;i++){a[i]=i;b[i]=i*2}
+let U=GPUBufferUsage;
+let A=device.createBuffer({size:bytes,usage:U.STORAGE|U.COPY_DST});
+let B=device.createBuffer({size:bytes,usage:U.STORAGE|U.COPY_DST});
+let O=device.createBuffer({size:bytes,usage:U.STORAGE|U.COPY_SRC});
+let R=device.createBuffer({size:bytes,usage:GPUBufferUsage.MAP_READ|U.COPY_DST});
+device.queue.writeBuffer(A,0,a);device.queue.writeBuffer(B,0,b);
+let bind=device.createBindGroup({layout:pipeline.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:A}},{binding:1,resource:{buffer:B}},{binding:2,resource:{buffer:O}}]});
+let enc=device.createCommandEncoder(),pass=enc.beginComputePass();
+pass.setPipeline(pipeline);pass.setBindGroup(0,bind);pass.dispatchWorkgroups(Math.ceil(count/64));pass.end();
+enc.copyBufferToBuffer(O,0,R,0,bytes);device.queue.submit([enc.finish()]);
+await R.mapAsync(GPUMapMode.READ);
+let out=new Float32Array(R.getMappedRange().slice(0));R.unmap();
+log.textContent='УСПЕХ · WGSL скомпилирован и выполнен на WebGPU · '+count+' элементов · первые результаты: '+Array.from(out.slice(0,Math.min(12,count))).join(', ');
+[A,B,O,R].forEach(x=>x.destroy());
+}catch(e){log.textContent='ОШИБКА GPU WORKSPACE\\n'+e.message}
+finally{if(device)device.destroy();btn.disabled=false;btn.textContent='▶ Компилировать и запустить на GPU'}
+}
 function nnDownloadDataset(){let b=new Blob([JSON.stringify({format:'ZERO Neural Dataset',data:nnData()},null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='zero-dataset.json';a.click();URL.revokeObjectURL(u)}
 
 function nnInit(){if(nnTFModel){try{nnTFModel.dispose()}catch(e){}}nnTFModel=null;nnOptimizerState=null;nn.W=[];nn.B=[];for(let l=1;l<nn.sizes.length;l++){let w=[],b=[],fanIn=nn.sizes[l-1],fanOut=nn.sizes[l],scale=$('nnInitializer')?.value==='he'?Math.sqrt(2/fanIn):Math.sqrt(6/(fanIn+fanOut));for(let j=0;j<fanOut;j++){w.push(Array.from({length:fanIn},()=>((Math.random()*2)-1)*scale));b.push(0)}nn.W.push(w);nn.B.push(b)}nn.trained=false;nn.epoch=0;nn.loss=0;nn.accuracy=0;nn.history=[];nnDraw();nnChart();$('nnStatus').textContent='Готова к обучению';$('nnEpoch').textContent='0';$('nnLoss').textContent='—';$('nnAccuracy').textContent='—';$('nnOutput').textContent='—';$('nnClass').textContent='Обучи модель, чтобы получить предсказание'}
