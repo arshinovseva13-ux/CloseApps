@@ -99,7 +99,7 @@ function nnGpuSample(){
 $('nnGpuShader').value='@group(0) @binding(0) var<storage, read> inputA: array<f32>;\\n@group(0) @binding(1) var<storage, read> inputB: array<f32>;\\n@group(0) @binding(2) var<storage, read_write> output: array<f32>;\\n@compute @workgroup_size(64)\\nfn main(@builtin(global_invocation_id) id: vec3<u32>) {\\n let i = id.x;\\n if (i < arrayLength(&output)) { output[i] = inputA[i] + inputB[i]; }\\n}';
 toast('Пример WGSL восстановлен');
 }
-async async function nnGpuInfo(){
+async function nnGpuInfo(){
 let log=$('nnGpuLog');
 if(!navigator.gpu){log.textContent='WebGPU API недоступен в этом браузере или контексте.';return}
 try{let adapter=await navigator.gpu.requestAdapter();if(!adapter){log.textContent='WebGPU найден, но GPU adapter недоступен.';return}
