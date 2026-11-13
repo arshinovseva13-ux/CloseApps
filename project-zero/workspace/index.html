@@ -98,10 +98,120 @@ input:focus,textarea:focus,select:focus{outline:2px solid #78c9bd55;border-color
   .hero .row .btn{flex:1 1 auto}
   .tile,.panel,.stat,.nn-panel{padding:14px}
 }
+
+/* Unslop pass 02 · interface hierarchy, component identity, accessibility */
+:root{--bg:#101516;--panel:#181f20;--line:#303b3a;--text:#edf2ef;--muted:#9ba8a2;--accent:#8acfc1;--accent-strong:#b9e4da;--surface-2:#202929;--surface-3:#273332}
+body{background:var(--bg);font-size:14px;letter-spacing:.002em}
+.layout{grid-template-columns:244px minmax(0,1fr)}
+.side{display:flex;flex-direction:column;gap:24px;background:#141a1b}
+.brand{font-size:14px;letter-spacing:.09em;line-height:1.35}
+.brand i{display:inline-grid;place-items:center;width:28px;height:28px;border:1px solid #45615a;border-radius:7px;font-size:16px}
+.brand small{font-weight:450;letter-spacing:.01em}
+.nav{gap:4px}
+.nav button{display:flex;align-items:center;min-height:40px;padding:8px 11px;border-radius:6px;font-weight:500;transition:background .15s ease,color .15s ease}
+.nav button.active{background:#26312f;border-color:#3a514a;color:#eaf5f1;box-shadow:inset 2px 0 0 var(--accent)}
+.main{padding:34px clamp(18px,3.5vw,52px);max-width:1660px}
+.top{display:flex;align-items:center;gap:9px;padding-bottom:13px;border-bottom:1px solid #293332;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.top b{font-weight:600;color:#d5dfda}
+.view{max-width:1320px;margin-inline:auto}
+.hero{padding:clamp(30px,5vw,62px) 0 34px;max-width:1020px}
+.hero .eyebrow{display:flex;align-items:center;gap:10px}
+.hero .eyebrow:after{content:"";display:block;width:44px;height:1px;background:#49625b}
+h1{font-size:clamp(34px,4.5vw,58px);line-height:1.07;letter-spacing:-.052em;font-weight:580;max-width:900px}
+h1 em{color:var(--accent)}
+.hero p{max-width:720px;font-size:15px;line-height:1.75;color:#aebbb5}
+.hero .row{margin-top:22px;gap:9px}
+.btn{min-height:36px;border-radius:6px;background:#202928;border-color:#394744;color:#e3ece7;cursor:pointer}
+.btn.primary{background:var(--accent-strong);border-color:var(--accent-strong);color:#14201d}
+.btn:disabled{cursor:not-allowed;opacity:.42}
+.btn.small{min-height:32px}
+.stats{max-width:760px;gap:10px}
+.stat{position:relative;min-height:92px;padding:15px 17px;background:#171e1f;border-color:#303b39;border-radius:7px}
+.stat strong{font-size:27px;letter-spacing:-.04em}
+.stat small{display:block;margin-top:2px;font-size:11px;letter-spacing:.02em}
+h2{font-size:19px;letter-spacing:-.025em;font-weight:580;margin:42px 0 13px}
+.grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:13px;margin-top:16px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-height:214px;padding:19px;background:#171e1f;border:1px solid #303b39;border-radius:8px;transition:border-color .16s ease,background .16s ease,transform .16s ease}
+.tile:hover{background:#1b2423;border-color:#526a61;transform:translateY(-2px)}
+.tile-mark{display:grid;place-items:center;width:42px;height:36px;margin-bottom:17px;border:1px solid #3a5049;border-radius:6px;background:#1e2b28;color:#a8dbcf;font:650 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em}
+.tile-meta{position:absolute;right:17px;top:20px}
+.tile .tag{font-size:9px;letter-spacing:.07em;color:#a5b5ae}
+.tile h3{font-size:16px;margin:0 0 6px;letter-spacing:-.02em}
+.tile p{font-size:12px;line-height:1.55;margin:0 0 18px;max-width:30em}
+.tile-action{margin-top:auto;display:inline-flex;align-items:center;gap:12px;background:transparent;border-color:#3b4945}
+.tile-action span{color:var(--accent)}
+.panel,.nn-panel{background:#181f20;border:1px solid #303b39;border-radius:8px}
+.field{gap:6px;margin:12px 0}
+.field label,.nn-field label{font-size:11px;font-weight:550;letter-spacing:.015em;color:#b3c0ba}
+input,textarea,select{background:#111819;border-color:#394643;border-radius:6px;color:#e7efea}
+input:disabled,select:disabled{opacity:.65;color:#a1ada7}
+textarea{line-height:1.55}
+.notice,.nn-help{background:#1c2825;border-color:#52766b;color:#c8d9d2;border-radius:0 6px 6px 0}
+.nn-tabs{display:flex;gap:6px;padding:5px;border:1px solid #303b39;border-radius:8px;background:#151c1d;width:max-content;max-width:100%;overflow-x:auto;flex-wrap:nowrap}
+.nn-tab{white-space:nowrap;min-height:38px;padding:8px 12px;background:transparent;border-color:transparent;border-radius:5px;color:#aab7b0;font-size:12px;font-weight:550}
+.nn-tab.active{background:#293632;color:#dff3ec;border-color:#476057;font-weight:650}
+.nn-builder-panel{margin-bottom:12px}
+.nn-panel{padding:20px}
+.nn-panel h3{font-size:16px;margin:0 0 8px}
+.nn-layout{grid-template-columns:minmax(0,1.35fr) minmax(280px,.85fr);gap:13px}
+.nn-stage{background:#111819;border-color:#35413e;border-radius:6px}
+.nn-statgrid{gap:7px}
+.nn-stat{background:#141b1c;border-color:#303b39;border-radius:6px}
+.nn-stat b{font-size:22px;font-variant-numeric:tabular-nums}
+.nn-result{background:#1b2925;border-color:#42675c}
+.nn-result strong{color:#a9dfd1}
+.nn-chart{background:#111819;border-color:#303b39}
+.nn-architecture span{background:#141b1c;border-color:#35413e;border-radius:5px}
+.promptResult{background:#111819;border-color:#35413e;border-radius:6px}
+.builder{border-radius:8px;border-color:#394643;background:#141a1b}
+.bhead{padding:10px 12px;background:#1a2222}
+.bbody{background:#111718}
+.tools,.inspector{background:#171e1f}
+.toolgrid button{border:1px solid #394643;background:#202928;color:#cbd6d0}
+.layer{background:#1d2625}
+.layer.active{border-color:var(--accent);color:#eef8f4}
+.stage{background:#111718}
+.toast{background:#202b28;border-color:#4c655b;border-radius:7px}
+.modalCard{background:#181f20;border-color:#3b4945;border-radius:8px}
+:where(button,input,textarea,select,[tabindex]):focus-visible{outline:2px solid #9bdccc;outline-offset:2px}
+button:focus:not(:focus-visible){outline:none}
+@media(max-width:1050px){.layout{grid-template-columns:205px minmax(0,1fr)}.nn-layout{grid-template-columns:1fr}}
+@media(max-width:720px){
+ .layout{grid-template-columns:minmax(0,1fr)}
+ .side{gap:8px;padding:8px 10px;background:#141a1b}
+ .brand{padding:0 4px 4px}
+ .brand i{width:24px;height:24px}
+ .nav{padding-bottom:2px}
+ .nav button{min-height:36px;padding:7px 10px}
+ .main{padding:17px 12px 30px}
+ .top{margin-bottom:10px}
+ .hero{padding:26px 0 24px}
+ .hero .row{display:grid;grid-template-columns:1fr 1fr}
+ .hero .row .btn.primary{grid-column:1/-1}
+ .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .stat{min-height:78px;padding:12px 10px}
+ .stat strong{font-size:23px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .tile{min-height:202px;padding:14px}
+ .tile-mark{margin-bottom:13px}
+ .tile-meta{right:12px;top:15px}
+ .nn-tabs{width:100%}
+ .nn-tab{padding:8px 10px}
+ .nn-panel{padding:15px}
+}
+@media(max-width:430px){
+ .grid{grid-template-columns:1fr}
+ .tile{min-height:175px}
+ .hero .row{grid-template-columns:1fr}
+ .hero .row .btn.primary{grid-column:auto}
+ .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .stat strong{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style></head><body><div class="layout"><aside class="side"><div class="brand"><i>◈</i>PROJECT ZERO<small>Рабочая среда разработки</small></div><nav class="nav" id="nav"><button class="active" data-page="home">Главная</button><button data-page="studio">AI Studio</button><button data-page="constructors">Конструкторы</button><button data-page="neural">Neural Studio</button><button data-page="projects">Проекты</button><button data-page="publish">Публикация</button></nav></aside><main class="main"><div class="top">ZERO WORKSPACE / <b id="crumb">Главная</b></div>
-<section class="view active" id="home"><div class="hero"><div class="eyebrow">PROJECT ZERO / WORKSPACE</div><h1>Среда для создания<br><em>цифровых продуктов</em></h1><p>ZERO — самый технологичный хаб компании Close. PROJECT ZERO — no-code-среда для создания сайтов, приложений, игр, 3D-миров и цифровых продуктов. Собирай проекты из визуальных элементов, настраивай их и экспортируй результат.</p><div class="row"><button class="btn primary" onclick="page('constructors')">Открыть конструкторы →</button><button class="btn" onclick="page('web')">＋ Новый сайт</button><button class="btn" onclick="page('studio')">✦ AI Studio</button></div></div><div class="stats"><div class="stat"><strong id="count">0</strong><small>Мои проекты</small></div><div class="stat"><strong>6</strong><small>Направлений</small></div><div class="stat"><strong>0.5</strong><small>Версия</small></div></div><h2>Рабочее пространство</h2><div class="grid" id="homegrid"></div></section>
+<section class="view active" id="home"><div class="hero"><div class="eyebrow">PROJECT ZERO / WORKSPACE</div><h1>Среда для создания<br><em>цифровых продуктов</em></h1><p>ZERO — самый технологичный хаб компании Close. PROJECT ZERO — no-code-среда для создания сайтов, приложений, игр, 3D-миров и цифровых продуктов. Собирай проекты из визуальных элементов, настраивай их и экспортируй результат.</p><div class="row"><button class="btn primary" onclick="page('constructors')">Открыть конструкторы →</button><button class="btn" onclick="page('web')">＋ Новый сайт</button><button class="btn" onclick="page('studio')">AI Studio</button></div></div><div class="stats"><div class="stat"><strong id="count">0</strong><small>Мои проекты</small></div><div class="stat"><strong>7</strong><small>Направлений</small></div><div class="stat"><strong>0.5</strong><small>Версия</small></div></div><h2>Рабочее пространство</h2><div class="grid" id="homegrid"></div></section>
 <section class="view" id="studio"><div class="eyebrow">ZERO INTELLIGENCE</div><h1>AI Studio</h1><p>Собирай запросы с файлами и сохраняй результаты в отдельные файлы. Прикреплённые текстовые документы добавляются в контекст промпта.</p><div class="panel"><div class="field"><label>Название задачи</label><input id="aititle" value="Новый AI-проект"></div><div class="field"><label>Задача</label><textarea id="aigoal" placeholder="Опиши желаемый результат..."></textarea></div><div class="field"><label>Роль AI</label><select id="airole"><option>Универсальный помощник</option><option>Senior-разработчик</option><option>UI/UX-дизайнер</option><option>3D-художник</option><option>Технический архитектор</option></select></div><div class="field"><label>Контекст и ограничения</label><textarea id="aicontext" placeholder="Технологии, стиль, ограничения, формат результата..."></textarea></div><div class="field"><label>Файлы задачи</label><input id="aiFilesInput" type="file" multiple onchange="addAIFiles(event)" style="display:none"><button class="btn" type="button" onclick="$('aiFilesInput').click()">＋ Прикрепить файлы</button><div class="muted" style="font-size:12px">Можно прикреплять документы, код, таблицы, архивы, PDF и изображения. Текстовые форматы попадут прямо в контекст промпта.</div><div id="aiFilesList" style="display:grid;gap:7px;margin-top:9px"><span class="muted">Файлы пока не добавлены.</span></div></div><button class="btn primary" onclick="buildPrompt()">Собрать промпт с файлами</button></div><div class="panel"><h3>Результат</h3><div class="promptResult" id="airesult">Здесь появится промпт или результат работы.</div><div class="row" style="margin-top:9px"><button class="btn" onclick="copyAI()">Скопировать</button><input id="aiExportName" value="close-ai-result" aria-label="Имя файла" style="max-width:210px"><select id="aiExportType" style="width:auto"><option value="txt">.txt</option><option value="md">.md</option><option value="json">.json</option><option value="html">.html</option></select><button class="btn primary" onclick="downloadAIResult()">↓ Создать файл</button></div></div><div class="notice">Важно: внешняя AI-модель пока не подключена. Studio умеет принимать файлы, включать читаемый текст в промпт и создавать скачиваемые файлы с результатом. Бинарные вложения (например PDF, DOCX, ZIP и изображения) пока сохраняются как вложения с метаданными, но их содержимое не анализируется.</div></section><section class="view" id="constructors"><div class="eyebrow">VISUAL BUILD SYSTEM</div><h1>Конструкторы</h1><p>Не только компиляторы: визуальные редакторы, компоненты, свойства, логика и экспорт — основа ZERO.</p><div class="grid" id="allgrid"></div></section>
-<section class="view" id="neural"><div class="eyebrow">ZERO INTELLIGENCE LAB</div><h1>Neural <em>Network Studio</em></h1><p>Четыре no-code конструктора ZERO Neural: архитектура сети, оптимизатор, вычислительный backend и датасеты. Настройки объединяются в одной обучаемой модели.</p><div class="notice">GPU Replacement не создаёт видеокарту программно: он выбирает доступный TensorFlow.js backend. WebGL использует совместимую GPU, CPU остаётся резервным вариантом.</div><div class="nn-tabs"><button class="nn-tab active" id="nnTab-network" onclick="nnTab('network')">① Сеть</button><button class="nn-tab" id="nnTab-optimizer" onclick="nnTab('optimizer')">② Оптимизатор</button><button class="nn-tab" id="nnTab-compute" onclick="nnTab('compute')">③ GPU Replacement</button><button class="nn-tab" id="nnTab-dataset" onclick="nnTab('dataset')">④ Датасеты</button></div>
+<section class="view" id="neural"><div class="eyebrow">ZERO INTELLIGENCE LAB</div><h1>Neural <em>Network Studio</em></h1><p>Четыре no-code конструктора ZERO Neural: архитектура сети, оптимизатор, вычислительный backend и датасеты. Настройки объединяются в одной обучаемой модели.</p><div class="notice">GPU Replacement не создаёт видеокарту программно: он выбирает доступный TensorFlow.js backend. WebGL использует совместимую GPU, CPU остаётся резервным вариантом.</div><div class="nn-tabs"><button class="nn-tab active" id="nnTab-network" onclick="nnTab('network')">01 / Сеть</button><button class="nn-tab" id="nnTab-optimizer" onclick="nnTab('optimizer')">02 / Оптимизатор</button><button class="nn-tab" id="nnTab-compute" onclick="nnTab('compute')">03 / GPU Replacement</button><button class="nn-tab" id="nnTab-dataset" onclick="nnTab('dataset')">04 / Датасеты</button></div>
 <div class="nn-builder-panel active" data-nntab="network"><div class="nn-panel"><h3>Конструктор нейронной сети</h3><p class="nn-muted">Укажи число нейронов в каждом скрытом слое через запятую. Например: 8, 4 — два слоя.</p><div class="nn-controls"><div class="nn-field"><label for="nnLayers">Нейроны по слоям (1–6 слоёв, 1–64 нейрона)</label><input id="nnLayers" value="8, 4" inputmode="numeric" placeholder="Например: 32, 16, 8"></div><div class="nn-field"><label for="nnActivation">Активация скрытых слоёв</label><select id="nnActivation"><option value="sigmoid">Sigmoid</option><option value="tanh" selected>Tanh</option><option value="relu">ReLU</option></select></div><div class="nn-field"><label for="nnInitializer">Инициализация весов</label><select id="nnInitializer"><option value="xavier" selected>Xavier / Glorot</option><option value="he">He</option></select></div><div class="nn-field"><label>Входы / выходы</label><input value="2 признака · 1 бинарный выход" disabled></div></div><div class="nn-actions"><button class="btn primary" onclick="nnBuild()">Применить архитектуру</button><button class="btn" onclick="nnReset()">Сбросить веса</button></div><div id="nnArchitecture" class="nn-architecture">Вход · 2 → Слой 1 · 4 → Выход · 1</div><div class="nn-help">Архитектура, активация и инициализация применяются при обучении. Тип задачи сейчас — бинарная классификация: два входных признака, один выход.</div></div></div>
 <div class="nn-builder-panel" data-nntab="optimizer"><div class="nn-panel"><h3>Конструктор оптимизатора</h3><div class="nn-controls"><div class="nn-field"><label for="nnOptimizer">Алгоритм</label><select id="nnOptimizer" onchange="nnOptimizerChanged()"><option value="sgd">SGD</option><option value="momentum">Momentum</option><option value="adam" selected>Adam</option><option value="rmsprop">RMSProp</option></select></div><div class="nn-field"><label for="nnRate">Learning rate</label><input id="nnRate" type="number" min="0.000001" max="1" step="0.0001" value="0.01"></div><div class="nn-field"><label for="nnMomentum">Momentum / β₁</label><input id="nnMomentum" type="number" min="0" max="0.9999" step="0.01" value="0.9"></div><div class="nn-field"><label for="nnBeta2">β₂ / decay</label><input id="nnBeta2" type="number" min="0.8" max="0.99999" step="0.001" value="0.999"></div><div class="nn-field"><label for="nnEpsilon">Epsilon</label><input id="nnEpsilon" type="number" min="0.000000001" step="0.0000001" value="0.0000001"></div><div class="nn-field"><label for="nnDecay">Weight decay</label><input id="nnDecay" type="number" min="0" max="1" step="0.0001" value="0"></div><div class="nn-field"><label for="nnClipNorm">Gradient clipping norm (CPU)</label><input id="nnClipNorm" type="number" min="0" max="100" step="0.1" value="0"></div><div class="nn-field"><label for="nnSchedule">Learning-rate schedule (CPU)</label><select id="nnSchedule"><option value="constant">Constant</option><option value="step">Step decay</option><option value="cosine">Cosine decay</option></select></div></div><div id="nnOptimizerInfo" class="nn-help">Adam: адаптивные моменты первого и второго порядка.</div></div></div>
 <div class="nn-builder-panel" data-nntab="compute"><div class="nn-panel"><h3>GPU Replacement · GPU Development Lab</h3><p class="nn-muted">Выбери, где TensorFlow.js будет выполнять операции. Auto предпочитает WebGL и переключается на CPU, если GPU-backend недоступен.</p><div class="nn-controls"><div class="nn-field"><label for="nnBackend">Режим вычислений</label><select id="nnBackend" onchange="nnCheckBackend()"><option value="auto" selected>Auto · WebGL → CPU</option><option value="webgl">WebGL · GPU</option><option value="cpu">CPU</option></select></div><div class="nn-field"><label>Активный backend</label><input id="nnBackendName" value="Проверка…" disabled></div><div class="nn-field"><label>Устройство</label><input id="nnDeviceName" value="Проверка…" disabled></div><div class="nn-field"><label>TensorFlow.js</label><input id="nnTfStatus" value="Проверка…" disabled></div></div><div id="nnBackendStatus" class="nn-help">Проверяем доступные вычислительные backend…</div><div class="nn-actions"><button class="btn" onclick="nnCheckBackend()">Обновить диагностику</button><button class="btn primary" onclick="nnGpuInfo()">Проверить WebGPU</button></div><div class="layers"><h4>WEBGPU COMPUTE WORKSPACE</h4><div class="nn-controls"><div class="nn-field"><label for="nnGpuCount">Количество элементов</label><input id="nnGpuCount" type="number" min="1" max="65536" value="256"></div><div class="nn-field"><label>Режим</label><input value="WGSL compute shader" disabled></div></div><div class="nn-field"><label for="nnGpuShader">Редактор WGSL · bindings 0/1/2: inputA, inputB, output</label><textarea id="nnGpuShader" spellcheck="false" style="min-height:190px;font:12px/1.5 ui-monospace,monospace">@group(0) @binding(0) var<storage, read> inputA: array<f32>;
@@ -122,11 +232,11 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
 <section class="view" id="projects"><div class="eyebrow">YOUR WORKSPACE</div><h1>Мои проекты</h1><div class="panel" id="projectList"></div></section><section class="view" id="publish"><div class="eyebrow">GO LIVE</div><h1>Публикация</h1><div class="panel"><h3>Экспорт и публикация</h3><p>Экспортируй сайт в HTML и загрузи его на GitHub Pages или другой хостинг.</p><div class="notice">Прямая публикация GitHub потребует безопасной авторизации OAuth. Не вставляй токены и пароли в редактор.</div><button class="btn primary" onclick="page('web')">Открыть Web Studio</button></div></section>
 </main></div><div class="toast" id="toast"></div><div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="modalCard" id="modalCard"></div></div>
 <script>
-const $=id=>document.getElementById(id),kinds=[['web','🌐','Web Studio','Визуальный no-code редактор сайтов','ГОТОВО'],['ai','✦','AI Studio','Промпты, контекст и AI-сценарии','BETA'],['3d','◈','3D Studio','Объекты, сцены, материалы и свет','В РАЗРАБОТКЕ'],['game','🎮','Game Studio','Игровые сцены и механики','В РАЗРАБОТКЕ'],['ui','▧','UI Studio','Экраны и дизайн-системы','В РАЗРАБОТКЕ'],['logic','⌘','Logic Studio','Визуальные блоки и связи','В РАЗРАБОТКЕ'],['neural','🧠','Neural Network Studio','Создание и обучение нейросетей','BETA']];
+const $=id=>document.getElementById(id),kinds=[['web','WEB','Web Studio','Визуальный no-code редактор сайтов','ГОТОВО'],['ai','AI','AI Studio','Промпты, контекст и AI-сценарии','BETA'],['3d','3D','3D Studio','Объекты, сцены, материалы и свет','В РАЗРАБОТКЕ'],['game','GM','Game Studio','Игровые сцены и механики','В РАЗРАБОТКЕ'],['ui','UI','UI Studio','Экраны и дизайн-системы','В РАЗРАБОТКЕ'],['logic','LOG','Logic Studio','Визуальные блоки и связи','В РАЗРАБОТКЕ'],['neural','NN','Neural Network Studio','Создание и обучение нейросетей','BETA']];
 let site={name:'Мой сайт',pages:[{id:'p1',name:'Главная',blocks:[]}],current:'p1',style:{bg:'#ffffff',accent:'#2563eb',font:'Arial, sans-serif',bgImage:'',bgSize:'cover'}},selected=-1,history=[],future=[],codeMode=false;
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').style.display='none',2200)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function tile(k){return '<article class="tile"><div style="font-size:24px">'+k[1]+'</div><h3>'+k[2]+'</h3><p>'+k[3]+'</p><div class="tag">'+k[4]+'</div><p style="margin-top:9px"><button class="btn small" onclick="openKind(\''+k[0]+'\')">'+(k[0]==='web'?'Открыть':k[0]==='ai'?'Открыть':'Подробнее')+'</button></p></article>'}
+function tile(k){return '<article class="tile"><div class="tile-mark" aria-hidden="true">'+k[1]+'</div><div class="tile-meta"><span class="tag">'+k[4]+'</span></div><h3>'+k[2]+'</h3><p>'+k[3]+'</p><button class="btn small tile-action" onclick="openKind(\''+k[0]+'\')">'+(k[0]==='web'||k[0]==='ai'||k[0]==='neural'?'Открыть':'Подробнее')+' <span aria-hidden="true">↗</span></button></article>'}
 $('homegrid').innerHTML=kinds.slice(0,3).map(tile).join('');$('allgrid').innerHTML=kinds.map(tile).join('');
 function page(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$('crumb').textContent=({home:'Главная',studio:'AI Studio',constructors:'Конструкторы',web:'Web Studio',projects:'Проекты',publish:'Публикация',neural:'Neural Network Studio'}[id]||id);if(id==='projects')renderProjects();if(id==='web')renderBuilder();scrollTo(0,0)}
 $('nav').onclick=e=>{let b=e.target.closest('[data-page]');if(b)page(b.dataset.page)};
