@@ -39,7 +39,7 @@ button,select{font:inherit}button{cursor:pointer}.app{max-width:1160px;margin:au
 <div class="promotion" id="promotion"><div class="promo-box">Выберите фигуру для превращения<div class="promo-pieces" id="promoPieces"></div></div></div>
 <script type="module">
 import { Chess } from 'https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm';
-const ENGINE_URL='https://cdn.jsdelivr.net/npm/stockfish@19.0.1/bin/stockfish-19-lite-single.js';
+const ENGINE_URL='./stockfish-worker.js';
 const $=id=>document.getElementById(id);
 const game=new Chess(); let worker=null,ready=false,busy=false,playerColor='w',flipped=false,selected=null,legal=[],lastMove=null,pendingPromotion=null,analysisRequested=false,ignoreBestmove=false;
 const glyph={wk:'♔',wq:'♕',wr:'♖',wb:'♗',wn:'♘',wp:'♙',bk:'♚',bq:'♛',br:'♜',bb:'♝',bn:'♞',bp:'♟'};
