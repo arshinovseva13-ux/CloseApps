@@ -113,7 +113,7 @@ function render(){
   renderBoard();
   const counts=countPieces();$('whiteCount').textContent=counts.w;$('blackCount').textContent=counts.b;
   $('turnPill').textContent=gameOver?'Партия окончена':side===1?'Ход белых':'Ход чёрных';
-  $('topName').textContent=engineSide===-1?'Компьютер':'Вы';$('bottomName').textContent=engineSide===1?'Компьютер':'Вы';
+  $('topName').textContent=flipped?(engineSide===1?'Компьютер':'Вы'):(engineSide===-1?'Компьютер':'Вы');$('bottomName').textContent=flipped?(engineSide===-1?'Компьютер':'Вы'):(engineSide===1?'Компьютер':'Вы');
   $('topMeta').textContent=flipped?'Белые':'Чёрные';$('bottomMeta').textContent=flipped?'Чёрные':'Белые';
   $('topAvatar').className='avatar '+(flipped?'':'dark');$('bottomAvatar').className='avatar '+(flipped?'dark':'');
   $('undo').disabled=history.length===0||thinking;$('hint').disabled=thinking||gameOver||side!==humanSide;
