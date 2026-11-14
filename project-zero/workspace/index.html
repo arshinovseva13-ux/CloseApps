@@ -211,9 +211,86 @@ button:focus:not(:focus-visible){outline:none}
  .stat strong{font-size:20px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* ZERO 3D · visual scene constructor */
+.z3-shell{display:grid;grid-template-columns:205px minmax(0,1fr) 245px;min-height:680px;border:1px solid #35413e;border-radius:9px;overflow:hidden;background:#111718}
+.z3-left,.z3-right{padding:13px;background:#171e1f;min-width:0}.z3-left{border-right:1px solid #303b39}.z3-right{border-left:1px solid #303b39}
+.z3-center{min-width:0;display:flex;flex-direction:column;background:#0e1415}
+.z3-toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:9px;border-bottom:1px solid #303b39;background:#171e1f}
+.z3-toolbar .btn{font-size:12px;padding:7px 9px}.z3-viewport{position:relative;min-height:520px;flex:1;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#263332,#0b1011 72%)}
+.z3-viewport canvas{display:block;width:100%;height:100%;min-height:520px;touch-action:none;outline:none}
+.z3-overlay{position:absolute;left:12px;top:11px;color:#a9bbb4;font:11px/1.6 ui-monospace,monospace;pointer-events:none;background:#101718b8;padding:7px 9px;border:1px solid #34413d;border-radius:5px}
+.z3-bottom{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 11px;border-top:1px solid #303b39;color:#98a8a1;font-size:11px}
+.z3-title{font-size:10px;letter-spacing:.08em;color:#9aaba4;margin:3px 0 10px}
+.z3-addgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.z3-addgrid button{min-height:55px;text-align:center;font-size:11px;padding:7px 3px}
+.z3-addgrid button b{display:block;font-size:18px;font-weight:500;color:#a9d8cb;margin-bottom:3px}
+.z3-tree{display:grid;gap:4px;margin-top:9px;max-height:300px;overflow:auto}
+.z3-tree button{width:100%;text-align:left;padding:7px 8px;background:#1b2424;border:1px solid transparent;border-radius:5px;color:#bdc9c3;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.z3-tree button.active{border-color:#7fc5b6;background:#22312d;color:#f0f6f2}
+.z3-prop{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0}
+.z3-prop label{display:grid;gap:4px;color:#aab8b1;font-size:10px;min-width:0}
+.z3-prop input{width:100%;padding:7px 6px;font-size:11px}
+.z3-prop input[type=color]{height:32px;padding:3px}
+.z3-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.z3-actions .btn{font-size:11px;padding:7px 8px}
+.z3-empty{font-size:12px;color:#82928b;padding:10px 4px;line-height:1.6}
+.z3-status{color:#a7d7c8}
+@media(max-width:1000px){.z3-shell{grid-template-columns:175px minmax(0,1fr)}.z3-right{grid-column:1/-1;border-left:0;border-top:1px solid #303b39}.z3-right .z3-prop{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.z3-shell{grid-template-columns:1fr}.z3-left{border-right:0;border-bottom:1px solid #303b39}.z3-right{grid-column:auto}.z3-addgrid{grid-template-columns:repeat(5,minmax(0,1fr))}.z3-addgrid button{font-size:9px;min-height:48px}.z3-addgrid button b{font-size:15px}.z3-tree{grid-template-columns:repeat(2,minmax(0,1fr));max-height:150px}.z3-right .z3-prop{grid-template-columns:1fr 1fr}.z3-viewport,.z3-viewport canvas{min-height:390px}}
+
 </style></head><body><div class="layout"><aside class="side"><div class="brand"><i>◈</i>PROJECT ZERO<small>Рабочая среда разработки</small></div><nav class="nav" id="nav"><button class="active" data-page="home">Главная</button><button data-page="studio">AI Studio</button><button data-page="constructors">Конструкторы</button><button data-page="neural">Neural Studio</button><button data-page="projects">Проекты</button><button data-page="publish">Публикация</button></nav></aside><main class="main"><div class="top">ZERO WORKSPACE / <b id="crumb">Главная</b></div>
 <section class="view active" id="home"><div class="hero"><div class="eyebrow">PROJECT ZERO / WORKSPACE</div><h1>Среда для создания<br><em>цифровых продуктов</em></h1><p>ZERO — самый технологичный хаб компании Close. PROJECT ZERO — no-code-среда для создания сайтов, приложений, игр, 3D-миров и цифровых продуктов. Собирай проекты из визуальных элементов, настраивай их и экспортируй результат.</p><div class="row"><button class="btn primary" onclick="page('constructors')">Открыть конструкторы →</button><button class="btn" onclick="page('web')">＋ Новый сайт</button><button class="btn" onclick="page('studio')">AI Studio</button></div></div><div class="stats"><div class="stat"><strong id="count">0</strong><small>Мои проекты</small></div><div class="stat"><strong>7</strong><small>Направлений</small></div><div class="stat"><strong>0.5</strong><small>Версия</small></div></div><h2>Рабочее пространство</h2><div class="grid" id="homegrid"></div></section>
 <section class="view" id="studio"><div class="eyebrow">ZERO INTELLIGENCE</div><h1>AI Studio</h1><p>Собирай запросы с файлами и сохраняй результаты в отдельные файлы. Прикреплённые текстовые документы добавляются в контекст промпта.</p><div class="panel"><div class="field"><label>Название задачи</label><input id="aititle" value="Новый AI-проект"></div><div class="field"><label>Задача</label><textarea id="aigoal" placeholder="Опиши желаемый результат..."></textarea></div><div class="field"><label>Роль AI</label><select id="airole"><option>Универсальный помощник</option><option>Senior-разработчик</option><option>UI/UX-дизайнер</option><option>3D-художник</option><option>Технический архитектор</option></select></div><div class="field"><label>Контекст и ограничения</label><textarea id="aicontext" placeholder="Технологии, стиль, ограничения, формат результата..."></textarea></div><div class="field"><label>Файлы задачи</label><input id="aiFilesInput" type="file" multiple onchange="addAIFiles(event)" style="display:none"><button class="btn" type="button" onclick="$('aiFilesInput').click()">＋ Прикрепить файлы</button><div class="muted" style="font-size:12px">Можно прикреплять документы, код, таблицы, архивы, PDF и изображения. Текстовые форматы попадут прямо в контекст промпта.</div><div id="aiFilesList" style="display:grid;gap:7px;margin-top:9px"><span class="muted">Файлы пока не добавлены.</span></div></div><button class="btn primary" onclick="buildPrompt()">Собрать промпт с файлами</button></div><div class="panel"><h3>Результат</h3><div class="promptResult" id="airesult">Здесь появится промпт или результат работы.</div><div class="row" style="margin-top:9px"><button class="btn" onclick="copyAI()">Скопировать</button><input id="aiExportName" value="close-ai-result" aria-label="Имя файла" style="max-width:210px"><select id="aiExportType" style="width:auto"><option value="txt">.txt</option><option value="md">.md</option><option value="json">.json</option><option value="html">.html</option></select><button class="btn primary" onclick="downloadAIResult()">↓ Создать файл</button></div></div><div class="notice">Важно: внешняя AI-модель пока не подключена. Studio умеет принимать файлы, включать читаемый текст в промпт и создавать скачиваемые файлы с результатом. Бинарные вложения (например PDF, DOCX, ZIP и изображения) пока сохраняются как вложения с метаданными, но их содержимое не анализируется.</div></section><section class="view" id="constructors"><div class="eyebrow">VISUAL BUILD SYSTEM</div><h1>Конструкторы</h1><p>Не только компиляторы: визуальные редакторы, компоненты, свойства, логика и экспорт — основа ZERO.</p><div class="grid" id="allgrid"></div></section>
+
+<section class="view" id="zero3d">
+  <div class="eyebrow">ZERO CREATION SYSTEM / 03D</div>
+  <h1>ZERO <em>3D</em></h1>
+  <p>Визуальный конструктор 3D-сцен. Добавляй объекты, располагай их в пространстве, настраивай материалы и сохраняй проекты — без написания кода.</p>
+  <div class="notice">Управление: перетаскивай мышью или пальцем, чтобы вращать камеру; прокручивай для приближения. Выбери объект в сцене или иерархии, чтобы изменить его свойства.</div>
+  <div class="workbar">
+    <input id="z3ProjectName" value="Моя 3D-сцена" aria-label="Название проекта" style="max-width:240px">
+    <button class="btn small" onclick="z3Save()">Сохранить</button>
+    <button class="btn small" onclick="z3Export()">Экспорт JSON</button>
+    <label class="btn small" for="z3ImportFile">Импорт проекта</label><input id="z3ImportFile" type="file" accept=".json,application/json" style="display:none" onchange="z3Import(event)">
+    <button class="btn small" onclick="z3Reset()">Новая сцена</button>
+  </div>
+  <div class="z3-shell">
+    <aside class="z3-left">
+      <div class="z3-title">ДОБАВИТЬ ОБЪЕКТ</div>
+      <div class="z3-addgrid">
+        <button class="btn" onclick="z3Add('box')"><b>▧</b>Куб</button>
+        <button class="btn" onclick="z3Add('sphere')"><b>◉</b>Сфера</button>
+        <button class="btn" onclick="z3Add('cylinder')"><b>⬭</b>Цилиндр</button>
+        <button class="btn" onclick="z3Add('cone')"><b>△</b>Конус</button>
+        <button class="btn" onclick="z3Add('torus')"><b>◎</b>Тор</button>
+      </div>
+      <div class="z3-title" style="margin-top:19px">ИЕРАРХИЯ СЦЕНЫ</div>
+      <div id="z3Tree" class="z3-tree"><div class="z3-empty">Сцена пуста. Добавь первый объект.</div></div>
+      <div class="z3-actions"><button class="btn" onclick="z3Duplicate()">Дублировать</button><button class="btn" onclick="z3Delete()">Удалить</button></div>
+      <div class="z3-title" style="margin-top:18px">СЦЕНА</div>
+      <div class="z3-actions"><button class="btn" onclick="z3ToggleGrid()">Сетка: вкл.</button><button class="btn" onclick="z3FrameAll()">Показать всё</button></div>
+    </aside>
+    <div class="z3-center">
+      <div class="z3-toolbar">
+        <span class="pill">3D VIEWPORT</span>
+        <button class="btn" onclick="z3Camera('perspective')">Перспектива</button>
+        <button class="btn" onclick="z3Camera('top')">Сверху</button>
+        <button class="btn" onclick="z3Camera('front')">Спереди</button>
+        <button class="btn" onclick="z3Camera('side')">Сбоку</button>
+      </div>
+      <div class="z3-viewport" id="z3Viewport">
+        <canvas id="z3Canvas" aria-label="Интерактивный 3D viewport"></canvas>
+        <div class="z3-overlay">WORLD SPACE<br><span id="z3ObjectCount">0 OBJECTS</span><br><span id="z3RenderStatus">Инициализация…</span></div>
+      </div>
+      <div class="z3-bottom"><span id="z3Selection">Ничего не выбрано</span><span>Orbit · Zoom · Select</span></div>
+    </div>
+    <aside class="z3-right">
+      <div class="z3-title">СВОЙСТВА ОБЪЕКТА</div>
+      <div id="z3Inspector" class="z3-empty">Выбери объект, чтобы редактировать его параметры.</div>
+    </aside>
+  </div>
+  <p class="muted" style="font-size:11px;margin-top:10px">Проекты сохраняются в локальном хранилище этого браузера. Экспорт JSON содержит геометрию-примитивы, трансформации и материалы сцены.</p>
+</section>
 <section class="view" id="neural"><div class="eyebrow">ZERO INTELLIGENCE LAB</div><h1>Neural <em>Network Studio</em></h1><p>Четыре no-code конструктора ZERO Neural: архитектура сети, оптимизатор, вычислительный backend и датасеты. Настройки объединяются в одной обучаемой модели.</p><div class="notice">GPU Replacement не создаёт видеокарту программно: он выбирает доступный TensorFlow.js backend. WebGL использует совместимую GPU, CPU остаётся резервным вариантом.</div><div class="nn-tabs"><button class="nn-tab active" id="nnTab-network" onclick="nnTab('network')">01 / Сеть</button><button class="nn-tab" id="nnTab-optimizer" onclick="nnTab('optimizer')">02 / Оптимизатор</button><button class="nn-tab" id="nnTab-compute" onclick="nnTab('compute')">03 / GPU Replacement</button><button class="nn-tab" id="nnTab-dataset" onclick="nnTab('dataset')">04 / Датасеты</button><button class="nn-tab" id="nnTab-llm" onclick="nnTab('llm')">05 / LLM Studio</button></div>
 <div class="nn-builder-panel active" data-nntab="network"><div class="nn-panel"><h3>Конструктор нейронной сети</h3><p class="nn-muted">Укажи число нейронов в каждом скрытом слое через запятую. Например: 8, 4 — два слоя.</p><div class="nn-controls"><div class="nn-field"><label for="nnLayers">Нейроны по слоям (1–6 слоёв, 1–64 нейрона)</label><input id="nnLayers" value="8, 4" inputmode="numeric" placeholder="Например: 32, 16, 8"></div><div class="nn-field"><label for="nnActivation">Активация скрытых слоёв</label><select id="nnActivation"><option value="sigmoid">Sigmoid</option><option value="tanh" selected>Tanh</option><option value="relu">ReLU</option></select></div><div class="nn-field"><label for="nnInitializer">Инициализация весов</label><select id="nnInitializer"><option value="xavier" selected>Xavier / Glorot</option><option value="he">He</option></select></div><div class="nn-field"><label>Входы / выходы</label><input value="2 признака · 1 бинарный выход" disabled></div></div><div class="nn-actions"><button class="btn primary" onclick="nnBuild()">Применить архитектуру</button><button class="btn" onclick="nnReset()">Сбросить веса</button></div><div id="nnArchitecture" class="nn-architecture">Вход · 2 → Слой 1 · 4 → Выход · 1</div><div class="nn-statgrid nn-architecture-metrics"><div class="nn-stat"><b id="nnParamCount">—</b><small>Параметров</small></div><div class="nn-stat"><b id="nnLayerCount">—</b><small>Слоёв</small></div><div class="nn-stat"><b id="nnNeuronCount">—</b><small>Нейронов</small></div></div><div class="nn-help">Архитектура, активация и инициализация применяются при обучении. Тип задачи сейчас — бинарная классификация: два входных признака, один выход.</div></div></div>
 <div class="nn-builder-panel" data-nntab="optimizer"><div class="nn-panel"><h3>Конструктор оптимизатора</h3><div class="nn-controls"><div class="nn-field"><label for="nnOptimizer">Алгоритм</label><select id="nnOptimizer" onchange="nnOptimizerChanged()"><option value="sgd">SGD</option><option value="momentum">Momentum</option><option value="adam" selected>Adam</option><option value="rmsprop">RMSProp</option></select></div><div class="nn-field"><label for="nnRate">Learning rate</label><input id="nnRate" type="number" min="0.000001" max="1" step="0.0001" value="0.01"></div><div class="nn-field"><label for="nnMomentum">Momentum / β₁</label><input id="nnMomentum" type="number" min="0" max="0.9999" step="0.01" value="0.9"></div><div class="nn-field"><label for="nnBeta2">β₂ / decay</label><input id="nnBeta2" type="number" min="0.8" max="0.99999" step="0.001" value="0.999"></div><div class="nn-field"><label for="nnEpsilon">Epsilon</label><input id="nnEpsilon" type="number" min="0.000000001" step="0.0000001" value="0.0000001"></div><div class="nn-field"><label for="nnDecay">Weight decay</label><input id="nnDecay" type="number" min="0" max="1" step="0.0001" value="0"></div><div class="nn-field"><label for="nnClipNorm">Gradient clipping norm (CPU)</label><input id="nnClipNorm" type="number" min="0" max="100" step="0.1" value="0"></div><div class="nn-field"><label for="nnSchedule">Learning-rate schedule (CPU)</label><select id="nnSchedule"><option value="constant">Constant</option><option value="step">Step decay</option><option value="cosine">Cosine decay</option></select></div></div><div id="nnOptimizerInfo" class="nn-help">Adam: адаптивные моменты первого и второго порядка.</div></div></div>
@@ -304,6 +381,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
 <div id="codePanel" style="display:none;padding:12px"><div class="codegrid"><div><label>HTML</label><textarea id="codeHtml"></textarea><label>CSS</label><textarea id="codeCss"></textarea><label>JavaScript</label><textarea id="codeJs"></textarea><button class="btn primary" onclick="runCode()">Обновить предпросмотр</button></div><div><label>Предпросмотр</label><iframe id="codeFrame" class="preview" sandbox="allow-scripts"></iframe></div></div></div></div><p class="notice">Автосохранение работает в этом браузере. JSON сохраняет редактируемую структуру, HTML — готовую страницу. Публикация на хостинг пока выполняется вручную.</p></section>
 <section class="view" id="projects"><div class="eyebrow">YOUR WORKSPACE</div><h1>Мои проекты</h1><div class="panel" id="projectList"></div></section><section class="view" id="publish"><div class="eyebrow">GO LIVE</div><h1>Публикация</h1><div class="panel"><h3>Экспорт и публикация</h3><p>Экспортируй сайт в HTML и загрузи его на GitHub Pages или другой хостинг.</p><div class="notice">Прямая публикация GitHub потребует безопасной авторизации OAuth. Не вставляй токены и пароли в редактор.</div><button class="btn primary" onclick="page('web')">Открыть Web Studio</button></div></section>
 </main></div><div class="toast" id="toast"></div><div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="modalCard" id="modalCard"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
 const $=id=>document.getElementById(id),kinds=[['web','WEB','Web Studio','Визуальный no-code редактор сайтов','ГОТОВО'],['ai','AI','AI Studio','Промпты, контекст и AI-сценарии','BETA'],['3d','3D','3D Studio','Объекты, сцены, материалы и свет','В РАЗРАБОТКЕ'],['game','GM','Game Studio','Игровые сцены и механики','В РАЗРАБОТКЕ'],['ui','UI','UI Studio','Экраны и дизайн-системы','В РАЗРАБОТКЕ'],['logic','LOG','Logic Studio','Визуальные блоки и связи','В РАЗРАБОТКЕ'],['neural','NN','Neural Network Studio','Создание и обучение нейросетей','BETA']];
 let site={name:'Мой сайт',pages:[{id:'p1',name:'Главная',blocks:[]}],current:'p1',style:{bg:'#ffffff',accent:'#2563eb',font:'Arial, sans-serif',bgImage:'',bgSize:'cover'}},selected=-1,history=[],future=[],codeMode=false;
@@ -311,9 +389,9 @@ function toast(t){$('toast').textContent=t;$('toast').style.display='block';clea
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function tile(k){return '<article class="tile"><div class="tile-mark" aria-hidden="true">'+k[1]+'</div><div class="tile-meta"><span class="tag">'+k[4]+'</span></div><h3>'+k[2]+'</h3><p>'+k[3]+'</p><button class="btn small tile-action" onclick="openKind(\''+k[0]+'\')">'+(k[0]==='web'||k[0]==='ai'||k[0]==='neural'?'Открыть':'Подробнее')+' <span aria-hidden="true">↗</span></button></article>'}
 $('homegrid').innerHTML=kinds.slice(0,3).map(tile).join('');$('allgrid').innerHTML=kinds.map(tile).join('');
-function page(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$('crumb').textContent=({home:'Главная',studio:'AI Studio',constructors:'Конструкторы',web:'Web Studio',projects:'Проекты',publish:'Публикация',neural:'Neural Network Studio'}[id]||id);if(id==='projects')renderProjects();if(id==='web')renderBuilder();scrollTo(0,0)}
+function page(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$('crumb').textContent=({home:'Главная',studio:'AI Studio',constructors:'Конструкторы',web:'Web Studio',projects:'Проекты',publish:'Публикация',neural:'Neural Network Studio'}[id]||id);if(id==='projects')renderProjects();if(id==='web')renderBuilder();if(id==='zero3d')z3Init();scrollTo(0,0)}
 $('nav').onclick=e=>{let b=e.target.closest('[data-page]');if(b)page(b.dataset.page)};
-function openKind(id){if(id==='web')page('web');else if(id==='ai')page('studio');else if(id==='neural')page('neural');else toast('Этот конструктор находится в разработке')}
+function openKind(id){if(id==='web')page('web');else if(id==='ai')page('studio');else if(id==='neural')page('neural');else if(id==='3d')page('zero3d');else toast('Этот конструктор находится в разработке')}
 function cp(){return site.pages.find(p=>p.id===site.current)||site.pages[0]}function snap(){history.push(JSON.stringify(site));if(history.length>50)history.shift();future=[];buttons()}
 function buttons(){$('undoBtn').disabled=!history.length;$('redoBtn').disabled=!future.length}
 function undo(){if(!history.length)return;future.push(JSON.stringify(site));site=JSON.parse(history.pop());selected=-1;renderBuilder();buttons()}
@@ -547,6 +625,73 @@ nn.trained=true;$('nnStatus').textContent='Обучение завершено';
 }finally{nn.busy=false;$('nnTrain').disabled=false;$('nnTrain').textContent='▶ Обучить ещё раз'}
 }
 function nnExport(){if(!nn.trained){toast('Сначала обучи модель');return}let model={format:'PROJECT ZERO Neural Model',version:2,created:new Date().toISOString(),architecture:nn.sizes,activation:$('nnActivation')?.value||'tanh',initializer:$('nnInitializer')?.value||'xavier',optimizer:{name:$('nnOptimizer').value,learningRate:Number($('nnRate').value),momentum:Number($('nnMomentum').value),beta2:Number($('nnBeta2').value),epsilon:Number($('nnEpsilon').value),weightDecay:Number($('nnDecay').value),clipNorm:Number($('nnClipNorm')?.value)||0,schedule:$('nnSchedule')?.value||'constant'},dataset:$('nnDataset').value,weights:nn.W,biases:nn.B,loss:nn.loss,accuracy:nn.accuracy};let blob=new Blob([JSON.stringify(model,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='zero-neural-model.json';a.click();URL.revokeObjectURL(url);toast('Модель экспортирована')}
+
+
+let z3={scene:null,camera:null,renderer:null,objects:[],selected:null,grid:null,raycaster:null,pointer:null,target:null,theta:Math.PI/4,phi:Math.PI/3,radius:10,ready:false};
+function z3Init(){
+ if(z3.ready)return;
+ const canvas=$('z3Canvas'),host=$('z3Viewport');
+ if(!canvas||!window.THREE){if($('z3RenderStatus'))$('z3RenderStatus').textContent='Three.js не загрузился';return}
+ const T=THREE;z3.scene=new T.Scene();z3.scene.background=new T.Color('#101819');
+ z3.camera=new T.PerspectiveCamera(48,1,.1,1000);z3.target=new T.Vector3(0,0,0);
+ z3.renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:false});z3.renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));z3.renderer.shadowMap.enabled=true;z3.renderer.shadowMap.type=T.PCFSoftShadowMap;
+ z3.scene.add(new T.HemisphereLight(0xdcefe9,0x28332f,2));
+ const key=new T.DirectionalLight(0xffffff,2.3);key.position.set(5,9,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);z3.scene.add(key);
+ const fill=new T.DirectionalLight(0x8bc9e8,.7);fill.position.set(-6,3,-5);z3.scene.add(fill);
+ z3.grid=new T.GridHelper(20,20,0x53645d,0x2a3733);z3.scene.add(z3.grid);
+ z3.raycaster=new T.Raycaster();z3.pointer=new T.Vector2();
+ const resize=()=>{let w=host.clientWidth,h=host.clientHeight||520;z3.camera.aspect=w/h;z3.camera.updateProjectionMatrix();z3.renderer.setSize(w,h,false)};
+ if(window.ResizeObserver)new ResizeObserver(resize).observe(host);else window.addEventListener('resize',resize);resize();
+ z3UpdateCamera();z3BindControls();z3.ready=true;
+ const loop=()=>{if(!z3.ready)return;z3.renderer.render(z3.scene,z3.camera);requestAnimationFrame(loop)};loop();
+ $('z3RenderStatus').textContent='WebGL · готово';z3RenderTree();
+}
+function z3UpdateCamera(){if(!z3.camera)return;z3.phi=Math.max(.08,Math.min(Math.PI-.08,z3.phi));const r=z3.radius,t=z3.theta,p=z3.phi;z3.camera.position.set(z3.target.x+r*Math.sin(p)*Math.sin(t),z3.target.y+r*Math.cos(p),z3.target.z+r*Math.sin(p)*Math.cos(t));z3.camera.lookAt(z3.target)}
+function z3BindControls(){
+ const c=$('z3Canvas');let down=null,dragging=false;
+ c.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,button:e.button,lastX:e.clientX,lastY:e.clientY};dragging=false;c.setPointerCapture(e.pointerId)});
+ c.addEventListener('pointermove',e=>{if(!down)return;let dx=e.clientX-down.lastX,dy=e.clientY-down.lastY;if(Math.abs(e.clientX-down.x)+Math.abs(e.clientY-down.y)>4)dragging=true;if(down.button===2){let right=new THREE.Vector3().setFromMatrixColumn(z3.camera.matrix,0),up=new THREE.Vector3().setFromMatrixColumn(z3.camera.matrix,1);z3.target.addScaledVector(right,-dx*.009*z3.radius);z3.target.addScaledVector(up,dy*.009*z3.radius)}else{z3.theta-=dx*.008;z3.phi-=dy*.008}down.lastX=e.clientX;down.lastY=e.clientY;z3UpdateCamera()});
+ c.addEventListener('pointerup',e=>{if(down&&!dragging&&down.button===0)z3Pick(e);down=null});
+ c.addEventListener('pointercancel',()=>down=null);c.addEventListener('contextmenu',e=>e.preventDefault());
+ c.addEventListener('wheel',e=>{e.preventDefault();z3.radius=Math.max(2,Math.min(60,z3.radius*Math.exp(e.deltaY*.001)));z3UpdateCamera()},{passive:false});
+}
+function z3Geometry(type){const T=THREE;return type==='sphere'?new T.SphereGeometry(.7,32,20):type==='cylinder'?new T.CylinderGeometry(.55,.55,1.3,32):type==='cone'?new T.ConeGeometry(.7,1.4,32):type==='torus'?new T.TorusGeometry(.62,.22,16,48):new T.BoxGeometry(1.2,1.2,1.2)}
+function z3Add(type='box',data=null){
+ if(!z3.ready)z3Init();if(!z3.ready){toast('3D-движок не загрузился. Проверь подключение к интернету.');return}
+ const mesh=new THREE.Mesh(z3Geometry(type),new THREE.MeshStandardMaterial({color:data?.color||'#83cbbb',roughness:data?.roughness??.55,metalness:data?.metalness??.05}));
+ mesh.name=data?.name||({box:'Куб',sphere:'Сфера',cylinder:'Цилиндр',cone:'Конус',torus:'Тор'}[type]||'Объект')+' '+(z3.objects.length+1);mesh.userData.z3type=type;mesh.castShadow=true;mesh.receiveShadow=true;
+ if(data){mesh.position.set(...data.position);mesh.rotation.set(...data.rotation);mesh.scale.set(...data.scale)}else mesh.position.set((Math.random()-.5)*1.8,.7,(Math.random()-.5)*1.8);
+ z3.scene.add(mesh);z3.objects.push(mesh);z3Select(mesh);z3RenderTree();return mesh;
+}
+function z3Pick(e){const r=$('z3Canvas').getBoundingClientRect();z3.pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);z3.raycaster.setFromCamera(z3.pointer,z3.camera);const hits=z3.raycaster.intersectObjects(z3.objects,false);z3Select(hits.length?hits[0].object:null)}
+function z3Select(mesh){z3.selected=mesh;z3RenderTree();z3RenderInspector()}
+function z3RenderTree(){
+ const root=$('z3Tree');if(!root)return;root.innerHTML=z3.objects.length?z3.objects.map((o,i)=>'<button class="'+(o===z3.selected?'active':'')+'" onclick="z3Select(z3.objects['+i+'])">'+({box:'▧',sphere:'◉',cylinder:'⬭',cone:'△',torus:'◎'}[o.userData.z3type]||'◇')+' &nbsp;'+z3Esc(o.name)+'</button>').join(''):'<div class="z3-empty">Сцена пуста. Добавь первый объект.</div>';
+ $('z3ObjectCount').textContent=z3.objects.length+' OBJECTS';
+ $('z3Selection').textContent=z3.selected?z3.selected.name:'Ничего не выбрано';
+}
+function z3Esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function z3RenderInspector(){
+ const el=$('z3Inspector'),o=z3.selected;if(!el)return;if(!o){el.innerHTML='Выбери объект, чтобы редактировать его параметры.';return}
+ const p=o.position,r=o.rotation,s=o.scale,m=o.material;
+ const vec=(key,label,v)=>'<label>'+label+'<input type="number" step=".1" value="'+Number(v).toFixed(2)+'" onchange="z3Set(\''+key+'\',this.value)"></label>';
+ el.innerHTML='<div class="field"><label>Имя</label><input value="'+z3Esc(o.name)+'" onchange="z3Rename(this.value)"></div><div class="field"><label>Цвет материала</label><input type="color" value="#'+m.color.getHexString()+'" onchange="z3SetColor(this.value)"></div><div class="z3-title">ПОЗИЦИЯ</div><div class="z3-prop">'+vec('px','X',p.x)+vec('py','Y',p.y)+vec('pz','Z',p.z)+'</div><div class="z3-title">ВРАЩЕНИЕ · ГРАДУСЫ</div><div class="z3-prop">'+vec('rx','X',THREE.MathUtils.radToDeg(r.x))+vec('ry','Y',THREE.MathUtils.radToDeg(r.y))+vec('rz','Z',THREE.MathUtils.radToDeg(r.z))+'</div><div class="z3-title">МАСШТАБ</div><div class="z3-prop">'+vec('sx','X',s.x)+vec('sy','Y',s.y)+vec('sz','Z',s.z)+'</div><div class="z3-prop"><label>Шероховатость<input type="number" min="0" max="1" step=".05" value="'+m.roughness+'" onchange="z3SetMaterial(\'roughness\',this.value)"></label><label>Металличность<input type="number" min="0" max="1" step=".05" value="'+m.metalness+'" onchange="z3SetMaterial(\'metalness\',this.value)"></label></div><div class="z3-actions"><button class="btn" onclick="z3Focus()">К объекту</button><button class="btn" onclick="z3Delete()">Удалить</button></div>';
+}
+function z3Set(k,v){if(!z3.selected)return;v=Number(v);if(!Number.isFinite(v))return;const o=z3.selected;if(k[0]==='p')o.position[k[1]]=v;else if(k[0]==='r')o.rotation[k[1]]=THREE.MathUtils.degToRad(v);else if(k[0]==='s')o.scale[k[1]]=Math.max(.01,Math.min(100,v));}
+function z3Rename(v){if(z3.selected){z3.selected.name=v.trim()||'Объект';z3RenderTree()}}
+function z3SetColor(v){if(z3.selected)z3.selected.material.color.set(v)}
+function z3SetMaterial(k,v){if(z3.selected)z3.selected.material[k]=Math.max(0,Math.min(1,Number(v)||0))}
+function z3Delete(){if(!z3.selected)return;let o=z3.selected;z3.scene.remove(o);o.geometry.dispose();o.material.dispose();z3.objects=z3.objects.filter(x=>x!==o);z3Select(null)}
+function z3Duplicate(){if(!z3.selected)return;let o=z3.selected,d={name:o.name+' копия',position:[o.position.x+1,o.position.y,o.position.z],rotation:[o.rotation.x,o.rotation.y,o.rotation.z],scale:[o.scale.x,o.scale.y,o.scale.z],color:'#'+o.material.color.getHexString(),roughness:o.material.roughness,metalness:o.material.metalness};z3Add(o.userData.z3type,d)}
+function z3Focus(){if(!z3.selected)return;z3.target.copy(z3.selected.position);z3.radius=4;z3UpdateCamera()}
+function z3FrameAll(){if(!z3.objects.length){z3.target.set(0,0,0);z3.radius=10}else{let box=new THREE.Box3().setFromObject(z3.objects[0]);z3.objects.slice(1).forEach(o=>box.expandByObject(o));box.getCenter(z3.target);z3.radius=Math.max(4,box.getSize(new THREE.Vector3()).length()*1.35)}z3UpdateCamera()}
+function z3Camera(mode){z3.target.set(0,0,0);z3.radius=10;if(mode==='top'){z3.phi=.05;z3.theta=0}else if(mode==='front'){z3.phi=Math.PI/2;z3.theta=0}else if(mode==='side'){z3.phi=Math.PI/2;z3.theta=Math.PI/2}else{z3.phi=Math.PI/3;z3.theta=Math.PI/4}z3UpdateCamera()}
+function z3ToggleGrid(){if(!z3.grid)return;z3.grid.visible=!z3.grid.visible;event?.target&&(event.target.textContent='Сетка: '+(z3.grid.visible?'вкл.':'выкл.'))}
+function z3Data(){return {format:'ZERO 3D Scene',version:1,name:$('z3ProjectName').value||'Моя 3D-сцена',objects:z3.objects.map(o=>({type:o.userData.z3type,name:o.name,position:o.position.toArray(),rotation:o.rotation.toArray().slice(0,3),scale:o.scale.toArray(),color:'#'+o.material.color.getHexString(),roughness:o.material.roughness,metalness:o.material.metalness}))}}
+function z3Save(){try{let d=z3Data(),a=JSON.parse(localStorage.zero3dProjects||'[]'),i=a.findIndex(x=>x.name===d.name);if(i>=0)a[i]=d;else a.unshift(d);localStorage.zero3dProjects=JSON.stringify(a);toast('3D-проект сохранён в этом браузере')}catch(e){toast('Не удалось сохранить: '+e.message)}}
+function z3Export(){const d=z3Data();let u=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=(d.name.replace(/[^\wа-яё-]+/gi,'_')||'zero-3d-scene')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function z3Import(e){let f=e.target.files?.[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let d=JSON.parse(rd.result);if(d.format!=='ZERO 3D Scene'||!Array.isArray(d.objects))throw Error('Неверный формат ZERO 3D');z3Reset(false);$('z3ProjectName').value=d.name||'Импортированная сцена';d.objects.forEach(o=>z3Add(o.type,{...o}));z3Select(null);toast('Сцена импортирована')}catch(err){toast('Ошибка импорта: '+err.message)}};rd.readAsText(f);e.target.value=''}
+function z3Reset(confirmUser=true){if(confirmUser&&!confirm('Создать новую сцену? Несохранённые изменения будут потеряны.'))return;z3.objects.slice().forEach(o=>{z3.scene.remove(o);o.geometry.dispose();o.material.dispose()});z3.objects=[];z3Select(null);$('z3ProjectName').value='Новая 3D-сцена';z3RenderTree();z3FrameAll()}
 
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}if(e.key==='Escape')closeModal()});
 $('nav').addEventListener('click',e=>{let b=e.target.closest('[data-page]');if(b)page(b.dataset.page)});
