@@ -27,7 +27,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent-soft);o
   </header>
   <section class="hero">
     <div><div class="eyebrow">Close Draughts Engine</div><h1>Международные шашки</h1><p>Игра против компьютерного соперника на доске 10×10. Обязательные взятия, длинные дамки и полные комбинации.</p></div>
-    <div class="version">Версия 1.0 · локальный движок</div>
+    <div class="version">Версия 0.1 · ранняя версия движка</div>
   </section>
   <main class="layout">
     <section class="board-panel">
@@ -104,8 +104,8 @@ function renderBoard(){
       if(hintMove&&idx===hintMove.from)cell.classList.add('hint-from');
       if(hintMove&&idx===hintMove.to)cell.classList.add('hint-to');
       if(p)cell.innerHTML=pieceHTML(p);
-      if(dc===0){const n=document.createElement('span');n.className='coords row';n.textContent=String(10-dr);cell.append(n)}
-      if(dr===9){const n=document.createElement('span');n.className='coords col';n.textContent=String.fromCharCode(97+dc);cell.append(n)}
+      if(dc===0){const n=document.createElement('span');n.className='coords row';n.textContent=String(10-(flipped?9-dr:dr));cell.append(n)}
+      if(dr===9){const n=document.createElement('span');n.className='coords col';n.textContent=String.fromCharCode(97+(flipped?9-dc:dc));cell.append(n)}
       cell.addEventListener('click',()=>onSquare(idx));
     }else{cell.disabled=true;cell.tabIndex=-1}
     boardEl.append(cell);
