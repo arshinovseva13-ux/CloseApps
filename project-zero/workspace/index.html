@@ -638,7 +638,7 @@ function z3Init(){
  z3.scene.add(new T.HemisphereLight(0xdcefe9,0x28332f,2));
  const key=new T.DirectionalLight(0xffffff,2.3);key.position.set(5,9,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);z3.scene.add(key);
  const fill=new T.DirectionalLight(0x8bc9e8,.7);fill.position.set(-6,3,-5);z3.scene.add(fill);
- z3.grid=new T.GridHelper(20,20,0x53645d,0x2a3733);z3.scene.add(z3.grid);
+ const floor=new T.Mesh(new T.PlaneGeometry(200,200),new T.MeshStandardMaterial({color:'#121a18',roughness:1}));floor.rotation.x=-Math.PI/2;floor.position.y=-.025;floor.receiveShadow=true;z3.scene.add(floor);z3.grid=new T.GridHelper(20,20,0x53645d,0x2a3733);z3.scene.add(z3.grid);
  z3.raycaster=new T.Raycaster();z3.pointer=new T.Vector2();
  const resize=()=>{let w=host.clientWidth,h=host.clientHeight||520;z3.camera.aspect=w/h;z3.camera.updateProjectionMatrix();z3.renderer.setSize(w,h,false)};
  if(window.ResizeObserver)new ResizeObserver(resize).observe(host);else window.addEventListener('resize',resize);resize();
