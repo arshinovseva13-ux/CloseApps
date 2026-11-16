@@ -39,38 +39,8 @@ jobs:
           echo "Stockfish JS: $(wc -c < engine/stockfish-19-lite-single.js) bytes"
           echo "Stockfish WASM: $(wc -c < engine/stockfish-19-lite-single.wasm) bytes"
 
-      - name: Download pinned Shogi engine (YaneuraOu + Suisho Petite)
-        run: |
-          npm pack @mizarjp/yaneuraou.k-p@7.6.3-alpha.0 --json > shogi-pack.json
-          TARBALL="$(node -e "console.log(JSON.parse(require('fs').readFileSync('shogi-pack.json','utf8'))[0].filename)")"
-          mkdir -p /tmp/shogi-engine engine/shogi
-          tar -xzf "$TARBALL" -C /tmp/shogi-engine \
-            package/lib/yaneuraou.k-p.js \
-            package/lib/yaneuraou.k-p.wasm \
-            package/lib/yaneuraou.k-p.worker.js \
-            package/LICENSE.md \
-            package/README.md
-          cp /tmp/shogi-engine/package/lib/yaneuraou.k-p.js engine/shogi/
-          cp /tmp/shogi-engine/package/lib/yaneuraou.k-p.wasm engine/shogi/
-          cp /tmp/shogi-engine/package/lib/yaneuraou.k-p.worker.js engine/shogi/
-          cp /tmp/shogi-engine/package/LICENSE.md engine/shogi/LICENSE.txt
-          cp /tmp/shogi-engine/package/README.md engine/shogi/README.md
-          cat > engine/shogi/THIRD_PARTY_NOTICES.txt <<'EOF'
-          YaneuraOu WebAssembly K-P
-          Package: @mizarjp/yaneuraou.k-p@7.6.3-alpha.0
-          Evaluation function: Suisho Petite
-          License: GNU General Public License v3.0
-          Package source: https://github.com/mizar/YaneuraOu.wasm/tree/c9c34f240f89b611ca34060466e61220b0d3180c
-          Upstream engine: https://github.com/yaneurao/YaneuraOu
-          Copyright and license notices are retained with the distributed package.
-          EOF
-          test -s engine/shogi/yaneuraou.k-p.js
-          test -s engine/shogi/yaneuraou.k-p.wasm
-          test -s engine/shogi/yaneuraou.k-p.worker.js
-          test -s engine/shogi/LICENSE.txt
-          echo "YaneuraOu JS: $(wc -c < engine/shogi/yaneuraou.k-p.js) bytes"
-          echo "YaneuraOu WASM: $(wc -c < engine/shogi/yaneuraou.k-p.wasm) bytes"
-          echo "YaneuraOu worker: $(wc -c < engine/shogi/yaneuraou.k-p.worker.js) bytes"
+      - name: Build offline single-threaded Shogi app
+        run: bash scripts/build-shogi-offline.sh
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
