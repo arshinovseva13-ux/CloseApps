@@ -27,6 +27,8 @@ makefile = root / "source/Makefile"
 s = makefile.read_text(encoding="utf-8-sig")
 s = s.replace("\t\tCPPFLAGS += -s USE_PTHREADS=1\n", "")
 s = s.replace("\t\tLDFLAGS += -s PTHREAD_POOL_SIZE=32\n", "")
+s = s.replace("\t\tCPPFLAGS += -march=wasm32\n", "")
+s = s.replace("LDFLAGS += -lpthread\n", "")
 needle = "\t\tCPPFLAGS += -DUSE_WASM_SIMD -msimd128\n"
 if needle not in s:
     raise SystemExit("Could not locate Emscripten SIMD flags in source/Makefile")
