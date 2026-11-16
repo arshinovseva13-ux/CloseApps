@@ -511,15 +511,15 @@ self.onmessage = async event => {
     try {
       const factory = self.YaneuraOu_K_P;
       if (!factory) throw new Error("YaneuraOu factory was not loaded");
-      const startupLines = [];
       engine = await factory({
         locateFile: file => new URL(file, self.location.href).href,
         mainScriptUrlOrBlob: new URL("./yaneuraou.k-p.js", self.location.href).href,
-        print: line => startupLines.push(String(line)),
-        printErr: line => startupLines.push(String(line))
+        // Forward stdout immediately, including lines emitted before factory()
+        // resolves and before addMessageListener can be installed.
+        print: line => self.postMessage({ type: "line", line: String(line) }),
+        printErr: line => self.postMessage({ type: "line", line: String(line) })
       });
       engine.addMessageListener(line => self.postMessage({ type: "line", line }));
-      for (const line of startupLines) self.postMessage({ type: "line", line });
       self.postMessage({ type: "ready" });
     } catch (error) {
       self.postMessage({ type: "error", error: String(error) });
