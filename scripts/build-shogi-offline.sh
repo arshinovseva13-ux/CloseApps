@@ -227,9 +227,8 @@ function waitFor(engine, prefix, command, timeoutMs = 20000) {
   ]);
   // Emscripten may emit the initial USI identification and usiok while its
   // factory is still starting, before addMessageListener can be attached.
-  if (!startupLines.some(line => line.startsWith("usiok"))) {
-    await waitFor(engine, "usiok", "usi");
-  }
+  // The engine emits its USI identification and usiok during module startup.
+  // That startup output precedes addMessageListener, so do not wait for it again.
   engine.ccall("usi_command", "number", ["string"], ["setoption name Threads value 1"]);
   await waitFor(engine, "readyok", "isready");
   engine.ccall("usi_command", "number", ["string"], ["position startpos"]);
@@ -323,7 +322,9 @@ export class YaneuraOuEngine {
       worker.postMessage({ type: "init" });
       await withTimeout(ready, 30000);
       this.onProgress?.("init", null);
-      await withTimeout(this.cmdWait("usi", "usiok"), 15000);
+      // YaneuraOu emits id/options/usiok automatically during WASM startup.
+      // The worker listener is attached after factory() resolves, so that initial
+      // usiok has already passed. Proceed directly to isready.
       this.post("setoption name USI_Hash value 64");
       this.post("setoption name Threads value 1");
       this.post("setoption name NetworkDelay value 0");
