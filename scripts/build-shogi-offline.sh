@@ -216,11 +216,20 @@ function waitFor(engine, prefix, command, timeoutMs = 20000) {
   });
 }
 (async () => {
+  const startupLines = [];
   const engine = await Promise.race([
-    create({ locateFile: f => path.join(base, f) }),
+    create({
+      locateFile: f => path.join(base, f),
+      print: line => startupLines.push(String(line)),
+      printErr: line => startupLines.push(String(line))
+    }),
     new Promise((_, reject) => setTimeout(() => reject(new Error("Engine module initialization timed out")), 30000))
   ]);
-  await waitFor(engine, "usiok", "usi");
+  // Emscripten may emit the initial USI identification and usiok while its
+  // factory is still starting, before addMessageListener can be attached.
+  if (!startupLines.some(line => line.startsWith("usiok"))) {
+    await waitFor(engine, "usiok", "usi");
+  }
   engine.ccall("usi_command", "number", ["string"], ["setoption name Threads value 1"]);
   await waitFor(engine, "readyok", "isready");
   engine.ccall("usi_command", "number", ["string"], ["position startpos"]);
@@ -491,11 +500,15 @@ self.onmessage = async event => {
     try {
       const factory = self.YaneuraOu_K_P;
       if (!factory) throw new Error("YaneuraOu factory was not loaded");
+      const startupLines = [];
       engine = await factory({
         locateFile: file => new URL(file, self.location.href).href,
-        mainScriptUrlOrBlob: new URL("./yaneuraou.k-p.js", self.location.href).href
+        mainScriptUrlOrBlob: new URL("./yaneuraou.k-p.js", self.location.href).href,
+        print: line => startupLines.push(String(line)),
+        printErr: line => startupLines.push(String(line))
       });
       engine.addMessageListener(line => self.postMessage({ type: "line", line }));
+      for (const line of startupLines) self.postMessage({ type: "line", line });
       self.postMessage({ type: "ready" });
     } catch (error) {
       self.postMessage({ type: "error", error: String(error) });
