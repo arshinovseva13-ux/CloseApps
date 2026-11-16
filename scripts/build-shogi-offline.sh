@@ -426,7 +426,7 @@ licenses.write_text(s, encoding="utf-8")
 
 Path("public/sw.js").write_text("""const CACHE_NAME = "close-shogi-offline-v2";
 const BASE = "/CloseApps/shogi/";
-const CORE = [BASE, BASE + "engine/yaneuraou.k-p.js", BASE + "engine/yaneuraou.k-p.wasm"];
+const CORE = [BASE, BASE + "engine/engine-worker.js", BASE + "engine/yaneuraou.k-p.js", BASE + "engine/yaneuraou.k-p.wasm"];
 self.addEventListener("install", event => event.waitUntil(
   caches.open(CACHE_NAME).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting())
 ));
