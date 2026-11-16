@@ -1,4 +1,4 @@
-# Build and deploy CloseApps static site, including the pinned Stockfish WASM engine.
+# Build CloseApps and deploy the offline single-threaded YaneuraOu + Suisho Petite Shogi app.
 name: Deploy static content to Pages
 
 on:
