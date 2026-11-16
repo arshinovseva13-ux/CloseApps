@@ -77,6 +77,19 @@ replace_once(
 thread_cpp = root / "source/thread.cpp"
 s = thread_cpp.read_text(encoding="utf-8-sig")
 
+ctor_anchor = """Thread::Thread(size_t n) : idx(n) , stdThread(&Thread::idle_loop, this)
+{
+"""
+ctor_new = """Thread::Thread(size_t n) : idx(n) , stdThread(&Thread::idle_loop, this)
+{
+#if defined(CLOSE_SHOGI_SINGLE_THREAD)
+\tsearching = false;
+#endif
+"""
+if ctor_anchor not in s:
+    raise SystemExit("Could not locate Thread constructor in build patch")
+s = s.replace(ctor_anchor, ctor_new, 1)
+
 old_destructor = """Thread::~Thread()
 {
 \t// 探索中にスレッドオブジェクトが解体されることはない。
