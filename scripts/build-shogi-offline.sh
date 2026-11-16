@@ -211,15 +211,15 @@ function waitFor(engine, prefix, command, timeoutMs = 20000) {
       }
     };
     engine.addMessageListener(listener);
-    engine.postMessage(command);
+    engine.ccall("usi_command", "number", ["string"], [command]);
   });
 }
 (async () => {
   const engine = await create({ locateFile: f => path.join(base, f) });
   await waitFor(engine, "usiok", "usi");
-  engine.postMessage("setoption name Threads value 1");
+  engine.ccall("usi_command", "number", ["string"], ["setoption name Threads value 1"]);
   await waitFor(engine, "readyok", "isready");
-  engine.postMessage("position startpos");
+  engine.ccall("usi_command", "number", ["string"], ["position startpos"]);
   const best = await waitFor(engine, "bestmove ", "go movetime 300", 30000);
   if (!/^bestmove [1-9][a-i][1-9][a-i]/.test(best)) throw new Error("Unexpected engine response: " + best);
   engine.terminate();
@@ -497,7 +497,7 @@ self.onmessage = async event => {
       self.postMessage({ type: "error", error: String(error) });
     }
   } else if (data.type === "command" && engine) {
-    engine.postMessage(data.command);
+    engine.ccall("usi_command", "number", ["string"], [data.command]);
   } else if (data.type === "terminate" && engine) {
     engine.terminate();
     engine = null;
