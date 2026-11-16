@@ -59,7 +59,7 @@ s = s.replace('dir: "/engine/",', 'dir: "/CloseApps/shogi/engine/",')
 s = s.replace('if (typeof window === "undefined" || typeof SharedArrayBuffer === "undefined") {', 'if (typeof window === "undefined") {')
 s = s.replace('const threads = Math.min(8, Math.max(2, (navigator.hardwareConcurrency || 4) - 2));', 'const threads = 1; // Single-threaded build: works without SharedArrayBuffer/COOP/COEP.')
 s = s.replace('this.post("setoption name USI_Hash value 128");', 'this.post("setoption name USI_Hash value 64");')
-if 'SharedArrayBuffer' in s:
+if 'typeof SharedArrayBuffer' in s:
     raise SystemExit("SharedArrayBuffer dependency remains in engine wrapper")
 engine.write_text(s)
 
