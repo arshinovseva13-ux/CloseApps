@@ -443,7 +443,12 @@ Path("public/sw.js").write_text("""const CACHE_NAME = "close-shogi-offline-v2";
 const BASE = "/CloseApps/shogi/";
 const CORE = [BASE, BASE + "engine/engine-worker.js", BASE + "engine/yaneuraou.k-p.js", BASE + "engine/yaneuraou.k-p.wasm"];
 self.addEventListener("install", event => event.waitUntil(
-  caches.open(CACHE_NAME).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting())
+  caches.open(CACHE_NAME).then(async cache => {
+    await cache.addAll(CORE);
+    const manifest = await fetch(BASE + "offline-assets.json");
+    if (!manifest.ok) throw new Error("Offline asset manifest is missing");
+    await cache.addAll(await manifest.json());
+  }).then(() => self.skipWaiting())
 ));
 self.addEventListener("activate", event => event.waitUntil(
   caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("close-shogi-") && key !== CACHE_NAME).map(key => caches.delete(key))))
@@ -513,7 +518,23 @@ EOF
 echo "== Install dependencies and export static app =="
 npm ci
 npm run build
+python3 - "$TMP/shogi-app/out" <<'PY'
+from pathlib import Path
+import json, sys
+out = Path(sys.argv[1])
+base = "/CloseApps/shogi/"
+assets = [base, base + "licenses/"]
+static = out / "_next" / "static"
+if not static.is_dir():
+    raise SystemExit("Next static assets directory is missing")
+for path in static.rglob("*"):
+    if path.is_file():
+        assets.append(base + path.relative_to(out).as_posix())
+(out / "offline-assets.json").write_text(json.dumps(sorted(set(assets))), encoding="utf-8")
+print(f"Prepared {len(assets)} offline app assets")
+PY
 test -s out/index.html
+test -s out/offline-assets.json
 test -s out/engine/yaneuraou.k-p.js
 test -s out/engine/yaneuraou.k-p.wasm
 test -s out/engine/engine-worker.js
