@@ -216,23 +216,33 @@ function waitFor(engine, prefix, command, timeoutMs = 20000) {
   });
 }
 (async () => {
-  const startupLines = [];
+  const outputLines = [];
   const engine = await Promise.race([
     create({
       locateFile: f => path.join(base, f),
-      print: line => startupLines.push(String(line)),
-      printErr: line => startupLines.push(String(line))
+      print: line => outputLines.push(String(line)),
+      printErr: line => outputLines.push(String(line))
     }),
     new Promise((_, reject) => setTimeout(() => reject(new Error("Engine module initialization timed out")), 30000))
   ]);
-  // Emscripten may emit the initial USI identification and usiok while its
-  // factory is still starting, before addMessageListener can be attached.
-  // The engine emits its USI identification and usiok during module startup.
-  // That startup output precedes addMessageListener, so do not wait for it again.
+  // Collect both Emscripten stdout and the engine message API. Some builds
+  // deliver protocol output through print() rather than addMessageListener().
+  engine.addMessageListener(line => outputLines.push(String(line)));
+  async function commandAndWait(prefix, command, timeoutMs = 20000) {
+    const start = outputLines.length;
+    engine.ccall("usi_command", "number", ["string"], [command]);
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const match = outputLines.slice(start).find(line => line.startsWith(prefix));
+      if (match) return match;
+      await new Promise(resolve => setTimeout(resolve, 20));
+    }
+    throw new Error("Timed out waiting for " + prefix + "; recent output: " + outputLines.slice(-20).join(" | "));
+  }
   engine.ccall("usi_command", "number", ["string"], ["setoption name Threads value 1"]);
-  await waitFor(engine, "readyok", "isready");
+  await commandAndWait("readyok", "isready");
   engine.ccall("usi_command", "number", ["string"], ["position startpos"]);
-  const best = await waitFor(engine, "bestmove ", "go movetime 300", 30000);
+  const best = await commandAndWait("bestmove ", "go movetime 300", 30000);
   if (!/^bestmove [1-9][a-i][1-9][a-i]/.test(best)) throw new Error("Unexpected engine response: " + best);
   engine.terminate();
   console.log("YaneuraOu single-thread smoke test passed:", best);
