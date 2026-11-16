@@ -31,6 +31,7 @@ s = s.replace("\t\tCPPFLAGS += -march=wasm32\n", "")
 s = s.replace("LDFLAGS += -lpthread\n", "")
 s = s.replace("LDFLAGS += -s TOTAL_STACK=67108864\n", "LDFLAGS += -s STACK_SIZE=67108864\n")
 s = s.replace("\t\tLDFLAGS += -s LLD_REPORT_UNDEFINED\n", "")
+s = s.replace("\t\tLDFLAGS += -s FILESYSTEM=1 -s EXIT_RUNTIME=0 -s \"EXPORTED_RUNTIME_METHODS=['FS','ccall']\"\n", "\t\tLDFLAGS += -s EXIT_RUNTIME=0 -s \"EXPORTED_RUNTIME_METHODS=['ccall']\"\n")
 needle = "\t\tCPPFLAGS += -DUSE_WASM_SIMD -msimd128\n"
 if needle not in s:
     raise SystemExit("Could not locate Emscripten SIMD flags in source/Makefile")
