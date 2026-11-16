@@ -26,20 +26,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Download pinned Stockfish package
-        run: |
-          npm pack stockfish@19.0.1
-          mkdir -p engine
-          tar -xzf stockfish-19.0.1.tgz \
-            package/bin/stockfish-19-lite-single.js \
-            package/bin/stockfish-19-lite-single.wasm
-          cp package/bin/stockfish-19-lite-single.js engine/
-          cp package/bin/stockfish-19-lite-single.wasm engine/
-          test -s engine/stockfish-19-lite-single.js
-          test -s engine/stockfish-19-lite-single.wasm
-          echo "Stockfish JS: $(wc -c < engine/stockfish-19-lite-single.js) bytes"
-          echo "Stockfish WASM: $(wc -c < engine/stockfish-19-lite-single.wasm) bytes"
-
       - name: Build offline single-threaded Shogi app
         run: bash scripts/build-shogi-offline.sh
 
