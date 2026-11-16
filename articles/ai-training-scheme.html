@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Исследовательская статья CloseApps о полном цикле обучения нейросети: данные, forward pass, loss, backpropagation, AdamW, графики и оценка качества.">
+<meta name="theme-color" content="#090e1b">
+<title>Схема обучения искусственного интеллекта — CloseApps Research</title>
+<style>
+:root{color-scheme:dark;--bg:#090e1b;--panel:#111a2c;--panel2:#162238;--line:#293955;--text:#edf3ff;--muted:#a9b8d1;--cyan:#72e4d2;--blue:#83b9ff;--violet:#c5a0ff;--amber:#ffc978;--green:#8ee0ad;--red:#ff9292}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#172844 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.72 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{width:min(100% - 32px,1040px);margin:auto;padding:26px 0 70px}.back{color:var(--cyan);text-decoration:none;font-weight:650}.eyebrow{margin:34px 0 8px;color:var(--cyan);font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}h1{font-size:clamp(36px,7vw,66px);line-height:1.04;letter-spacing:-.045em;margin:0 0 20px;max-width:900px}h2{font-size:clamp(25px,4vw,36px);line-height:1.15;letter-spacing:-.025em;margin:56px 0 14px}h3{font-size:20px;margin:28px 0 10px}p,li{color:#c4d0e3}p{margin:12px 0}.lead{font-size:19px;max-width:820px;color:#d6e1f2}.meta{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 28px}.pill{border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted);font-size:12px}.panel{background:linear-gradient(145deg,#141f34,#101827);border:1px solid var(--line);border-radius:18px;padding:20px;margin:22px 0;box-shadow:0 14px 45px #0002}.panel h3{margin-top:0}.muted{color:var(--muted)}.small{font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.stat{padding:16px;border:1px solid var(--line);border-radius:14px;background:#0d1728}.stat b{display:block;font-size:25px;color:var(--cyan)}.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}.step{border:1px solid var(--line);border-radius:13px;background:#101c30;padding:14px;min-height:112px;position:relative}.step strong{display:block;color:var(--text);font-size:15px;margin-bottom:5px}.step span{display:block;color:var(--muted);font-size:13px;line-height:1.5}.step .n{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#203d59;color:var(--cyan);font-weight:800;margin-bottom:8px}.step.data{border-color:#397e91}.step.forward{border-color:#456ba5}.step.loss{border-color:#97703d}.step.grad{border-color:#74569e}.step.opt{border-color:#397c5c}.step.update{border-color:#397c5c}.svg-wrap{overflow-x:auto;padding:8px 0}.svg-wrap svg{display:block;width:100%;height:auto;min-width:580px}.diagram-note{border-left:3px solid var(--cyan);padding:10px 14px;background:#122337;border-radius:0 10px 10px 0;color:#cbd8e9;margin:16px 0}.table-wrap{overflow-x:auto;margin:16px 0}table{width:100%;border-collapse:collapse;min-width:620px;font-size:14px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--cyan);font-weight:700;background:#132138}td{color:#c4d0e3}code,.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.formula{display:block;overflow-x:auto;background:#091321;border:1px solid #2a3a56;border-radius:12px;padding:15px;color:#e5efff;font-size:clamp(13px,2vw,17px);margin:12px 0}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.controls button{background:#15243a;border:1px solid #344965;color:#dce8fa;border-radius:10px;padding:9px 13px;font:inherit;font-size:13px;cursor:pointer}.controls button[aria-pressed=true]{background:#17443f;border-color:#4caa9b;color:#baffef}.explain{background:#0c1728;border:1px solid var(--line);border-radius:12px;padding:15px;min-height:82px;color:#cbd8e9}.chart{width:100%;height:auto;display:block}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}.callout{border:1px solid #655334;background:#241d13;border-radius:14px;padding:15px;color:#f4dfbd}.source-list a{color:var(--cyan);text-decoration:none}.source-list a:hover{text-decoration:underline}.footer{border-top:1px solid var(--line);margin-top:55px;padding-top:20px;color:var(--muted);font-size:13px}
+@media(max-width:680px){.wrap{width:min(100% - 22px,1040px);padding-top:18px}.panel{padding:15px}.grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.step{min-height:100px}h2{margin-top:42px}.lead{font-size:17px}}
+@media(max-width:420px){.flow{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main class="wrap">
+<a class="back" href="../index.html">← Вернуться в CloseApps</a>
+<p class="eyebrow">CLOSEAPPS RESEARCH · ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ · СТАТЬЯ №33</p>
+<h1>Схема обучения искусственного интеллекта</h1>
+<p class="lead">Что происходит между загрузкой обучающего пакета и изменением весов нейросети? Разбираем полный цикл: прямой проход, вычисление функции потерь, обратное распространение градиентов и работу оптимизатора AdamW.</p>
+<div class="meta"><span class="pill">Исследовательская статья</span><span class="pill">Техническая схема</span><span class="pill">Обновлено: 16 ноября 2026</span></div>
+<div class="grid">
+ <div class="stat"><b>01 → 06</b><span class="muted small">Шесть операций одного шага обучения</span></div>
+ <div class="stat"><b>θ → θ′</b><span class="muted small">Параметры модели меняются после обновления</span></div>
+</div>
+
+<h2>1. Полный цикл обучения</h2>
+<p>Для большинства нейросетей обучение организовано как повторяющийся цикл. Модель получает пакет примеров, строит предсказания, измеряет ошибку, вычисляет градиенты и обновляет параметры. Затем цикл повторяется на следующем пакете.</p>
+<section class="panel">
+<h3>От данных до новых весов</h3>
+<div class="flow">
+ <div class="step data"><span class="n">1</span><strong>Вливка данных</strong><span>Batch загружается в память и передаётся модели.</span></div>
+ <div class="step forward"><span class="n">2</span><strong>Forward pass</strong><span>Сеть вычисляет предсказания по текущим параметрам.</span></div>
+ <div class="step loss"><span class="n">3</span><strong>Loss / погрешность</strong><span>Предсказание сравнивается с целевым ответом.</span></div>
+ <div class="step grad"><span class="n">4</span><strong>Backpropagation</strong><span>Вычисляются градиенты функции потерь по параметрам.</span></div>
+ <div class="step opt"><span class="n">5</span><strong>Optimizer</strong><span>Оптимизатор рассчитывает величину и направление обновления.</span></div>
+ <div class="step update"><span class="n">6</span><strong>Обновление весов</strong><span>Новые параметры сохраняются для следующего шага.</span></div>
+</div>
+<p class="diagram-note"><b>Важно не путать три вещи.</b> Loss измеряет ошибку; backpropagation вычисляет, как параметры повлияли на эту ошибку; optimizer использует градиенты, чтобы изменить параметры.</p>
+</section>
+
+<h2>2. Что именно подаётся на вход</h2>
+<p>В языковой модели исходный текст сначала превращается в токены, затем — в числовые идентификаторы. Из последовательностей формируются обучающие примеры. Для авторегрессионной модели вход и целевые метки обычно сдвинуты на один токен: модель учится предсказывать следующий токен.</p>
+<section class="panel">
+<h3>Мини-пример формирования пары «вход → цель»</h3>
+<div class="table-wrap"><table><thead><tr><th>Позиция</th><th>Вход модели</th><th>Целевой токен</th><th>Что проверяем</th></tr></thead><tbody>
+<tr><td>1</td><td>«Нейросеть»</td><td>«обучается»</td><td>Продолжение после первого токена</td></tr>
+<tr><td>2</td><td>«Нейросеть обучается»</td><td>«на»</td><td>Контекст из двух токенов</td></tr>
+<tr><td>3</td><td>«Нейросеть обучается на»</td><td>«данных»</td><td>Контекст из трёх токенов</td></tr>
+</tbody></table></div>
+<p class="small muted">Это учебная иллюстрация принципа next-token prediction, а не реальный токенизатор: в настоящей модели слова могут разбиваться на части.</p>
+</section>
+
+<h2>3. Forward pass: получение предсказания</h2>
+<p>На прямом проходе данные проходят через слои модели. В Transformer это включает embedding, позиционную информацию, блоки self-attention и feed-forward, а затем выходную проекцию в словарь токенов. На выходе получаются логиты — оценки для возможных следующих токенов. Softmax преобразует их в вероятности.</p>
+<div class="panel">
+<h3>Упрощённая цепочка вычислений</h3>
+<div class="svg-wrap"><svg viewBox="0 0 900 220" role="img" aria-label="Схема прямого прохода Transformer">
+<defs><marker id="arr1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#83b9ff" stroke-width="1.4"/></marker></defs>
+<g font-family="system-ui" text-anchor="middle">
+<g fill="#142b43" stroke="#397e91"><rect x="10" y="62" width="130" height="86" rx="12"/></g><text x="75" y="96" fill="#72e4d2" font-size="15" font-weight="700">Токены</text><text x="75" y="119" fill="#c4d0e3" font-size="12">ID + маска</text>
+<path d="M140 105H170" stroke="#83b9ff" stroke-width="2" marker-end="url(#arr1)"/>
+<rect x="180" y="62" width="130" height="86" rx="12" fill="#172944" stroke="#456ba5"/><text x="245" y="96" fill="#83b9ff" font-size="15" font-weight="700">Embedding</text><text x="245" y="119" fill="#c4d0e3" font-size="12">векторы</text>
+<path d="M310 105H340" stroke="#83b9ff" stroke-width="2" marker-end="url(#arr1)"/>
+<rect x="350" y="48" width="170" height="114" rx="12" fill="#1b2540" stroke="#74569e"/><text x="435" y="82" fill="#c5a0ff" font-size="15" font-weight="700">Transformer</text><text x="435" y="107" fill="#c4d0e3" font-size="12">Attention</text><text x="435" y="128" fill="#c4d0e3" font-size="12">Feed Forward × N</text>
+<path d="M520 105H550" stroke="#83b9ff" stroke-width="2" marker-end="url(#arr1)"/>
+<rect x="560" y="62" width="130" height="86" rx="12" fill="#302719" stroke="#97703d"/><text x="625" y="96" fill="#ffc978" font-size="15" font-weight="700">Logits</text><text x="625" y="119" fill="#c4d0e3" font-size="12">оценки токенов</text>
+<path d="M690 105H720" stroke="#83b9ff" stroke-width="2" marker-end="url(#arr1)"/>
+<rect x="730" y="62" width="155" height="86" rx="12" fill="#14352f" stroke="#397c5c"/><text x="807" y="96" fill="#8ee0ad" font-size="15" font-weight="700">Вероятности</text><text x="807" y="119" fill="#c4d0e3" font-size="12">Softmax</text>
+</g></svg></div>
+</div>
+
+<h2>4. Loss: как измеряется ошибка</h2>
+<p>Для языковой модели часто используют cross-entropy loss. Если правильный следующий токен получил низкую вероятность, вклад этой позиции в ошибку будет большим. Если вероятность правильного токена высока — вклад будет меньше.</p>
+<div class="formula">L = − (1 / N) · Σᵢ log pθ(yᵢ | xᵢ)</div>
+<p>Здесь <b>N</b> — число учитываемых целевых токенов, <b>yᵢ</b> — правильный токен, <b>xᵢ</b> — доступный контекст, а <b>pθ</b> — вероятность, которую назначила модель с параметрами θ.</p>
+<section class="panel">
+<h3>Почему низкая вероятность означает большую потерю?</h3>
+<div class="table-wrap"><table><thead><tr><th>Вероятность правильного токена</th><th>−ln(p)</th><th>Интерпретация</th></tr></thead><tbody>
+<tr><td>0,90</td><td>0,105</td><td>Предсказание близко к цели</td></tr>
+<tr><td>0,50</td><td>0,693</td><td>Модель не уверена</td></tr>
+<tr><td>0,10</td><td>2,303</td><td>Модель сильно ошиблась</td></tr>
+<tr><td>0,01</td><td>4,605</td><td>Очень низкая вероятность цели</td></tr>
+</tbody></table></div>
+<p class="small muted">Числа рассчитаны по −ln(p), округлены до трёх знаков. Это иллюстрация вклада одной позиции, а не измерение качества конкретной модели.</p>
+</section>
+
+<h2>5. Backpropagation: от ошибки к градиентам</h2>
+<p>После вычисления loss нужно понять, как каждый параметр влияет на итоговую ошибку. Для этого применяется правило цепочки производных. Градиент показывает локальное направление наиболее быстрого роста функции потерь; чтобы уменьшить loss, оптимизатор обычно делает шаг в противоположном направлении.</p>
+<div class="panel">
+<h3>Поток вычисления градиента</h3>
+<div class="svg-wrap"><svg viewBox="0 0 900 260" role="img" aria-label="Схема обратного распространения ошибки">
+<defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#c5a0ff" stroke-width="1.4"/></marker></defs>
+<g font-family="system-ui" text-anchor="middle">
+<rect x="20" y="35" width="180" height="70" rx="12" fill="#302719" stroke="#97703d"/><text x="110" y="64" fill="#ffc978" font-size="16" font-weight="700">Loss</text><text x="110" y="85" fill="#c4d0e3" font-size="12">скалярная ошибка</text>
+<path d="M200 70H245" stroke="#c5a0ff" stroke-width="2" marker-end="url(#arr2)"/>
+<rect x="255" y="35" width="180" height="70" rx="12" fill="#28203d" stroke="#74569e"/><text x="345" y="64" fill="#c5a0ff" font-size="16" font-weight="700">Backward</text><text x="345" y="85" fill="#c4d0e3" font-size="12">правило цепочки</text>
+<path d="M435 70H480" stroke="#c5a0ff" stroke-width="2" marker-end="url(#arr2)"/>
+<rect x="490" y="35" width="180" height="70" rx="12" fill="#28203d" stroke="#74569e"/><text x="580" y="64" fill="#c5a0ff" font-size="16" font-weight="700">Градиенты</text><text x="580" y="85" fill="#c4d0e3" font-size="12">∂L / ∂θ</text>
+<path d="M670 70H715" stroke="#c5a0ff" stroke-width="2" marker-end="url(#arr2)"/>
+<rect x="725" y="35" width="155" height="70" rx="12" fill="#14352f" stroke="#397c5c"/><text x="802" y="64" fill="#8ee0ad" font-size="16" font-weight="700">Optimizer</text><text x="802" y="85" fill="#c4d0e3" font-size="12">шаг обновления</text>
+<path d="M580 105V158H345V190" fill="none" stroke="#c5a0ff" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#arr2)"/>
+<rect x="255" y="195" width="180" height="48" rx="10" fill="#172944" stroke="#456ba5"/><text x="345" y="224" fill="#83b9ff" font-size="14">Градиент каждого слоя</text>
+</g></svg></div>
+<p class="small muted">Схема концептуальная: в реальной вычислительной граф-сети градиенты проходят от выходных операций к параметрам всех участвующих слоёв.</p>
+</div>
+
+<h2>6. Оптимизатор AdamW: что он делает с градиентами</h2>
+<p>Оптимизатор не ищет «правильный ответ» напрямую. Он использует градиенты, чтобы обновить параметры. AdamW хранит экспоненциальные средние градиентов и их квадратов, корректирует смещение этих оценок на ранних шагах и отдельно применяет weight decay.</p>
+<div class="panel">
+<h3>Внутренняя схема одного шага AdamW</h3>
+<div class="flow">
+ <div class="step grad"><span class="n">A</span><strong>Градиент gₜ</strong><span>Получен из backpropagation.</span></div>
+ <div class="step forward"><span class="n">B</span><strong>Первый момент mₜ</strong><span>Сглаженное среднее градиентов.</span></div>
+ <div class="step forward"><span class="n">C</span><strong>Второй момент vₜ</strong><span>Сглаженное среднее квадратов градиентов.</span></div>
+ <div class="step loss"><span class="n">D</span><strong>Bias correction</strong><span>Коррекция смещения оценок в начале обучения.</span></div>
+ <div class="step opt"><span class="n">E</span><strong>Adaptive step</strong><span>Масштабирование шага по оценкам моментов.</span></div>
+ <div class="step update"><span class="n">F</span><strong>Weight decay + update</strong><span>Отдельное затухание весов и обновление θ.</span></div>
+</div>
+</div>
+<h3>Формулы AdamW</h3>
+<div class="formula">mₜ = β₁ mₜ₋₁ + (1 − β₁) gₜ</div>
+<div class="formula">vₜ = β₂ vₜ₋₁ + (1 − β₂) gₜ²</div>
+<div class="formula">m̂ₜ = mₜ / (1 − β₁ᵗ)       v̂ₜ = vₜ / (1 − β₂ᵗ)</div>
+<div class="formula">θₜ₊₁ = θₜ − η · m̂ₜ / (√v̂ₜ + ε) − ηλθₜ</div>
+<p>β₁ и β₂ задают коэффициенты сглаживания; η — learning rate; ε предотвращает деление на ноль; λ — коэффициент weight decay. В последней формуле показана распространённая запись decoupled weight decay для AdamW.</p>
+<div class="callout"><b>Ключевое различие:</b> обычный L2-регуляризатор добавляет штраф к функции потерь и тем самым влияет на градиент. В AdamW weight decay отделён от адаптивной части обновления — именно это означает decoupled weight decay.</div>
+
+<h2>7. Сравнение популярных оптимизаторов</h2>
+<div class="table-wrap"><table><thead><tr><th>Оптимизатор</th><th>Идея</th><th>Сильные стороны</th><th>Ограничения</th><th>Типичное применение</th></tr></thead><tbody>
+<tr><td><b>SGD</b></td><td>Шаг против градиента</td><td>Простота, понятная динамика</td><td>Чувствителен к масштабу и настройке learning rate</td><td>Классическое обучение, CV</td></tr>
+<tr><td><b>SGD + Momentum</b></td><td>Сглаживает направление шагов</td><td>Меньше колебаний в некоторых ландшафтах</td><td>Нужна настройка momentum и learning rate</td><td>Компьютерное зрение, большие батчи</td></tr>
+<tr><td><b>Adam</b></td><td>Адаптивный шаг по моментам градиента</td><td>Часто быстро даёт рабочий baseline</td><td>Не всегда лучшая генерализация; важна настройка</td><td>Языковые модели и разнообразные задачи</td></tr>
+<tr><td><b>AdamW</b></td><td>Adam с отделённым weight decay</td><td>Удобное управление регуляризацией</td><td>Не отменяет подбор гиперпараметров</td><td>Современные Transformer-модели</td></tr>
+</tbody></table></div>
+
+<h2>8. Что показывают графики обучения</h2>
+<p>Ниже — <b>иллюстративные данные</b>, а не результаты конкретного эксперимента CloseApps. Они показывают типичные формы кривых: обучающая потеря может продолжать снижаться, а проверочная — перестать улучшаться или начать расти. Это сигнал проверить переобучение, данные и настройки.</p>
+<section class="panel">
+<h3>Пример динамики loss по эпохам</h3>
+<svg class="chart" viewBox="0 0 760 340" role="img" aria-label="Иллюстративный график train и validation loss">
+<g stroke="#2a3a56" stroke-width="1"><path d="M70 35V280H720"/><path d="M70 80H720M70 130H720M70 180H720M70 230H720" stroke-dasharray="4 5"/></g>
+<g fill="#a9b8d1" font-size="12" font-family="system-ui"><text x="27" y="39">2.0</text><text x="27" y="84">1.6</text><text x="27" y="134">1.2</text><text x="27" y="184">0.8</text><text x="27" y="234">0.4</text><text x="65" y="305">1</text><text x="190" y="305">3</text><text x="315" y="305">5</text><text x="440" y="305">7</text><text x="565" y="305">9</text><text x="680" y="305">11</text><text x="340" y="333">Эпоха</text><text x="8" y="18">Loss</text></g>
+<polyline fill="none" stroke="#72e4d2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="70,55 132,110 194,145 256,174 318,195 380,212 442,225 504,236 566,245 628,252 690,258"/>
+<polyline fill="none" stroke="#ffc978" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="70,62 132,115 194,151 256,179 318,195 380,204 442,207 504,204 566,195 628,183 690,166"/>
+<g fill="#72e4d2"><circle cx="70" cy="55" r="4"/><circle cx="690" cy="258" r="4"/></g><g fill="#ffc978"><circle cx="70" cy="62" r="4"/><circle cx="690" cy="166" r="4"/></g>
+</svg>
+<div class="legend"><span><i class="dot" style="background:#72e4d2"></i>Train loss</span><span><i class="dot" style="background:#ffc978"></i>Validation loss</span></div>
+<p class="small muted">На иллюстрации validation loss достигает минимума примерно в середине обучения, затем растёт — возможный признак переобучения. В реальном проекте вывод делают по нескольким проверкам, а не по одной кривой.</p>
+</section>
+
+<h2>9. Что влияет на результат</h2>
+<div class="table-wrap"><table><thead><tr><th>Фактор</th><th>Что контролирует</th><th>Что проверять</th></tr></thead><tbody>
+<tr><td>Learning rate</td><td>Размер шага обновления</td><td>Сходимость, скачки loss, стабильность</td></tr>
+<tr><td>Batch size</td><td>Количество примеров на шаг</td><td>Память, шум градиента, скорость</td></tr>
+<tr><td>Количество токенов</td><td>Объём обучающего сигнала</td><td>Разнообразие, повторы, качество корпуса</td></tr>
+<tr><td>Размер модели</td><td>Число обучаемых параметров</td><td>Соответствие объёму данных и compute-бюджету</td></tr>
+<tr><td>Weight decay</td><td>Регуляризацию параметров</td><td>Влияние на валидацию и стабильность</td></tr>
+<tr><td>Scheduler</td><td>Изменение learning rate во времени</td><td>Warmup, decay, финальная динамика</td></tr>
+</tbody></table></div>
+
+<h2>10. Один шаг — ещё не обучение</h2>
+<p>Один optimizer step обрабатывает один пакет данных. Эпоха — полный проход по обучающей выборке. Большая языковая модель может обучаться на огромном числе пакетов и токенов; при распределённом обучении один логический шаг может включать синхронизацию градиентов между несколькими ускорителями.</p>
+<p>На практике перед обновлением часто выполняют обнуление старых градиентов, а при gradient accumulation суммируют градиенты нескольких микропакетов. При смешанной точности применяют специальные меры для численной стабильности.</p>
+
+<h2>11. Итоговая карта процесса</h2>
+<div class="panel">
+<div class="svg-wrap"><svg viewBox="0 0 900 300" role="img" aria-label="Сводная схема итерации обучения нейросети">
+<defs><marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#72e4d2" stroke-width="1.5"/></marker></defs>
+<g font-family="system-ui" text-anchor="middle">
+<rect x="18" y="92" width="130" height="72" rx="12" fill="#142b43" stroke="#397e91"/><text x="83" y="121" fill="#72e4d2" font-weight="700">Batch</text><text x="83" y="143" fill="#c4d0e3" font-size="12">данные</text>
+<path d="M148 128H177" stroke="#72e4d2" stroke-width="2" marker-end="url(#arr3)"/>
+<rect x="187" y="92" width="130" height="72" rx="12" fill="#172944" stroke="#456ba5"/><text x="252" y="121" fill="#83b9ff" font-weight="700">Forward</text><text x="252" y="143" fill="#c4d0e3" font-size="12">предсказание</text>
+<path d="M317 128H346" stroke="#72e4d2" stroke-width="2" marker-end="url(#arr3)"/>
+<rect x="356" y="92" width="130" height="72" rx="12" fill="#302719" stroke="#97703d"/><text x="421" y="121" fill="#ffc978" font-weight="700">Loss</text><text x="421" y="143" fill="#c4d0e3" font-size="12">ошибка</text>
+<path d="M486 128H515" stroke="#72e4d2" stroke-width="2" marker-end="url(#arr3)"/>
+<rect x="525" y="92" width="130" height="72" rx="12" fill="#28203d" stroke="#74569e"/><text x="590" y="121" fill="#c5a0ff" font-weight="700">Backward</text><text x="590" y="143" fill="#c4d0e3" font-size="12">градиенты</text>
+<path d="M655 128H684" stroke="#72e4d2" stroke-width="2" marker-end="url(#arr3)"/>
+<rect x="694" y="92" width="185" height="72" rx="12" fill="#14352f" stroke="#397c5c"/><text x="786" y="121" fill="#8ee0ad" font-weight="700">AdamW</text><text x="786" y="143" fill="#c4d0e3" font-size="12">новые параметры θ</text>
+<path d="M786 164V225H83V174" fill="none" stroke="#72e4d2" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arr3)"/>
+<text x="430" y="252" fill="#72e4d2" font-size="14">следующий пакет данных · следующий шаг</text>
+</g></svg></div>
+</div>
+
+<h2>12. Вывод</h2>
+<p>Обучение нейросети — это не абстрактное «впитывание информации», а конкретный вычислительный процесс. Данные проходят через модель; функция потерь измеряет расхождение с целями; backpropagation вычисляет градиенты; оптимизатор на их основе меняет параметры. Качество обучения оценивают на отдельных данных и по динамике метрик.</p>
+<p><b>Короткая формула всего цикла:</b> данные → предсказание → loss → градиенты → optimizer → новые веса → повторение.</p>
+
+<h2>Источники и литература</h2>
+<ol class="source-list">
+<li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Vaswani et al. (2017), Attention Is All You Need</a> — архитектура Transformer.</li>
+<li><a href="https://arxiv.org/abs/1412.6980" target="_blank" rel="noopener noreferrer">Kingma &amp; Ba (2014), Adam: A Method for Stochastic Optimization</a> — алгоритм Adam.</li>
+<li><a href="https://arxiv.org/abs/1711.05101" target="_blank" rel="noopener noreferrer">Loshchilov &amp; Hutter (2017/2019), Decoupled Weight Decay Regularization</a> — AdamW и отделение weight decay.</li>
+<li><a href="https://www.nature.com/articles/323533a0" target="_blank" rel="noopener noreferrer">Rumelhart, Hinton &amp; Williams (1986), Learning representations by back-propagating errors</a> — классическая работа об обратном распространении.</li>
+<li><a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener noreferrer">Hoffmann et al. (2022), Training Compute-Optimal Large Language Models</a> — масштабирование моделей и данных.</li>
+<li><a href="https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html" target="_blank" rel="noopener noreferrer">PyTorch documentation: AdamW</a> — практическая реализация оптимизатора.</li>
+<li><a href="https://huggingface.co/docs/transformers/main_classes/optimizer_schedules" target="_blank" rel="noopener noreferrer">Hugging Face Transformers: Optimizer Schedules</a> — оптимизаторы и расписания learning rate.</li>
+</ol>
+<footer class="footer">CloseApps Research Library · Искусственный интеллект · Статья №33<br>Материал предназначен для образовательного изучения принципов машинного обучения.</footer>
+</main></body></html>
