@@ -87,6 +87,7 @@ ctor_new = """Thread::Thread(size_t n) : idx(n) , stdThread(&Thread::idle_loop, 
 {
 #if defined(CLOSE_SHOGI_SINGLE_THREAD)
 \tsearching = false;
+\tthreadStarted = true;
 #endif
 """
 if ctor_anchor not in s:
