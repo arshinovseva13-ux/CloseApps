@@ -216,7 +216,10 @@ function waitFor(engine, prefix, command, timeoutMs = 20000) {
   });
 }
 (async () => {
-  const engine = await create({ locateFile: f => path.join(base, f) });
+  const engine = await Promise.race([
+    create({ locateFile: f => path.join(base, f) }),
+    new Promise((_, reject) => setTimeout(() => reject(new Error("Engine module initialization timed out")), 30000))
+  ]);
   await waitFor(engine, "usiok", "usi");
   engine.ccall("usi_command", "number", ["string"], ["setoption name Threads value 1"]);
   await waitFor(engine, "readyok", "isready");
